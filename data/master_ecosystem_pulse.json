@@ -1,13 +1,15 @@
 {
-  "version": "2.0.0",
-  "last_updated": "2026-11-18T14:18:00+09:00",
-  "dashboard_name": "Let's Master Control Hub (렛츠 통합 관제 대시보드 v2.0.0)",
+  "version": "2.1.0",
+  "last_updated": "2026-11-18T14:32:00+09:00",
+  "dashboard_name": "Let's Master Control Hub (렛츠 통합 관제 대시보드 v2.1.0)",
   "theme": "light",
   "summary": {
     "total_indexed_records": 454150,
     "total_daily_ingest_rate": 1547,
+    "total_daily_analyze_rate": 2185,
     "ecosystem_health_score": 99.4,
     "status": "ALL_PIPELINES_OPTIMAL",
+    "total_automation_devices": 24,
     "active_repos_count": 15,
     "zero_drop_anomalies": 0,
     "flat_curve_anomalies": 0,
@@ -90,6 +92,824 @@
       "status": "RUNNING"
     }
   },
+  "automation_devices": [
+    {
+      "id": "people_global_crawler",
+      "service_id": "people",
+      "service_name": "렛츠피플 (Let's People)",
+      "badge_color": "#e11d48",
+      "badge_bg": "#ffe4e6",
+      "name": "글로벌 미디어 인물 무인 수집기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "people/scripts/daily_people_collector.py",
+      "schedule": "매일 05:00 KST (Cron: 0 20 * * *)",
+      "target_description": "위키데이터·글로벌 오픈 DB 기반 전 세계 배우, 방송인, 앵커, 개그맨, 역사 거장 인적 메타데이터",
+      "current_rate_text": "+245 명/일",
+      "slope_pct": 32.1,
+      "total_cum": 128600,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [230, 235, 240, 238, 242, 245, 240, 245, 248, 244, 250, 252, 245, 245],
+          "unit": "명/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [5800, 6100, 6400, 6800, 7100, 7300, 7500, 7800, 8100, 8300, 8500, 8800],
+          "unit": "명/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [45000, 82000, 128600],
+          "unit": "명 (누적)"
+        }
+      }
+    },
+    {
+      "id": "people_media_staff_crawler",
+      "service_id": "people",
+      "service_name": "렛츠피플 (Let's People)",
+      "badge_color": "#e11d48",
+      "badge_bg": "#ffe4e6",
+      "name": "미디어 연출진·작가 전 생애 수집기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "people/scripts/daily_people_collector.py",
+      "schedule": "매일 05:30 KST (Cron: 30 20 * * *)",
+      "target_description": "영화/드라마 메인 PD, 조연출(FD), 극본 작가, 촬영감독 등 카메라 뒤 제작진 생애 연대기",
+      "current_rate_text": "+185 명/일",
+      "slope_pct": 42.5,
+      "total_cum": 38450,
+      "status": "EXPANDING_FAST",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [160, 165, 170, 168, 172, 175, 170, 178, 180, 176, 182, 184, 180, 185],
+          "unit": "명/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1800, 2100, 2400, 2600, 2900, 3100, 3300, 3500, 3700, 3900, 4100, 4450],
+          "unit": "명/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [12000, 24000, 38450],
+          "unit": "명 (누적)"
+        }
+      }
+    },
+    {
+      "id": "people_chemistry_analyzer",
+      "service_id": "people",
+      "service_name": "렛츠피플 (Let's People)",
+      "badge_color": "#e11d48",
+      "badge_bg": "#ffe4e6",
+      "name": "PD-작가-출연진 케미스트리 분석기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "people/scripts/creator_chemistry_engine.py",
+      "schedule": "매일 06:00 KST (수집 완료 직후 트리거)",
+      "target_description": "PD-작가-배우 간 협업 작품의 흥행 성적, 시청률, 관객수 가중치를 결합한 합작 성과 지수 산출",
+      "current_rate_text": "+385 관계쌍/일",
+      "slope_pct": 38.0,
+      "total_cum": 104200,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [320, 330, 345, 340, 350, 355, 350, 360, 365, 360, 370, 375, 370, 385],
+          "unit": "관계쌍/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [6200, 6800, 7200, 7600, 8000, 8400, 8900, 9300, 9700, 10200, 10800, 11400],
+          "unit": "관계쌍/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [28000, 64000, 104200],
+          "unit": "관계쌍 (누적)"
+        }
+      }
+    },
+    {
+      "id": "people_filmography_bep_parser",
+      "service_id": "people",
+      "service_name": "렛츠피플 (Let's People)",
+      "badge_color": "#e11d48",
+      "badge_bg": "#ffe4e6",
+      "name": "필모그래피 BEP 손익분기 분석기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "people/scripts/ott_filmography_parser.py",
+      "schedule": "매일 06:30 KST (일간 배치)",
+      "target_description": "영화/OTT 시리즈 총제작비, 누적 관객수, 손익분기점(BEP) 달성률, 글로벌 배급 매출 온톨로지 생성",
+      "current_rate_text": "+134 편/일",
+      "slope_pct": 29.5,
+      "total_cum": 51200,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [110, 115, 120, 118, 122, 125, 120, 126, 128, 125, 130, 132, 130, 134],
+          "unit": "편/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4650],
+          "unit": "편/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [15000, 31000, 51200],
+          "unit": "편 (누적)"
+        }
+      }
+    },
+    {
+      "id": "asset_sec_dart_streamer",
+      "service_id": "asset",
+      "service_name": "렛츠에셋 (Let's Asset)",
+      "badge_color": "#4f46e5",
+      "badge_bg": "#eef2ff",
+      "name": "SEC 10-K & DART 공시 스트리머",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "asset/scripts/daily_market_collector.py",
+      "schedule": "평일 15:00 UTC (미국 장마감 15분 스트림, 10req/s 토큰버킷)",
+      "target_description": "SEC EDGAR 10-K 연례보고서 및 DART 상장사 감사보고서 주석·공급망 밸류체인 수집",
+      "current_rate_text": "+260 건/일",
+      "slope_pct": 30.2,
+      "total_cum": 99200,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [245, 250, 255, 250, 260, 265, 255, 260, 268, 262, 270, 275, 260, 260],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [6100, 6400, 6700, 7000, 7300, 7600, 7900, 8200, 8500, 8800, 9100, 9500],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [38000, 68000, 99200],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "asset_history_macro_feeder",
+      "service_id": "asset",
+      "service_name": "렛츠에셋 (Let's Asset)",
+      "badge_color": "#4f46e5",
+      "badge_bg": "#eef2ff",
+      "name": "100년 금융 시계열 & 거시지표 피더",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "asset/scripts/crawler.py",
+      "schedule": "매주 월 06:00 KST (FRED 120회/분 완충)",
+      "target_description": "1929~2026년 기준금리, CPI 인플레이션, GDP 성장률, 원자재 가격 100년 거시 시계열 피딩",
+      "current_rate_text": "+140 시계열/일",
+      "slope_pct": 22.8,
+      "total_cum": 42100,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [130, 132, 135, 134, 138, 140, 136, 140, 142, 140, 144, 146, 140, 140],
+          "unit": "시계열/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5500],
+          "unit": "시계열/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [16000, 29000, 42100],
+          "unit": "시계열 (누적)"
+        }
+      }
+    },
+    {
+      "id": "asset_monte_carlo_tester",
+      "service_id": "asset",
+      "service_name": "렛츠에셋 (Let's Asset)",
+      "badge_color": "#4f46e5",
+      "badge_bg": "#eef2ff",
+      "name": "100년 금융 10대 위기 스트레스 테스터",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "asset/scripts/stress_test_engine.py",
+      "schedule": "매일 07:00 KST & 온디맨드 즉시 시뮬레이션",
+      "target_description": "1929 대공황(-86%), 2008 금융위기(-56%) 등 10대 금융위기 가상 1만 회 몬테카를로 MDD 산출",
+      "current_rate_text": "+475 회/일",
+      "slope_pct": 34.2,
+      "total_cum": 148000,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [410, 420, 435, 430, 440, 445, 440, 450, 455, 450, 460, 465, 460, 475],
+          "unit": "회/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [8500, 9100, 9700, 10200, 10800, 11400, 12000, 12600, 13200, 13800, 14500, 15300],
+          "unit": "회/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [42000, 89000, 148000],
+          "unit": "회 (누적)"
+        }
+      }
+    },
+    {
+      "id": "asset_tax_saving_optimizer",
+      "service_id": "asset",
+      "service_name": "렛츠에셋 (Let's Asset)",
+      "badge_color": "#4f46e5",
+      "badge_bg": "#eef2ff",
+      "name": "생애주기 3단계 절세계좌 최적화 엔진",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "asset/scripts/tax_engine.py",
+      "schedule": "매일 07:30 KST (일간 배치)",
+      "target_description": "연금저축/IRP 연 900만 세액공제 + 중개형 ISA 비과세 + 해외주식 기본공제 250만 절세 플랜 산출",
+      "current_rate_text": "+210 플랜/일",
+      "slope_pct": 26.4,
+      "total_cum": 71500,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [180, 185, 190, 188, 192, 195, 190, 198, 200, 196, 202, 205, 200, 210],
+          "unit": "플랜/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [3800, 4100, 4400, 4700, 5000, 5300, 5600, 5900, 6200, 6500, 6800, 7200],
+          "unit": "플랜/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [18000, 41000, 71500],
+          "unit": "플랜 (누적)"
+        }
+      }
+    },
+    {
+      "id": "law_supreme_court_crawler",
+      "service_id": "law",
+      "service_name": "렛츠로 (Let's Law)",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "name": "대법원 판례 & 양형기준 수집기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "law/scripts/daily_legal_collector.py",
+      "schedule": "매일 04:00 KST (Cron: 0 19 * * *)",
+      "target_description": "대한민국 대법원 종합법률정보 판결문, 양형위원회 공식 양형기준표, SCOTUS 주요 판례",
+      "current_rate_text": "+88 건/일",
+      "slope_pct": 19.5,
+      "total_cum": 28400,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [82, 85, 88, 86, 90, 92, 88, 92, 94, 91, 95, 96, 90, 88],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [2100, 2250, 2400, 2550, 2700, 2850, 3000, 3150, 3300, 3450, 3600, 3800],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [11000, 19500, 28400],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "law_traffic_case_harvester",
+      "service_id": "law",
+      "service_name": "렛츠로 (Let's Law)",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "name": "한문철 교통사고 사례 하베스터",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "law/scripts/crawler.py",
+      "schedule": "매일 04:30 KST (Cron: 30 19 * * *)",
+      "target_description": "손보협회 250개 인정기준 도표 및 한문철 변호사 대표 1,200건 블랙박스 쟁점 사고 원천 수집",
+      "current_rate_text": "+55 건/일",
+      "slope_pct": 34.0,
+      "total_cum": 4920,
+      "status": "EXPANDING",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [50, 52, 54, 53, 56, 58, 55, 57, 59, 58, 60, 62, 55, 55],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2150, 2300],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [1500, 3200, 4920],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "law_traffic_3d_analyzer",
+      "service_id": "law",
+      "service_name": "렛츠로 (Let's Law)",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "name": "3D 교차로 공간 과실비율 평가기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "law/scripts/traffic_modeler.py",
+      "schedule": "매일 05:00 KST & 실시간 온디맨드",
+      "target_description": "자연어 사고 상황 파싱 ➔ HTML5 3D 차선 재구성 ➔ 법원 과실비율 및 12대 중과실 여부 도출",
+      "current_rate_text": "+170 건/일",
+      "slope_pct": 36.5,
+      "total_cum": 41200,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [140, 145, 150, 148, 152, 155, 150, 158, 160, 156, 162, 165, 160, 170],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4900, 5200],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [8500, 21000, 41200],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "law_contract_scanner",
+      "service_id": "law",
+      "service_name": "렛츠로 (Let's Law)",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "name": "계약서 독소조항 AI Redline 분석기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "law/scripts/contract_scanner.py",
+      "schedule": "매일 05:30 KST (일간 배치)",
+      "target_description": "프리랜서·용역·임대차 계약서 5대 독소조항(과도한 위약벌, 저작권 일방귀속 등) 탐지 및 수정안 제시",
+      "current_rate_text": "+85 건/일",
+      "slope_pct": 21.0,
+      "total_cum": 23500,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [65, 68, 72, 70, 74, 76, 73, 77, 80, 78, 82, 84, 80, 85],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1400, 1550, 1700, 1850, 2000, 2150, 2300, 2450, 2600, 2750, 2900, 3100],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [4500, 12000, 23500],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "insu_policy_46y_crawler",
+      "service_id": "insu",
+      "service_name": "렛츠인슈 (Let's Insu)",
+      "badge_color": "#059669",
+      "badge_bg": "#ecfdf5",
+      "name": "46개년 전수 보험약관 수집기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "insu/scripts/daily_policy_collector.py",
+      "schedule": "매일 03:00 KST (Cron: 0 18 * * *)",
+      "target_description": "1980~2026년 46개년 생명/손해보험사 자동차, 실손, 암, 화재, 일배책 인가 약관 원문 아카이빙",
+      "current_rate_text": "+85 건/일",
+      "slope_pct": 20.4,
+      "total_cum": 14230,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [78, 80, 84, 82, 86, 88, 85, 89, 91, 88, 92, 95, 90, 85],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1800, 1950, 2100, 2250, 2400, 2550, 2700, 2850, 3000, 3150, 3300, 3500],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [5500, 10200, 14230],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "insu_fss_dispute_harvester",
+      "service_id": "insu",
+      "service_name": "렛츠인슈 (Let's Insu)",
+      "badge_color": "#059669",
+      "badge_bg": "#ecfdf5",
+      "name": "금감원 분쟁조정 결정례 하베스터",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "insu/scripts/crawler.py",
+      "schedule": "매일 03:30 KST (Cron: 30 18 * * *)",
+      "target_description": "금융감독원 분쟁조정위원회 6,400건 전수 결정례 및 소비자 승소/화해 사례 수집",
+      "current_rate_text": "+45 건/일",
+      "slope_pct": 23.5,
+      "total_cum": 6400,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [40, 42, 44, 43, 45, 46, 44, 47, 48, 46, 49, 50, 48, 45],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [850, 920, 990, 1060, 1130, 1200, 1270, 1340, 1410, 1480, 1560, 1650],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [2100, 4400, 6400],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "insu_auto_settlement_calculator",
+      "service_id": "insu",
+      "service_name": "렛츠인슈 (Let's Insu)",
+      "badge_color": "#059669",
+      "badge_bg": "#ecfdf5",
+      "name": "자동차보험 합의금 정밀 산정기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "insu/scripts/settlement_engine.py",
+      "schedule": "매일 04:00 KST & 실시간 온디맨드",
+      "target_description": "위자료, 휴업손해(85%), 통원교통비, 향후치료비 과실상계 후 실수령 총액 자동 산출",
+      "current_rate_text": "+235 회/일",
+      "slope_pct": 31.0,
+      "total_cum": 58000,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [190, 195, 205, 200, 210, 215, 208, 218, 222, 216, 225, 230, 220, 235],
+          "unit": "회/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [3900, 4200, 4500, 4800, 5100, 5400, 5700, 6000, 6300, 6600, 7000, 7400],
+          "unit": "회/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [12000, 29000, 58000],
+          "unit": "회 (누적)"
+        }
+      }
+    },
+    {
+      "id": "insu_denial_refutation_ai",
+      "service_id": "insu",
+      "service_name": "렛츠인슈 (Let's Insu)",
+      "badge_color": "#059669",
+      "badge_bg": "#ecfdf5",
+      "name": "보험사 면책 통보 반박 소명서 생성기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "insu/scripts/claim_defense_ai.py",
+      "schedule": "매일 04:30 KST (일간 배치)",
+      "target_description": "고지의무 위반, 직업변경 미통지 등 보험사 부지급 통보에 맞서는 대법원 판례 인용 소명서 생성",
+      "current_rate_text": "+142 건/일",
+      "slope_pct": 28.0,
+      "total_cum": 35600,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [115, 120, 126, 124, 130, 132, 128, 134, 136, 132, 138, 140, 135, 142],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [2300, 2500, 2700, 2900, 3100, 3300, 3500, 3700, 3900, 4100, 4350, 4600],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [7000, 18000, 35600],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "art_classical_fine_art_collector",
+      "service_id": "art",
+      "service_name": "렛츠아트 (Let's Art)",
+      "badge_color": "#d97706",
+      "badge_bg": "#fef3c7",
+      "name": "세계 고전 명화 오픈액세스 수집기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "art/scripts/daily_art_collector.py",
+      "schedule": "매일 02:00 KST (Cron: 0 17 * * *)",
+      "target_description": "The Metropolitan Museum of Art (Met API) 및 Art Institute of Chicago 세계 명화 18,580점",
+      "current_rate_text": "+65 점/일",
+      "slope_pct": 14.2,
+      "total_cum": 18580,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [60, 62, 64, 63, 65, 66, 64, 66, 67, 65, 68, 69, 65, 65],
+          "unit": "점/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2420, 2550],
+          "unit": "점/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [7500, 13500, 18580],
+          "unit": "점 (누적)"
+        }
+      }
+    },
+    {
+      "id": "art_contemporary_arch_harvester",
+      "service_id": "art",
+      "service_name": "렛츠아트 (Let's Art)",
+      "badge_color": "#d97706",
+      "badge_bg": "#fef3c7",
+      "name": "현대 미술 & 프리츠커 현대 건축 수집기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "art/scripts/daily_art_collector.py",
+      "schedule": "매일 02:30 KST (Cron: 30 17 * * *)",
+      "target_description": "동시대 현대 미술(호크니, 쿠사마, 이우환 등) 및 세계 프리츠커상 현대 건축(DDP, 빛의교회, 구겐하임)",
+      "current_rate_text": "+50 점/일",
+      "slope_pct": 32.1,
+      "total_cum": 12500,
+      "status": "EXPANDING_FAST",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [42, 45, 48, 46, 50, 52, 49, 52, 54, 51, 55, 56, 50, 50],
+          "unit": "점/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [850, 920, 1000, 1080, 1160, 1250, 1340, 1430, 1520, 1620, 1720, 1850],
+          "unit": "점/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [2500, 6800, 12500],
+          "unit": "점 (누적)"
+        }
+      }
+    },
+    {
+      "id": "art_aesthetic_elements_curator",
+      "service_id": "art",
+      "service_name": "렛츠아트 (Let's Art)",
+      "badge_color": "#d97706",
+      "badge_bg": "#fef3c7",
+      "name": "미학 도상학 & 컬러 팔레트 큐레이터",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "art/scripts/daily_art_collector.py",
+      "schedule": "매일 03:00 KST (일간 배치)",
+      "target_description": "작품별 도상학, 대표 색상 팔레트(Hex), 미적 요소(Aesthetic Elements) 태그 정량 추출 및 온톨로지 정제",
+      "current_rate_text": "+98 점/일",
+      "slope_pct": 25.4,
+      "total_cum": 25800,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [85, 88, 92, 90, 94, 96, 92, 96, 98, 95, 100, 102, 96, 98],
+          "unit": "점/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1900, 2050, 2200, 2350, 2500, 2650, 2800, 2950, 3100, 3250, 3420, 3600],
+          "unit": "점/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [6500, 14200, 25800],
+          "unit": "점 (누적)"
+        }
+      }
+    },
+    {
+      "id": "art_bim_poetics_parser",
+      "service_id": "art",
+      "service_name": "렛츠아트 (Let's Art)",
+      "badge_color": "#d97706",
+      "badge_bg": "#fef3c7",
+      "name": "건축 BIM 구조공학 & 공간시학 분석기",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "art/scripts/daily_art_collector.py",
+      "schedule": "매일 03:30 KST (일간 배치)",
+      "target_description": "현대 건축 3D BIM 외장 패널 곡률 분석, 노출 콘크리트 슬릿 광원, 물질성-비물질성 시학 정량화",
+      "current_rate_text": "+38 점/일",
+      "slope_pct": 28.4,
+      "total_cum": 7200,
+      "status": "EXPANDING",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [30, 32, 34, 33, 35, 36, 34, 36, 38, 36, 39, 40, 35, 38],
+          "unit": "점/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [620, 680, 740, 800, 860, 920, 980, 1050, 1120, 1190, 1270, 1360],
+          "unit": "점/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [1200, 3500, 7200],
+          "unit": "점 (누적)"
+        }
+      }
+    },
+    {
+      "id": "cultureflow_kopis_sync",
+      "service_id": "cultureflow",
+      "service_name": "컬처플로우 (CultureFlow)",
+      "badge_color": "#0284c7",
+      "badge_bg": "#f0f9ff",
+      "name": "전국 공연·전시 KOPIS 실시간 동기화기",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "CultureFlow/.github/workflows/daily-update.yml",
+      "schedule": "매일 01:00 KST (Cron: 0 16 * * *)",
+      "target_description": "예술의전당, 세종문화회관, KOPIS 전국 공연·전시·축제 실시간 캘린더 및 예매처 링크 수집",
+      "current_rate_text": "+72 건/일",
+      "slope_pct": 19.8,
+      "total_cum": 14478,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [52, 53, 54, 54, 55, 56, 55, 56, 57, 57, 58, 59, 72, 72],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1100, 1180, 1250, 1320, 1400, 1480, 1560, 1640, 1720, 1800, 1900, 2020],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [4200, 8900, 14478],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "cultureflow_venue_canonicalizer",
+      "service_id": "cultureflow",
+      "service_name": "컬처플로우 (CultureFlow)",
+      "badge_color": "#0284c7",
+      "badge_bg": "#f0f9ff",
+      "name": "전국 공연장 주소 정제 & 지오코더",
+      "role": "ANALYZE",
+      "role_kr": "🧠 분석 장치",
+      "script": "CultureFlow/scripts/build-venues.ts",
+      "schedule": "매일 01:30 KST (일간 배치)",
+      "target_description": "전국 공연장/미술관 위치 지오코딩 좌표 변환, 대중교통 노선 정합 및 표준 URN 매핑",
+      "current_rate_text": "+68 건/일",
+      "slope_pct": 18.5,
+      "total_cum": 8950,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [50, 52, 54, 53, 55, 56, 54, 56, 58, 57, 60, 62, 65, 68],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [700, 750, 800, 850, 900, 950, 1000, 1060, 1120, 1180, 1250, 1340],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [2500, 5600, 8950],
+          "unit": "건 (누적)"
+        }
+      }
+    },
+    {
+      "id": "cctv_stream_sentinel",
+      "service_id": "cctv",
+      "service_name": "전국 교통 CCTV (CCTV)",
+      "badge_color": "#06b6d4",
+      "badge_bg": "#ecfeff",
+      "name": "전국 1.8만 채널 스트림 무인 센티널",
+      "role": "QUALITY",
+      "role_kr": "🛡️ 품질/감시 장치",
+      "script": "cctv/scripts/sentinel.py",
+      "schedule": "30분 주기 24/7 상시 가동 (Cron: */30 * * * *)",
+      "target_description": "전국 18,400개 국토부·경찰청 실시간 스트림 연결성 검사 및 먹통 채널 자동 복구 스크립트 실행",
+      "current_rate_text": "36,800 회/일 (2회 전수순찰)",
+      "slope_pct": 12.0,
+      "total_cum": 18400,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800, 36800],
+          "unit": "체크/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [1104000, 1104000, 1104000, 1104000, 1104000, 1104000, 1104000, 1104000, 1104000, 1104000, 1104000, 1104000],
+          "unit": "체크/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [4200000, 9600000, 13400000],
+          "unit": "체크 (누적)"
+        }
+      }
+    },
+    {
+      "id": "meat_price_monitor",
+      "service_id": "meat",
+      "service_name": "미트플레이스 (Meat)",
+      "badge_color": "#ef4444",
+      "badge_bg": "#fef2f2",
+      "name": "전국 축산물 이력 & 시세 모니터",
+      "role": "INGEST",
+      "role_kr": "📥 수집 장치",
+      "script": "meat/.github/workflows/megamart_monitor.yml",
+      "schedule": "매일 06:00 KST (Cron: 0 21 * * *)",
+      "target_description": "축산물이력제 공공 오픈 API 한우/한돈 도매·소매 시세 및 대형마트 할인율 실시간 트래킹",
+      "current_rate_text": "+125 건/일",
+      "slope_pct": 15.0,
+      "total_cum": 8450,
+      "status": "HEALTHY_OPTIMAL",
+      "metrics": {
+        "day": {
+          "labels": ["11/05", "11/06", "11/07", "11/08", "11/09", "11/10", "11/11", "11/12", "11/13", "11/14", "11/15", "11/16", "11/17", "11/18"],
+          "values": [110, 112, 115, 114, 116, 118, 115, 118, 120, 118, 122, 124, 120, 125],
+          "unit": "건/일"
+        },
+        "month": {
+          "labels": ["25.12", "26.01", "26.02", "26.03", "26.04", "26.05", "26.06", "26.07", "26.08", "26.09", "26.10", "26.11"],
+          "values": [2500, 2700, 2900, 3100, 3300, 3500, 3700, 3900, 4100, 4300, 4500, 4750],
+          "unit": "건/월"
+        },
+        "year": {
+          "labels": ["2024년", "2025년", "2026년 누적"],
+          "values": [2800, 5900, 8450],
+          "unit": "건 (누적)"
+        }
+      }
+    }
+  ],
   "services": [
     {
       "id": "people",
@@ -110,19 +930,13 @@
       "anomaly_count": 0,
       "cron_schedule": "매일 05:00 KST (0 20 * * *)",
       "last_run": "2026-11-18T13:26:11+09:00",
-      "pipeline_progress": {
-        "ingest": 100,
-        "analyze": 98.8,
-        "quality": 99.5,
-        "federate": 100
-      },
+      "pipeline_progress": { "ingest": 100, "analyze": 98.8, "quality": 99.5, "federate": 100 },
       "sectors": [
         {
           "name": "미디어 PD·작가·제작진 온톨로지",
           "count": 38450,
           "daily_rate": 185,
           "slope_pct": 42.5,
-          "slope_direction": "UP_STRONG",
           "status": "EXPANDING_FAST",
           "desc": "카메라 뒤 연출진, 작가 전 생애 연대기 및 합작 흥행 케미스트리(99.4점)"
         },
@@ -131,7 +945,6 @@
           "count": 128600,
           "daily_rate": 245,
           "slope_pct": 32.1,
-          "slope_direction": "UP_MODERATE",
           "status": "HEALTHY",
           "desc": "국내외 배우, 코미디언, 아나운서, OTT 오리지널 시리즈 전수 필모그래피 & BEP 손익분기"
         },
@@ -140,16 +953,9 @@
           "count": 4800,
           "daily_rate": 32,
           "slope_pct": 18.0,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "고흐, 다빈치, 셰익스피어, 톨스토이 등 역사적 창작자 온톨로지 URN 연계"
         }
-      ],
-      "key_deliverables": [
-        "글로벌 인물 12.8만명 & 미디어 PD·작가 3.8만명",
-        "PD-작가-배우 케미스트리 합작 성과 지수",
-        "필모그래피 BEP 손익분기 & 해외 OTT 시리즈",
-        "역사 거장 예술가 URN 렛츠아트 연계"
       ]
     },
     {
@@ -171,19 +977,13 @@
       "anomaly_count": 0,
       "cron_schedule": "평일 15:00 UTC (장마감 스트림)",
       "last_run": "2026-11-18T13:55:34+09:00",
-      "pipeline_progress": {
-        "ingest": 100,
-        "analyze": 99.2,
-        "quality": 99.8,
-        "federate": 100
-      },
+      "pipeline_progress": { "ingest": 100, "analyze": 99.2, "quality": 99.8, "federate": 100 },
       "sectors": [
         {
           "name": "SEC 10-K & DART 9.9천개사 기업 공시",
           "count": 99200,
           "daily_rate": 260,
           "slope_pct": 30.2,
-          "slope_direction": "UP_MODERATE",
           "status": "EXPANDING",
           "desc": "글로벌 상장사 재무제표, 10-K 주석, 공급망 밸류체인 및 감사보고서"
         },
@@ -192,7 +992,6 @@
           "count": 42100,
           "daily_rate": 140,
           "slope_pct": 22.8,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "1929 대공황부터 2024 AI 버블까지 10,000회 스트레스 테스트 시뮬레이터"
         },
@@ -201,16 +1000,9 @@
           "count": 17280,
           "daily_rate": 92,
           "slope_pct": 26.4,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "3단계 세제혜택 계좌 최적화 엔진 & 연 8.4% 안정 올웨더 포트폴리오"
         }
-      ],
-      "key_deliverables": [
-        "100년 금융 역사 몬테카를로 스트레스 테스터",
-        "레이 달리오 올웨더 포트폴리오 (MDD -16.2% 방어)",
-        "3단계 절세 계좌(ISA/IRP/연금) 한도 최적화",
-        "SEC & FRED 120회/분 무과금 완충 파이프라인"
       ]
     },
     {
@@ -232,19 +1024,13 @@
       "anomaly_count": 0,
       "cron_schedule": "매일 04:00 KST (0 19 * * *)",
       "last_run": "2026-11-18T13:33:48+09:00",
-      "pipeline_progress": {
-        "ingest": 100,
-        "analyze": 98.5,
-        "quality": 99.2,
-        "federate": 100
-      },
+      "pipeline_progress": { "ingest": 100, "analyze": 98.5, "quality": 99.2, "federate": 100 },
       "sectors": [
         {
           "name": "한문철 교통사고 3D 인터랙티브 과실평가",
           "count": 4920,
           "daily_rate": 55,
           "slope_pct": 34.0,
-          "slope_direction": "UP_STRONG",
           "status": "EXPANDING",
           "desc": "블랙박스 제보 기반 3D 교차로·차선 재구성 및 법원 과실비율 도출"
         },
@@ -253,7 +1039,6 @@
           "count": 28400,
           "daily_rate": 88,
           "slope_pct": 19.5,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "음주운전, 전세사기, 층간소음, 임대차 분쟁 즉시 해결 가이드"
         },
@@ -262,16 +1047,9 @@
           "count": 9802,
           "daily_rate": 35,
           "slope_pct": 14.2,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "근로·프리랜서·용역 계약서 5대 독소조항 Redline 수정 제안"
         }
-      ],
-      "key_deliverables": [
-        "교통사고 3D 시뮬레이터 & 한문철 과실평가",
-        "대법원 양형기준 3D 시뮬레이터",
-        "계약서 독소조항 Redline AI 스캐너",
-        "대법원 Law OC 쿼터 완충 0원 파이프라인"
       ]
     },
     {
@@ -293,19 +1071,13 @@
       "anomaly_count": 0,
       "cron_schedule": "매일 03:00 KST (0 18 * * *)",
       "last_run": "2026-11-18T13:33:58+09:00",
-      "pipeline_progress": {
-        "ingest": 100,
-        "analyze": 99.0,
-        "quality": 99.6,
-        "federate": 100
-      },
+      "pipeline_progress": { "ingest": 100, "analyze": 99.0, "quality": 99.6, "federate": 100 },
       "sectors": [
         {
           "name": "교통사고 합의금 & 손해배상 산정기",
           "count": 8200,
           "daily_rate": 78,
           "slope_pct": 31.0,
-          "slope_direction": "UP_STRONG",
           "status": "EXPANDING",
           "desc": "위자료, 휴업손해(85%), 향후치료비 표준 지급기준 정밀 산출"
         },
@@ -314,7 +1086,6 @@
           "count": 14230,
           "daily_rate": 85,
           "slope_pct": 20.4,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "자동차, 암·실손, 화재, 일배책 연도별 약관 개정 히스토리 비교"
         },
@@ -323,16 +1094,9 @@
           "count": 6400,
           "daily_rate": 45,
           "slope_pct": 23.5,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "보험사 부지급/면책 통보에 맞서는 승소 소명서 원클릭 생성"
         }
-      ],
-      "key_deliverables": [
-        "교통사고 합의금(위자료·휴업손해85%·통원비) 계산기",
-        "6대 보험(자동차/화재/생명/실손/일배책) 면책 반박기",
-        "소비자 승소 방어 소명서 자동 작성",
-        "렛츠로 과실평가 결과와 실시간 연동"
       ]
     },
     {
@@ -354,19 +1118,13 @@
       "anomaly_count": 0,
       "cron_schedule": "매일 02:00 KST (0 17 * * *)",
       "last_run": "2026-11-18T14:16:47+09:00",
-      "pipeline_progress": {
-        "ingest": 100,
-        "analyze": 99.4,
-        "quality": 99.8,
-        "federate": 100
-      },
+      "pipeline_progress": { "ingest": 100, "analyze": 99.4, "quality": 99.8, "federate": 100 },
       "sectors": [
         {
           "name": "현대 미술 (동시대 거장 회화·조각·설치)",
           "count": 7855,
           "daily_rate": 35,
           "slope_pct": 32.1,
-          "slope_direction": "UP_STRONG",
           "status": "EXPANDING_FAST",
           "desc": "데이비드 호크니, 쿠사마 야요이, 이우환 등 현존 거장의 미학 요소 분석"
         },
@@ -375,7 +1133,6 @@
           "count": 4645,
           "daily_rate": 15,
           "slope_pct": 28.4,
-          "slope_direction": "UP_STRONG",
           "status": "EXPANDING_FAST",
           "desc": "자하 하디드 DDP, 안도 다다오 빛의 교회, 프랭크 게리 빌바오 구겐하임 BIM 시학"
         },
@@ -384,7 +1141,6 @@
           "count": 18580,
           "daily_rate": 65,
           "slope_pct": 14.2,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "고흐, 다빈치, 모네, 렘브란트 등 Met API & AIC 공공 오픈액세스"
         },
@@ -393,16 +1149,9 @@
           "count": 6260,
           "daily_rate": 20,
           "slope_pct": 9.5,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "셰익스피어, 톨스토이, 괴테 등 원문 및 번역 명문장 큐레이션"
         }
-      ],
-      "key_deliverables": [
-        "현대 미술 7,855점 & 프리츠커상 현대 건축 4,645점",
-        "작품 미적 요소(Aesthetic Elements) 도상학",
-        "건축 공간 시학 & BIM 구조 공학 해설",
-        "완전한 라이트 테마 가상 미술관 v2.0.0 라이브"
       ]
     },
     {
@@ -424,19 +1173,13 @@
       "anomaly_count": 0,
       "cron_schedule": "매일 01:00 KST (0 16 * * *)",
       "last_run": "2026-11-18T13:30:10+09:00",
-      "pipeline_progress": {
-        "ingest": 100,
-        "analyze": 98.7,
-        "quality": 99.1,
-        "federate": 100
-      },
+      "pipeline_progress": { "ingest": 100, "analyze": 98.7, "quality": 99.1, "federate": 100 },
       "sectors": [
         {
           "name": "전국 공연·뮤지컬·콘서트 캘린더",
           "count": 6800,
           "daily_rate": 35,
           "slope_pct": 21.0,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "예술의전당, 세종문화회관, 국립극장 실시간 공연 일정 및 좌석 예매 링크"
         },
@@ -445,7 +1188,6 @@
           "count": 4820,
           "daily_rate": 22,
           "slope_pct": 18.5,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "국립현대미술관, 리움미술관, 광주비엔날레 전시 정보 및 도슨트 연계"
         },
@@ -454,16 +1196,9 @@
           "count": 2858,
           "daily_rate": 15,
           "slope_pct": 19.2,
-          "slope_direction": "STEADY",
           "status": "OPTIMAL",
           "desc": "지자체 공공 문화예술 포털 실시간 축제 스케줄"
         }
-      ],
-      "key_deliverables": [
-        "전국 공연/전시 실시간 캘린더",
-        "렛츠피플 출연진·제작진 URN 연동",
-        "렛츠아트 소장품 전시회 크로스 링크",
-        "무인 티켓팅 일정 알림"
       ]
     }
   ],

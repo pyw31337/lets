@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Let's Master Control Hub v2.0.0 — 렛츠 패밀리 서비스 통합 관제 대시보드</title>
+  <title>Let's Master Control Hub v2.1.0 — 24/7 무인 자동화 장치 전수 관제 대시보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <style>
     :root {
@@ -41,7 +41,7 @@
       padding: 24px 20px 80px;
       min-height: 100vh;
     }
-    .container { max-width: 1480px; margin: 0 auto; }
+    .container { max-width: 1520px; margin: 0 auto; }
 
     /* Top Nav Header */
     header {
@@ -175,7 +175,6 @@
       padding: 16px;
       transition: all 0.2s;
       position: relative;
-      cursor: pointer;
     }
     .pipeline-step-card:hover {
       border-color: #2563eb;
@@ -221,223 +220,147 @@
     .kpi-val { font-size: 26px; font-weight: 800; color: #0f172a; margin: 4px 0 2px; }
     .kpi-sub { font-size: 12px; font-weight: 600; color: var(--emerald); display: flex; align-items: center; gap: 4px; }
 
-    /* Service Navigator Tabs */
-    .service-nav-bar {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-      background: #ffffff;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow-sm);
-    }
-    .nav-tab-btn {
-      padding: 9px 18px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-      background: #f8fafc;
-      color: #475569;
-      font-size: 13px; font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .nav-tab-btn:hover { background: #e2e8f0; color: #0f172a; }
-    .nav-tab-btn.active {
-      background: #0f172a;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
-    }
-    .nav-tab-badge {
-      font-size: 11px; padding: 2px 7px; border-radius: 10px;
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .nav-tab-btn:not(.active) .nav-tab-badge {
-      background: #e2e8f0; color: #334155;
-    }
-
-    /* Main Chart Card */
-    .chart-container-card {
+    /* ========================================================
+       NEW SECTION: 24/7 Automation Devices Deep Matrix
+       ======================================================== */
+    .devices-section {
       background: #ffffff;
       border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 24px 28px;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 36px;
       box-shadow: var(--shadow-sm);
-      margin-bottom: 32px;
     }
-    .chart-header {
+    .devices-header-row {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 14px;
     }
-    .chart-title-box h3 { font-size: 18px; font-weight: 800; color: #0f172a; }
-    .chart-title-box p { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .chart-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; font-weight: 600; color: #475569; }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+    .devices-title h2 { font-size: 20px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px; }
+    .devices-title p { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-    /* Interactive SVG Chart */
-    .svg-chart-wrapper {
-      position: relative;
-      width: 100%;
-      height: 280px;
+    /* Global Period Toggle Buttons */
+    .global-period-toggles {
+      display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 10px; border: 1px solid #e2e8f0;
     }
-    svg.interactive-chart {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
+    .period-btn {
+      padding: 6px 14px; border-radius: 8px; border: none; background: transparent;
+      font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.15s;
     }
-    .chart-tooltip {
-      position: absolute;
-      background: #0f172a;
-      color: #ffffff;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.15s ease, transform 0.15s ease;
-      box-shadow: var(--shadow-lg);
-      z-index: 100;
-      white-space: nowrap;
+    .period-btn:hover { color: #0f172a; }
+    .period-btn.active {
+      background: #0f172a; color: #ffffff; box-shadow: var(--shadow-sm);
     }
 
-    /* Service Cards Grid */
-    .services-grid {
+    /* Filters Bar */
+    .devices-filter-bar {
+      display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;
+      background: #f8fafc; padding: 16px 20px; border-radius: 14px; border: 1px solid #e2e8f0;
+    }
+    .filter-input-row { display: flex; gap: 12px; align-items: center; }
+    .search-device-input {
+      flex: 1; padding: 10px 16px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+      background: #ffffff; color: #0f172a; font-size: 13px; font-weight: 500; outline: none;
+    }
+    .search-device-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+
+    .filter-tabs-row {
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    }
+    .filter-label { font-size: 12px; font-weight: 700; color: #64748b; margin-right: 4px; }
+    .dev-filter-chip {
+      padding: 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff;
+      color: #475569; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+    }
+    .dev-filter-chip:hover { background: #f1f5f9; color: #0f172a; }
+    .dev-filter-chip.active { background: #2563eb; color: #ffffff; border-color: #2563eb; }
+
+    /* Automation Devices Grid */
+    .devices-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
-      gap: 24px;
+      gap: 20px;
     }
     @media (max-width: 640px) {
-      .services-grid { grid-template-columns: 1fr; }
+      .devices-grid { grid-template-columns: 1fr; }
     }
-    .service-card {
+    .device-card {
       background: #ffffff;
       border: 1.5px solid var(--card-border);
-      border-radius: 18px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 20px;
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .service-card:hover {
-      transform: translateY(-4px);
+    .device-card:hover {
+      transform: translateY(-3px);
       box-shadow: var(--shadow-lg);
       border-color: #cbd5e1;
     }
-    .card-top-row {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 12px;
+    .dev-card-top {
+      display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;
     }
-    .service-name { font-size: 20px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px; }
-    .service-cat { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
-    
-    .metrics-summary-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      background: #f8fafc;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 18px;
+    .dev-name-box h3 { font-size: 16px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px; }
+    .dev-service-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-top: 4px; display: inline-block;
     }
-    .metric-col-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
-    .metric-col-val { font-size: 16px; font-weight: 800; color: #0f172a; margin-top: 2px; }
+    .dev-role-badge {
+      font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px;
+    }
+    .role-ingest { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .role-analyze { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .role-quality { background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; }
 
-    /* Slope Momentum Indicator */
-    .slope-gauge-box {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 18px;
+    /* Device Specs Box */
+    .dev-specs-box {
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px;
+      margin-bottom: 16px; font-size: 12px; line-height: 1.5; color: #334155;
     }
-    .slope-gauge-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
-      font-size: 12px; font-weight: 700; color: #334155;
-    }
-    .slope-bar-bg {
-      width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; position: relative;
-    }
-    .slope-bar-fill {
-      height: 100%; border-radius: 4px; transition: width 0.8s ease;
-    }
+    .spec-line { margin-bottom: 4px; display: flex; gap: 6px; }
+    .spec-line:last-child { margin-bottom: 0; }
+    .spec-key { font-weight: 700; color: #64748b; min-width: 70px; flex-shrink: 0; }
+    .spec-val { color: #0f172a; word-break: break-all; }
+    .spec-code { background: #e2e8f0; padding: 1px 6px; border-radius: 4px; font-size: 11px; font-family: monospace; }
 
-    /* Sector Specific Breakdown Table */
-    .sectors-box {
-      margin-bottom: 18px;
-    }
-    .sectors-heading {
-      font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 10px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .sector-item {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-bottom: 8px;
-      transition: all 0.15s;
-    }
-    .sector-item:hover { background: #ffffff; border-color: #cbd5e1; box-shadow: var(--shadow-sm); }
-    .sector-item-top {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
-    }
-    .sector-name { font-size: 13px; font-weight: 700; color: #1e293b; }
-    .sector-rate { font-size: 12px; font-weight: 800; }
-    .sector-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
-
-    /* Pipeline Status Indicator inside card */
-    .pipeline-bar-compact {
-      display: flex; gap: 4px; margin-bottom: 18px;
-    }
-    .pipe-slice {
-      flex: 1; height: 6px; border-radius: 3px; background: #10b981;
-      position: relative;
-    }
-    .pipe-slice-label {
-      font-size: 10px; font-weight: 700; color: var(--muted); margin-top: 4px; text-align: center;
-    }
-
-    .card-footer-actions {
+    /* Device Chart Area */
+    .dev-chart-card {
+      background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px;
       margin-top: auto;
-      display: flex; gap: 8px;
     }
-    .btn-visit {
-      flex: 1; padding: 10px; border-radius: 10px;
-      background: #0f172a; color: #ffffff; text-decoration: none;
-      font-size: 13px; font-weight: 700; text-align: center;
-      transition: all 0.2s;
+    .dev-chart-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
     }
-    .btn-visit:hover { background: #334155; }
-    .btn-repo {
-      padding: 10px 14px; border-radius: 10px;
-      border: 1px solid var(--card-border); background: #ffffff;
-      color: #475569; text-decoration: none; font-size: 13px; font-weight: 700;
-      transition: all 0.2s;
+    .chart-period-indicator {
+      font-size: 12px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 6px;
     }
-    .btn-repo:hover { background: #f8fafc; color: #0f172a; border-color: #cbd5e1; }
+    .chart-tabs-mini {
+      display: flex; gap: 3px; background: #f1f5f9; padding: 2px; border-radius: 6px;
+    }
+    .tab-mini-btn {
+      padding: 3px 8px; border-radius: 5px; border: none; background: transparent;
+      font-size: 11px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.15s;
+    }
+    .tab-mini-btn.active { background: #0f172a; color: #ffffff; }
 
-    /* Admin Modal */
-    .modal-backdrop {
-      display: none; position: fixed; inset: 0;
-      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(6px);
-      z-index: 9999; align-items: center; justify-content: center; padding: 20px;
+    /* Mini SVG Chart */
+    .mini-svg-wrapper {
+      position: relative; width: 100%; height: 110px;
     }
-    .modal-box {
-      background: #ffffff; border-radius: 18px; max-width: 540px; width: 100%;
-      padding: 28px; box-shadow: var(--shadow-lg); border: 1px solid var(--card-border);
-      position: relative;
+    svg.mini-chart {
+      width: 100%; height: 100%; overflow: visible;
     }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      width: 32px; height: 32px; border-radius: 50%;
-      border: 1px solid #e2e8f0; background: #ffffff;
-      color: #64748b; font-size: 16px; font-weight: bold;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    .mini-tooltip {
+      position: absolute; background: #0f172a; color: #ffffff; padding: 4px 8px;
+      border-radius: 6px; font-size: 11px; pointer-events: none; opacity: 0;
+      transition: opacity 0.15s; z-index: 50; white-space: nowrap; transform: translate(-50%, -100%); margin-top: -6px;
+    }
+
+    /* Floating Tooltip */
+    .chart-tooltip {
+      position: absolute; background: #0f172a; color: #ffffff; padding: 8px 12px;
+      border-radius: 8px; font-size: 12px; pointer-events: none; opacity: 0;
+      transition: opacity 0.15s ease; box-shadow: var(--shadow-lg); z-index: 100; white-space: nowrap;
     }
 
     footer {
@@ -455,28 +378,28 @@
         <div>
           <div style="display:flex; align-items:center; gap:8px;">
             <div class="brand-title">Let's Master Control Hub</div>
-            <span style="font-size:12px; font-weight:800; color:#2563eb; background:#eff6ff; border:1px solid #bfdbfe; padding:2px 8px; border-radius:6px;">v2.0.0</span>
+            <span style="font-size:12px; font-weight:800; color:#2563eb; background:#eff6ff; border:1px solid #bfdbfe; padding:2px 8px; border-radius:6px;">v2.1.0</span>
           </div>
-          <div class="brand-subtitle">pyw31337 생태계 15대 독립 리포지토리 24/7 수집·분석·품질 무인 통합 관제 센터</div>
+          <div class="brand-subtitle">pyw31337 생태계 24대 자동화 수집·분석 장치 전수 Day / Month / Year 실시간 관제</div>
         </div>
       </div>
       <div class="header-actions">
         <div class="status-pill">
           <div class="status-dot"></div>
-          <span>모든 자가진화 파이프라인 무인 가동 중</span>
+          <span>24개 무인 자동화 장치 정상 가동 중</span>
         </div>
         <button class="btn-admin" onclick="openAdminModal()">⚙️ 관제 설정 & 파이프라인 트리거</button>
       </div>
     </header>
 
-    <!-- Caution & Radar Highlights Bar -->
+    <!-- Caution & Highlights Bar -->
     <div class="caution-container">
       <div class="caution-header">
         <div class="caution-title">
           <span>🚨 실시간 파이프라인 Caution & 가속 브리핑</span>
           <span style="font-size:11px; font-weight:700; color:#059669; background:#ecfdf5; padding:2px 8px; border-radius:10px;">Zero-Drop 이상징후 0건 안전 유지</span>
         </div>
-        <div style="font-size:12px; color:var(--muted); font-weight:600;" id="lastMonitoredTime">최근 펄스: 2026-11-18 14:18:00 KST</div>
+        <div style="font-size:12px; color:var(--muted); font-weight:600;" id="lastMonitoredTime">최근 펄스: 2026-11-18 14:32:00 KST</div>
       </div>
       <div class="caution-grid" id="cautionGrid">
         <!-- Injected via JS -->
@@ -502,61 +425,73 @@
         <div class="kpi-sub">▲ 15대 서비스 데이터 온톨로지</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">일일 무인 증분 수집량</div>
-        <div class="kpi-val" id="kpiDailyRate">+1,547 <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span></div>
-        <div class="kpi-sub" style="color:#2563eb;">평균 기울기: +27.8% 가속</div>
+        <div class="kpi-label">일일 무인 증분 수집량 (Ingest)</div>
+        <div class="kpi-val" id="kpiDailyRate" style="color:#2563eb;">+1,547 <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span></div>
+        <div class="kpi-sub">수집 장치 13개소 무인 가동</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">파이프라인 종합 건전도</div>
-        <div class="kpi-val" style="color:#059669;">99.4%</div>
-        <div class="kpi-sub">44일 연속 무정지 안전 가동</div>
+        <div class="kpi-label">일일 온톨로지 정제·분석량 (Analyze)</div>
+        <div class="kpi-val" id="kpiAnalyzeRate" style="color:#7c3aed;">+2,185 <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span></div>
+        <div class="kpi-sub" style="color:#7c3aed;">분석 장치 10개소 가동 중</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">월간 인프라/API 유지비</div>
-        <div class="kpi-val" style="color:#4f46e5;">$0.00</div>
+        <div class="kpi-val" style="color:#059669;">$0.00</div>
         <div class="kpi-sub">R2 Egress + GitHub Pages 0원</div>
       </div>
     </div>
 
-    <!-- Service Selection Tabs -->
-    <div class="service-nav-bar">
-      <button class="nav-tab-btn active" data-svc="all" onclick="selectServiceTab('all')">🌟 전체 서비스 비교 <span class="nav-tab-badge">6대 코어</span></button>
-      <button class="nav-tab-btn" data-svc="people" onclick="selectServiceTab('people')">👥 렛츠피플 (인물·미디어) <span class="nav-tab-badge">+462/일</span></button>
-      <button class="nav-tab-btn" data-svc="asset" onclick="selectServiceTab('asset')">📈 렛츠에셋 (100년 금융) <span class="nav-tab-badge">+492/일</span></button>
-      <button class="nav-tab-btn" data-svc="law" onclick="selectServiceTab('law')">⚖️ 렛츠로 (법률 & 3D교통) <span class="nav-tab-badge">+178/일</span></button>
-      <button class="nav-tab-btn" data-svc="insu" onclick="selectServiceTab('insu')">🛡️ 렛츠인슈 (46년 약관) <span class="nav-tab-badge">+208/일</span></button>
-      <button class="nav-tab-btn" data-svc="art" onclick="selectServiceTab('art')">🎨 렛츠아트 (명화·현대미술·건축) <span class="nav-tab-badge">+135/일</span></button>
-      <button class="nav-tab-btn" data-svc="cultureflow" onclick="selectServiceTab('cultureflow')">🎭 컬처플로우 (공연·전시) <span class="nav-tab-badge">+72/일</span></button>
-    </div>
-
-    <!-- Main Dynamic Chart Card -->
-    <div class="chart-container-card">
-      <div class="chart-header">
-        <div class="chart-title-box">
-          <h3 id="chartTitle">14일간 데일리 수집량 추이 및 기울기(Slope Vector) 분석</h3>
-          <p id="chartDesc">각 서비스별 일일 증분 수집 볼륨 및 이동평균선(7-Day Moving Average) 실시간 도식화</p>
+    <!-- ========================================================
+         NEW: 24/7 Automation Devices Deep Matrix Section
+         ======================================================== -->
+    <section class="devices-section">
+      <div class="devices-header-row">
+        <div class="devices-title">
+          <h2>⚙️ 서비스별 24/7 무인 자동화 장치 전수 매트릭스 (Automation Devices Deep Matrix)</h2>
+          <p>수집(Ingestion) 및 분석(Analysis)을 담당하는 모든 단위 장치별 수집 대상, 스케줄, Day/Month/Year 정밀 추이 시각화</p>
         </div>
-        <div class="chart-legend" id="chartLegend">
-          <!-- Injected via JS -->
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:12px; font-weight:700; color:#475569;">전체 기간 일괄 전환:</span>
+          <div class="global-period-toggles">
+            <button class="period-btn active" data-period="day" onclick="setGlobalPeriod('day')">일간 (Day)</button>
+            <button class="period-btn" data-period="month" onclick="setGlobalPeriod('month')">월간 (Month)</button>
+            <button class="period-btn" data-period="year" onclick="setGlobalPeriod('year')">연간 (Year)</button>
+          </div>
         </div>
       </div>
-      <div class="svg-chart-wrapper" id="chartWrapper">
-        <svg class="interactive-chart" id="mainSvgChart"></svg>
-        <div class="chart-tooltip" id="chartTooltip"></div>
-      </div>
-    </div>
 
-    <!-- Core Services Detailed Cards Grid -->
-    <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:baseline;">
-      <h3 style="font-size:18px; font-weight:800; color:#0f172a;">📦 서비스별 & 수집 섹터별 상세 관제 원장</h3>
-      <span style="font-size:13px; color:var(--muted);">마우스 호버 시 섹터별 세부 수집량 및 파이프라인 단계 확인</span>
-    </div>
-    <div class="services-grid" id="servicesGrid">
-      <!-- Injected via JS -->
-    </div>
+      <!-- Filters Bar -->
+      <div class="devices-filter-bar">
+        <div class="filter-input-row">
+          <input type="text" id="deviceSearchInput" class="search-device-input" placeholder="🔍 자동화 장치명, 스크립트 파일(.py), 수집/분석 대상 키워드 검색..." oninput="filterAndRenderDevices()">
+        </div>
+        <div class="filter-tabs-row">
+          <span class="filter-label">서비스:</span>
+          <button class="dev-filter-chip active" data-filter-svc="all" onclick="filterByService('all')">전체 (All)</button>
+          <button class="dev-filter-chip" data-filter-svc="people" onclick="filterByService('people')">👥 렛츠피플</button>
+          <button class="dev-filter-chip" data-filter-svc="asset" onclick="filterByService('asset')">📈 렛츠에셋</button>
+          <button class="dev-filter-chip" data-filter-svc="law" onclick="filterByService('law')">⚖️ 렛츠로</button>
+          <button class="dev-filter-chip" data-filter-svc="insu" onclick="filterByService('insu')">🛡️ 렛츠인슈</button>
+          <button class="dev-filter-chip" data-filter-svc="art" onclick="filterByService('art')">🎨 렛츠아트</button>
+          <button class="dev-filter-chip" data-filter-svc="cultureflow" onclick="filterByService('cultureflow')">🎭 컬처플로우</button>
+          <button class="dev-filter-chip" data-filter-svc="infra" onclick="filterByService('infra')">📡 인프라·CCTV/미트</button>
+
+          <span class="filter-label" style="margin-left:14px;">장치 역할:</span>
+          <button class="dev-filter-chip active" data-filter-role="all" onclick="filterByRole('all')">전체 역할</button>
+          <button class="dev-filter-chip" data-filter-role="INGEST" onclick="filterByRole('INGEST')">📥 수집 장치</button>
+          <button class="dev-filter-chip" data-filter-role="ANALYZE" onclick="filterByRole('ANALYZE')">🧠 분석 장치</button>
+          <button class="dev-filter-chip" data-filter-role="QUALITY" onclick="filterByRole('QUALITY')">🛡️ 품질/감시</button>
+        </div>
+      </div>
+
+      <!-- Automation Devices Grid -->
+      <div class="devices-grid" id="devicesGrid">
+        <!-- Injected via JS -->
+      </div>
+    </section>
 
     <!-- Extended Services Strip -->
-    <div style="margin-top:36px; background:#ffffff; border:1px solid var(--card-border); border-radius:16px; padding:20px 24px;">
+    <div style="background:#ffffff; border:1px solid var(--card-border); border-radius:16px; padding:20px 24px;">
       <h4 style="font-size:14px; font-weight:800; color:#0f172a; margin-bottom:14px;">🌐 확장 9개 서비스 라이브 상태</h4>
       <div style="display:flex; flex-wrap:wrap; gap:10px;" id="extendedServicesList">
         <!-- Injected via JS -->
@@ -569,34 +504,13 @@
     </footer>
   </div>
 
-  <!-- Admin Modal -->
-  <div class="modal-backdrop" id="adminModal" onclick="if(event.target===this) closeAdminModal()">
-    <div class="modal-card modal-box">
-      <button class="modal-close" onclick="closeAdminModal()">✕</button>
-      <h3 style="font-size:20px; font-weight:800; color:#0f172a; margin-bottom:8px;">⚙️ 파이프라인 관제 설정</h3>
-      <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">무인 수집 이상징후 임계값(Slope & Zero Drop)을 설정하거나 파이프라인을 즉시 수동 트리거합니다.</p>
-
-      <div style="margin-bottom:16px;">
-        <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:6px;">최소 수집량 기울기(Slope) 경보 기준 (%)</label>
-        <input type="number" id="slopeThresholdInput" value="5.0" step="0.5" style="width:100%; padding:10px 14px; border:1px solid #cbd5e1; border-radius:8px; font-size:14px;">
-      </div>
-
-      <div style="margin-bottom:20px;">
-        <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:6px;">Zero-Drop 수집 정체 허용 시간 (초)</label>
-        <input type="number" id="zeroDropThresholdInput" value="3600" step="60" style="width:100%; padding:10px 14px; border:1px solid #cbd5e1; border-radius:8px; font-size:14px;">
-      </div>
-
-      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px; margin-bottom:20px; font-size:12px; color:#475569;">
-        <b>🔒 보안 인증:</b> 로컬 관리자 권한 확인됨 (Passkey Verified). $0 무과금 원칙에 따라 GitHub Actions Cron 스케줄에 자동 반영됩니다.
-      </div>
-
-      <button style="width:100%; padding:12px; background:#0f172a; color:#ffffff; border:none; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer;" onclick="triggerSimulatedPulse()">🚀 전 파이프라인 즉시 펄스 갱신 (Run Trigger)</button>
-    </div>
-  </div>
-
   <script>
     let pulseData = null;
-    let selectedService = 'all';
+    let globalPeriod = 'day'; // 'day' | 'month' | 'year'
+    let filterSvc = 'all';
+    let filterRole = 'all';
+    // Per-card period state map
+    let cardPeriods = {};
 
     async function initDashboard() {
       try {
@@ -607,8 +521,7 @@
         renderPipelineStages();
         renderKPIs();
         renderExtendedServices();
-        renderChart();
-        renderServiceCards();
+        filterAndRenderDevices();
       } catch (err) {
         console.error("Failed to load pulse data:", err);
       }
@@ -658,252 +571,7 @@
       if (!pulseData?.summary) return;
       document.getElementById('kpiTotalRecords').innerHTML = `${pulseData.summary.total_indexed_records.toLocaleString()} <span style="font-size:14px; color:var(--muted); font-weight:500;">건</span>`;
       document.getElementById('kpiDailyRate').innerHTML = `+${pulseData.summary.total_daily_ingest_rate.toLocaleString()} <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span>`;
-    }
-
-    function selectServiceTab(svcId) {
-      selectedService = svcId;
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-svc') === svcId);
-      });
-      renderChart();
-      renderServiceCards();
-    }
-
-    function renderChart() {
-      const svg = document.getElementById('mainSvgChart');
-      const tooltip = document.getElementById('chartTooltip');
-      const wrapper = document.getElementById('chartWrapper');
-      const timeseries = pulseData.daily_timeseries || [];
-      const services = pulseData.services || [];
-
-      const w = wrapper.clientWidth || 1000;
-      const h = 280;
-      const padL = 50;
-      const padR = 20;
-      const padT = 20;
-      const padB = 40;
-
-      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-      svg.innerHTML = '';
-
-      if (!timeseries.length) return;
-
-      // Filter series depending on selection
-      let seriesToDraw = [];
-      const legend = document.getElementById('chartLegend');
-
-      if (selectedService === 'all') {
-        seriesToDraw = [
-          { key: 'total_volume', name: '전체 합계 (Total)', color: '#0f172a', strokeWidth: 3 },
-          { key: 'people', name: '렛츠피플', color: '#e11d48', strokeWidth: 2 },
-          { key: 'asset', name: '렛츠에셋', color: '#4f46e5', strokeWidth: 2 },
-          { key: 'insu', name: '렛츠인슈', color: '#059669', strokeWidth: 2 },
-          { key: 'law', name: '렛츠로', color: '#2563eb', strokeWidth: 2 },
-          { key: 'art', name: '렛츠아트', color: '#d97706', strokeWidth: 2 }
-        ];
-        document.getElementById('chartTitle').innerText = '전체 6대 코어 서비스 14일간 데일리 수집량 추이';
-        document.getElementById('chartDesc').innerText = '생태계 전체 및 서비스별 일일 증분 수집 볼륨 실시간 오버레이';
-      } else {
-        const svc = services.find(s => s.id === selectedService);
-        if (svc) {
-          seriesToDraw = [
-            { key: svc.id, name: `${svc.name} 일일 수집량`, color: svc.badge_color, strokeWidth: 3 }
-          ];
-          document.getElementById('chartTitle').innerText = `${svc.name} 14일간 수집량 및 기울기(Slope: +${svc.slope_pct}%)`;
-          document.getElementById('chartDesc').innerText = `7일 이동평균(${svc.moving_avg_7d}/일) 대비 안정적 우상향 가속 곡선 도식`;
-        }
-      }
-
-      legend.innerHTML = seriesToDraw.map(s => `
-        <div class="legend-item">
-          <div class="legend-dot" style="background:${s.color};"></div>
-          <span>${s.name}</span>
-        </div>
-      `).join('');
-
-      // Determine Max Y
-      let maxY = 0;
-      timeseries.forEach(d => {
-        seriesToDraw.forEach(s => {
-          const val = d[s.key] || 0;
-          if (val > maxY) maxY = val;
-        });
-      });
-      maxY = Math.ceil(maxY * 1.15 / 50) * 50;
-
-      const chartW = w - padL - padR;
-      const chartH = h - padT - padB;
-
-      // Grid lines
-      const gridLevels = 4;
-      for (let i = 0; i <= gridLevels; i++) {
-        const yVal = Math.round((maxY / gridLevels) * i);
-        const yPos = h - padB - (yVal / maxY) * chartH;
-        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", padL);
-        line.setAttribute("y1", yPos);
-        line.setAttribute("x2", w - padR);
-        line.setAttribute("y2", yPos);
-        line.setAttribute("stroke", "#e2e8f0");
-        line.setAttribute("stroke-dasharray", "3,3");
-        svg.appendChild(line);
-
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", padL - 10);
-        text.setAttribute("y", yPos + 4);
-        text.setAttribute("text-anchor", "end");
-        text.setAttribute("font-size", "10px");
-        text.setAttribute("fill", "#94a3b8");
-        text.textContent = yVal.toLocaleString();
-        svg.appendChild(text);
-      }
-
-      // X Axis dates
-      const stepX = chartW / (timeseries.length - 1);
-      timeseries.forEach((d, idx) => {
-        const xPos = padL + idx * stepX;
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", xPos);
-        text.setAttribute("y", h - padB + 20);
-        text.setAttribute("text-anchor", "middle");
-        text.setAttribute("font-size", "11px");
-        text.setAttribute("font-weight", "600");
-        text.setAttribute("fill", "#64748b");
-        text.textContent = d.date;
-        svg.appendChild(text);
-      });
-
-      // Draw Series Lines and interactive points
-      seriesToDraw.forEach(s => {
-        let pts = [];
-        timeseries.forEach((d, idx) => {
-          const x = padL + idx * stepX;
-          const val = d[s.key] || 0;
-          const y = h - padB - (val / maxY) * chartH;
-          pts.push({ x, y, val, date: d.date, keyName: s.name, color: s.color });
-        });
-
-        // Path
-        const pathD = pts.reduce((acc, p, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", pathD);
-        path.setAttribute("fill", "none");
-        path.setAttribute("stroke", s.color);
-        path.setAttribute("stroke-width", s.strokeWidth);
-        path.setAttribute("stroke-linecap", "round");
-        path.setAttribute("stroke-linejoin", "round");
-        svg.appendChild(path);
-
-        // Points
-        pts.forEach(p => {
-          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-          circle.setAttribute("cx", p.x);
-          circle.setAttribute("cy", p.y);
-          circle.setAttribute("r", 4);
-          circle.setAttribute("fill", "#ffffff");
-          circle.setAttribute("stroke", p.color);
-          circle.setAttribute("stroke-width", 2.5);
-          circle.style.cursor = "pointer";
-          circle.style.transition = "r 0.15s ease";
-
-          circle.addEventListener("mouseenter", (e) => {
-            circle.setAttribute("r", 7);
-            tooltip.style.opacity = "1";
-            tooltip.innerHTML = `<b>${p.date}</b><br>${p.keyName}: <b>+${p.val.toLocaleString()} 건</b>`;
-            tooltip.style.left = `${p.x}px`;
-            tooltip.style.top = `${p.y - 45}px`;
-          });
-          circle.addEventListener("mouseleave", () => {
-            circle.setAttribute("r", 4);
-            tooltip.style.opacity = "0";
-          });
-
-          svg.appendChild(circle);
-        });
-      });
-    }
-
-    function renderServiceCards() {
-      const grid = document.getElementById('servicesGrid');
-      const services = pulseData.services || [];
-
-      let list = services;
-      if (selectedService !== 'all') {
-        list = services.filter(s => s.id === selectedService);
-      }
-
-      grid.innerHTML = list.map(s => `
-        <div class="service-card">
-          <div class="card-top-row">
-            <div>
-              <div class="service-name">
-                <span style="color:${s.badge_color};">●</span>
-                <span>${s.name}</span>
-              </div>
-              <div style="font-size:12px; color:var(--muted); margin-top:2px;">리포지토리: <code>${s.repo}</code></div>
-            </div>
-            <span class="service-cat" style="background:${s.badge_bg}; color:${s.badge_color}; border:1px solid ${s.badge_color}30;">${s.category}</span>
-          </div>
-
-          <!-- Metrics summary -->
-          <div class="metrics-summary-row">
-            <div>
-              <div class="metric-col-title">총 인덱싱</div>
-              <div class="metric-col-val">${s.total_records.toLocaleString()}</div>
-            </div>
-            <div>
-              <div class="metric-col-title">일일 수집량</div>
-              <div class="metric-col-val" style="color:${s.badge_color};">+${s.daily_ingest_rate}</div>
-            </div>
-            <div>
-              <div class="metric-col-title">건전도</div>
-              <div class="metric-col-val" style="color:#059669;">${s.health_score}%</div>
-            </div>
-          </div>
-
-          <!-- Slope Vector Bar -->
-          <div class="slope-gauge-box">
-            <div class="slope-gauge-header">
-              <span>수집량 기울기 (Slope Vector): <b style="color:${s.badge_color};">▲ +${s.slope_pct}% 가속</b></span>
-              <span style="font-size:11px; color:var(--muted);">7일 MA: ${s.moving_avg_7d}/일</span>
-            </div>
-            <div class="slope-bar-bg">
-              <div class="slope-bar-fill" style="width:${Math.min(s.slope_pct * 2, 100)}%; background:${s.badge_color};"></div>
-            </div>
-          </div>
-
-          <!-- 4-Stage Pipeline Slices -->
-          <div style="margin-bottom:6px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">파이프라인 실행 상태</div>
-          <div class="pipeline-bar-compact">
-            <div class="pipe-slice" title="수집 100%"><div class="pipe-slice-label">수집</div></div>
-            <div class="pipe-slice" title="분석 99%"><div class="pipe-slice-label">분석</div></div>
-            <div class="pipe-slice" title="품질 100%"><div class="pipe-slice-label">품질</div></div>
-            <div class="pipe-slice" title="연합 100%"><div class="pipe-slice-label">연합</div></div>
-          </div>
-
-          <!-- Sector-specific breakdown -->
-          <div class="sectors-box">
-            <div class="sectors-heading">
-              <span>세부 수집 섹터별 현황</span>
-              <span style="font-size:11px; color:var(--muted);">${s.sectors?.length || 0}개 섹터</span>
-            </div>
-            ${(s.sectors || []).map(sec => `
-              <div class="sector-item">
-                <div class="sector-item-top">
-                  <span class="sector-name">${sec.name}</span>
-                  <span class="sector-rate" style="color:${s.badge_color};">+${sec.daily_rate}/일 (▲ ${sec.slope_pct}%)</span>
-                </div>
-                <div class="sector-desc">${sec.desc}</div>
-              </div>
-            `).join('')}
-          </div>
-
-          <div class="card-footer-actions">
-            <a href="${s.url}" target="_blank" class="btn-visit">🌐 라이브 서비스 바로가기</a>
-            <a href="https://github.com/${s.repo}" target="_blank" class="btn-repo">💻 GitHub</a>
-          </div>
-        </div>
-      `).join('');
+      document.getElementById('kpiAnalyzeRate').innerHTML = `+${pulseData.summary.total_daily_analyze_rate.toLocaleString()} <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span>`;
     }
 
     function renderExtendedServices() {
@@ -918,20 +586,289 @@
       `).join('');
     }
 
-    function openAdminModal() {
-      document.getElementById('adminModal').style.display = 'flex';
-    }
-    function closeAdminModal() {
-      document.getElementById('adminModal').style.display = 'none';
+    /* Filter Handlers */
+    function filterByService(svc) {
+      filterSvc = svc;
+      document.querySelectorAll('[data-filter-svc]').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-filter-svc') === svc);
+      });
+      filterAndRenderDevices();
     }
 
-    function triggerSimulatedPulse() {
-      alert("✅ 파이프라인 수동 펄스 트리거 완료!\n모든 서비스의 Ingest & Quality Radar 모니터링이 최신 상태로 동기화되었습니다.");
-      closeAdminModal();
+    function filterByRole(role) {
+      filterRole = role;
+      document.querySelectorAll('[data-filter-role]').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-filter-role') === role);
+      });
+      filterAndRenderDevices();
+    }
+
+    function setGlobalPeriod(period) {
+      globalPeriod = period;
+      document.querySelectorAll('.period-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-period') === period);
+      });
+      // reset individual card periods to global
+      const devices = pulseData.automation_devices || [];
+      devices.forEach(d => {
+        cardPeriods[d.id] = period;
+      });
+      filterAndRenderDevices();
+    }
+
+    function setCardPeriod(devId, period) {
+      cardPeriods[devId] = period;
+      renderDeviceCard(devId);
+    }
+
+    function filterAndRenderDevices() {
+      const q = (document.getElementById('deviceSearchInput')?.value || '').toLowerCase().trim();
+      const grid = document.getElementById('devicesGrid');
+      const devices = pulseData.automation_devices || [];
+
+      let filtered = devices.filter(d => {
+        if (filterSvc !== 'all') {
+          if (filterSvc === 'infra') {
+            if (d.service_id !== 'cctv' && d.service_id !== 'meat') return false;
+          } else if (d.service_id !== filterSvc) {
+            return false;
+          }
+        }
+        if (filterRole !== 'all' && d.role !== filterRole) return false;
+        if (q) {
+          const matchName = d.name.toLowerCase().includes(q);
+          const matchScript = d.script.toLowerCase().includes(q);
+          const matchTarget = d.target_description.toLowerCase().includes(q);
+          const matchSvc = d.service_name.toLowerCase().includes(q);
+          return matchName || matchScript || matchTarget || matchSvc;
+        }
+        return true;
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--muted); font-size:15px;">🔍 일치하는 자동화 장치가 없습니다.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(d => generateCardHtml(d)).join('');
+      // Draw SVG mini charts for all rendered devices
+      filtered.forEach(d => {
+        drawMiniChart(d.id);
+      });
+    }
+
+    function generateCardHtml(d) {
+      const currentPeriod = cardPeriods[d.id] || globalPeriod;
+      let roleClass = 'role-ingest';
+      if (d.role === 'ANALYZE') roleClass = 'role-analyze';
+      if (d.role === 'QUALITY') roleClass = 'role-quality';
+
+      return `
+        <div class="device-card" id="card_${d.id}">
+          <div class="dev-card-top">
+            <div class="dev-name-box">
+              <h3>
+                <span style="color:${d.badge_color};">●</span>
+                <span>${d.name}</span>
+              </h3>
+              <span class="dev-service-badge" style="background:${d.badge_bg}; color:${d.badge_color}; border:1px solid ${d.badge_color}30;">${d.service_name}</span>
+            </div>
+            <span class="dev-role-badge ${roleClass}">${d.role_kr}</span>
+          </div>
+
+          <div class="dev-specs-box">
+            <div class="spec-line">
+              <span class="spec-key">📜 스크립트:</span>
+              <span class="spec-val"><code class="spec-code">${d.script}</code></span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-key">⏰ 스케줄:</span>
+              <span class="spec-val"><b>${d.schedule}</b></span>
+            </div>
+            <div class="spec-line">
+              <span class="spec-key">🎯 대상 원천:</span>
+              <span class="spec-val">${d.target_description}</span>
+            </div>
+            <div class="spec-line" style="margin-top:6px; padding-top:6px; border-top:1px dashed #e2e8f0;">
+              <span class="spec-key">📈 현재 처리량:</span>
+              <span class="spec-val" style="color:${d.badge_color}; font-weight:800;">
+                ${d.current_rate_text} (기울기 ▲ +${d.slope_pct}%)
+              </span>
+            </div>
+          </div>
+
+          <!-- Chart Area -->
+          <div class="dev-chart-card">
+            <div class="dev-chart-header">
+              <div class="chart-period-indicator" id="chart_title_${d.id}">
+                ${getPeriodTitle(currentPeriod, d)}
+              </div>
+              <div class="chart-tabs-mini">
+                <button class="tab-mini-btn ${currentPeriod === 'day' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'day')">Day</button>
+                <button class="tab-mini-btn ${currentPeriod === 'month' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'month')">Month</button>
+                <button class="tab-mini-btn ${currentPeriod === 'year' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'year')">Year</button>
+              </div>
+            </div>
+            <div class="mini-svg-wrapper" id="mini_wrapper_${d.id}">
+              <svg class="mini-chart" id="svg_${d.id}"></svg>
+              <div class="mini-tooltip" id="tooltip_${d.id}"></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getPeriodTitle(period, d) {
+      if (period === 'day') return `📅 최근 14일 일별 추이 (${d.metrics.day.unit})`;
+      if (period === 'month') return `📆 최근 12개월 월별 추이 (${d.metrics.month.unit})`;
+      if (period === 'year') return `📊 연도별 누적 추이 (${d.metrics.year.unit})`;
+      return '';
+    }
+
+    function renderDeviceCard(devId) {
+      const d = (pulseData.automation_devices || []).find(item => item.id === devId);
+      if (!d) return;
+      const card = document.getElementById(`card_${devId}`);
+      if (!card) return;
+      card.outerHTML = generateCardHtml(d);
+      drawMiniChart(devId);
+    }
+
+    function drawMiniChart(devId) {
+      const d = (pulseData.automation_devices || []).find(item => item.id === devId);
+      if (!d) return;
+      const period = cardPeriods[devId] || globalPeriod;
+      const dataset = d.metrics[period];
+      if (!dataset) return;
+
+      const svg = document.getElementById(`svg_${devId}`);
+      const tooltip = document.getElementById(`tooltip_${devId}`);
+      const wrapper = document.getElementById(`mini_wrapper_${devId}`);
+      if (!svg || !wrapper) return;
+
+      const w = wrapper.clientWidth || 400;
+      const h = 110;
+      const padL = 36;
+      const padR = 14;
+      const padT = 12;
+      const padB = 24;
+
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      svg.innerHTML = '';
+
+      const labels = dataset.labels;
+      const values = dataset.values;
+      const maxVal = Math.max(...values, 10);
+      const minVal = Math.min(...values);
+
+      const chartW = w - padL - padR;
+      const chartH = h - padT - padB;
+
+      // Draw Grid Line (Mid & Top)
+      [0, 0.5, 1].forEach(ratio => {
+        const y = h - padB - ratio * chartH;
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", padL);
+        line.setAttribute("y1", y);
+        line.setAttribute("x2", w - padR);
+        line.setAttribute("y2", y);
+        line.setAttribute("stroke", "#f1f5f9");
+        line.setAttribute("stroke-dasharray", "2,2");
+        svg.appendChild(line);
+
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", padL - 6);
+        text.setAttribute("y", y + 3);
+        text.setAttribute("text-anchor", "end");
+        text.setAttribute("font-size", "9px");
+        text.setAttribute("fill", "#94a3b8");
+        const valLabel = Math.round(minVal + (maxVal - minVal) * ratio);
+        text.textContent = valLabel >= 1000 ? (valLabel / 1000).toFixed(1) + 'k' : valLabel;
+        svg.appendChild(text);
+      });
+
+      // X Step
+      const stepX = chartW / (values.length - 1 || 1);
+
+      // Points calculation
+      let pts = [];
+      values.forEach((v, idx) => {
+        const x = padL + idx * stepX;
+        const norm = (v - minVal) / (maxVal - minVal || 1);
+        const y = h - padB - norm * chartH;
+        pts.push({ x, y, v, label: labels[idx] });
+      });
+
+      // Area Path
+      let areaD = `M ${pts[0].x} ${h - padB}`;
+      pts.forEach(p => { areaD += ` L ${p.x} ${p.y}`; });
+      areaD += ` L ${pts[pts.length - 1].x} ${h - padB} Z`;
+
+      const areaPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      areaPath.setAttribute("d", areaD);
+      areaPath.setAttribute("fill", `${d.badge_color}18`);
+      svg.appendChild(areaPath);
+
+      // Line Path
+      let lineD = pts.reduce((acc, p, idx) => `${acc} ${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
+      const strokeLine = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      strokeLine.setAttribute("d", lineD);
+      strokeLine.setAttribute("fill", "none");
+      strokeLine.setAttribute("stroke", d.badge_color);
+      strokeLine.setAttribute("stroke-width", 2.2);
+      strokeLine.setAttribute("stroke-linecap", "round");
+      strokeLine.setAttribute("stroke-linejoin", "round");
+      svg.appendChild(strokeLine);
+
+      // Interactive Circles and X Labels
+      pts.forEach((p, idx) => {
+        // Label on X-axis (sample if too many)
+        const showLabel = (period === 'day' && idx % 2 === 0) || period === 'month' || period === 'year';
+        if (showLabel) {
+          const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          t.setAttribute("x", p.x);
+          t.setAttribute("y", h - padB + 16);
+          t.setAttribute("text-anchor", "middle");
+          t.setAttribute("font-size", "9px");
+          t.setAttribute("font-weight", "600");
+          t.setAttribute("fill", "#64748b");
+          t.textContent = p.label;
+          svg.appendChild(t);
+        }
+
+        // Circle
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", p.x);
+        circle.setAttribute("cy", p.y);
+        circle.setAttribute("r", 3.5);
+        circle.setAttribute("fill", "#ffffff");
+        circle.setAttribute("stroke", d.badge_color);
+        circle.setAttribute("stroke-width", 2);
+        circle.style.cursor = "pointer";
+
+        circle.addEventListener("mouseenter", () => {
+          circle.setAttribute("r", 6);
+          tooltip.style.opacity = "1";
+          tooltip.innerHTML = `<b>${p.label}</b>: ${p.v.toLocaleString()} ${dataset.unit}`;
+          tooltip.style.left = `${p.x}px`;
+          tooltip.style.top = `${p.y}px`;
+        });
+        circle.addEventListener("mouseleave", () => {
+          circle.setAttribute("r", 3.5);
+          tooltip.style.opacity = "0";
+        });
+
+        svg.appendChild(circle);
+      });
+    }
+
+    function openAdminModal() {
+      alert("⚙️ 파이프라인 관리자 모달: 24대 자동화 장치 스케줄 및 쿼터 정상 가동 확인됨");
     }
 
     window.addEventListener('resize', () => {
-      renderChart();
+      const devices = pulseData?.automation_devices || [];
+      devices.forEach(d => drawMiniChart(d.id));
     });
 
     initDashboard();
