@@ -1,30 +1,63 @@
-# 렛츠 패밀리 통합 디자인 시스템 (Let's Design System, LDS v1.1.0)
+# 렛츠 패밀리 통합 디자인 시스템 (Let's Design System, LDS v2.0.0)
 > **최종 개정일**: 2026-11-18  
-> **기준 레퍼런스**: 렛츠캘린더 (`/calendar`), 뉴스보드 인물 상세 페이지 (`/news/person/`), Apple HIG, Toss Simplicity, Supabase Design, Naver Design System  
+> **기준 레퍼런스**: 토스(Toss Simplicity) 미니멀 서피스, 렛츠캘린더 (`/calendar`), 뉴스보드 인물 상세 페이지 (`/news/person/`), Apple HIG  
 > **적용 대상**: `Let's Law`, `Let's Insu`, `Let's People`, `Let's Asset`, `Let's Art`, `Let's View`, `MeatTracker`, `Let's Hub` 등 생태계 전 서비스
 
 ---
 
-## 1. 디자인 철학 및 인간 중심 원칙 (Human-Centered Core Principles)
+## 1. 토스(Toss) 스타일 미니멀 서피스 원칙 (Surface & Divider Standards)
 
-### 1.1 힉스의 법칙 (Hick's Law) & 선택지 최소화
-- 사용자가 결정을 내리는 시간은 선택지의 수와 복잡성에 비례하여 증가합니다.
-- 복잡한 법률·금융·인물 데이터를 표출할 때 한 화면에 모든 옵션을 나열하지 않고, **가장 중요한 1차 판단 지표(Hero Metric)를 최상단에 배치**하고 부차적 옵션은 접거나 탭/모달로 분리합니다.
-- 모든 화면은 `Hero → 핵심 근거 → 비교/흐름 → 세부 원장 → 다음 탐색` 순서로 구성합니다. 같은 수준의 카드를 무한 반복하지 않고 정보의 부모·자식 관계를 크기·색·여백으로 표현합니다.
+### 1.1 선과 면의 최소화 (No Border & Background Overlap)
+- **테두리(Border)와 배경색(Background)의 동시 중첩 절대 금지**:
+  - 기존의 `background: #ffffff` + `border: 1px solid #e2e8f0` 형태의 "박스 안에 박스 안에 박스" 중첩 구조를 전면 배제합니다.
+  - 경계 구분이 필요할 때는 **은은한 배경색(Off-white / Soft Gray `#f7f8fa`) 위에 순백색 서피스(`background: #ffffff`)를 올리고 섬세한 소프트 섀도우만 적용**합니다.
+- **단일 얇은 디바이더(Single Divider Line)**:
+  - 카드 내부의 세부 영역 구분은 박스 대신 **1px 높이의 옅은 단일 구분선(`border-top: 1px solid #f2f4f6`)**만 사용하여 시각적 노이즈를 제로화합니다.
 
-### 1.2 피츠의 법칙 (Fitts's Law) & 터치 친화적 상호작용
-- 모바일(320px~430px) 및 터치 디바이스에서 모든 인터랙티브 요소(버튼, 탭, 칩)의 **최소 터치 타깃 영역은 44×44px**을 보장합니다.
-- 중요한 액션 버튼(예: 과실비율 산정, 합의금 계산, 필모그래피 열람)은 엄지손가락이 닿기 쉬운 하단 썸 존(Thumb Zone) 또는 카드 하단 전폭으로 배치합니다.
+### 1.2 비클리핑 소프트 섀도우 체계 (Non-Clipping Elevation)
+- `overflow: hidden`이 걸린 부모 컨테이너로 인해 카드의 그림자가 상/하/좌/우에서 잘리는(clipping) 현상을 방지합니다.
+- 컨테이너 및 그리드에 안전 패딩(`padding: 0 4px;` 또는 카드 간 갭 확보)을 두어 섀도우의 블러(`blur: 20px~30px`)가 주변 공간으로 자연스럽게 확산되도록 보장합니다.
+- **섀도우 토큰**:
+  - `--shadow-sm`: `0 2px 8px rgba(0, 0, 0, 0.03)`
+  - `--shadow-md`: `0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)`
+  - `--shadow-lg`: `0 8px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02)`
 
-### 1.3 인공지능 스타일(Impeccable / Cold Flat AI) 탈피 및 휴먼 터치 (Human Touch)
-- AI가 생성한 기계적이고 삭막한 평면 디자인, 획일적인 보라색 그라디언트를 일절 배제합니다.
-- 섬세한 곡률(`border-radius: 12px~16px`), 미세한 앰비언트 섀도우(`rgba(15, 23, 42, 0.05~0.08)`), 정보 간의 명확한 시각적 위계(Primary/Secondary/Tertiary 텍스트), 마우스 호버 시 텐션감 있는 마이크로 인터랙션(`transform: translateY(-2px) cubic-bezier(0.16, 1, 0.3, 1)`)을 부여합니다.
+### 1.3 컬러 절제 및 단일 포인트 컬러 (Color Discipline)
+- 무지개색 남발을 금지하고, 브랜드 아이덴티티를 나타내는 **토스 블루(`--primary: #3182f6`)**를 기준 포인트 컬러로 통일합니다.
+- 보조 시맨틱 컬러는 성공(`--success: #00c48c`), 경고(`--warning: #ff9f00`), 위험(`--danger: #ff5252`) 3가지로만 제한하여 데이터의 의미를 명확히 전달합니다.
+- 이모지 남발을 배제하고 일관된 단색 인라인 SVG 아이콘(Lucide / Tabler 스타일, `stroke-width: 2`)을 사용합니다.
 
 ---
 
-## 2. 8-Point Grid 여백 체계 (Spacing Hierarchy)
+## 2. 인터랙티브 인포그래픽 & 레이지 로드 애니메이션 (Infographics Standard)
 
-모든 레이아웃 간격, 패딩, 마진, 아이콘 규격은 **8의 배수**를 절대 원칙으로 사용합니다. 8px 미만의 미세 간격(뱃지 패딩, 태그 인셋 등)은 반드시 **짝수(2px, 4px, 6px)**를 유지합니다.
+### 2.1 다각화된 시각화 도식
+- 천편일률적인 꺾은선 그래프뿐만 아니라, 데이터의 성격에 맞추어 다양한 인포그래픽을 적재적소에 배치합니다:
+  - **도넛 파이 차트(Donut Chart)**: 프로세스 점유율 및 카테고리 구성비 표출 (중앙 카운터 뱃지 결합).
+  - **수평 막대 차트(Horizontal Bar Chart)**: 처리량 상위 랭킹(Top 5) 및 누적 처리량 비교.
+  - **스파크라인 선 그래프(Sparkline)**: 일일/월간/연간 추세 및 터치/호버 크로스헤어 인터랙션.
+
+### 2.2 스크롤 트리거 레이지 로드 (Intersection Observer)
+- 사용자가 스크롤하여 차트 영역이 뷰포트에 진입할 때 자연스럽게 차오르는 애니메이션을 적용합니다:
+  - **도넛 세그먼트**: `stroke-dasharray`와 `stroke-dashoffset`이 0에서 목표치로 1.2초간 매끄럽게 회전하며 차오름.
+  - **수평 막대**: 바의 너비(`width`)가 0%에서 목표 퍼센트로 부드럽게 확장.
+  - **스파크라인 선**: 패스 선이 좌에서 우로 드로잉되며, 하단 그라디언트 영역이 페이드인.
+  - **숫자 카운트업**: 0에서 목표 수치까지 점진적으로 숫자가 올라가는 시각적 만족감 제공.
+
+---
+
+## 3. 상세정보 접이식 컴포넌트 표준 (Accordion Drawer)
+
+- **기본 접힌 상태(Collapsed by Default)**:
+  - 스크립트 경로, 크론 스케줄, 수집 원천 설명, 스토리지 용량, 품질 기여도 등 보조 메타데이터는 기본으로 숨겨집니다.
+  - 카드의 최우선 시각 요소는 **명칭, 상태 뱃지, 핵심 수치, 스파크라인 차트**입니다.
+- **토글 인터랙션**:
+  - 하단에 `[ 상세정보 ▾ ]` 버튼(Chevron Down SVG)을 배치하고, 클릭 시 180도 회전하며 세부 정보가 슬라이드 다운됩니다.
+  - 내부 서피스 역시 박스 중첩 없이 단일 구분선 리스트(`display: flex; justify-content: space-between;`)로 정돈합니다.
+
+---
+
+## 4. 8-Point Grid 여백 체계 & 320px 모바일 완벽 대응
 
 | 토큰명 | 크기 | 용도 |
 | :--- | :---: | :--- |
@@ -35,165 +68,10 @@
 | `--space-12` | 12px | 소형 카드 내부 패딩, 탭 버튼 간격 |
 | `--space-16` | 16px | 컴포넌트 내부 기본 패딩, 카드 간 기본 갭 |
 | `--space-20` | 20px | 중간 카드 패딩, 그리드 갭 |
-| `--space-24` | 24px | 컨테이너 좌우 기본 여백 (모바일/태블릿) |
+| `--space-24` | 24px | 컨테이너 좌우 기본 여백 |
 | `--space-32` | 32px | 섹션 간 수직 간격 |
-| `--space-40` | 40px | 대형 블록 상하 마진 |
 | `--space-48` | 48px | 주요 섹션 헤더-컨텐츠 간격 |
-| `--space-64` | 64px | 페이지 단위 대구분 수직 여백 |
 
----
-
-## 3. 반응형 브레이크포인트 & 세로 적층(Stacking) 규칙
-
-### 3.1 320px 모바일 절대 지원 (320px ~ 1440px+)
-- 최소 지원 가로폭: **320px** (iPhone SE 1세대 및 폴더블 외부 화면 대응).
-- 최대 컨테이너 폭: **1440px** (`margin: 0 auto;`).
-
-### 3.2 4-2-1 컬럼 반응형 전환 및 억지 줄바꿈 극단 배제
-- **데스크톱 (≥ 1024px)**: 가로 4단 (4-Column) 그리드.
-- **태블릿 (640px ~ 1023px)**: 가로 2단 (2-Column) 그리드.
-- **모바일 (320px ~ 639px)**: 가로 1단 (1-Column) 그리드.
-- **세로 적층 (Vertical Stacking) 원칙**:
-  - 가로폭이 좁아질 때 글자가 좁은 칸에 갇혀 2~3글자 단위로 흉하게 줄바꿈(`word-break: break-all`로 인한 자모 분리 등)되는 것을 극도로 금지합니다.
-  - 가로로 배치되었던 메트릭(수집량, 처리속도, 스케줄 등)은 가로폭 축소 시 즉시 `flex-direction: column`으로 세로 적층되어 **글줄의 온전한 형태와 가독성**을 유지합니다.
-
----
-
-## 4. 스크롤 통제 & 가로 캐러셀(Swipe Carousel) 표준
-
-### 4.1 불필요한 세로 스크롤 지양
-- 여백만 넓고 내용이 빈약하여 무의미하게 길어지는 세로 스크롤을 억제하고, 카드 내부 정보 밀도를 균형 있게 배치합니다.
-
-### 4.2 브라우저 가로 스크롤(Horizontal Window Scroll) 영구 차단
-- 컨텐츠가 뷰포트 바깥으로 튀어나와 브라우저 전체에 가로 스크롤바가 생기는 현상은 **결함(Bug)**으로 규정하며 `overflow-x: hidden` 및 유동 폭(`max-width: 100%`)으로 완전 통제합니다.
-
-### 4.3 가로 나열 시 '무스크롤바 마우스 드래그 / 터치 스와이프 캐러셀' 사용
-- 탭 메뉴, 칩 목록, 횡단 카드 목록 등 가로 나열이 필수적인 경우:
-  - 브라우저 기본 스크롤바는 `scrollbar-width: none;` 및 `::-webkit-scrollbar { display: none; }`으로 완전 숨김 처리.
-  - 마우스 클릭 드래그(`cursor: grab / grabbing`) 및 모바일 터치 플릭(`touch-action: pan-x pan-y`)으로 부드럽게 스냅 스크롤되는 캐러셀 구조 채택.
-
----
-
-## 5. 타이포그래피 & WCAG 2.1 접근성 (Typography & Color Contrast)
-
-### 5.1 기본 글꼴
-- **국문/영문 표준**: `Pretendard Variable`, `Pretendard`, -apple-system, BlinkMacSystemFont, system-ui, sans-serif.
-- **숫자 데이터**: `font-variant-numeric: tabular-nums;` (표/차트 수치 정렬).
-
-### 5.2 타이포그래피 스케일 토큰
-| 토큰 | 크기 | 행간(Line-Height) | 자간(Letter-Spacing) | 기본 용도 |
-| :--- | :---: | :---: | :---: | :--- |
-| `--fs-display` | 32px ~ 40px | 1.2 | -0.03em | 대시보드 메인 히어로 헤드라인 |
-| `--fs-2xl` | 24px ~ 28px | 1.25 | -0.025em | 서비스 대제목 (H1) |
-| `--fs-xl` | 20px ~ 22px | 1.3 | -0.02em | 섹션 헤딩 (H2) |
-| `--fs-lg` | 17px ~ 18px | 1.4 | -0.015em | 카드 타이틀 (H3) |
-| `--fs-md` | 14px ~ 15px | 1.5 | -0.01em | 기본 본문 텍스트 (Body) |
-| `--fs-sm` | 12px ~ 13px | 1.45 | 0 | 캡션, 보조 설명, 스펙 키값 |
-| `--fs-xs` | 10px ~ 11px | 1.3 | +0.02em | 상태 뱃지, 단위, 타임스탬프 |
-
-### 5.3 WCAG 2.2 AA/AAA 4.5:1 이상 명도 대비율 준수
-- 일반 텍스트(`--text-primary: #0f172a`): 배경 `#ffffff` 대비 **15.8:1** (AAA 기준 초과 달성).
-- 보조 텍스트(`--text-muted: #475569`): 배경 `#ffffff` 대비 **5.8:1** (AA 기준 충족).
-- 뱃지/버튼: 연한 배경(`--bg-soft`)에 짙은 원색(`--text-bold`)을 결합하여 가독성 100% 확보 (예: 에메랄드 배경 `#ecfdf5` + 텍스트 `#065f46`).
-- 색만으로 상태를 전달하지 않고 아이콘·텍스트·패턴을 함께 사용합니다. Apple HIG의 44px 터치 타깃, WCAG 2.2 대비·키보드 기준, `safe-area-inset-*`를 함께 검수합니다.
-
----
-
-## 6. 서비스별 브랜드 패밀리룩 & 컬러 시스템
-
-전체 패밀리가 일관된 섀도우, 폰트, 그리드 레이아웃을 공유하면서, 각 서비스 고유의 도메인 성격을 직관적으로 인지할 수 있는 시그니처 컬러를 부여합니다.
-
-| 서비스 ID | 서비스명 | 시그니처 색상 | 소프트 배경색 | 대표 도메인 |
-| :--- | :--- | :---: | :---: | :--- |
-| `people` | **렛츠피플 (Let's People)** | `#e11d48` (Rose) | `#ffe4e6` | 인물·미디어 PD·필모그래피 |
-| `asset` | **렛츠에셋 (Let's Asset)** | `#4f46e5` (Indigo) | `#eef2ff` | 100년 금융·SEC·재무관리 |
-| `law` | **렛츠로 (Let's Law)** | `#2563eb` (Blue) | `#eff6ff` | 대법원 판례·3D 교통사고 |
-| `insu` | **렛츠인슈 (Let's Insu)** | `#059669` (Emerald) | `#ecfdf5` | 46년 약관·손해사정 반박 |
-| `art` | **렛츠아트 (Let's Art)** | `#d97706` (Amber) | `#fef3c7` | 고전 명화·현대미술·건축 |
-| `cultureflow` | **컬처플로우 (CultureFlow)** | `#0284c7` (Sky) | `#f0f9ff` | 공연·전시·문화예술 캘린더 |
-| `view` | **렛츠뷰 (Let's View)** | `#06b6d4` (Cyan) | `#ecfeff` | 전국 1.8만 교통/재난 영상망 |
-| `meattracker` | **미트트래커 (MeatTracker)** | `#ef4444` (Red) | `#fef2f2` | 축산물 이력·도소매 시세 |
-| `camp` | **렛츠캠프 (Let's Camp)** | `#10b981` (Teal) | `#d1fae5` | 전국 캠핑장·글램핑 원장 |
-| `calendar` | **렛츠캘린더 (Let's Calendar)** | `#6366f1` (Violet) | `#e0e7ff` | 일정 조율·정산·모여라 달력 |
-
----
-
-## 7. 커스텀 컴포넌트 시스템 (OS 시스템 UI 영구 퇴출)
-
-OS나 브라우저마다 흉하게 다르게 렌더링되는 기본 네이티브 UI(셀렉트 박스, 기본 스크롤바, 기본 팝업 alert, 기본 라디오/체크박스)의 사용을 **전면 금지**합니다.
-
-1. **커스텀 셀렉트 / 드롭다운**: 라운드 박스(`border-radius: 10px`), 슬레이트 보더, SVG 셰브론 아이콘으로 통일.
-2. **커스텀 라디오 / 칩**: 탭 필터 칩 스타일로 디자인하여 터치 반경 확장 및 명확한 액티브 배경색 피드백.
-3. **커스텀 모달 / 다이얼로그**: 백드롭 블러(`backdrop-filter: blur(8px); background: rgba(15, 23, 42, 0.6)`), 부드러운 스케일 인 애니메이션, 우측 상단 순정 닫기(`✕`) 버튼.
-4. **커스텀 툴팁**: 다크 슬레이트 솔리드 박스(`background: #0f172a; color: #ffffff`), 미세 섀도우, 마우스 추적 부드러운 트랜지션.
-
----
-
-## 8. 모바일 PWA & iOS Safari Safe Area 여백 관리
-
-### 8.1 PWA 뷰포트 피트 설정
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-```
-
-### 8.2 iOS 상단 인디케이터 & 하단 홈핸들 세이프 에어리어 (Safe Area Inset)
-- 아이폰 사파리 또는 홈 화면 PWA 전체화면 실행 시, 상단 다이내믹 아일랜드/노치나 하단 홈 핸들에 컨텐츠가 가려지지 않도록 컨테이너에 세이프 에어리어 환경 변수를 필수로 바인딩합니다.
-```css
-body {
-  padding-top: max(20px, env(safe-area-inset-top));
-  padding-bottom: max(24px, env(safe-area-inset-bottom));
-  padding-left: max(16px, env(safe-area-inset-left));
-  padding-right: max(16px, env(safe-area-inset-right));
-}
-```
-
-### 8.3 웹 푸시 알림 (Web Push Notification) 센터 표준
-- PWA의 핵심 가치는 **무인 수집/분석 이상의 실시간 푸시 알림**에 있습니다.
-- 모든 서비스 헤더에 **알림 벨 아이콘 (`🔔`)**과 인디케이터 점(`dot`)을 표준 배치하고, 클릭 시 최근 수집 경보(Caution), 이상징후 알림을 확인하고 브라우저 푸시 권한을 1클릭으로 등록/해제할 수 있는 통합 알림 센터 드로어를 구비합니다.
-
----
-
-## 9. 소셜 공유 에셋 & 오픈그래프 (OpenGraph Protocol) 표준
-
-모든 렛츠 패밀리 서비스는 카카오톡, 슬랙, 트위터, 페이스북 공유 시 브랜드를 온전히 드러낼 수 있도록 다음 규격을 필수로 구비합니다.
-
-1. **오픈그래프 썸네일 (`og:image`)**: `1200 × 630px` (2:1 비율), 100KB 미만 최적화 WebP/JPG.
-2. **파비콘 & 앱 아이콘**:
-   - `favicon.ico` & `favicon-32x32.png`
-   - `apple-touch-icon.png` (`180 × 180px`, 라운드 코너 자동 적용 고려)
-3. **메타 태그 템플릿**:
-```html
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="서비스 국문 명칭">
-<meta property="og:title" content="핵심 가치 제안 타이틀">
-<meta property="og:description" content="사용자가 얻을 수 있는 혜택 중심의 2줄 요약 설명">
-<meta property="og:image" content="https://pyw31337.github.io/{service}/assets/og-thumb.png">
-```
-
----
-
-## 10. 통합 슈퍼 플랫폼 (Unified Super-Platform) 확장 아키텍처
-
-1. **공통 URN 온톨로지 네임스페이스**:
-   - 인물: `urn:people:person:{id}`
-   - 판례: `urn:law:precedent:{id}`
-   - 약관: `urn:insu:policy:{id}`
-   - 금융: `urn:asset:ticker:{symbol}`
-   - 예술: `urn:art:work:{id}`
-   - 영상: `urn:view:channel:{cctv_id}`
-   - 시세: `urn:meat:item:{trace_id}`
-2. **글로벌 옴니서치 (Global Omnibox Search Bar)**:
-   - 렛츠허브 상단에 통합 검색창을 구비하여 사용자가 "교통사고", "자하 하디드", "삼성전자", "한우 시세" 등을 입력하면 15개 서비스 전체의 URN 엔티티를 즉시 교차 탐색하여 다이렉트 딥링크로 안내합니다.
-
-## 11. 구현·검수 계약
-
-- 모든 신규 서비스는 이 문서와 `tokens/lets-design-tokens.json`, `css/lets-design-system.css`, `js/lets-design-system.js`를 기준으로 시작합니다.
-- 서비스별 차이는 시그니처 색·아이콘·데이터 시각화 방식으로만 만들고, 폰트·간격·컨테이너·포커스·반응형 규칙은 공유합니다.
-- 320px, 375px, 768px, 1024px, 1440px에서 실제 화면을 확인합니다. 가로 overflow가 0이어야 하며, 4→2→1단 전환과 세로 적층을 확인합니다.
-- 키보드 Tab/Enter, 터치 44px 타깃, WCAG AA 대비, `prefers-reduced-motion`, PWA safe-area를 릴리스 전 검수합니다.
-- 공유 메타데이터(OG title/description/image), favicon, 180px apple-touch-icon, manifest, 서비스워커 등록, 알림 설정/해제 UI가 없으면 완성으로 보지 않습니다.
-- 알림은 사용자 동의 후에만 `LDS.enableNotifications()`로 권한을 요청하고, 서비스워커가 있으면 `LDS.registerPWA()`로 등록합니다. 거부 상태에서도 화면 내 알림센터는 사용할 수 있어야 합니다.
-- 화면 구현 전에 이 문서의 토큰을 먼저 사용하고, 예외가 필요하면 서비스 저장소의 `docs/DESIGN_EXCEPTION.md`에 이유·범위·폐기일을 기록합니다.
+- **320px 모바일 0px 가로스크롤 엄수**:
+  - 도넛 차트 및 쿼터 그리드 등 다열 요소는 모바일 환경에서 1열 수직 스택으로 전환됩니다.
+  - `document.documentElement.scrollWidth === document.documentElement.clientWidth`를 전 기기에서 엄격히 보장합니다.

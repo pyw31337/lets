@@ -13,12 +13,13 @@
   <meta property="og:image" content="https://pyw31337.github.io/lets/og-image.png">
   <title>Let's 마스터 컨트롤 허브 — 15대 서비스 61개 무인 자동화 장치 통합 관제</title>
   
-  <!-- Pretendard Variable Font -->
+  <!-- Pretendard Variable Font & LDS v2.0 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/lets-design-system.css">
   
   <style>
     /* ==========================================================
-       Toss Design System: Minimal Surface, Line & Soft Shadow Tokens
+       Toss Design System v2.0: Non-Clipping Soft Shadow & Surface Tokens
        ========================================================== */
     :root {
       --bg-page: #f7f8fa;
@@ -50,10 +51,10 @@
       --danger: #ff5252;
       --danger-light: #ffebee;
 
-      /* 소프트 섀도우 (선 없이 면의 깊이감 부여) */
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
-      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.06);
+      /* 비클리핑 소프트 섀도우: 넓은 블러와 자연스러운 확산 */
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 6px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.02);
 
       --radius-sm: 8px;
       --radius-md: 14px;
@@ -82,7 +83,8 @@
 
     body {
       min-height: 100vh;
-      padding: max(20px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(56px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      /* 사방 여백을 주어 카드 섀도우가 뷰포트 가장자리에서 잘리지 않도록 보장 */
+      padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
     }
 
     .hub-container {
@@ -90,6 +92,8 @@
       margin: 0 auto;
       width: 100%;
       min-width: 0;
+      /* 섀도우 블러 확산을 위한 안전 패딩 (클리핑 방지) */
+      padding: 4px 6px;
     }
 
     /* ==========================================================
@@ -117,7 +121,7 @@
       background: var(--bg-surface);
       border-radius: var(--radius-lg);
       padding: 24px 32px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       box-shadow: var(--shadow-md);
       display: flex;
       justify-content: space-between;
@@ -221,30 +225,32 @@
     }
 
     /* ==========================================================
-       2. Summary Metric Cards: Single Clean Surface
+       2. Summary Metric Cards: Single Clean Surface with Safe Margins
        ========================================================== */
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 20px;
+      margin-bottom: 28px;
       width: 100%;
       min-width: 0;
+      padding: 2px 0; /* 상하 섀도우 클리핑 방지 */
     }
 
     .metric-card {
       background: var(--bg-surface);
       border-radius: var(--radius-md);
-      padding: 20px 24px;
+      padding: 22px 24px;
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       min-width: 0;
+      /* 카드 자체에 overflow: hidden을 걸지 않아 섀도우가 사방으로 부드럽게 퍼짐 */
     }
     .metric-card:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-md);
     }
     .metric-header {
@@ -296,10 +302,11 @@
     .infographics-grid {
       display: grid;
       grid-template-columns: 1fr 1.25fr;
-      gap: 20px;
-      margin-bottom: 24px;
+      gap: 22px;
+      margin-bottom: 28px;
       width: 100%;
       min-width: 0;
+      padding: 2px 0;
     }
 
     .info-panel {
@@ -309,6 +316,10 @@
       box-shadow: var(--shadow-md);
       min-width: 0;
       width: 100%;
+      transition: box-shadow 0.2s ease;
+    }
+    .info-panel:hover {
+      box-shadow: var(--shadow-lg);
     }
     .info-panel-title {
       font-size: 16px;
@@ -325,7 +336,7 @@
       margin-bottom: 20px;
     }
 
-    /* Donut Chart Layout */
+    /* Donut Chart Layout & Lazy Animation */
     .donut-container {
       display: flex;
       align-items: center;
@@ -340,6 +351,14 @@
       height: 150px;
       flex-shrink: 0;
     }
+    .donut-segment {
+      /* 초기 상태: dasharray 0 (차오르기 전) */
+      stroke-dasharray: 0 251.32;
+      transition: stroke-dasharray 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .donut-segment.animated {
+      /* JS가 Intersection Observer로 목표 dasharray 주입 */
+    }
     .donut-center-text {
       position: absolute;
       top: 50%;
@@ -349,7 +368,7 @@
       pointer-events: none;
     }
     .donut-center-value {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1;
@@ -394,7 +413,7 @@
       white-space: nowrap;
     }
 
-    /* Horizontal Bar Chart */
+    /* Horizontal Bar Chart & Lazy Animation */
     .bar-chart-list {
       display: flex;
       flex-direction: column;
@@ -452,9 +471,10 @@
     }
     .bar-fill {
       height: 100%;
+      width: 0%; /* 초기 상태 0%에서 부드럽게 차오름 */
       background: var(--primary);
       border-radius: var(--radius-full);
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ==========================================================
@@ -465,9 +485,13 @@
       border-radius: var(--radius-lg);
       padding: 24px;
       box-shadow: var(--shadow-md);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       width: 100%;
       min-width: 0;
+      transition: box-shadow 0.2s ease;
+    }
+    .quota-panel:hover {
+      box-shadow: var(--shadow-lg);
     }
     .quota-header {
       display: flex;
@@ -550,8 +574,10 @@
     }
     .quota-bar-fill {
       height: 100%;
+      width: 0%;
       background: var(--success);
       border-radius: var(--radius-full);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .quota-numbers {
       display: flex;
@@ -581,7 +607,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       flex-wrap: wrap;
       width: 100%;
       min-width: 0;
@@ -648,15 +674,16 @@
     }
 
     /* ==========================================================
-       6. Automation Devices Grid: Toss Minimal Accordion Cards
+       6. Automation Devices Grid: Non-Clipping Accordion Cards
        ========================================================== */
     .devices-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 40px;
+      gap: 22px;
+      margin-bottom: 48px;
       width: 100%;
       min-width: 0;
+      padding: 4px 0; /* 카드 섀도우가 위아래 잘리지 않도록 보호 */
     }
 
     /* 토스 원칙: 테두리 없이 면과 소프트 섀도우로만 구성된 카드 */
@@ -667,12 +694,13 @@
       box-shadow: var(--shadow-md);
       display: flex;
       flex-direction: column;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       min-width: 0;
       width: 100%;
+      /* 카드에 overflow: hidden을 걸지 않아 부드러운 섀도우가 온전히 유지됨 */
     }
     .device-card:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: var(--shadow-lg);
     }
 
@@ -790,7 +818,7 @@
       height: 90px;
       background: var(--bg-page);
       border-radius: var(--radius-md);
-      overflow: hidden;
+      overflow: hidden; /* 차트 내부 드로잉만 클리핑 */
       cursor: crosshair;
     }
     .chart-svg {
@@ -798,6 +826,24 @@
       height: 100%;
       display: block;
     }
+    
+    /* 선 그래프 레이지 로드 드로잉 효과 */
+    .sparkline-path {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sparkline-path.animated {
+      stroke-dashoffset: 0;
+    }
+    .sparkline-area {
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .sparkline-area.animated {
+      opacity: 1;
+    }
+
     .chart-crosshair-line {
       stroke: var(--primary);
       stroke-width: 1.5;
@@ -987,6 +1033,9 @@
       body {
         padding: 16px 8px 48px 8px;
       }
+      .hub-container {
+        padding: 2px 4px;
+      }
       .summary-grid {
         grid-template-columns: 1fr;
       }
@@ -994,18 +1043,17 @@
         grid-template-columns: 1fr;
       }
       .hub-header {
-        padding: 16px;
+        padding: 18px 16px;
       }
       .hub-title {
         font-size: 18px;
       }
       .info-panel {
-        padding: 18px;
+        padding: 18px 16px;
       }
       .device-card {
-        padding: 18px;
+        padding: 18px 16px;
       }
-      /* 320px 도넛 차트 컨테이너 수직 정렬 */
       .donut-container {
         flex-direction: column;
         align-items: center;
@@ -1067,7 +1115,7 @@
             <svg class="icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
           </div>
         </div>
-        <div class="metric-value" id="dailyTotalVal">197,320</div>
+        <div class="metric-value" id="dailyTotalVal" data-target="197320">197,320</div>
         <div class="metric-sub positive">
           <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"></path></svg>
           목표 대비 104.2% 달성
@@ -1113,8 +1161,8 @@
 
     <!-- 3. Diverse Infographics (Donut Pie + Top 5 Horizontal Bars) -->
     <section class="infographics-grid">
-      <!-- Donut: Process Distribution -->
-      <div class="info-panel">
+      <!-- Donut: Process Distribution with Scroll Animation -->
+      <div class="info-panel" id="donutPanel">
         <div class="info-panel-title">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10h-10z"></path></svg>
           4대 프로세스 장치 분포
@@ -1125,13 +1173,17 @@
           <div class="donut-svg-wrap">
             <svg viewBox="0 0 120 120" style="transform: rotate(-90deg);">
               <!-- Donut Segments (circumference = 2 * PI * 40 = 251.32) -->
-              <circle cx="60" cy="60" r="40" fill="transparent" stroke="#3182f6" stroke-width="16" stroke-dasharray="94.7 156.6" stroke-dashoffset="0"></circle>
-              <circle cx="60" cy="60" r="40" fill="transparent" stroke="#00c48c" stroke-width="16" stroke-dasharray="57.8 193.5" stroke-dashoffset="-94.7"></circle>
-              <circle cx="60" cy="60" r="40" fill="transparent" stroke="#6366f1" stroke-width="16" stroke-dasharray="49.5 201.8" stroke-dashoffset="-152.5"></circle>
-              <circle cx="60" cy="60" r="40" fill="transparent" stroke="#f59e0b" stroke-width="16" stroke-dasharray="49.5 201.8" stroke-dashoffset="-202.0"></circle>
+              <!-- Seg 1: 수집 37.7% = 94.7 -->
+              <circle id="donutSeg1" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#3182f6" stroke-width="16" stroke-dashoffset="0" data-dash="94.7 156.6"></circle>
+              <!-- Seg 2: 분석 23.0% = 57.8 -->
+              <circle id="donutSeg2" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#00c48c" stroke-width="16" stroke-dashoffset="-94.7" data-dash="57.8 193.5"></circle>
+              <!-- Seg 3: 품질 19.7% = 49.5 -->
+              <circle id="donutSeg3" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#6366f1" stroke-width="16" stroke-dashoffset="-152.5" data-dash="49.5 201.8"></circle>
+              <!-- Seg 4: 관리 19.7% = 49.5 -->
+              <circle id="donutSeg4" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#f59e0b" stroke-width="16" stroke-dashoffset="-202.0" data-dash="49.5 201.8"></circle>
             </svg>
             <div class="donut-center-text">
-              <div class="donut-center-value">61</div>
+              <div class="donut-center-value" id="donutCounter">0</div>
               <div class="donut-center-label">총 파이프라인</div>
             </div>
           </div>
@@ -1169,8 +1221,8 @@
         </div>
       </div>
 
-      <!-- Horizontal Bar: Top 5 Throughput Pipelines -->
-      <div class="info-panel">
+      <!-- Horizontal Bar: Top 5 Throughput Pipelines with Lazy Animation -->
+      <div class="info-panel" id="barPanel">
         <div class="info-panel-title">
           <svg class="icon" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
           일일 처리량 상위 파이프라인
@@ -1184,7 +1236,7 @@
     </section>
 
     <!-- 4. External Quota Governance Panel -->
-    <section class="quota-panel">
+    <section class="quota-panel" id="quotaPanel">
       <div class="quota-header">
         <div class="quota-title-wrap">
           <div class="quota-title">
@@ -1223,9 +1275,9 @@
       </div>
     </section>
 
-    <!-- 6. Automation Devices Grid (Accordion Cards) -->
+    <!-- 6. Automation Devices Grid (Non-Clipping Accordion Cards) -->
     <main class="devices-grid" id="devicesGrid">
-      <!-- Rendered dynamically with Accordion details -->
+      <!-- Rendered dynamically with Accordion details & Lazy Sparkline Animation -->
     </main>
 
     <!-- 7. Minimal Footer -->
@@ -1248,6 +1300,7 @@
     let masterData = null;
     let currentFilter = 'all';
     let searchQuery = '';
+    let observedCards = new Set();
 
     // Extract Values Array Safely
     function getMetricValues(dev, horizon) {
@@ -1282,6 +1335,7 @@
         masterData = generateFallbackData();
       }
       renderDashboard();
+      setupIntersectionObservers();
     }
 
     function renderDashboard() {
@@ -1309,7 +1363,7 @@
         { name: "e커머스 최저가 및 품절 트래커", service: "렛츠바이", daily_count: 5200, pct: 6.0 }
       ];
 
-      container.innerHTML = ranking.map(item => `
+      container.innerHTML = ranking.map((item, idx) => `
         <div class="bar-item">
           <div class="bar-item-meta">
             <span class="bar-item-name">
@@ -1319,7 +1373,7 @@
             <span class="bar-item-val">${item.daily_count.toLocaleString()} / 일</span>
           </div>
           <div class="bar-track">
-            <div class="bar-fill" style="width: ${item.pct}%;"></div>
+            <div class="bar-fill" id="bar-fill-${idx}" data-target-width="${item.pct}%" style="transition-delay: ${idx * 0.12}s;"></div>
           </div>
         </div>
       `).join('');
@@ -1331,7 +1385,7 @@
       if (!grid) return;
       const quotas = masterData.external_quota_governance || [];
 
-      grid.innerHTML = quotas.map(q => `
+      grid.innerHTML = quotas.map((q, idx) => `
         <div class="quota-item">
           <div>
             <div class="quota-top">
@@ -1343,7 +1397,7 @@
             </div>
             <div class="quota-progress-wrap">
               <div class="quota-bar-track">
-                <div class="quota-bar-fill" style="width: ${q.quota_remaining_pct}%;"></div>
+                <div class="quota-bar-fill" id="quota-fill-${idx}" data-target-width="${q.quota_remaining_pct}%" style="transition-delay: ${idx * 0.15}s;"></div>
               </div>
               <div class="quota-numbers">
                 <span>잔여: <strong>${q.quota_remaining_pct}%</strong></span>
@@ -1359,7 +1413,7 @@
       `).join('');
     }
 
-    // Devices Render with Accordion Details
+    // Devices Render with Accordion Details & Sparkline Lazy Animation
     function renderDevices() {
       const grid = document.getElementById('devicesGrid');
       if (!grid) return;
@@ -1386,7 +1440,7 @@
       grid.innerHTML = devices.map(dev => {
         const dayPoints = getMetricValues(dev, 'day');
         return `
-          <div class="device-card" id="dev-card-${dev.id}">
+          <div class="device-card" id="dev-card-${dev.id}" data-dev-id="${dev.id}">
             <!-- Top Info -->
             <div class="dev-top-row">
               <div class="dev-title-wrap">
@@ -1406,7 +1460,7 @@
               </span>
             </div>
 
-            <!-- Interactive Sparkline Chart (최우선 배치) -->
+            <!-- Interactive Sparkline Chart (최우선 배치 & 스크롤 드로잉) -->
             <div class="dev-chart-section">
               <div class="chart-controls">
                 <div class="chart-time-tabs" id="tabs-${dev.id}">
@@ -1432,7 +1486,7 @@
               </svg>
             </button>
 
-            <!-- Collapsible Drawer (선과 면의 최소화, 단일 디바이더 구조) -->
+            <!-- Collapsible Drawer (단일 디바이더 리스트) -->
             <div class="spec-drawer" id="drawer-${dev.id}">
               <div class="spec-item">
                 <span class="spec-key">실행 스크립트</span>
@@ -1459,6 +1513,9 @@
           </div>
         `;
       }).join('');
+
+      // Observe Device Cards for Sparkline Lazy Drawing
+      observeDeviceCards();
     }
 
     // Toggle Accordion
@@ -1477,8 +1534,8 @@
       }
     }
 
-    // Generate Smooth SVG Sparkline
-    function generateSvgLineChart(points, devId) {
+    // Generate Smooth SVG Sparkline with Lazy Animation classes
+    function generateSvgLineChart(points, devId, isAnimated = false) {
       if (!points || !Array.isArray(points) || points.length === 0) return '';
       const w = 320;
       const h = 90;
@@ -1496,6 +1553,7 @@
 
       const pathData = pts.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(' ');
       const areaData = `${pathData} L ${pts[pts.length - 1].x} ${h} L ${pts[0].x} ${h} Z`;
+      const animClass = isAnimated ? 'animated' : '';
 
       return `
         <svg class="chart-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" id="svg-${devId}">
@@ -1505,8 +1563,8 @@
               <stop offset="100%" stop-color="#3182f6" stop-opacity="0.0" />
             </linearGradient>
           </defs>
-          <path d="${areaData}" fill="url(#grad-${devId})" />
-          <path d="${pathData}" fill="none" stroke="#3182f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="sparkline-area ${animClass}" id="area-${devId}" d="${areaData}" fill="url(#grad-${devId})" />
+          <path class="sparkline-path ${animClass}" id="path-${devId}" d="${pathData}" fill="none" stroke="#3182f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           <line id="cross-line-${devId}" class="chart-crosshair-line" x1="0" y1="0" x2="0" y2="${h}" />
           <circle id="cross-dot-${devId}" class="chart-crosshair-dot" cx="0" cy="0" r="4.5" />
         </svg>
@@ -1528,7 +1586,7 @@
       const wrap = document.getElementById('chart-wrap-' + devId);
       if (wrap) {
         wrap.innerHTML = `
-          ${generateSvgLineChart(points, devId)}
+          ${generateSvgLineChart(points, devId, true)}
           <div class="chart-tooltip" id="tooltip-${devId}"></div>
         `;
       }
@@ -1577,6 +1635,128 @@
       if (crossLine) crossLine.style.opacity = '0';
       if (crossDot) crossDot.style.opacity = '0';
       if (tooltip) tooltip.style.opacity = '0';
+    }
+
+    // ==========================================================
+    // Intersection Observer: Scroll Lazy Load & Filling Animations
+    // ==========================================================
+    function setupIntersectionObservers() {
+      // 1. Donut Chart Observer
+      const donutObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateDonutChart();
+            animateCounter('donutCounter', 0, 61, 1000);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      const donutPanel = document.getElementById('donutPanel');
+      if (donutPanel) donutObserver.observe(donutPanel);
+
+      // 2. Bar Chart Observer
+      const barObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateBarChart();
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      const barPanel = document.getElementById('barPanel');
+      if (barPanel) barObserver.observe(barPanel);
+
+      // 3. Quota Panel Observer
+      const quotaObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateQuotaBars();
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      const quotaPanel = document.getElementById('quotaPanel');
+      if (quotaPanel) quotaObserver.observe(quotaPanel);
+    }
+
+    // Animate Donut Segments
+    function animateDonutChart() {
+      ['donutSeg1', 'donutSeg2', 'donutSeg3', 'donutSeg4'].forEach(id => {
+        const seg = document.getElementById(id);
+        if (seg) {
+          const targetDash = seg.getAttribute('data-dash');
+          setTimeout(() => {
+            seg.style.strokeDasharray = targetDash;
+          }, 100);
+        }
+      });
+    }
+
+    // Animate Horizontal Bars
+    function animateBarChart() {
+      document.querySelectorAll('.bar-fill').forEach(bar => {
+        const targetWidth = bar.getAttribute('data-target-width');
+        if (targetWidth) {
+          setTimeout(() => {
+            bar.style.width = targetWidth;
+          }, 100);
+        }
+      });
+    }
+
+    // Animate Quota Bars
+    function animateQuotaBars() {
+      document.querySelectorAll('.quota-bar-fill').forEach(bar => {
+        const targetWidth = bar.getAttribute('data-target-width');
+        if (targetWidth) {
+          setTimeout(() => {
+            bar.style.width = targetWidth;
+          }, 100);
+        }
+      });
+    }
+
+    // Smooth Number Counter
+    function animateCounter(elemId, start, end, duration) {
+      const elem = document.getElementById(elemId);
+      if (!elem) return;
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        elem.innerText = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          elem.innerText = end;
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // Observe Device Cards for Line Drawing on Scroll
+    function observeDeviceCards() {
+      const cardObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const devId = entry.target.getAttribute('data-dev-id');
+            const path = document.getElementById('path-' + devId);
+            const area = document.getElementById('area-' + devId);
+            if (path && area) {
+              path.classList.add('animated');
+              area.classList.add('animated');
+            }
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.device-card').forEach(card => {
+        cardObserver.observe(card);
+      });
     }
 
     // Filter Chips Event
