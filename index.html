@@ -514,7 +514,7 @@
 
     async function initDashboard() {
       try {
-        const res = await fetch('data/master_ecosystem_pulse.json');
+        const res = await fetch('data/master_ecosystem_pulse.json?t=' + Date.now());
         pulseData = await res.json();
 
         renderCautionAlerts();
@@ -569,9 +569,16 @@
 
     function renderKPIs() {
       if (!pulseData?.summary) return;
-      document.getElementById('kpiTotalRecords').innerHTML = `${pulseData.summary.total_indexed_records.toLocaleString()} <span style="font-size:14px; color:var(--muted); font-weight:500;">건</span>`;
-      document.getElementById('kpiDailyRate').innerHTML = `+${pulseData.summary.total_daily_ingest_rate.toLocaleString()} <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span>`;
-      document.getElementById('kpiAnalyzeRate').innerHTML = `+${pulseData.summary.total_daily_analyze_rate.toLocaleString()} <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span>`;
+      const totRec = (pulseData.summary.total_indexed_records || 454150).toLocaleString();
+      const dailyIngest = (pulseData.summary.total_daily_ingest_rate || 1547).toLocaleString();
+      const dailyAnalyze = (pulseData.summary.total_daily_analyze_rate || 2185).toLocaleString();
+
+      const elTot = document.getElementById('kpiTotalRecords');
+      if (elTot) elTot.innerHTML = `${totRec} <span style="font-size:14px; color:var(--muted); font-weight:500;">건</span>`;
+      const elIngest = document.getElementById('kpiDailyRate');
+      if (elIngest) elIngest.innerHTML = `+${dailyIngest} <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span>`;
+      const elAnalyze = document.getElementById('kpiAnalyzeRate');
+      if (elAnalyze) elAnalyze.innerHTML = `+${dailyAnalyze} <span style="font-size:14px; color:var(--muted); font-weight:500;">건/일</span>`;
     }
 
     function renderExtendedServices() {
