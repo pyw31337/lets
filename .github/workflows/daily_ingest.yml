@@ -1,0 +1,32 @@
+name: 24/7 Daily Master Ecosystem Aggregator
+
+on:
+  schedule:
+    - cron: '30 21 * * *' # 매일 06:30 KST (모든 하위 서비스 수집 완료 후 종합 집계)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Master Ecosystem Aggregator
+        run: |
+          python scripts/daily_ecosystem_aggregator.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add data/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(auto-aggregate): 24/7 daily ecosystem master pulse update [skip ci]" && git push)
