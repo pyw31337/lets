@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-18T00:00:00+09:00",
+  "runs": [],
+  "note": "실제 실행 이벤트 연결 전 초기 상태. master_ecosystem_pulse의 기존 시계열은 configured_snapshot으로 표시한다."
+}

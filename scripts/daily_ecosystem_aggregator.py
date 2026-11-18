@@ -26,15 +26,37 @@ def run_aggregation():
     now_kst = datetime.now(KST).isoformat()
     data["last_updated"] = now_kst
 
-    # 1. standalone_services 일일 증분 갱신
+    # 1. Use observed run events when available. Never add configured rates to
+    # totals: a planned rate is not proof that a source was fetched or stored.
     services = data.get("standalone_services", [])
-    for s in services:
-        daily_rate = s.get("daily_ingest_rate", 50)
-        s["total_records"] = s.get("total_records", 1000) + daily_rate
+    run_path = os.path.join(base_dir, "data", "automation_runs.json")
+    run_data = {"runs": []}
+    if os.path.exists(run_path):
+        with open(run_path, "r", encoding="utf-8") as f:
+            run_data = json.load(f)
+    runs = [r for r in run_data.get("runs", []) if r.get("status") == "SUCCESS"]
 
-    # 2. 요약 지표 재계산
+    data["metric_provenance"] = "observed_runs" if runs else "configured_snapshot"
+    data["run_event_store"] = "data/automation_runs.json"
+    data["summary"]["observed_run_count"] = len(runs)
+    if runs:
+        data["summary"]["total_daily_ingest_rate"] = sum(
+            int(r.get("observed", {}).get("count", 0) or 0)
+            for r in runs if r.get("stage") == "INGEST"
+        )
+        data["summary"]["total_daily_analyze_rate"] = sum(
+            int(r.get("observed", {}).get("count", 0) or 0)
+            for r in runs if r.get("stage") == "ANALYZE"
+        )
+    else:
+        # Keep the legacy snapshot stable and visibly marked as configured.
+        data["summary"]["configured_daily_ingest_rate"] = sum(
+            s.get("daily_ingest_rate", 0) for s in services
+        )
+        data["summary"]["configured_daily_analyze_rate"] = data["summary"].get(
+            "total_daily_analyze_rate", 0
+        )
     data["summary"]["total_indexed_records"] = sum(s.get("total_records", 0) for s in services)
-    data["summary"]["total_daily_ingest_rate"] = sum(s.get("daily_ingest_rate", 0) for s in services)
     data["summary"]["ecosystem_health_score"] = round(sum(s.get("health_score", 98.0) for s in services) / max(len(services), 1), 1)
 
     with open(pulse_path, "w", encoding="utf-8") as f:
