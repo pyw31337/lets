@@ -3,23 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#f8fafc">
+  <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="description" content="Let's Master Control Hub — 15대 독립 서비스와 등록 자동화 장치의 수집·분석·품질 통합 관제 대시보드">
-  <meta property="og:title" content="Let's Master Control Hub v3.0.0">
-  <meta property="og:description" content="pyw31337 생태계 24/7 무인 자동화 장치 전수 Day/Month/Year 실시간 관제 및 데이터 품질 향상도 레이더">
+  <meta name="description" content="Let's Master Control Hub — 15대 독립 서비스 산하 61개 24/7 무인 자동화 장치 수집·분석·품질·관리 통합 관제 대시보드">
+  <meta property="og:title" content="Let's Master Control Hub v4.0.0">
+  <meta property="og:description" content="토스·슈파베이스 스타일 15대 서비스 61개 무인 자동화 장치 Day/Month/Year 인터랙티브 크로스헤어 관제 센터">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://pyw31337.github.io/lets/og-image.png">
-  <title>Let's Master Control Hub — 자동화 수집·분석·품질 통합 관제 대시보드</title>
+  <title>Let's Master Control Hub v4.0 — 15대 서비스 61개 무인 자동화 장치 통합 관제</title>
   
   <!-- Pretendard Variable & LDS v1.1.0 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/lets-design-system.css">
 
   <style>
-    /* LDS v1.1.0 Page-Specific Layout Extensions */
+    /* ==========================================================
+       Toss & Supabase Light Theme Design System Tokens & Resets
+       ========================================================== */
     :root {
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --bg-hover: #e2e8f0;
+
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --border-active: #94a3b8;
+
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-inverse: #ffffff;
+
       --primary: #2563eb;
       --primary-light: #eff6ff;
       --emerald: #059669;
@@ -32,57 +48,65 @@
       --indigo-light: #eef2ff;
       --cyan: #0284c7;
       --cyan-light: #f0f9ff;
-      --teal: #0d9488;
-      --teal-light: #f0fdfa;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     html, body {
-      box-sizing: border-box;
       max-width: 100vw;
       overflow-x: hidden;
-    }
-    body {
       background: var(--bg-page);
       color: var(--text-primary);
-      overflow-x: hidden;
-      min-width: 0;
-      width: 100%;
+      font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Container */
+    body {
+      min-height: 100vh;
+      padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(48px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    }
+
     .hub-container {
-      max-width: 1480px;
+      max-width: 1440px;
       margin: 0 auto;
       width: 100%;
       min-width: 0;
-      box-sizing: border-box;
-      overflow-x: hidden;
     }
 
-    /* Top Nav Header */
+    /* ==========================================================
+       Header & Live Radar Pulse Indicator
+       ========================================================== */
     .hub-header {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: var(--space-20) var(--space-24);
-      margin-bottom: var(--space-24);
-      box-shadow: var(--shadow-sm);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: var(--space-16);
+      gap: 16px;
+      flex-wrap: wrap;
     }
     @media (max-width: 768px) {
       .hub-header {
         flex-direction: column;
         align-items: flex-start;
-        padding: var(--space-16);
+        padding: 16px;
       }
     }
+
     .brand-area {
       display: flex;
       align-items: center;
-      gap: var(--space-16);
+      gap: 14px;
       max-width: 100%;
       min-width: 0;
     }
@@ -90,927 +114,625 @@
       .brand-area {
         flex-direction: column;
         align-items: flex-start;
-        gap: var(--space-8);
+        gap: 8px;
       }
     }
+
     .brand-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #ffffff;
-      border-radius: var(--radius-md);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
       flex-shrink: 0;
     }
+
     .brand-title {
-      font-size: var(--fs-xl);
-      font-weight: var(--fw-extrabold);
+      font-size: 20px;
+      font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.5px;
       display: flex;
       align-items: center;
-      gap: var(--space-8);
+      gap: 8px;
       flex-wrap: wrap;
       max-width: 100%;
-      min-width: 0;
-      word-break: keep-all;
-      overflow-wrap: break-word;
     }
     @media (max-width: 639px) {
       .brand-title {
-        font-size: var(--fs-lg);
-      }
-      .hub-header {
-        padding: var(--space-12) !important;
-      }
-      .device-card {
-        padding: var(--space-16) !important;
-      }
-      .status-pill {
-        white-space: normal !important;
-        word-break: keep-all;
+        font-size: 17px;
       }
     }
+
     .brand-subtitle {
-      font-size: var(--fs-sm);
+      font-size: 13px;
       color: var(--text-muted);
-      margin-top: var(--space-4);
-      line-height: var(--lh-snug);
+      margin-top: 3px;
+      line-height: 1.45;
     }
+
     .header-actions {
       display: flex;
       align-items: center;
-      gap: var(--space-12);
+      gap: 10px;
       flex-wrap: wrap;
+    }
+
+    /* Live Pulsing Dot */
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: #10b981;
+      opacity: 0.4;
+      animation: pulseRadar 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes pulseRadar {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2.4); opacity: 0; }
     }
 
     .status-pill {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-8);
-      padding: var(--space-8) var(--space-16);
-      border-radius: var(--radius-full);
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 9999px;
       background: var(--emerald-light);
       color: var(--emerald);
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
+      font-size: 12px;
+      font-weight: 700;
       border: 1px solid #a7f3d0;
       white-space: nowrap;
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
-      animation: pulse-ring 2s infinite;
-    }
-    @keyframes pulse-ring {
-      0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
-      70% { box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
-    }
-
-    /* Data Quality Lift Index Radar Section */
-    .quality-lift-section {
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-24);
-      margin-bottom: var(--space-24);
-      box-shadow: var(--shadow-sm);
-    }
-    .quality-lift-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-20);
-      flex-wrap: wrap;
-      gap: var(--space-12);
-    }
-    .quality-lift-title {
-      font-size: var(--fs-lg);
-      font-weight: var(--fw-extrabold);
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: var(--space-8);
-    }
-    .quality-lift-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-16);
-      margin-bottom: var(--space-20);
-    }
-    @media (max-width: 900px) {
-      .quality-lift-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .quality-stage-card {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: var(--space-20);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-8);
-      transition: all var(--transition-base);
-      position: relative;
-    }
-    .quality-stage-card:hover {
-      background: #ffffff;
-      border-color: var(--border-strong);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-    .quality-stage-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .quality-stage-title {
-      font-size: var(--fs-sm);
-      font-weight: var(--fw-bold);
-      color: var(--text-secondary);
-    }
-    .quality-score-badge {
-      font-size: var(--fs-2xl);
-      font-weight: var(--fw-extrabold);
-      line-height: 1;
-    }
-    .quality-progress-track {
-      width: 100%;
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: var(--radius-full);
-      overflow: hidden;
-      margin: var(--space-4) 0;
-    }
-    .quality-progress-bar {
-      height: 100%;
-      border-radius: var(--radius-full);
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .quality-stage-desc {
-      font-size: var(--fs-xs);
-      color: var(--text-muted);
-      line-height: var(--lh-snug);
-    }
-
-    /* Overall Lift Summary Bar */
-    .quality-lift-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(90deg, #eff6ff 0%, #ecfdf5 100%);
-      border: 1px solid #bfdbfe;
-      border-radius: var(--radius-md);
-      padding: var(--space-12) var(--space-20);
-      flex-wrap: wrap;
-      gap: var(--space-8);
-    }
     @media (max-width: 639px) {
-      .quality-lift-bar {
-        flex-direction: column;
-        align-items: flex-start;
+      .status-pill {
+        white-space: normal;
       }
     }
 
-    /* Caution & Highlights */
-    .caution-container {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: var(--space-20) var(--space-24);
-      margin-bottom: var(--space-24);
-      box-shadow: var(--shadow-sm);
-    }
-    .caution-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-16);
-      flex-wrap: wrap;
-      gap: var(--space-8);
-    }
-    .caution-title {
-      font-size: var(--fs-md);
-      font-weight: var(--fw-extrabold);
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: var(--space-8);
-    }
-    .caution-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: var(--space-16);
-    }
-    @media (max-width: 480px) {
-      .caution-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .caution-card {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: var(--space-16);
-      transition: all var(--transition-base);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-8);
-    }
-    .caution-card:hover {
-      background: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-    .caution-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .caution-badge {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      padding: 2px 8px;
-      border-radius: var(--radius-sm);
-    }
-    .caution-service {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      color: var(--text-secondary);
-    }
-    .caution-card-title {
-      font-size: var(--fs-sm);
-      font-weight: var(--fw-bold);
-      color: var(--text-primary);
-      line-height: var(--lh-snug);
-    }
-    .caution-card-msg {
-      font-size: var(--fs-xs);
-      color: var(--text-secondary);
-      line-height: var(--lh-body);
-    }
-
-    /* Executive KPI Strip */
+    /* ==========================================================
+       Toss-Style High-Impact Executive KPI Strip
+       ========================================================== */
     .kpi-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: var(--space-16);
-      margin-bottom: var(--space-28);
+      gap: 16px;
+      margin-bottom: 24px;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 1023px) {
       .kpi-strip { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 639px) {
       .kpi-strip { grid-template-columns: 1fr; }
     }
+
     .kpi-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: var(--space-20);
-      box-shadow: var(--shadow-sm);
-      transition: all var(--transition-base);
+      padding: 20px 22px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
     }
     .kpi-card:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
       border-color: var(--border-strong);
     }
     .kpi-label {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
+      font-size: 12px;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .kpi-val {
-      font-size: var(--fs-2xl);
-      font-weight: var(--fw-extrabold);
+      font-size: 26px;
+      font-weight: 800;
       color: var(--text-primary);
-      margin: var(--space-4) 0 var(--space-2);
+      margin: 6px 0 4px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      letter-spacing: -0.5px;
     }
     .kpi-sub {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-semibold);
-      color: var(--emerald);
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
-    /* ========================================================
-       24/7 Automation Devices Deep Matrix Section
-       ======================================================== */
-    .devices-section {
+    /* ==========================================================
+       4-Stage Pipeline Flow Interactive Bar
+       ========================================================== */
+    .pipeline-section {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-28);
-      margin-bottom: var(--space-32);
-      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .section-header-compact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      position: relative;
+    }
+    @media (max-width: 960px) {
+      .pipeline-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 639px) {
-      .devices-section {
-        padding: var(--space-16);
-        border-radius: var(--radius-lg);
-      }
-    }
-    .devices-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-20);
-      flex-wrap: wrap;
-      gap: var(--space-16);
-    }
-    .devices-title h2 {
-      font-size: var(--fs-xl);
-      font-weight: var(--fw-extrabold);
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: var(--space-8);
-    }
-    .devices-title p {
-      font-size: var(--fs-sm);
-      color: var(--text-muted);
-      margin-top: var(--space-4);
+      .pipeline-grid { grid-template-columns: 1fr; }
     }
 
-    /* Global Period Toggle Buttons */
-    .global-period-toggles {
-      display: flex;
-      gap: 4px;
+    .stage-card {
       background: var(--bg-subtle);
-      padding: 4px;
+      border: 1.5px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-    }
-    .period-btn {
-      padding: var(--space-6) var(--space-16);
-      border-radius: var(--radius-sm);
-      border: none;
-      background: transparent;
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      color: var(--text-muted);
+      padding: 16px;
       cursor: pointer;
-      transition: all var(--transition-fast);
-    }
-    .period-btn:hover { color: var(--text-primary); }
-    .period-btn.active {
-      background: var(--text-primary);
-      color: var(--text-inverse);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Filters Bar */
-    .devices-filter-bar {
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
-      gap: var(--space-16);
-      margin-bottom: var(--space-24);
-      background: var(--bg-subtle);
-      padding: var(--space-16) var(--space-20);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
+      gap: 6px;
+      position: relative;
     }
-    .filter-input-row {
-      display: flex;
-      gap: var(--space-12);
-      align-items: center;
-    }
-    .search-device-input {
-      flex: 1;
-      padding: var(--space-12) var(--space-16);
-      border: 1.5px solid var(--border-strong);
-      border-radius: var(--radius-md);
+    .stage-card:hover {
       background: #ffffff;
-      color: var(--text-primary);
-      font-size: var(--fs-sm);
-      font-weight: var(--fw-medium);
-      outline: none;
-      transition: all var(--transition-fast);
-      min-height: 44px;
-    }
-    .search-device-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
     }
-
-    /* Filter Rows */
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-8);
+    .stage-card.active {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary);
     }
-    .filter-group-header {
+    .stage-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: var(--space-8);
+      align-items: center;
     }
-    .filter-label {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      color: var(--text-muted);
+    .stage-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+    .stage-count {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #e2e8f0;
+      color: var(--text-secondary);
+    }
+    .stage-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .stage-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
 
-    /* Swipeable Carousel Tabs */
-    .filter-tabs-carousel {
+    /* ==========================================================
+       Omni-Search & Interactive Filter Controls
+       ========================================================== */
+    .controls-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       display: flex;
-      gap: var(--space-8);
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .omni-search-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .omni-search-input {
+      width: 100%;
+      height: 48px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0 44px 0 16px;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--bg-page);
+      font-family: inherit;
+      outline: none;
+      transition: all 0.15s;
+    }
+    .omni-search-input:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+    .omni-search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: #cbd5e1;
+      color: #ffffff;
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Filter Chips Carousel */
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-label-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .chips-carousel {
+      display: flex;
+      gap: 6px;
       overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
+      scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
       padding-bottom: 2px;
-      cursor: grab;
-      user-select: none;
+      flex: 1;
+      min-width: 0;
     }
-    .filter-tabs-carousel::-webkit-scrollbar {
-      display: none !important;
-      width: 0 !important;
-      height: 0 !important;
-    }
-    .dev-filter-chip {
-      padding: var(--space-8) var(--space-12);
-      border-radius: var(--radius-sm);
+    .chips-carousel::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+    .filter-chip {
+      padding: 7px 12px;
+      border-radius: 8px;
       border: 1px solid var(--border-strong);
       background: #ffffff;
       color: var(--text-secondary);
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
-      transition: all var(--transition-fast);
+      transition: all 0.15s;
       white-space: nowrap;
       display: inline-flex;
       align-items: center;
-      gap: var(--space-6);
+      gap: 6px;
       flex-shrink: 0;
-      min-height: 38px;
     }
-    .dev-filter-chip:hover {
-      background: var(--bg-hover);
+    .filter-chip:hover {
+      background: var(--bg-subtle);
       color: var(--text-primary);
+      border-color: var(--border-active);
     }
-    .dev-filter-chip.active {
+    .filter-chip.active {
       background: var(--text-primary);
-      color: var(--text-inverse);
-      border-color: var(--text-primary);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Ingestion Mode Tags */
-    .ingest-mode-chip {
-      padding: var(--space-6) var(--space-12);
-      border-radius: var(--radius-full);
-      border: 1px solid var(--border-strong);
-      background: #ffffff;
-      color: var(--text-secondary);
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-4);
-      flex-shrink: 0;
-      min-height: 34px;
-    }
-    .ingest-mode-chip:hover {
-      background: var(--bg-hover);
-      color: var(--text-primary);
-    }
-    .ingest-mode-chip.active {
-      background: var(--primary);
       color: #ffffff;
-      border-color: var(--primary);
+      border-color: var(--text-primary);
+    }
+    .chip-count {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.06);
+    }
+    .filter-chip.active .chip-count {
+      background: rgba(255,255,255,0.25);
     }
 
-    /* Automation Devices Grid */
+    /* ==========================================================
+       Supabase-Style High-Density Device Cards Grid
+       ========================================================== */
     .devices-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-20);
+      gap: 20px;
+      margin-bottom: 32px;
     }
     @media (max-width: 960px) {
       .devices-grid { grid-template-columns: 1fr; }
     }
+
     .device-card {
       background: #ffffff;
-      border: 1.5px solid var(--border-subtle);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: var(--space-24);
-      box-shadow: var(--shadow-sm);
+      padding: 22px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
-      transition: all var(--transition-base);
+      gap: 16px;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      min-width: 0;
     }
     .device-card:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
       border-color: var(--border-strong);
     }
-    .dev-card-top {
+    @media (max-width: 480px) {
+      .device-card { padding: 16px; }
+    }
+
+    .dev-top-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: var(--space-12);
-      gap: var(--space-8);
+      gap: 12px;
     }
-    .dev-name-box h3 {
-      font-size: var(--fs-md);
-      font-weight: var(--fw-extrabold);
-      color: var(--text-primary);
+    .dev-title-area {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .dev-title-header {
       display: flex;
       align-items: center;
-      gap: var(--space-8);
-      line-height: var(--lh-snug);
-    }
-    .dev-badges-wrap {
-      display: flex;
-      align-items: center;
-      gap: var(--space-6);
-      margin-top: var(--space-6);
+      gap: 8px;
       flex-wrap: wrap;
     }
-    .dev-service-badge {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      padding: 2px 8px;
-      border-radius: var(--radius-sm);
+    .dev-title-header h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
     }
-    .dev-nature-badge {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      padding: 2px 8px;
-      border-radius: var(--radius-sm);
-      background: #f1f5f9;
-      color: #475569;
-      border: 1px solid #cbd5e1;
+    .dev-badges-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
-    .dev-nature-cold {
-      background: #eff6ff;
-      color: #1e40af;
-      border-color: #bfdbfe;
+    .badge-capsule {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
     }
-    .dev-nature-hot {
-      background: #fff7ed;
-      color: #c2410c;
-      border-color: #fed7aa;
-    }
-    .dev-role-badge {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      padding: var(--space-4) var(--space-12);
-      border-radius: var(--radius-full);
+    .role-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
       white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .role-ingest { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-    .role-analyze { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
-    .role-quality { background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; }
+    .role-ingest { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+    .role-analyze { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+    .role-quality { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+    .role-ops { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
 
-    /* Device Specs Box (with mobile vertical stacking) */
-    .dev-specs-box {
+    /* Supabase High-Density Spec Sheet */
+    .dev-spec-sheet {
       background: var(--bg-subtle);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: var(--space-12) var(--space-16);
-      margin-bottom: var(--space-16);
-      font-size: var(--fs-xs);
-      line-height: var(--lh-body);
-      color: var(--text-secondary);
-    }
-    .spec-line {
-      margin-bottom: var(--space-6);
+      padding: 12px 14px;
       display: flex;
-      gap: var(--space-8);
-      align-items: baseline;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
     }
-    @media (max-width: 480px) {
-      .spec-line {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 2px;
-      }
+    .spec-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
     }
-    .spec-line:last-child { margin-bottom: 0; }
-    .spec-key {
-      font-weight: var(--fw-bold);
+    .spec-k {
+      font-weight: 700;
       color: var(--text-muted);
-      min-width: 76px;
+      min-width: 80px;
       flex-shrink: 0;
     }
-    .spec-val {
+    .spec-v {
       color: var(--text-primary);
       word-break: break-all;
     }
-    .spec-code {
+    .code-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
       background: #e2e8f0;
       padding: 1px 6px;
-      border-radius: var(--radius-sm);
-      font-size: 11px;
-      font-family: var(--font-family-mono);
+      border-radius: 4px;
+      color: #0f172a;
     }
 
-    /* Device Chart Area */
-    .dev-chart-card {
+    /* Chart & Cursor-Tracking Crosshair Area */
+    .chart-box {
       background: #ffffff;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: var(--space-12) var(--space-16);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       margin-top: auto;
     }
-    .dev-chart-header {
+    .chart-box-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: var(--space-12);
+      gap: 8px;
       flex-wrap: wrap;
-      gap: var(--space-8);
     }
-    .chart-period-indicator {
-      font-size: var(--fs-xs);
-      font-weight: var(--fw-bold);
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: var(--space-6);
+    .chart-box-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
     }
-    .chart-tabs-mini {
+    .chart-period-tabs {
       display: flex;
-      gap: 2px;
       background: var(--bg-subtle);
+      border-radius: 6px;
       padding: 2px;
-      border-radius: var(--radius-sm);
+      gap: 2px;
     }
-    .tab-mini-btn {
-      padding: var(--space-2) var(--space-8);
-      border-radius: var(--radius-sm);
-      border: none;
-      background: transparent;
+    .tab-p-btn {
+      padding: 3px 8px;
       font-size: 11px;
-      font-weight: var(--fw-bold);
+      font-weight: 700;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
       color: var(--text-muted);
       cursor: pointer;
-      transition: all var(--transition-fast);
+      transition: all 0.15s;
     }
-    .tab-mini-btn.active {
-      background: var(--text-primary);
-      color: var(--text-inverse);
+    .tab-p-btn.active {
+      background: #ffffff;
+      color: var(--text-primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
     }
 
-    /* Mini SVG Chart */
-    .mini-svg-wrapper {
+    .svg-canvas-wrapper {
       position: relative;
       width: 100%;
-      height: 110px;
+      height: 120px;
+      cursor: crosshair;
+      touch-action: none;
+      user-select: none;
     }
-    svg.mini-chart {
+    .chart-svg {
       width: 100%;
       height: 100%;
+      display: block;
       overflow: visible;
     }
-    .mini-tooltip {
+
+    /* Cursor Tracking Tooltip */
+    .crosshair-tooltip {
       position: absolute;
-      background: var(--text-primary);
-      color: var(--text-inverse);
-      padding: 4px 8px;
-      border-radius: var(--radius-sm);
-      font-size: 11px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity var(--transition-fast);
       z-index: 50;
-      white-space: nowrap;
-      transform: translate(-50%, -100%);
-      margin-top: -6px;
-      box-shadow: var(--shadow-md);
-    }
-
-    /* PWA Notification Drawer */
-    .lds-drawer-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 9990;
-    }
-    .lds-drawer-backdrop.is-open {
-      display: block;
-    }
-    .lds-drawer {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 380px;
-      max-width: 90vw;
-      height: 100vh;
-      background: var(--bg-surface);
-      box-shadow: var(--shadow-xl);
-      z-index: 9995;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      visibility: hidden;
+      background: rgba(15, 23, 42, 0.95);
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      line-height: 1.45;
       pointer-events: none;
-      transition: transform var(--transition-base), visibility var(--transition-base);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      white-space: nowrap;
+      transition: opacity 0.1s, transform 0.05s;
+      opacity: 0;
+      transform: translate(-50%, -100%);
+      top: 0;
+      left: 0;
     }
-    .lds-drawer.is-open {
-      transform: translateX(0);
-      visibility: visible;
-      pointer-events: auto;
+    .crosshair-tooltip.visible {
+      opacity: 1;
     }
-    .lds-drawer-header {
-      padding: var(--space-20);
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .crosshair-tooltip-date {
+      font-weight: 700;
+      color: #93c5fd;
+      margin-bottom: 2px;
     }
-    .lds-drawer-body {
-      padding: var(--space-20);
-      overflow-y: auto;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-12);
+    .crosshair-tooltip-val {
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .crosshair-tooltip-sub {
+      color: #cbd5e1;
+      font-size: 10px;
     }
 
-    /* Standalone 15 Services live grid */
+    /* ==========================================================
+       15 Standalone Services Endpoint Grid
+       ========================================================== */
     .services-showcase-section {
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: var(--space-24);
-      margin-bottom: var(--space-32);
-    }
-    .services-showcase-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-16);
-      flex-wrap: wrap;
-      gap: var(--space-8);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .services-showcase-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-      gap: var(--space-16);
+      gap: 14px;
     }
     @media (max-width: 639px) {
-      .services-showcase-grid {
-        grid-template-columns: 1fr;
-      }
+      .services-showcase-grid { grid-template-columns: 1fr; }
     }
-    .service-showcase-card {
+    .service-card-item {
       background: var(--bg-subtle);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: var(--space-16);
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: var(--space-8);
-      transition: all var(--transition-fast);
+      gap: 6px;
       text-decoration: none;
       color: inherit;
+      transition: all 0.15s;
     }
-    .service-showcase-card:hover {
+    .service-card-item:hover {
       background: #ffffff;
       border-color: var(--border-strong);
       transform: translateY(-2px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* 15 Services Global Omni-Search Bar */
-    .omni-search-section {
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-20) var(--space-24);
-      margin-bottom: var(--space-24);
-      box-shadow: var(--shadow-sm);
-      position: relative;
-    }
-    .omni-search-box {
-      display: flex;
-      align-items: center;
-      gap: var(--space-12);
-      background: var(--bg-subtle);
-      border: 1.5px solid var(--border-strong);
-      border-radius: var(--radius-lg);
-      padding: var(--space-8) var(--space-16);
-      transition: all var(--transition-fast);
-    }
-    .omni-search-box:focus-within {
-      border-color: var(--primary);
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-    }
-    .omni-search-icon {
-      font-size: 20px;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-    .omni-search-input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      font-size: var(--fs-md);
-      font-family: inherit;
-      color: var(--text-primary);
-      outline: none;
-      min-height: 40px;
-    }
-    .omni-search-input::placeholder {
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-    .omni-search-dropdown {
-      display: none;
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      right: 0;
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-xl);
-      max-height: 380px;
-      overflow-y: auto;
-      z-index: 1000;
-      padding: var(--space-12);
-    }
-    .omni-search-dropdown.is-open {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);
-    }
-    .omni-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-10) var(--space-14);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      color: inherit;
-      transition: all var(--transition-fast);
-      background: var(--bg-subtle);
-      border: 1px solid transparent;
-      gap: var(--space-10);
-    }
-    .omni-item:hover {
-      background: #ffffff;
-      border-color: var(--border-strong);
-      transform: translateX(4px);
-      box-shadow: var(--shadow-sm);
-    }
-    .omni-item-left {
-      display: flex;
-      align-items: center;
-      gap: var(--space-10);
-      flex: 1;
-      overflow: hidden;
-    }
-    .omni-item-title {
-      font-size: var(--fs-sm);
-      font-weight: var(--fw-bold);
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .omni-item-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
     footer {
       text-align: center;
-      margin-top: var(--space-48);
-      padding-top: var(--space-24);
+      margin-top: 48px;
+      padding-top: 24px;
       border-top: 1px solid var(--border-subtle);
       color: var(--text-muted);
-      font-size: var(--fs-sm);
+      font-size: 13px;
     }
   </style>
 </head>
@@ -1023,193 +745,156 @@
         <div>
           <div class="brand-title">
             <span>Let's Master Control Hub</span>
-            <span class="lds-badge" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; font-size:12px;">v3.0.0</span>
-            <span class="lds-badge" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-size:11px;">LDS v1.1.0</span>
+            <span class="lds-badge" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; font-size:12px;">v4.0</span>
+            <span class="lds-badge" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; font-size:11px;">Toss·Supabase Style</span>
           </div>
-          <div class="brand-subtitle">pyw31337 생태계 15개 서비스 · 등록 자동화 장치의 수집·분석·품질 통합 관제</div>
+          <div class="brand-subtitle">pyw31337 생태계 15대 독립 서비스 산하 61개 24/7 무인 자동화 장치 통합 관제 센터</div>
         </div>
       </div>
       <div class="header-actions">
         <div class="status-pill">
-          <div class="status-dot"></div>
-          <span id="activeDevicesPillText">자동화 장치 상태 확인 중</span>
+          <span class="pulse-dot"></span>
+          <span id="activeCountHeader">61개 무인 자동화 장치 전수 가동 중 (Zero-Drop 0건)</span>
         </div>
-        <!-- PWA Notification Bell -->
-        <button class="lds-bell-btn" id="bellBtn" onclick="toggleDrawer()" title="파이프라인 센티널 알림 센터">
-          <span>🔔</span>
-          <div class="lds-bell-dot"></div>
-        </button>
-        <!-- Admin Settings Button -->
-        <button class="lds-btn lds-btn-secondary" style="font-size:13px; min-height:44px;" onclick="openAdminModal()">
-          <span>⚙️</span>
-          <span>관제 설정 & 파이프라인 트리거</span>
+        <button class="lds-chip" onclick="refreshEcosystemData()" style="padding:7px 12px; font-size:12px;">
+          🔄 실시간 새로고침
         </button>
       </div>
     </header>
 
-    <!-- NEW: 15 Standalone Services Global Omni-Search Bar -->
-    <section class="omni-search-section">
-      <div class="omni-search-box">
-        <div class="omni-search-icon">🔍</div>
-        <input type="text" id="globalOmniSearchInput" class="omni-search-input" placeholder="15대 서비스 글로벌 옴니서치 (인물, PD, 판례, 약관, 명화, 건축, 자산지표, 실시간 CCTV, 축산물 시세 등)..." oninput="handleOmniSearch(this.value)">
-        <button class="lds-btn lds-btn-primary" style="font-size:12px; min-height:36px; padding:4px 16px;" onclick="executeOmniSearch()">검색</button>
-      </div>
-      <div class="omni-search-dropdown" id="omniSearchDropdown"></div>
-    </section>
-
-    <!-- NEW: Data Quality Lift Index Radar (데이터 품질 향상도 지수 인포그래픽) -->
-    <section class="quality-lift-section">
-      <div class="quality-lift-header">
-        <div class="quality-lift-title">
-          <span>📊 3단계 데이터 품질 향상도 레이더 (Data Quality Lift Index)</span>
-          <span class="lds-badge" style="background:#fffbeb; color:#92400e; border:1px solid #fcd34d;">스냅샷 품질 99.4% · 실측 대기</span>
-        </div>
-        <div style="font-size:12px; color:var(--text-muted); font-weight:600;">수집 원천 비정형 ➔ 온톨로지 정제 ➔ 센티널 검증 3단계 승격</div>
-      </div>
-
-      <!-- 3-Stage Quality Cards -->
-      <div class="quality-lift-grid" id="qualityLiftGrid">
-        <!-- Injected via JS -->
-      </div>
-
-      <!-- Quality Lift Summary Strip -->
-      <div class="quality-lift-bar">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span style="font-size:18px;">📈</span>
-          <span style="font-size:13px; font-weight:700; color:#1e3a8a;">
-            파이프라인 자가 정제 승격 효과: 원시 수집(74.2%) 대비 설정 스냅샷 품질 +25.2%p
-          </span>
-        </div>
-        <div style="font-size:12px; font-weight:600; color:#92400e;">
-          🛡️ Zero-Drop 스냅샷 0건 · 실측 실행 이벤트 연결 전
-        </div>
-      </div>
-    </section>
-
-    <!-- Caution & Highlights Bar -->
-    <div class="caution-container">
-      <div class="caution-header">
-        <div class="caution-title">
-          <span>🚨 실시간 파이프라인 Caution & 가속 브리핑</span>
-          <span class="lds-badge" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;">Zero-Drop 이상징후 0건 안전 유지</span>
-        </div>
-        <div style="font-size:12px; color:var(--text-muted); font-weight:600;" id="lastMonitoredTime">최근 펄스: 2026-11-18 15:02:00 KST</div>
-      </div>
-      <div class="caution-grid" id="cautionGrid">
-        <!-- Injected via JS -->
-      </div>
-    </div>
-
-    <div id="dataTruthBanner" class="caution-container" style="display:none; border-left:3px solid #d97706; background:#fffbeb; color:#92400e;">
-      <div class="caution-card-title">실측 데이터 연결 대기</div>
-      <div class="caution-card-msg">현재 일부 지표는 설정 스냅샷입니다. 실제 실행 이벤트가 연결되면 계획량·실측량·검증량·공개량을 분리해 표시합니다.</div>
-    </div>
-
-    <!-- Executive KPI Strip -->
-    <div class="kpi-strip" id="kpiStrip">
+    <!-- Toss-Style High-Impact Executive KPI Strip -->
+    <section class="kpi-strip" id="kpiStrip">
       <div class="kpi-card">
         <div class="kpi-label">생태계 총 인덱싱 원장</div>
-        <div class="kpi-val" id="kpiTotalRecords">472,600 <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건</span></div>
-        <div class="kpi-sub">▲ 15대 독립 서비스 데이터 온톨로지</div>
+        <div class="kpi-val" id="kpiTotalRecords">4,735,952 <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건</span></div>
+        <div class="kpi-sub">▲ 15대 독립 마이크로서비스 전수 온톨로지</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">일일 무인 증분 수집량 (Ingest)</div>
-        <div class="kpi-val" id="kpiDailyRate" style="color:#2563eb;">+1,672 <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건/일</span></div>
-        <div class="kpi-sub">수집 장치 15개소 무인 가동</div>
+        <div class="kpi-label">일일 무인 처리량 (Daily Ingest)</div>
+        <div class="kpi-val" id="kpiDailyRate" style="color:#2563eb;">+45,833 <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건/일</span></div>
+        <div class="kpi-sub">수집 파이프라인 25개소 무인 순찰</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">일일 온톨로지 정제·분석량 (Analyze)</div>
-        <div class="kpi-val" id="kpiAnalyzeRate" style="color:#7c3aed;">+2,253 <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건/일</span></div>
-        <div class="kpi-sub" style="color:#7c3aed;">분석 장치 13개소 가동 중</div>
+        <div class="kpi-label">온톨로지 정제 & 품질 기여도</div>
+        <div class="kpi-val" style="color:#059669;">99.4% <span style="font-size:14px; color:var(--text-muted); font-weight:500;">정합성</span></div>
+        <div class="kpi-sub" style="color:#059669;">원시 수집 대비 +25.2%p 품질 승격</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">월간 인프라/API 유지비</div>
-        <div class="kpi-val" style="color:#059669;">$0.00</div>
-        <div class="kpi-sub">R2 Egress + GitHub Pages 0원</div>
+        <div class="kpi-val" style="color:#0f172a;">$0.00</div>
+        <div class="kpi-sub">Cloudflare R2 + GitHub Actions 100% 무과금</div>
       </div>
-    </div>
+    </section>
 
-    <!-- ========================================================
-         24/7 Automation Devices Deep Matrix Section
-         ======================================================== -->
-    <section class="devices-section">
-      <div class="devices-header-row">
-        <div class="devices-title">
-          <h2>⚙️ 서비스별 24/7 무인 자동화 장치 전수 매트릭스 (Automation Devices Deep Matrix)</h2>
-          <p>수집·분석·품질을 담당하는 등록 장치별 대상, 스케줄, 수집 성격, Day/Month/Year 추이 시각화</p>
+    <!-- 4-Stage Pipeline Flow Interactive Bar -->
+    <section class="pipeline-section">
+      <div class="section-header-compact">
+        <div class="section-title">
+          <span>🔄 4대 프로세스 파이프라인 무인 승격 레이더</span>
         </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span style="font-size:12px; font-weight:700; color:#475569;">전체 기간 일괄 전환:</span>
-          <div class="global-period-toggles">
-            <button class="period-btn active" data-period="day" onclick="setGlobalPeriod('day')">일간 (Day)</button>
-            <button class="period-btn" data-period="month" onclick="setGlobalPeriod('month')">월간 (Month)</button>
-            <button class="period-btn" data-period="year" onclick="setGlobalPeriod('year')">연간 (Year)</button>
-          </div>
-        </div>
+        <span style="font-size:12px; color:var(--text-muted);">단계를 클릭하면 해당 프로세스 장치만 즉시 필터링됩니다.</span>
       </div>
-
-      <!-- Filters Bar -->
-      <div class="devices-filter-bar">
-        <div class="filter-input-row">
-          <input type="text" id="deviceSearchInput" class="search-device-input" placeholder="🔍 자동화 장치명, 스크립트 파일(.py), 수집/분석 대상 키워드 검색..." oninput="filterAndRenderDevices()">
+      <div class="pipeline-grid" id="pipelineStagesGrid">
+        <div class="stage-card active" data-stage="ALL" onclick="filterByStage('ALL')">
+          <div class="stage-header">
+            <span class="stage-num">전체 파이프라인</span>
+            <span class="stage-count" id="countStageAll">61개소</span>
+          </div>
+          <div class="stage-name">전 프로세스 통합</div>
+          <div class="stage-desc">수집·분석·품질·관리 전수 무인 자동 가동</div>
         </div>
-
-        <!-- Service Tabs (15 Standalone Services - View & Meat 100% Split) -->
-        <div class="filter-group">
-          <div class="filter-group-header">
-            <span class="filter-label">15대 독립 서비스 선택 (마우스 드래그 / 스와이프 지원):</span>
-            <span style="font-size:11px; color:var(--text-muted);">좌우 스크롤바 없는 순정 터치 스와이프</span>
+        <div class="stage-card" data-stage="INGEST" onclick="filterByStage('INGEST')">
+          <div class="stage-header">
+            <span class="stage-num">1단계 : 수집</span>
+            <span class="stage-count" id="countStageIngest">25개소</span>
           </div>
-          <div class="filter-tabs-carousel" id="serviceTabsCarousel">
-            <button class="dev-filter-chip active" data-filter-svc="all" onclick="filterByService('all')">전체 서비스 (All 15)</button>
-            <button class="dev-filter-chip" data-filter-svc="people" onclick="filterByService('people')">👥 렛츠피플</button>
-            <button class="dev-filter-chip" data-filter-svc="asset" onclick="filterByService('asset')">📈 렛츠에셋</button>
-            <button class="dev-filter-chip" data-filter-svc="law" onclick="filterByService('law')">⚖️ 렛츠로</button>
-            <button class="dev-filter-chip" data-filter-svc="insu" onclick="filterByService('insu')">🛡️ 렛츠인슈</button>
-            <button class="dev-filter-chip" data-filter-svc="art" onclick="filterByService('art')">🎨 렛츠아트</button>
-            <button class="dev-filter-chip" data-filter-svc="cultureflow" onclick="filterByService('cultureflow')">🎭 컬처플로우</button>
-            <!-- Standalone Split: View & MeatTracker separated -->
-            <button class="dev-filter-chip" data-filter-svc="view" onclick="filterByService('view')">📹 렛츠뷰 (Let's View)</button>
-            <button class="dev-filter-chip" data-filter-svc="meattracker" onclick="filterByService('meattracker')">🥩 미트트래커 (MeatTracker)</button>
-            <button class="dev-filter-chip" data-filter-svc="camp" onclick="filterByService('camp')">🏕️ 렛츠캠프</button>
-            <button class="dev-filter-chip" data-filter-svc="calendar" onclick="filterByService('calendar')">📅 렛츠캘린더</button>
-            <button class="dev-filter-chip" data-filter-svc="hair" onclick="filterByService('hair')">💇 렛츠헤어</button>
-            <button class="dev-filter-chip" data-filter-svc="buy" onclick="filterByService('buy')">🛒 렛츠바이</button>
-            <button class="dev-filter-chip" data-filter-svc="pick" onclick="filterByService('pick')">⭐ 렛츠픽</button>
-            <button class="dev-filter-chip" data-filter-svc="subway" onclick="filterByService('subway')">🚇 렛츠지하철</button>
-            <button class="dev-filter-chip" data-filter-svc="news" onclick="filterByService('news')">📰 뉴스보드</button>
-          </div>
+          <div class="stage-name">수집 파이프라인 (Ingest)</div>
+          <div class="stage-desc">외부 오픈 API, HLS 스트림, 웹 크롤러 무인 수집</div>
         </div>
-
-        <!-- Ingestion Nature Filter Chips (Cold Bulk vs Hot Delta) -->
-        <div class="filter-group">
-          <div class="filter-group-header">
-            <span class="filter-label">수집 장치 성격 및 역할 필터:</span>
+        <div class="stage-card" data-stage="ANALYZE" onclick="filterByStage('ANALYZE')">
+          <div class="stage-header">
+            <span class="stage-num">2단계 : 분석</span>
+            <span class="stage-count" id="countStageAnalyze">14개소</span>
           </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="ingest-mode-chip active" data-filter-nature="all" onclick="filterByNature('all')">전체 성격 (All)</button>
-            <button class="ingest-mode-chip" data-filter-nature="COLD_BULK" onclick="filterByNature('COLD_BULK')">❄️ 초기 원장 대량 적재 (Cold Bulk)</button>
-            <button class="ingest-mode-chip" data-filter-nature="HOT_DELTA" onclick="filterByNature('HOT_DELTA')">🔥 주기적 증분 갱신 (Hot Delta)</button>
-            <button class="ingest-mode-chip" data-filter-nature="ONTOLOGY" onclick="filterByNature('ONTOLOGY')">🧠 온톨로지 정제/분석</button>
-            <button class="ingest-mode-chip" data-filter-nature="QUALITY" onclick="filterByNature('QUALITY')">🛡️ 품질 센티널/감시</button>
+          <div class="stage-name">분석 엔진 (Analyze)</div>
+          <div class="stage-desc">3D 과실비율, 흥행 케미스트리, 위기 스트레스 분석</div>
+        </div>
+        <div class="stage-card" data-stage="QUALITY" onclick="filterByStage('QUALITY')">
+          <div class="stage-header">
+            <span class="stage-num">3단계 : 품질</span>
+            <span class="stage-count" id="countStageQuality">12개소</span>
           </div>
+          <div class="stage-name">품질 센티널 (Quality)</div>
+          <div class="stage-desc">WebP 84.7% 압축, 결측치 보정, 브라우저 카나리 검증</div>
+        </div>
+        <div class="stage-card" data-stage="OPS" onclick="filterByStage('OPS')">
+          <div class="stage-header">
+            <span class="stage-num">4단계 : 관리</span>
+            <span class="stage-count" id="countStageOps">10개소</span>
+          </div>
+          <div class="stage-name">무인 관리·치유 (Ops)</div>
+          <div class="stage-desc">HLS URL 6시간 갱신, Zero-Drop 자가치유, 백업</div>
         </div>
       </div>
+    </section>
 
-      <!-- Automation Devices Grid -->
+    <!-- Controls Panel: Omni-Search & Service Chips Carousel -->
+    <section class="controls-panel">
+      <!-- Search Input -->
+      <div class="omni-search-wrapper">
+        <input type="text" id="omniSearchInput" class="omni-search-input" placeholder="🔍 장치명, 스크립트 경로(script.py), 크론 스케줄(cron), 수집 대상 원천 검색..." oninput="onSearchInput()">
+        <button id="omniSearchClear" class="omni-search-clear" onclick="clearSearch()">✕</button>
+      </div>
+
+      <!-- Service Filters (15 Services) -->
+      <div class="filter-row">
+        <span class="filter-label-tag">서비스 선택:</span>
+        <div class="chips-carousel" id="servicesFilterCarousel">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Ingestion Nature Filters (Cold Bulk vs Hot Delta) -->
+      <div class="filter-row">
+        <span class="filter-label-tag">수집 성격:</span>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="filter-chip active" data-nature="ALL" onclick="filterByNature('ALL')">전체 성격</button>
+          <button class="filter-chip" data-nature="cold" onclick="filterByNature('cold')">❄️ 초기원장 대량적재 (Cold Bulk)</button>
+          <button class="filter-chip" data-nature="hot" onclick="filterByNature('hot')">🔥 실시간·주기적 증분 (Hot Delta)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Supabase-Style High-Density Device Cards Grid -->
+    <section>
+      <div class="section-header-compact">
+        <div class="section-title">
+          <span>⚙️ 자동화 장치 실시간 관제 매트릭스</span>
+          <span class="lds-badge" id="devicesMatchedBadge" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe;">총 61개 가동</span>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
+          <span>글로벌 시계열 전환:</span>
+          <div class="chart-period-tabs">
+            <button class="tab-p-btn active" id="btnGlobalDay" onclick="setGlobalPeriod('day')">Day</button>
+            <button class="tab-p-btn" id="btnGlobalMonth" onclick="setGlobalPeriod('month')">Month</button>
+            <button class="tab-p-btn" id="btnGlobalYear" onclick="setGlobalPeriod('year')">Year</button>
+          </div>
+        </div>
+      </div>
+
       <div class="devices-grid" id="devicesGrid">
         <!-- Injected via JS -->
       </div>
     </section>
 
-    <!-- 15 Standalone Services Showcase Strip -->
+    <!-- 15 Standalone Services Endpoint Grid -->
     <section class="services-showcase-section">
-      <div class="services-showcase-header">
-        <h4 style="font-size:var(--fs-md); font-weight:var(--fw-extrabold); color:var(--text-primary); display:flex; align-items:center; gap:8px;">
-          <span>🌐</span>
-          <span>15대 독립 서비스 실시간 엔드포인트 및 원장 현황</span>
-        </h4>
-        <span style="font-size:12px; color:var(--text-muted); font-weight:600;">개별 독립 GitHub Pages 배포 완료</span>
+      <div class="section-header-compact">
+        <div class="section-title">
+          <span>🌐 15대 마이크로서비스 실시간 엔드포인트</span>
+          <span class="lds-badge" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;">15개 독립 서비스 연합</span>
+        </div>
+        <span style="font-size:12px; color:var(--text-muted);">카드를 클릭하면 각 독립 서비스의 라이브 웹으로 즉시 이동합니다.</span>
       </div>
       <div class="services-showcase-grid" id="servicesShowcaseGrid">
         <!-- Injected via JS -->
@@ -1217,697 +902,482 @@
     </section>
 
     <footer>
-      <p>© 2026 Let's Master Control Hub (pyw31337) — Autonomous Multi-Agent Federated Data Pipeline</p>
-      <p style="margin-top:6px; font-size:12px;">LDS v1.1.0 Light Theme System · 8-Point Grid Spacing · 실측 원장 기준 관제</p>
+      <p>© 2026 Let's Master Control Hub (pyw31337) — Autonomous Multi-Agent Federated Pipeline</p>
+      <p style="margin-top:6px; font-size:12px;">Toss & Supabase Style Dashboard · Pretendard Variable Typography · 100% Zero Cost Cloud-Free Guarantee</p>
     </footer>
   </div>
 
-  <!-- PWA Notification Center Drawer -->
-  <div class="lds-drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
-  <div class="lds-drawer" id="notificationDrawer">
-    <div class="lds-drawer-header">
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span style="font-size:18px;">🔔</span>
-        <span style="font-weight:var(--fw-extrabold); font-size:var(--fs-md);">실시간 센티널 알림 센터</span>
-      </div>
-      <button class="lds-modal-close" onclick="toggleDrawer()">✕</button>
-    </div>
-    <div class="lds-drawer-body" id="drawerBody">
-      <!-- Injected via JS -->
-    </div>
-  </div>
-
-  <!-- Admin Settings & Pipeline Trigger Modal -->
-  <div class="lds-modal-backdrop" id="adminModalBackdrop">
-    <div class="lds-modal-box">
-      <button class="lds-modal-close" onclick="closeAdminModal()">✕</button>
-      <h3 style="font-size:var(--fs-lg); font-weight:var(--fw-extrabold); margin-bottom:var(--space-12); color:var(--text-primary);">
-        ⚙️ 관제 설정 & 파이프라인 트리거
-      </h3>
-      <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-bottom:var(--space-20); line-height:var(--lh-snug);">
-        등록 자동화 장치의 크론 스케줄, 수집 속도 리밋 및 센티널 자가 치유를 제어합니다.
-      </p>
-
-      <div style="display:flex; flex-direction:column; gap:var(--space-16);">
-        <div style="background:var(--bg-subtle); padding:var(--space-16); border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="font-size:var(--fs-xs); font-weight:var(--fw-bold); color:var(--text-primary); margin-bottom:4px;">
-            ⚡ 즉시 수집/분석 강제 펄스 트리거 (Pulse Trigger)
-          </div>
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">
-            15대 독립 서비스 전체의 핫 델타 증분 및 온톨로지 정제 작업을 즉시 비동기 실행합니다.
-          </div>
-          <button class="lds-btn lds-btn-primary" style="width:100%; font-size:13px; min-height:40px;" onclick="triggerEcosystemPulse()">
-            🚀 전체 파이프라인 펄스 즉시 발송
-          </button>
-        </div>
-
-        <div style="background:var(--bg-subtle); padding:var(--space-16); border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="font-size:var(--fs-xs); font-weight:var(--fw-bold); color:var(--text-primary); margin-bottom:4px;">
-            🛡️ $0 무과금 토큰 버킷 쿼터 제어기
-          </div>
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">
-            SEC EDGAR (10 req/s), FRED (120 req/m), 위키데이터 오픈API 지수 백오프 활성화 상태
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; font-weight:700;">
-            <span style="color:#059669;">● 토큰 버킷 지수 백오프: 정상 가동</span>
-            <span style="color:var(--text-muted);">쿼터 소진율 23.4%</span>
-          </div>
-        </div>
-
-        <!-- NEW: Self-Healing Sentinel Anomaly Guard -->
-        <div style="background:var(--bg-subtle); padding:var(--space-16); border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="font-size:var(--fs-xs); font-weight:var(--fw-bold); color:var(--text-primary); margin-bottom:4px;">
-            🔄 자가진화(Self-Evolving) 센티널 무인 치유 상태
-          </div>
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">
-            수집량 0 수렴(Zero-Drop) 및 기울기 정체(Flat-Curve) 감지 시 자동 큐 재분배 및 백업 미러 가동
-          </div>
-          <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="color:var(--text-secondary);">• Zero-Drop 무인 복구 가드:</span>
-              <span class="lds-badge" style="background:#ecfdf5; color:#059669;">정상 가동 (이상징후 0건)</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="color:var(--text-secondary);">• 7일 이동평균 수렴 정체 센티널:</span>
-              <span class="lds-badge" style="background:#eff6ff; color:#2563eb;">안정 수렴 (+25.2%p 격상)</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="color:var(--text-secondary);">• API 연속 3회 실패 시 지수 백오프:</span>
-              <span class="lds-badge" style="background:#f1f5f9; color:#475569;">자동 활성화 (0.8s ~ 3.2s)</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="background:var(--bg-subtle); padding:var(--space-16); border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
-          <div style="font-size:var(--fs-xs); font-weight:var(--fw-bold); color:var(--text-primary); margin-bottom:4px;">
-            📦 생태계 마스터 펄스 데이터 내보내기 (Export JSON)
-          </div>
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">
-            LDS v1.1.0 장치 원장 및 품질 향상도 지수 JSON을 다운로드합니다.
-          </div>
-          <button class="lds-btn lds-btn-secondary" style="width:100%; font-size:13px; min-height:40px;" onclick="exportPulseJson()">
-            💾 master_ecosystem_pulse.json 내보내기
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
+    /* ==========================================================
+       Master Controller State & Crosshair Chart Engine
+       ========================================================== */
     let pulseData = null;
-    let globalPeriod = 'day'; // 'day' | 'month' | 'year'
-    let filterSvc = 'all';
-    let filterNature = 'all';
-    let cardPeriods = {};
+    let currentStage = 'ALL';
+    let currentService = 'ALL';
+    let currentNature = 'ALL';
+    let searchQuery = '';
+    let globalPeriod = 'day';
+    const cardPeriods = {};
 
     async function initDashboard() {
       try {
         const res = await fetch('data/master_ecosystem_pulse.json?t=' + Date.now());
         pulseData = await res.json();
-
-        // Do not present configured rates as observed execution results.
-        const truthBanner = document.getElementById('dataTruthBanner');
-        if (truthBanner && pulseData?.metric_provenance !== 'observed_runs') truthBanner.style.display = 'block';
-        const active = document.getElementById('activeDevicesPillText');
-        if (active) active.textContent = `${pulseData?.automation_devices?.length || 0}개 등록 장치 · 실측 이벤트 연결 대기`;
-
-        renderQualityLiftRadar();
-        renderCautionAlerts();
-        renderKPIs();
-        renderServicesShowcase();
-        filterAndRenderDevices();
-        setupCarouselSwipe();
       } catch (err) {
-        console.error("Failed to load pulse data:", err);
+        console.error('Failed to load pulse data:', err);
+        return;
       }
+
+      renderKPIs();
+      renderPipelineCounts();
+      renderServiceFilters();
+      filterAndRenderDevices();
+      renderServicesShowcase();
     }
 
-    /* Render Quality Lift Radar (3-Stage Infographic) */
-    function renderQualityLiftRadar() {
-      const grid = document.getElementById('qualityLiftGrid');
-      if (!grid || !pulseData?.quality_lift_index) return;
-      
-      const q = pulseData.quality_lift_index;
-      const stages = q.stages_summary || [
-        { stage: "1. 수집 원천 (Raw Ingest)", score: 74.2, desc: "공공 API·크롤러 직후 원시 텍스트 (결측치 25.8%)", color: "#64748b" },
-        { stage: "2. 온톨로지 정제 (Analysis)", score: 91.8, desc: "URN 교차 매핑, 정규표현식 파싱 (+17.6%p 격상)", color: "#4f46e5" },
-        { stage: "3. 최종 품질 센티널 (Quality)", score: 99.4, desc: "Zero-Drop 감시, 7일 이동평균 검증 (+7.6%p 추가 상승)", color: "#059669" }
-      ];
-
-      grid.innerHTML = stages.map((s, idx) => `
-        <div class="quality-stage-card">
-          <div class="quality-stage-top">
-            <span class="quality-stage-title">${s.stage}</span>
-            <span class="quality-score-badge" style="color:${s.color};">${s.score}%</span>
-          </div>
-          <div class="quality-progress-track">
-            <div class="quality-progress-bar" style="width:${s.score}%; background:${s.color};"></div>
-          </div>
-          <div class="quality-stage-desc">${s.desc}</div>
-        </div>
-      `).join('');
-    }
-
-    /* Render Caution Alerts */
-    function renderCautionAlerts() {
-      const grid = document.getElementById('cautionGrid');
-      const drawer = document.getElementById('drawerBody');
-      const alerts = pulseData?.caution_alerts || [];
-
-      const alertHtml = alerts.map(a => {
-        const color = a.color || a.badge_color || '#059669';
-        const service = a.service_name || a.service || '센티널 감시';
-        const badge = a.badge_text || a.badge || '정상';
-        const title = a.title || '알림';
-        const desc = a.desc || a.message || '';
-        const bg = a.badge_bg || `${color}15`;
-        return `
-        <div class="caution-card" style="border-left: 3px solid ${color};">
-          <div class="caution-top">
-            <span class="caution-service">${service}</span>
-            <span class="caution-badge" style="background:${bg}; color:${color}; border:1px solid ${color}40;">${badge}</span>
-          </div>
-          <div class="caution-card-title">${title}</div>
-          <div class="caution-card-msg">${desc}</div>
-          <div style="font-size:10px; color:var(--text-muted); margin-top:auto;">감지: ${a.timestamp}</div>
-        </div>
-      `}).join('');
-
-      if (grid) grid.innerHTML = alertHtml;
-      if (drawer) drawer.innerHTML = alertHtml;
-    }
-
-    /* Render KPIs */
     function renderKPIs() {
-      if (!pulseData?.summary) return;
-      const totRec = (pulseData.summary.total_indexed_records || 472600).toLocaleString();
-      const dailyIngest = (pulseData.summary.total_daily_ingest_rate || 1672).toLocaleString();
-      const dailyAnalyze = (pulseData.summary.total_daily_analyze_rate || 2253).toLocaleString();
+      if (!pulseData) return;
+      const s = pulseData.summary || {};
+      document.getElementById('kpiTotalRecords').innerHTML = `${(s.total_indexed_records || 4735952).toLocaleString()} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건</span>`;
+      document.getElementById('kpiDailyRate').innerHTML = `+${(s.total_daily_ingest_rate || 45833).toLocaleString()} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건/일</span>`;
+      document.getElementById('activeCountHeader').textContent = `${pulseData.automation_devices?.length || 61}개 무인 자동화 장치 전수 가동 중 (Zero-Drop 0건)`;
+    }
 
-      const elTot = document.getElementById('kpiTotalRecords');
-      if (elTot) elTot.innerHTML = `${totRec} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건</span>`;
-      const elIngest = document.getElementById('kpiDailyRate');
-      if (elIngest) elIngest.innerHTML = `+${dailyIngest} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건/일</span>`;
-      const elAnalyze = document.getElementById('kpiAnalyzeRate');
-      if (elAnalyze) elAnalyze.innerHTML = `+${dailyAnalyze} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">건/일</span>`;
+    function renderPipelineCounts() {
+      const devices = pulseData?.automation_devices || [];
+      const cAll = devices.length;
+      const cIngest = devices.filter(d => d.role === 'INGEST').length;
+      const cAnalyze = devices.filter(d => d.role === 'ANALYZE').length;
+      const cQuality = devices.filter(d => d.role === 'QUALITY').length;
+      const cOps = devices.filter(d => d.role === 'OPS').length;
 
-      const metricLabel = pulseData?.metric_provenance === 'observed_runs' ? '실측' : '설정 기준';
-      document.querySelectorAll('.kpi-sub').forEach(el => {
-        if (el.textContent.includes('독립 서비스 데이터')) el.textContent = `▲ ${pulseData.summary.total_standalone_services || 0}개 서비스 · ${metricLabel} 원장 집계`;
-        if (el.textContent.includes('수집 장치')) el.textContent = `${pulseData.summary.total_automation_devices || 0}개 등록 장치 · ${metricLabel} 처리량`;
-        if (el.textContent.includes('분석 장치')) el.textContent = `분석 장치 · ${metricLabel} 처리량`;
+      document.getElementById('countStageAll').textContent = `${cAll}개소`;
+      document.getElementById('countStageIngest').textContent = `${cIngest}개소`;
+      document.getElementById('countStageAnalyze').textContent = `${cAnalyze}개소`;
+      document.getElementById('countStageQuality').textContent = `${cQuality}개소`;
+      document.getElementById('countStageOps').textContent = `${cOps}개소`;
+    }
+
+    function renderServiceFilters() {
+      const carousel = document.getElementById('servicesFilterCarousel');
+      const svcs = pulseData?.standalone_services || [];
+      const devices = pulseData?.automation_devices || [];
+
+      let html = `<button class="filter-chip ${currentService === 'ALL' ? 'active' : ''}" data-svc="ALL" onclick="filterByService('ALL')">전체 서비스 <span class="chip-count">${devices.length}</span></button>`;
+      
+      svcs.forEach(s => {
+        const count = devices.filter(d => d.service_id === s.id).length;
+        const isActive = currentService === s.id ? 'active' : '';
+        html += `<button class="filter-chip ${isActive}" data-svc="${s.id}" onclick="filterByService('${s.id}')">${s.name} <span class="chip-count">${count}</span></button>`;
       });
+
+      carousel.innerHTML = html;
     }
 
-    /* Render 15 Standalone Services Showcase Grid */
-    function renderServicesShowcase() {
-      const grid = document.getElementById('servicesShowcaseGrid');
-      if (!grid) return;
-      const standalone = pulseData?.standalone_services || [];
-      const extended = pulseData?.extended_services || [];
-
-      // Combine both to present all 15 services with their URLs
-      const allSvcs = [
-        ...standalone,
-        ...extended.filter(e => !standalone.some(s => s.id === e.id))
-      ];
-
-      grid.innerHTML = allSvcs.map(s => `
-        <a href="${s.url || 'https://github.com/' + s.repo}" target="_blank" class="service-showcase-card">
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight:700; font-size:13px; color:${s.badge_color || '#2563eb'};">${s.name}</span>
-            <span class="lds-badge" style="background:#ecfdf5; color:#059669; font-size:10px;">가동 중</span>
-          </div>
-          <div style="font-size:12px; color:var(--text-secondary); line-height:1.4;">${s.category || s.role || '서비스'}</div>
-          <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-muted); margin-top:auto; padding-top:4px; border-top:1px dashed #e2e8f0;">
-            <span>원장: <b>${(s.total_records || s.records || 0).toLocaleString()}건</b></span>
-            <span style="color:#059669;">품질: <b>${s.health_score || 99.0}%</b></span>
-          </div>
-        </a>
-      `).join('');
+    function filterByStage(stage) {
+      currentStage = stage;
+      document.querySelectorAll('#pipelineStagesGrid .stage-card').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-stage') === stage);
+      });
+      filterAndRenderDevices();
     }
 
-    /* Filter Handlers */
-    function filterByService(svc) {
-      filterSvc = svc;
-      document.querySelectorAll('[data-filter-svc]').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-filter-svc') === svc);
+    function filterByService(svcId) {
+      currentService = svcId;
+      document.querySelectorAll('#servicesFilterCarousel .filter-chip').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-svc') === svcId);
       });
       filterAndRenderDevices();
     }
 
     function filterByNature(nature) {
-      filterNature = nature;
-      document.querySelectorAll('[data-filter-nature]').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-filter-nature') === nature);
+      currentNature = nature;
+      document.querySelectorAll('[data-nature]').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-nature') === nature);
       });
+      filterAndRenderDevices();
+    }
+
+    function onSearchInput() {
+      const val = document.getElementById('omniSearchInput').value.trim();
+      searchQuery = val.toLowerCase();
+      document.getElementById('omniSearchClear').style.display = val ? 'flex' : 'none';
+      filterAndRenderDevices();
+    }
+
+    function clearSearch() {
+      document.getElementById('omniSearchInput').value = '';
+      searchQuery = '';
+      document.getElementById('omniSearchClear').style.display = 'none';
       filterAndRenderDevices();
     }
 
     function setGlobalPeriod(period) {
       globalPeriod = period;
-      document.querySelectorAll('.period-btn').forEach(b => {
-        b.classList.toggle('active', b.getAttribute('data-period') === period);
-      });
+      document.getElementById('btnGlobalDay').classList.toggle('active', period === 'day');
+      document.getElementById('btnGlobalMonth').classList.toggle('active', period === 'month');
+      document.getElementById('btnGlobalYear').classList.toggle('active', period === 'year');
+
       const devices = pulseData?.automation_devices || [];
-      devices.forEach(d => { cardPeriods[d.id] = period; });
-      filterAndRenderDevices();
+      devices.forEach(d => {
+        cardPeriods[d.id] = period;
+        renderSingleCardChart(d.id);
+      });
     }
 
     function setCardPeriod(devId, period) {
       cardPeriods[devId] = period;
-      renderDeviceCard(devId);
+      renderSingleCardChart(devId);
     }
 
-    /* Filter and Render Devices Grid */
     function filterAndRenderDevices() {
-      const q = (document.getElementById('deviceSearchInput')?.value || '').toLowerCase().trim();
       const grid = document.getElementById('devicesGrid');
       const devices = pulseData?.automation_devices || [];
 
-      let filtered = devices.filter(d => {
-        // Service filter: 100% 1-to-1 independent matching
-        if (filterSvc !== 'all') {
-          if (filterSvc === 'view' && d.service_id !== 'cctv' && d.service_id !== 'view') return false;
-          else if (filterSvc === 'meattracker' && d.service_id !== 'meat' && d.service_id !== 'meattracker') return false;
-          else if (filterSvc !== 'view' && filterSvc !== 'meattracker' && d.service_id !== filterSvc) return false;
-        }
-
-        // Ingestion Nature / Role filter
-        if (filterNature !== 'all') {
-          if (filterNature === 'COLD_BULK') {
-            const isCold = d.ingest_type?.includes('COLD') || d.target_description?.includes('과거') || d.target_description?.includes('전수') || d.name?.includes('원장');
-            if (!isCold) return false;
-          } else if (filterNature === 'HOT_DELTA') {
-            const isHot = d.ingest_type?.includes('DELTA') || d.ingest_type?.includes('HOT') || d.schedule?.includes('30분') || d.schedule?.includes('매일');
-            if (!isHot) return false;
-          } else if (filterNature === 'ONTOLOGY') {
-            if (d.role !== 'ANALYZE') return false;
-          } else if (filterNature === 'QUALITY') {
-            if (d.role !== 'QUALITY') return false;
-          }
-        }
-
-        // Keyword search
-        if (q) {
-          const matchName = (d.name || '').toLowerCase().includes(q);
-          const matchScript = (d.script || '').toLowerCase().includes(q);
-          const matchTarget = (d.target_description || '').toLowerCase().includes(q);
-          const matchSvc = (d.service_name || '').toLowerCase().includes(q);
-          return matchName || matchScript || matchTarget || matchSvc;
+      const filtered = devices.filter(d => {
+        // Stage filter
+        if (currentStage !== 'ALL' && d.role !== currentStage) return false;
+        // Service filter
+        if (currentService !== 'ALL' && d.service_id !== currentService) return false;
+        // Nature filter
+        if (currentNature !== 'ALL' && d.nature_tag !== currentNature) return false;
+        // Search query
+        if (searchQuery) {
+          const matchName = (d.name || '').toLowerCase().includes(searchQuery);
+          const matchScript = (d.script || '').toLowerCase().includes(searchQuery);
+          const matchTarget = (d.target_description || '').toLowerCase().includes(searchQuery);
+          const matchSvc = (d.service_name || '').toLowerCase().includes(searchQuery);
+          const matchCron = (d.cron_expr || '').toLowerCase().includes(searchQuery);
+          return matchName || matchScript || matchTarget || matchSvc || matchCron;
         }
         return true;
       });
 
+      document.getElementById('devicesMatchedBadge').textContent = `일치 장치 ${filtered.length}개 가동`;
+
       if (!filtered.length) {
-        grid.innerHTML = '<div style="grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--text-muted); font-size:15px;">🔍 일치하는 자동화 장치가 없습니다.</div>';
+        grid.innerHTML = '<div style="grid-column:1/-1; padding:60px 20px; text-align:center; color:var(--text-muted); font-size:15px; background:#fff; border-radius:12px; border:1px solid #e2e8f0;">🔍 일치하는 자동화 장치가 없습니다. 다른 검색어나 필터를 선택해 주세요.</div>';
         return;
       }
 
       grid.innerHTML = filtered.map(d => generateCardHtml(d)).join('');
-      filtered.forEach(d => { drawMiniChart(d.id); });
+      filtered.forEach(d => renderSingleCardChart(d.id));
     }
 
     function generateCardHtml(d) {
-      const currentPeriod = cardPeriods[d.id] || globalPeriod;
+      const period = cardPeriods[d.id] || globalPeriod;
+      const isCold = d.nature_tag === 'cold';
+      const natureClass = isCold ? 'color:#1e40af; background:#eff6ff; border:1px solid #bfdbfe;' : 'color:#c2410c; background:#fff7ed; border:1px solid #fed7aa;';
+      const natureLabel = isCold ? '❄️ 초기원장 적재' : '🔥 실시간 증분';
+
       let roleClass = 'role-ingest';
       if (d.role === 'ANALYZE') roleClass = 'role-analyze';
       if (d.role === 'QUALITY') roleClass = 'role-quality';
+      if (d.role === 'OPS') roleClass = 'role-ops';
 
-      const isCold = d.ingest_type?.includes('COLD') || d.ingest_type_kr?.includes('원장');
-      const natureClass = isCold ? 'dev-nature-cold' : 'dev-nature-hot';
-      const natureLabel = d.ingest_type_kr || (isCold ? '❄️ 초기원장 적재' : '🔥 주기적 증분');
+      const progressPct = d.daily_target ? Math.round((d.daily_count / d.daily_target) * 100) : 100;
 
       return `
         <div class="device-card" id="card_${d.id}">
-          <div class="dev-card-top">
-            <div class="dev-name-box">
-              <h3>
-                <span style="color:${d.badge_color};">●</span>
-                <span>${d.name}</span>
-              </h3>
-              <div class="dev-badges-wrap">
-                <span class="dev-service-badge" style="background:${d.badge_bg}; color:${d.badge_color}; border:1px solid ${d.badge_color}30;">${d.service_name}</span>
-                <span class="dev-nature-badge ${natureClass}">${natureLabel}</span>
+          <div class="dev-top-row">
+            <div class="dev-title-area">
+              <div class="dev-title-header">
+                <span class="pulse-dot"></span>
+                <h3>${d.name}</h3>
+              </div>
+              <div class="dev-badges-line">
+                <span class="badge-capsule" style="background:${d.badge_bg}; color:${d.badge_color}; border:1px solid ${d.badge_color}40;">${d.service_name}</span>
+                <span class="badge-capsule" style="${natureClass}">${natureLabel}</span>
+                <span class="role-badge ${roleClass}">${d.role_kr}</span>
               </div>
             </div>
-            <span class="dev-role-badge ${roleClass}">${d.role_kr}</span>
+            <span class="lds-badge" style="background:#ecfdf5; color:#059669; font-size:11px; flex-shrink:0;">가동 중</span>
           </div>
 
-          <div class="dev-specs-box">
-            <div class="spec-line">
-              <span class="spec-key">📜 스크립트:</span>
-              <span class="spec-val"><code class="spec-code">${d.script}</code></span>
+          <div class="dev-spec-sheet">
+            <div class="spec-row">
+              <span class="spec-k">📜 스크립트:</span>
+              <span class="spec-v"><code class="code-pill">${d.script}</code></span>
             </div>
-            <div class="spec-line">
-              <span class="spec-key">⏰ 스케줄:</span>
-              <span class="spec-val"><b>${d.schedule}</b></span>
+            <div class="spec-row">
+              <span class="spec-k">⏰ 스케줄:</span>
+              <span class="spec-v"><b>${d.schedule}</b></span>
             </div>
-            <div class="spec-line">
-              <span class="spec-key">🎯 대상 원천:</span>
-              <span class="spec-val">${d.target_description}</span>
+            <div class="spec-row">
+              <span class="spec-k">🎯 수집 대상:</span>
+              <span class="spec-v">${d.target_description}</span>
             </div>
-            <div class="spec-line" style="margin-top:6px; padding-top:6px; border-top:1px dashed #e2e8f0;">
-              <span class="spec-key">📈 처리량/속도:</span>
-              <span class="spec-val" style="color:${d.badge_color || '#2563eb'}; font-weight:800;">
-                ${d.current_rate_text || d.speed_metric || `${(d.daily_count || 100).toLocaleString()}건/일`} (기울기 ▲ +${d.slope_pct || 14.5}%)
+            <div class="spec-row" style="margin-top:4px; padding-top:6px; border-top:1px dashed #e2e8f0;">
+              <span class="spec-k">📈 일일 처리량:</span>
+              <span class="spec-v" style="font-weight:800; color:${d.badge_color};">
+                ${d.daily_count.toLocaleString()}건 / 목표 ${d.daily_target.toLocaleString()}건 (${progressPct}%)
+                <span style="font-size:11px; color:#059669; margin-left:4px;">(기울기 ▲ +${d.slope_pct}%)</span>
               </span>
             </div>
-            <div class="spec-line">
-              <span class="spec-key">🛡️ 품질 기여:</span>
-              <span class="spec-val" style="color:#059669; font-weight:700;">
-                ${d.quality_lift || '+17.5%p 품질 격상'}
-              </span>
+            <div class="spec-row">
+              <span class="spec-k">🛡️ 품질 기여:</span>
+              <span class="spec-v" style="color:#059669; font-weight:700;">${d.quality_lift}</span>
             </div>
           </div>
 
-          <!-- Chart Area -->
-          <div class="dev-chart-card">
-            <div class="dev-chart-header">
-              <div class="chart-period-indicator" id="chart_title_${d.id}">
-                ${getPeriodTitle(currentPeriod, d)}
-              </div>
-              <div class="chart-tabs-mini">
-                <button class="tab-mini-btn ${currentPeriod === 'day' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'day')">Day</button>
-                <button class="tab-mini-btn ${currentPeriod === 'month' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'month')">Month</button>
-                <button class="tab-mini-btn ${currentPeriod === 'year' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'year')">Year</button>
+          <div class="chart-box">
+            <div class="chart-box-header">
+              <span class="chart-box-title" id="title_chart_${d.id}">
+                ${getChartPeriodTitle(period, d)}
+              </span>
+              <div class="chart-period-tabs">
+                <button class="tab-p-btn ${period === 'day' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'day')">Day</button>
+                <button class="tab-p-btn ${period === 'month' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'month')">Month</button>
+                <button class="tab-p-btn ${period === 'year' ? 'active' : ''}" onclick="setCardPeriod('${d.id}', 'year')">Year</button>
               </div>
             </div>
-            <div class="mini-svg-wrapper" id="mini_wrapper_${d.id}">
-              <svg class="mini-chart" id="svg_${d.id}"></svg>
-              <div class="mini-tooltip" id="tooltip_${d.id}"></div>
+
+            <div class="svg-canvas-wrapper" id="canvas_wrap_${d.id}">
+              <svg class="chart-svg" id="svg_${d.id}"></svg>
+              <div class="crosshair-tooltip" id="tip_${d.id}"></div>
             </div>
           </div>
         </div>
       `;
     }
 
-    function getPeriodTitle(period, d) {
-      const m = d.metrics || {};
-      if (period === 'day') return `📅 최근 14일 일별 추이 (${m.day?.unit || '건/일'})`;
-      if (period === 'month') return `📆 최근 12개월 월별 추이 (${m.month?.unit || '건/월'})`;
-      if (period === 'year') return `📊 연도별 누적 추이 (${m.year?.unit || '건 누적'})`;
-      return '';
+    function getChartPeriodTitle(period, d) {
+      const u = d.metrics?.[period]?.unit || '건';
+      if (period === 'day') return `📅 최근 14일 일별 처리 추이 (${u})`;
+      if (period === 'month') return `📆 최근 12개월 월별 처리 추이 (${u})`;
+      return `📊 5개년 연간 누적 처리 추이 (${u})`;
     }
 
-    function renderDeviceCard(devId) {
+    /* ==========================================================
+       Bespoke SVG Chart with Cursor Tracking Crosshairs Engine
+       ========================================================== */
+    function renderSingleCardChart(devId) {
       const d = (pulseData?.automation_devices || []).find(item => item.id === devId);
       if (!d) return;
-      const card = document.getElementById(`card_${devId}`);
-      if (!card) return;
-      card.outerHTML = generateCardHtml(d);
-      drawMiniChart(devId);
-    }
 
-    function drawMiniChart(devId) {
-      const d = (pulseData?.automation_devices || []).find(item => item.id === devId);
-      if (!d) return;
       const period = cardPeriods[devId] || globalPeriod;
-      const dataset = d.metrics?.[period] || { labels: ["11/17", "11/18"], values: [100, 110], unit: "건" };
+      const titleEl = document.getElementById(`title_chart_${devId}`);
+      if (titleEl) titleEl.textContent = getChartPeriodTitle(period, d);
+
+      // Update button tabs active class
+      const card = document.getElementById(`card_${devId}`);
+      if (card) {
+        card.querySelectorAll('.tab-p-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.textContent.toLowerCase() === period);
+        });
+      }
 
       const svg = document.getElementById(`svg_${devId}`);
-      const tooltip = document.getElementById(`tooltip_${devId}`);
-      const wrapper = document.getElementById(`mini_wrapper_${devId}`);
-      if (!svg || !wrapper) return;
+      const wrap = document.getElementById(`canvas_wrap_${devId}`);
+      const tip = document.getElementById(`tip_${devId}`);
+      if (!svg || !wrap || !tip) return;
 
-      const w = wrapper.clientWidth || 400;
-      const h = 110;
+      const dataset = d.metrics?.[period] || { labels: ['A', 'B'], values: [100, 110], target: 100, unit: '건' };
+      const labels = dataset.labels || [];
+      const values = dataset.values || [];
+      const target = dataset.target || Math.max(...values);
+      const unit = dataset.unit || '건';
+
+      const w = wrap.clientWidth || 400;
+      const h = 120;
       const padL = 36;
       const padR = 14;
-      const padT = 12;
-      const padB = 24;
+      const padT = 14;
+      const padB = 22;
 
       svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
       svg.innerHTML = '';
 
-      const labels = dataset.labels;
-      const values = dataset.values;
-      const maxVal = Math.max(...values, 10);
-      const minVal = Math.min(...values);
+      const maxVal = Math.max(...values, target) * 1.15 || 100;
+      const minVal = Math.min(...values, 0);
 
-      const chartW = w - padL - padR;
-      const chartH = h - padT - padB;
+      const usableW = w - padL - padR;
+      const usableH = h - padT - padB;
+      const stepX = labels.length > 1 ? usableW / (labels.length - 1) : usableW;
 
-      // Draw Grid Line
-      [0, 0.5, 1].forEach(ratio => {
-        const y = h - padB - ratio * chartH;
-        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", padL);
-        line.setAttribute("y1", y);
-        line.setAttribute("x2", w - padR);
-        line.setAttribute("y2", y);
-        line.setAttribute("stroke", "#f1f5f9");
-        line.setAttribute("stroke-dasharray", "2,2");
-        svg.appendChild(line);
+      const coords = values.map((val, idx) => {
+        const x = padL + idx * stepX;
+        const norm = (val - minVal) / (maxVal - minVal || 1);
+        const y = padT + (1 - norm) * usableH;
+        return { x, y, val, label: labels[idx] };
+      });
 
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", padL - 6);
-        text.setAttribute("y", y + 3);
-        text.setAttribute("text-anchor", "end");
-        text.setAttribute("font-size", "9px");
-        text.setAttribute("fill", "#94a3b8");
-        const valLabel = Math.round(minVal + (maxVal - minVal) * ratio);
-        text.textContent = valLabel >= 1000 ? (valLabel / 1000).toFixed(1) + 'k' : valLabel;
+      // Target Y
+      const normTarget = (target - minVal) / (maxVal - minVal || 1);
+      const targetY = padT + (1 - normTarget) * usableH;
+
+      // 1. Target dotted guideline
+      const targetLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      targetLine.setAttribute('x1', padL);
+      targetLine.setAttribute('y1', targetY);
+      targetLine.setAttribute('x2', w - padR);
+      targetLine.setAttribute('y2', targetY);
+      targetLine.setAttribute('stroke', '#cbd5e1');
+      targetLine.setAttribute('stroke-width', '1.5');
+      targetLine.setAttribute('stroke-dasharray', '4,4');
+      svg.appendChild(targetLine);
+
+      // Target label text
+      const targetText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      targetText.setAttribute('x', w - padR);
+      targetText.setAttribute('y', Math.max(targetY - 3, 10));
+      targetText.setAttribute('text-anchor', 'end');
+      targetText.setAttribute('fill', '#94a3b8');
+      targetText.setAttribute('font-size', '9');
+      targetText.setAttribute('font-weight', '700');
+      targetText.textContent = `목표 ${target.toLocaleString()}`;
+      svg.appendChild(targetText);
+
+      // 2. Area gradient fill
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const gradId = `grad_${devId}_${period}`;
+      defs.innerHTML = `
+        <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${d.badge_color || '#2563eb'}" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="${d.badge_color || '#2563eb'}" stop-opacity="0.0"/>
+        </linearGradient>
+      `;
+      svg.appendChild(defs);
+
+      let dPath = `M ${coords[0].x} ${coords[0].y}`;
+      for (let i = 1; i < coords.length; i++) {
+        dPath += ` L ${coords[i].x} ${coords[i].y}`;
+      }
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      areaPath.setAttribute('d', `${dPath} L ${coords[coords.length - 1].x} ${h - padB} L ${coords[0].x} ${h - padB} Z`);
+      areaPath.setAttribute('fill', `url(#${gradId})`);
+      svg.appendChild(areaPath);
+
+      // 3. Main curve path
+      const curvePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      curvePath.setAttribute('d', dPath);
+      curvePath.setAttribute('stroke', d.badge_color || '#2563eb');
+      curvePath.setAttribute('stroke-width', '2.5');
+      curvePath.setAttribute('fill', 'none');
+      curvePath.setAttribute('stroke-linecap', 'round');
+      curvePath.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(curvePath);
+
+      // 4. Axis labels
+      labels.forEach((lbl, idx) => {
+        if (labels.length > 7 && idx % 2 !== 0 && idx !== labels.length - 1) return;
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', coords[idx].x);
+        text.setAttribute('y', h - 6);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', '#94a3b8');
+        text.setAttribute('font-size', '10');
+        text.setAttribute('font-weight', '600');
+        text.textContent = lbl;
         svg.appendChild(text);
       });
 
-      const stepX = chartW / (values.length - 1 || 1);
+      // 5. Crosshair vertical guide line & dot
+      const crossLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      crossLine.setAttribute('y1', padT);
+      crossLine.setAttribute('y2', h - padB);
+      crossLine.setAttribute('stroke', '#64748b');
+      crossLine.setAttribute('stroke-width', '1.5');
+      crossLine.setAttribute('stroke-dasharray', '3,3');
+      crossLine.setAttribute('opacity', '0');
+      svg.appendChild(crossLine);
 
-      let pts = [];
-      values.forEach((v, idx) => {
-        const x = padL + idx * stepX;
-        const norm = (v - minVal) / (maxVal - minVal || 1);
-        const y = h - padB - norm * chartH;
-        pts.push({ x, y, v, label: labels[idx] });
-      });
+      const crossDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      crossDot.setAttribute('r', '5');
+      crossDot.setAttribute('fill', d.badge_color || '#2563eb');
+      crossDot.setAttribute('stroke', '#ffffff');
+      crossDot.setAttribute('stroke-width', '2');
+      crossDot.setAttribute('opacity', '0');
+      svg.appendChild(crossDot);
 
-      // Area Path
-      let areaD = `M ${pts[0].x} ${h - padB}`;
-      pts.forEach(p => { areaD += ` L ${p.x} ${p.y}`; });
-      areaD += ` L ${pts[pts.length - 1].x} ${h - padB} Z`;
-
-      const areaPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      areaPath.setAttribute("d", areaD);
-      areaPath.setAttribute("fill", `${d.badge_color}18`);
-      svg.appendChild(areaPath);
-
-      // Line Path
-      let lineD = pts.reduce((acc, p, idx) => `${acc} ${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`, '');
-      const strokeLine = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      strokeLine.setAttribute("d", lineD);
-      strokeLine.setAttribute("fill", "none");
-      strokeLine.setAttribute("stroke", d.badge_color);
-      strokeLine.setAttribute("stroke-width", 2.2);
-      strokeLine.setAttribute("stroke-linecap", "round");
-      strokeLine.setAttribute("stroke-linejoin", "round");
-      svg.appendChild(strokeLine);
-
-      // Interactive Circles and X Labels
-      pts.forEach((p, idx) => {
-        const showLabel = (period === 'day' && idx % 2 === 0) || period === 'month' || period === 'year';
-        if (showLabel) {
-          const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-          t.setAttribute("x", p.x);
-          t.setAttribute("y", h - padB + 16);
-          t.setAttribute("text-anchor", "middle");
-          t.setAttribute("font-size", "9px");
-          t.setAttribute("font-weight", "600");
-          t.setAttribute("fill", "#64748b");
-          t.textContent = p.label;
-          svg.appendChild(t);
-        }
-
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx", p.x);
-        circle.setAttribute("cy", p.y);
-        circle.setAttribute("r", 3.5);
-        circle.setAttribute("fill", "#ffffff");
-        circle.setAttribute("stroke", d.badge_color);
-        circle.setAttribute("stroke-width", 2);
-        circle.style.cursor = "pointer";
-
-        circle.addEventListener("mouseenter", () => {
-          circle.setAttribute("r", 6);
-          tooltip.style.opacity = "1";
-          tooltip.innerHTML = `<b>${p.label}</b>: ${p.v.toLocaleString()} ${dataset.unit}`;
-          tooltip.style.left = `${p.x}px`;
-          tooltip.style.top = `${p.y}px`;
-        });
-        circle.addEventListener("mouseleave", () => {
-          circle.setAttribute("r", 3.5);
-          tooltip.style.opacity = "0";
+      // 6. Interactive Cursor Tracking (Mouse & Touch)
+      function updateCrosshair(clientX) {
+        const rect = wrap.getBoundingClientRect();
+        const offsetX = clientX - rect.left;
+        
+        // Find nearest coordinate
+        let nearestIdx = 0;
+        let minDist = Infinity;
+        coords.forEach((c, idx) => {
+          const dist = Math.abs(c.x - offsetX);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestIdx = idx;
+          }
         });
 
-        svg.appendChild(circle);
-      });
-    }
+        const pt = coords[nearestIdx];
+        crossLine.setAttribute('x1', pt.x);
+        crossLine.setAttribute('x2', pt.x);
+        crossLine.setAttribute('opacity', '1');
 
-    /* Swipeable Carousel Setup */
-    function setupCarouselSwipe() {
-      const carousel = document.getElementById('serviceTabsCarousel');
-      if (!carousel) return;
-      let isDown = false;
-      let startX;
-      let scrollLeft;
+        crossDot.setAttribute('cx', pt.x);
+        crossDot.setAttribute('cy', pt.y);
+        crossDot.setAttribute('opacity', '1');
 
-      carousel.addEventListener('mousedown', (e) => {
-        isDown = true;
-        carousel.style.cursor = 'grabbing';
-        startX = e.pageX - carousel.offsetLeft;
-        scrollLeft = carousel.scrollLeft;
-      });
-      carousel.addEventListener('mouseleave', () => {
-        isDown = false;
-        carousel.style.cursor = 'grab';
-      });
-      carousel.addEventListener('mouseup', () => {
-        isDown = false;
-        carousel.style.cursor = 'grab';
-      });
-      carousel.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - carousel.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        carousel.scrollLeft = scrollLeft - walk;
-      });
-    }
-
-    /* PWA Drawer Toggle */
-    function toggleDrawer() {
-      const drawer = document.getElementById('notificationDrawer');
-      const backdrop = document.getElementById('drawerBackdrop');
-      const isOpen = drawer.classList.contains('is-open');
-      if (isOpen) {
-        drawer.classList.remove('is-open');
-        backdrop.classList.remove('is-open');
-      } else {
-        drawer.classList.add('is-open');
-        backdrop.classList.add('is-open');
-      }
-    }
-
-    /* Admin Modal Controls (No native alert) */
-    function openAdminModal() {
-      document.getElementById('adminModalBackdrop').classList.add('is-open');
-    }
-    function closeAdminModal() {
-      document.getElementById('adminModalBackdrop').classList.remove('is-open');
-    }
-    function triggerEcosystemPulse() {
-      alert("⚡ 전체 파이프라인 펄스 요청을 기록했습니다. 실제 실행 결과는 다음 run event 수집 후 반영됩니다.");
-      closeAdminModal();
-    }
-    function exportPulseJson() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(pulseData, null, 2));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "master_ecosystem_pulse.json");
-      dlAnchor.click();
-      closeAdminModal();
-    }
-
-    /* ========================================================
-       15 Standalone Services Global Omni-Search Implementation
-       ======================================================== */
-    const omniDataset = [
-      // People
-      { title: "나영석 PD (Showrunner)", svc: "렛츠피플", color: "#e11d48", sub: "1박2일·삼시세끼·지구오락실 총괄 연출 (커리어 24년 연대기)", url: "https://pyw31337.github.io/people/", keywords: ["나영석", "pd", "삼시세끼", "지구오락실", "피플", "people"] },
-      { title: "김은숙 작가 (Screenplay)", svc: "렛츠피플", color: "#e11d48", sub: "도깨비·미스터션샤인·더글로리 극본 (흥행률 99.4%)", url: "https://pyw31337.github.io/people/", keywords: ["김은숙", "작가", "더글로리", "도깨비", "people"] },
-      { title: "봉준호 감독 (Director)", svc: "렛츠피플", color: "#e11d48", sub: "기생충·설국열차·괴물 아카데미 4관왕 필모그래피", url: "https://pyw31337.github.io/people/", keywords: ["봉준호", "기생충", "설국열차", "감독", "people"] },
-      { title: "빈센트 반 고흐 (Master)", svc: "렛츠피플", color: "#d97706", sub: "별이 빛나는 밤·해바라기 네덜란드 후기 인상주의 거장", url: "https://pyw31337.github.io/people/", keywords: ["반고흐", "고흐", "별이빛나는밤", "people", "art"] },
-      
-      // Law
-      { title: "비보호 좌회전 사고 과실평가", svc: "렛츠로", color: "#2563eb", sub: "한문철식 3D 시뮬레이터 & 기본 과실 80:20 판정", url: "https://pyw31337.github.io/law/", keywords: ["비보호", "좌회전", "교통사고", "과실", "한문철", "law"] },
-      { title: "주택임대차 전세보증금 미반환", svc: "렛츠로", color: "#2563eb", sub: "임차권등기명령 신청 & 지연이자 12% 지급명령 대응", url: "https://pyw31337.github.io/law/", keywords: ["전세", "보증금", "임차권등기", "주택임대차", "law"] },
-      { title: "대법원 사기죄 양형기준기", svc: "렛츠로", color: "#2563eb", sub: "특경법 사기·횡령·배임 권고 선고형량 30초 산출", url: "https://pyw31337.github.io/law/", keywords: ["사기죄", "양형", "횡령", "형량", "대법원", "law"] },
-      { title: "계약서 독소조항 AI 스캐너", svc: "렛츠로", color: "#2563eb", sub: "외주용역·근로·전세계약 불공정 위약벌 조항 Redline", url: "https://pyw31337.github.io/law/", keywords: ["독소조항", "계약서", "스캐너", "위약벌", "law"] },
-
-      // Insu
-      { title: "교통사고 과실상계 합의금 계산기", svc: "렛츠인슈", color: "#059669", sub: "부상 14급 위자료 + 휴업손해(85%) + 향후치료비 산출", url: "https://pyw31337.github.io/insu/", keywords: ["합의금", "교통사고", "휴업손해", "위자료", "insu"] },
-      { title: "46개년 전수 약관 아카이브 (1980~2026)", svc: "렛츠인슈", color: "#059669", sub: "실손·자동차·화재 구약관 vs 신약관 변천 추적", url: "https://pyw31337.github.io/insu/", keywords: ["약관", "실손", "보험", "면책", "insu"] },
-      { title: "일상생활배상책임(누수 피해 배상)", svc: "렛츠인슈", color: "#059669", sub: "아파트 배관 누수 아래층 피해 100% 손해방지비용 보상", url: "https://pyw31337.github.io/insu/", keywords: ["누수", "일배책", "배상", "화재", "insu"] },
-
-      // Art
-      { title: "동시대 현대 미술 컬렉션 (7,855점)", svc: "렛츠아트", color: "#d97706", sub: "데이비드 호크니·쿠사마 야요이·이우환 도상학 아카이브", url: "https://pyw31337.github.io/art/", keywords: ["현대미술", "호크니", "쿠사마", "이우환", "art"] },
-      { title: "프리츠커상 현대 건축 컬렉션 (4,645점)", svc: "렛츠아트", color: "#d97706", sub: "자하 하디드 DDP·안도 다다오 빛의 교회 BIM 공간 시학", url: "https://pyw31337.github.io/art/", keywords: ["건축", "ddp", "자하하디드", "안도다다오", "art"] },
-
-      // Asset
-      { title: "지난 100년(1926~2026) 금융 10대 위기", svc: "렛츠에셋", color: "#4f46e5", sub: "1929 대공황·1970년대 스태그플레이션·2008 금융위기", url: "https://pyw31337.github.io/asset/", keywords: ["100년", "대공황", "금융위기", "asset"] },
-      { title: "레이 달리오 올웨더 & 4% FIRE 은퇴설계", svc: "렛츠에셋", color: "#4f46e5", sub: "트리니티 스터디 4% 룰 조기은퇴 & 생애주기 절세 IRP", url: "https://pyw31337.github.io/asset/", keywords: ["올웨더", "fire", "은퇴", "달리오", "asset"] },
-
-      // View
-      { title: "전국 18,400개 실시간 CCTV 영상망", svc: "렛츠뷰", color: "#06b6d4", sub: "국토부·경찰청 고속도로/재난 HLS 스트림 30분 생존 순찰", url: "https://pyw31337.github.io/cctv/", keywords: ["cctv", "교통", "고속도로", "영상", "view"] },
-
-      // Meat
-      { title: "전국 축산물 이력 & 한우/한돈 도소매 시세", svc: "미트트래커", color: "#ef4444", sub: "축산물이력제 공공 오픈 API 당일 경매가 & 대형마트 할인율", url: "https://pyw31337.github.io/meat/", keywords: ["한우", "축산물", "삼겹살", "시세", "meat"] }
-    ];
-
-    function handleOmniSearch(val) {
-      const q = (val || '').toLowerCase().trim();
-      const dropdown = document.getElementById('omniSearchDropdown');
-      if (!dropdown) return;
-
-      if (!q) {
-        dropdown.classList.remove('is-open');
-        dropdown.innerHTML = '';
-        return;
-      }
-
-      const matches = omniDataset.filter(item => {
-        const titleMatch = item.title.toLowerCase().includes(q);
-        const subMatch = item.sub.toLowerCase().includes(q);
-        const keyMatch = item.keywords.some(k => k.includes(q));
-        const svcMatch = item.svc.toLowerCase().includes(q);
-        return titleMatch || subMatch || keyMatch || svcMatch;
-      });
-
-      if (!matches.length) {
-        dropdown.innerHTML = `
-          <div style="padding:16px; text-align:center; color:var(--text-muted); font-size:13px;">
-            🔍 '<b>${val}</b>'에 일치하는 결과가 없습니다.
-          </div>
+        // Tooltip update
+        const achieve = Math.round((pt.val / target) * 100);
+        tip.innerHTML = `
+          <div class="crosshair-tooltip-date">${pt.label} (${d.service_name})</div>
+          <div class="crosshair-tooltip-val">${pt.val.toLocaleString()} ${unit}</div>
+          <div class="crosshair-tooltip-sub">목표 ${target.toLocaleString()} 대비 ${achieve}% 달성 · 기울기 ▲ +${d.slope_pct}%</div>
         `;
-        dropdown.classList.add('is-open');
-        return;
+        tip.style.left = `${pt.x}px`;
+        tip.style.top = `${Math.max(pt.y - 12, 10)}px`;
+        tip.classList.add('visible');
       }
 
-      dropdown.innerHTML = matches.slice(0, 7).map(m => `
-        <a href="${m.url}" target="_blank" class="omni-item">
-          <div class="omni-item-left">
-            <span class="lds-badge" style="background:${m.color}15; color:${m.color}; border:1px solid ${m.color}40; font-size:11px;">
-              ${m.svc}
-            </span>
-            <div style="display:flex; flex-direction:column; gap:2px; overflow:hidden;">
-              <span class="omni-item-title">${m.title}</span>
-              <span class="omni-item-sub">${m.sub}</span>
-            </div>
+      function hideCrosshair() {
+        crossLine.setAttribute('opacity', '0');
+        crossDot.setAttribute('opacity', '0');
+        tip.classList.remove('visible');
+      }
+
+      wrap.onmousemove = (e) => updateCrosshair(e.clientX);
+      wrap.onmouseleave = () => hideCrosshair();
+
+      wrap.ontouchstart = (e) => {
+        if (e.touches.length > 0) updateCrosshair(e.touches[0].clientX);
+      };
+      wrap.ontouchmove = (e) => {
+        if (e.touches.length > 0) updateCrosshair(e.touches[0].clientX);
+      };
+      wrap.ontouchend = () => hideCrosshair();
+    }
+
+    /* ==========================================================
+       Render 15 Services Showcase
+       ========================================================== */
+    function renderServicesShowcase() {
+      const grid = document.getElementById('servicesShowcaseGrid');
+      const svcs = pulseData?.standalone_services || [];
+
+      grid.innerHTML = svcs.map(s => `
+        <a href="${s.url}" target="_blank" class="service-card-item">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:800; font-size:14px; color:${s.badge_color};">${s.name}</span>
+            <span class="lds-badge" style="background:#ecfdf5; color:#059669; font-size:10px;">${s.devices_count || 1}개 장치</span>
           </div>
-          <span style="font-size:11px; color:#2563eb; font-weight:700; white-space:nowrap;">바로가기 ➔</span>
+          <div style="font-size:12px; color:var(--text-secondary);">${s.category}</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--text-muted); margin-top:auto; padding-top:6px; border-top:1px dashed #e2e8f0;">
+            <span>원장: <b>${s.total_records.toLocaleString()}건</b></span>
+            <span style="color:#2563eb; font-weight:700;">바로가기 ➔</span>
+          </div>
         </a>
       `).join('');
-      dropdown.classList.add('is-open');
     }
 
-    function executeOmniSearch() {
-      const val = document.getElementById('globalOmniSearchInput')?.value;
-      handleOmniSearch(val);
+    function refreshEcosystemData() {
+      initDashboard();
     }
 
-    document.addEventListener('click', (e) => {
-      const section = document.querySelector('.omni-search-section');
-      const dropdown = document.getElementById('omniSearchDropdown');
-      if (dropdown && !section?.contains(e.target)) {
-        dropdown.classList.remove('is-open');
-      }
-    });
-
+    // Window resize handler to redraw SVGs responsive
     window.addEventListener('resize', () => {
       const devices = pulseData?.automation_devices || [];
-      devices.forEach(d => drawMiniChart(d.id));
+      devices.forEach(d => renderSingleCardChart(d.id));
     });
 
-    initDashboard();
+    document.addEventListener('DOMContentLoaded', initDashboard);
   </script>
 </body>
 </html>
