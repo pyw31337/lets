@@ -20,9 +20,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Master Ecosystem Aggregator
+      - name: Run Master Ecosystem Aggregator & Sentinel Anomaly Guard
         run: |
           python scripts/daily_ecosystem_aggregator.py
+          python scripts/sentinel_anomaly_guard.py
 
       - name: Commit and push changes
         run: |
