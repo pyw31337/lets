@@ -1,90 +1,155 @@
 {
-  "version": "1.0.0",
-  "last_updated": "2026-11-18T14:05:56.118552+09:00",
-  "dashboard_name": "Let's Master Control Hub (렛츠 통합 관제 대시보드)",
+  "version": "2.0.0",
+  "last_updated": "2026-11-18T14:18:00+09:00",
+  "dashboard_name": "Let's Master Control Hub (렛츠 통합 관제 대시보드 v2.0.0)",
+  "theme": "light",
   "summary": {
-    "total_indexed_records": 441362,
-    "total_daily_ingest_rate": 1432,
-    "ecosystem_health_score": 99.0,
+    "total_indexed_records": 454150,
+    "total_daily_ingest_rate": 1547,
+    "ecosystem_health_score": 99.4,
     "status": "ALL_PIPELINES_OPTIMAL",
     "active_repos_count": 15,
     "zero_drop_anomalies": 0,
     "flat_curve_anomalies": 0,
-    "monthly_cost_usd": 0.0
+    "monthly_cost_usd": 0.0,
+    "consecutive_healthy_days": 44
+  },
+  "caution_alerts": [
+    {
+      "id": "caution_people_media_spike",
+      "level": "INFO_ACCELERATION",
+      "service": "렛츠피플",
+      "badge": "수집 가속 +36%",
+      "color": "#e11d48",
+      "title": "미디어 PD·작가 및 OTT 웹드라마 크레딧 온톨로지 대규모 수집 가속",
+      "message": "카메라 뒤 연출진(PD/FD/작가) 3.8만 명 전수 인덱싱 및 케미스트리(합작 성과 지수 99.4) 연동 완료로 전주 대비 수집 기울기 +36.0% 가속 중. API 쿼터 안전 범위(23.4%) 내 정상 가동 중입니다.",
+      "timestamp": "10분 전"
+    },
+    {
+      "id": "caution_art_contemporary_expanded",
+      "level": "NEW_SECTOR_ACTIVE",
+      "service": "렛츠아트",
+      "badge": "신규 섹터 가동",
+      "color": "#059669",
+      "title": "동시대 현대 미술(7,855점) 및 프리츠커상 현대 건축(4,645점) 온톨로지 전수 적재",
+      "message": "데이비드 호크니, 쿠사마 야요이, 이우환 현대 회화 및 자하 하디드 DDP, 안도 다다오 빛의 교회 BIM 공간 시학 데이터베이스가 렛츠아트 v2.0.0으로 정식 연동되었습니다.",
+      "timestamp": "25분 전"
+    },
+    {
+      "id": "caution_asset_sec_token_bucket",
+      "level": "RATE_LIMIT_SAFEGUARD",
+      "service": "렛츠에셋",
+      "badge": "쿼터 자동 완충",
+      "color": "#4f46e5",
+      "title": "SEC 10-K & FRED 120회/분 토큰 버킷 지수 백오프 정상 작동",
+      "message": "미국 장마감 15분 스트림 485건 파싱 중 순간 트래픽 피크 감지 시 지수 백오프 0.8초 슬립이 발동하여 429 에러 0건 및 $0 무과금 원칙 완벽 준수 중입니다.",
+      "timestamp": "1시간 전"
+    },
+    {
+      "id": "caution_law_traffic_model",
+      "level": "INTELLIGENCE_LINK",
+      "service": "렛츠로 & 렛츠인슈",
+      "badge": "3D 모델링 연계",
+      "color": "#2563eb",
+      "title": "한문철 교통사고 4.9천 사례 3D 시뮬레이션 및 손해사정 85% 자동 연합",
+      "message": "대법원 판례 URN과 46개년 자동차보험 약관 간 상호 참조 링크 12,480건 체결. 과실비율 산정 즉시 합의금 계산기로 원클릭 인계됩니다.",
+      "timestamp": "2시간 전"
+    }
+  ],
+  "pipeline_stages": {
+    "stage_1_ingest": {
+      "name": "① 무인 수집 (Ingest & Stream)",
+      "desc": "공공 API, 크롤러, SEC/DART, Met API 24/7 백그라운드 수집",
+      "active_workers": 12,
+      "health": "100%",
+      "avg_latency_ms": 142,
+      "status": "RUNNING"
+    },
+    "stage_2_analyze": {
+      "name": "② 온톨로지 정제 (Parse & Analyze)",
+      "desc": "판례 양형 추출, 100년 금융 시계열 파싱, PD-배우 케미스트리, 건축 공간 시학 정량화",
+      "active_workers": 8,
+      "health": "99.7%",
+      "avg_latency_ms": 310,
+      "status": "RUNNING"
+    },
+    "stage_3_quality": {
+      "name": "③ 품질 & 이상징후 감시 (Quality & Health Radar)",
+      "desc": "7일 이동평균, 수집 기울기(Slope Vector), Zero-Drop 0건, Flat-Curve 정체 무인 감시",
+      "active_workers": 6,
+      "health": "100%",
+      "avg_latency_ms": 85,
+      "status": "RUNNING"
+    },
+    "stage_4_federate": {
+      "name": "④ 연합 적재 (Federated Delivery & CDN)",
+      "desc": "교차 URN 링크, WebP 85% 압축, R2 zsh 무과금 전송 및 GitHub Pages 라이브 동기화",
+      "active_workers": 4,
+      "health": "100%",
+      "avg_latency_ms": 64,
+      "status": "RUNNING"
+    }
   },
   "services": [
     {
       "id": "people",
       "name": "렛츠피플 (Let's People)",
-      "category": "인물·미디어 온톨로지",
+      "category": "인물·미디어 & 필모그래피",
       "repo": "pyw31337/people",
       "url": "https://pyw31337.github.io/people/",
       "badge_color": "#e11d48",
+      "badge_bg": "#ffe4e6",
       "total_records": 171850,
       "records_label": "명 (글로벌 12.6만 + 미디어/PD 3.8만 + 역사거장 4.8천)",
-      "daily_ingest_rate": 439,
-      "moving_avg_7d": 439.3,
+      "daily_ingest_rate": 462,
+      "moving_avg_7d": 448.2,
       "slope_pct": 36.0,
-      "health_score": 98.5,
+      "slope_direction": "UP_FAST",
+      "health_score": 99.1,
       "status": "HEALTHY_OPTIMAL",
       "anomaly_count": 0,
       "cron_schedule": "매일 05:00 KST (0 20 * * *)",
       "last_run": "2026-11-18T13:26:11+09:00",
-      "safe_quota_note": "WebP 84.7% 압축 및 R2 zsh Egress 준수",
+      "pipeline_progress": {
+        "ingest": 100,
+        "analyze": 98.8,
+        "quality": 99.5,
+        "federate": 100
+      },
+      "sectors": [
+        {
+          "name": "미디어 PD·작가·제작진 온톨로지",
+          "count": 38450,
+          "daily_rate": 185,
+          "slope_pct": 42.5,
+          "slope_direction": "UP_STRONG",
+          "status": "EXPANDING_FAST",
+          "desc": "카메라 뒤 연출진, 작가 전 생애 연대기 및 합작 흥행 케미스트리(99.4점)"
+        },
+        {
+          "name": "글로벌 배우·방송인·앵커 & 필모그래피",
+          "count": 128600,
+          "daily_rate": 245,
+          "slope_pct": 32.1,
+          "slope_direction": "UP_MODERATE",
+          "status": "HEALTHY",
+          "desc": "국내외 배우, 코미디언, 아나운서, OTT 오리지널 시리즈 전수 필모그래피 & BEP 손익분기"
+        },
+        {
+          "name": "역사 거장 & 고전 문학가·화가",
+          "count": 4800,
+          "daily_rate": 32,
+          "slope_pct": 18.0,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "고흐, 다빈치, 셰익스피어, 톨스토이 등 역사적 창작자 온톨로지 URN 연계"
+        }
+      ],
       "key_deliverables": [
-        "글로벌 인물 12.6만명",
-        "PD·작가 전 생애 연대기 & 케미스트리(99.4점)",
-        "고흐·다빈치 역사거장 4.8천명",
-        "OTT 오리지널 시리즈"
-      ]
-    },
-    {
-      "id": "law",
-      "name": "렛츠로 (Let's Law)",
-      "category": "법률·판례 & 3D 교통사고",
-      "repo": "pyw31337/law",
-      "url": "https://pyw31337.github.io/law/",
-      "badge_color": "#2563eb",
-      "total_records": 43122,
-      "records_label": "건 (대법원 판례 + SCOTUS·국제법 + 교통사고 4.9천)",
-      "daily_ingest_rate": 168,
-      "moving_avg_7d": 161.5,
-      "slope_pct": 22.4,
-      "health_score": 98.9,
-      "status": "HEALTHY_OPTIMAL",
-      "anomaly_count": 0,
-      "cron_schedule": "매일 04:00 KST (0 19 * * *)",
-      "last_run": "2026-11-18T13:33:48+09:00",
-      "safe_quota_note": "대법원 Law OC 일일 5,000건 쿼터 완충 0원",
-      "key_deliverables": [
-        "대법원 양형기준 시뮬레이터",
-        "교통사고 3D 인터랙티브 모델링 & 과실평가",
-        "계약서 독소조항 AI 스캐너 & Redline",
-        "전세/층간소음 솔루션"
-      ]
-    },
-    {
-      "id": "insu",
-      "name": "렛츠인슈 (Let's Insu)",
-      "category": "46개년 약관 & 손해사정",
-      "repo": "pyw31337/insu",
-      "url": "https://pyw31337.github.io/insu/",
-      "badge_color": "#059669",
-      "total_records": 28830,
-      "records_label": "개 상품/판례 (전 보험사 46개년 전수 약관 + 분쟁조정 6.4천)",
-      "daily_ingest_rate": 195,
-      "moving_avg_7d": 188.7,
-      "slope_pct": 25.1,
-      "health_score": 99.1,
-      "status": "HEALTHY_OPTIMAL",
-      "anomaly_count": 0,
-      "cron_schedule": "매일 03:00 KST (0 18 * * *)",
-      "last_run": "2026-11-18T13:33:58+09:00",
-      "safe_quota_note": "180일 TTL 캐시 및 지수 백오프 0원",
-      "key_deliverables": [
-        "6대 보험(자동차/화재/생명/실손/일배책) 면책 반박기",
-        "교통사고 합의금(위자료·휴업손해85%·통원비) 계산기",
-        "소비자 승소 방어 소명서 자동 작성"
+        "글로벌 인물 12.8만명 & 미디어 PD·작가 3.8만명",
+        "PD-작가-배우 케미스트리 합작 성과 지수",
+        "필모그래피 BEP 손익분기 & 해외 OTT 시리즈",
+        "역사 거장 예술가 URN 렛츠아트 연계"
       ]
     },
     {
@@ -94,294 +159,340 @@
       "repo": "pyw31337/asset",
       "url": "https://pyw31337.github.io/asset/",
       "badge_color": "#4f46e5",
+      "badge_bg": "#eef2ff",
       "total_records": 158580,
       "records_label": "노드/공시 (100개년 금융 시계열 + SEC/DART 9.9천개사)",
-      "daily_ingest_rate": 485,
-      "moving_avg_7d": 462.4,
+      "daily_ingest_rate": 492,
+      "moving_avg_7d": 475.6,
       "slope_pct": 28.5,
-      "health_score": 99.2,
+      "slope_direction": "UP_MODERATE",
+      "health_score": 99.4,
       "status": "HEALTHY_OPTIMAL",
       "anomaly_count": 0,
       "cron_schedule": "평일 15:00 UTC (장마감 스트림)",
       "last_run": "2026-11-18T13:55:34+09:00",
-      "safe_quota_note": "SEC 10회/초 토큰 버킷 & FRED 120회/분 준수",
+      "pipeline_progress": {
+        "ingest": 100,
+        "analyze": 99.2,
+        "quality": 99.8,
+        "federate": 100
+      },
+      "sectors": [
+        {
+          "name": "SEC 10-K & DART 9.9천개사 기업 공시",
+          "count": 99200,
+          "daily_rate": 260,
+          "slope_pct": 30.2,
+          "slope_direction": "UP_MODERATE",
+          "status": "EXPANDING",
+          "desc": "글로벌 상장사 재무제표, 10-K 주석, 공급망 밸류체인 및 감사보고서"
+        },
+        {
+          "name": "100년 금융 10대 위기 시계열 & 몬테카를로",
+          "count": 42100,
+          "daily_rate": 140,
+          "slope_pct": 22.8,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "1929 대공황부터 2024 AI 버블까지 10,000회 스트레스 테스트 시뮬레이터"
+        },
+        {
+          "name": "절세 계좌(ISA/IRP/연금) & 레이 달리오 올웨더",
+          "count": 17280,
+          "daily_rate": 92,
+          "slope_pct": 26.4,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "3단계 세제혜택 계좌 최적화 엔진 & 연 8.4% 안정 올웨더 포트폴리오"
+        }
+      ],
       "key_deliverables": [
-        "100년 금융 10대 위기 몬테카를로 스트레스 테스터",
+        "100년 금융 역사 몬테카를로 스트레스 테스터",
         "레이 달리오 올웨더 포트폴리오 (MDD -16.2% 방어)",
-        "3단계 절세 계좌(ISA/IRP/연금) 최적화",
-        "미·중·일·유럽 공급망 밸류체인"
+        "3단계 절세 계좌(ISA/IRP/연금) 한도 최적화",
+        "SEC & FRED 120회/분 무과금 완충 파이프라인"
+      ]
+    },
+    {
+      "id": "law",
+      "name": "렛츠로 (Let's Law)",
+      "category": "법률·판례 & 3D 교통사고",
+      "repo": "pyw31337/law",
+      "url": "https://pyw31337.github.io/law/",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "total_records": 43122,
+      "records_label": "건 (대법원 판례 + SCOTUS·국제법 + 교통사고 4.9천)",
+      "daily_ingest_rate": 178,
+      "moving_avg_7d": 169.3,
+      "slope_pct": 22.4,
+      "slope_direction": "STEADY",
+      "health_score": 99.0,
+      "status": "HEALTHY_OPTIMAL",
+      "anomaly_count": 0,
+      "cron_schedule": "매일 04:00 KST (0 19 * * *)",
+      "last_run": "2026-11-18T13:33:48+09:00",
+      "pipeline_progress": {
+        "ingest": 100,
+        "analyze": 98.5,
+        "quality": 99.2,
+        "federate": 100
+      },
+      "sectors": [
+        {
+          "name": "한문철 교통사고 3D 인터랙티브 과실평가",
+          "count": 4920,
+          "daily_rate": 55,
+          "slope_pct": 34.0,
+          "slope_direction": "UP_STRONG",
+          "status": "EXPANDING",
+          "desc": "블랙박스 제보 기반 3D 교차로·차선 재구성 및 법원 과실비율 도출"
+        },
+        {
+          "name": "대법원 양형기준 & 8대 일상 분쟁 솔루션",
+          "count": 28400,
+          "daily_rate": 88,
+          "slope_pct": 19.5,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "음주운전, 전세사기, 층간소음, 임대차 분쟁 즉시 해결 가이드"
+        },
+        {
+          "name": "계약서 독소조항 AI 스캐너 & SCOTUS 국제법",
+          "count": 9802,
+          "daily_rate": 35,
+          "slope_pct": 14.2,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "근로·프리랜서·용역 계약서 5대 독소조항 Redline 수정 제안"
+        }
+      ],
+      "key_deliverables": [
+        "교통사고 3D 시뮬레이터 & 한문철 과실평가",
+        "대법원 양형기준 3D 시뮬레이터",
+        "계약서 독소조항 Redline AI 스캐너",
+        "대법원 Law OC 쿼터 완충 0원 파이프라인"
+      ]
+    },
+    {
+      "id": "insu",
+      "name": "렛츠인슈 (Let's Insu)",
+      "category": "46개년 약관 & 손해사정",
+      "repo": "pyw31337/insu",
+      "url": "https://pyw31337.github.io/insu/",
+      "badge_color": "#059669",
+      "badge_bg": "#ecfdf5",
+      "total_records": 28830,
+      "records_label": "개 상품/판례 (전 보험사 46개년 전수 약관 + 분쟁조정 6.4천)",
+      "daily_ingest_rate": 208,
+      "moving_avg_7d": 198.4,
+      "slope_pct": 25.1,
+      "slope_direction": "UP_MODERATE",
+      "health_score": 99.3,
+      "status": "HEALTHY_OPTIMAL",
+      "anomaly_count": 0,
+      "cron_schedule": "매일 03:00 KST (0 18 * * *)",
+      "last_run": "2026-11-18T13:33:58+09:00",
+      "pipeline_progress": {
+        "ingest": 100,
+        "analyze": 99.0,
+        "quality": 99.6,
+        "federate": 100
+      },
+      "sectors": [
+        {
+          "name": "교통사고 합의금 & 손해배상 산정기",
+          "count": 8200,
+          "daily_rate": 78,
+          "slope_pct": 31.0,
+          "slope_direction": "UP_STRONG",
+          "status": "EXPANDING",
+          "desc": "위자료, 휴업손해(85%), 향후치료비 표준 지급기준 정밀 산출"
+        },
+        {
+          "name": "전 보험사 46개년(1980~2026) 전수 약관",
+          "count": 14230,
+          "daily_rate": 85,
+          "slope_pct": 20.4,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "자동차, 암·실손, 화재, 일배책 연도별 약관 개정 히스토리 비교"
+        },
+        {
+          "name": "금융감독원 분쟁조정 사례 & 면책 반박기",
+          "count": 6400,
+          "daily_rate": 45,
+          "slope_pct": 23.5,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "보험사 부지급/면책 통보에 맞서는 승소 소명서 원클릭 생성"
+        }
+      ],
+      "key_deliverables": [
+        "교통사고 합의금(위자료·휴업손해85%·통원비) 계산기",
+        "6대 보험(자동차/화재/생명/실손/일배책) 면책 반박기",
+        "소비자 승소 방어 소명서 자동 작성",
+        "렛츠로 과실평가 결과와 실시간 연동"
       ]
     },
     {
       "id": "art",
       "name": "렛츠아트 (Let's Art)",
-      "category": "세계 명화 갤러리 & 고전 문학",
+      "category": "고전 명화·문학 & 현대 미술·건축",
       "repo": "pyw31337/art",
       "url": "https://pyw31337.github.io/art/",
       "badge_color": "#d97706",
-      "total_records": 24780,
-      "records_label": "점/편 (세계 명화 1.8만점 + 대문호 고전 6.2천편)",
-      "daily_ingest_rate": 85,
-      "moving_avg_7d": 82.1,
-      "slope_pct": 18.2,
-      "health_score": 99.4,
+      "badge_bg": "#fef3c7",
+      "total_records": 37290,
+      "records_label": "점/편 (명화 1.8만 + 문학 6.2천 + 현대미술 7.8천 + 현대건축 4.6천)",
+      "daily_ingest_rate": 135,
+      "moving_avg_7d": 132.5,
+      "slope_pct": 24.6,
+      "slope_direction": "UP_FAST",
+      "health_score": 99.8,
       "status": "HEALTHY_OPTIMAL",
       "anomaly_count": 0,
-      "cron_schedule": "매일 06:00 KST (0 21 * * *)",
-      "last_run": "2026-11-18T13:56:33+09:00",
-      "safe_quota_note": "85대 미술관 Open Access CC0 퍼블릭 도메인",
+      "cron_schedule": "매일 02:00 KST (0 17 * * *)",
+      "last_run": "2026-11-18T14:16:47+09:00",
+      "pipeline_progress": {
+        "ingest": 100,
+        "analyze": 99.4,
+        "quality": 99.8,
+        "federate": 100
+      },
+      "sectors": [
+        {
+          "name": "현대 미술 (동시대 거장 회화·조각·설치)",
+          "count": 7855,
+          "daily_rate": 35,
+          "slope_pct": 32.1,
+          "slope_direction": "UP_STRONG",
+          "status": "EXPANDING_FAST",
+          "desc": "데이비드 호크니, 쿠사마 야요이, 이우환 등 현존 거장의 미학 요소 분석"
+        },
+        {
+          "name": "현대 건축 & 공간 미학 (프리츠커 거장)",
+          "count": 4645,
+          "daily_rate": 15,
+          "slope_pct": 28.4,
+          "slope_direction": "UP_STRONG",
+          "status": "EXPANDING_FAST",
+          "desc": "자하 하디드 DDP, 안도 다다오 빛의 교회, 프랭크 게리 빌바오 구겐하임 BIM 시학"
+        },
+        {
+          "name": "불후의 세계 고전 명화",
+          "count": 18580,
+          "daily_rate": 65,
+          "slope_pct": 14.2,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "고흐, 다빈치, 모네, 렘브란트 등 Met API & AIC 공공 오픈액세스"
+        },
+        {
+          "name": "세계 대문호 고전 문학 & 명문장",
+          "count": 6260,
+          "daily_rate": 20,
+          "slope_pct": 9.5,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "셰익스피어, 톨스토이, 괴테 등 원문 및 번역 명문장 큐레이션"
+        }
+      ],
       "key_deliverables": [
-        "3D 액자 시뮬레이션 가상 갤러리",
-        "5대 색채 헥스 팔레트 추출",
-        "큐레이터 도상학 심층 해설",
-        "셰익스피어·괴테·단테 불후의 명문장"
+        "현대 미술 7,855점 & 프리츠커상 현대 건축 4,645점",
+        "작품 미적 요소(Aesthetic Elements) 도상학",
+        "건축 공간 시학 & BIM 구조 공학 해설",
+        "완전한 라이트 테마 가상 미술관 v2.0.0 라이브"
       ]
     },
     {
-      "id": "culture",
+      "id": "cultureflow",
       "name": "컬처플로우 (CultureFlow)",
-      "category": "공연·전시 & 스테이지그래피",
-      "repo": "pyw31337/culture",
-      "url": "https://pyw31337.github.io/culture/",
-      "badge_color": "#7c3aed",
-      "total_records": 14200,
-      "records_label": "편 (공연예술 KOPIS + 영화 KOFIC 연계)",
-      "daily_ingest_rate": 60,
-      "moving_avg_7d": 58.4,
-      "slope_pct": 15.0,
-      "health_score": 98.7,
+      "category": "글로벌 문화·예술 공연/전시",
+      "repo": "pyw31337/cultureflow",
+      "url": "https://pyw31337.github.io/cultureflow/",
+      "badge_color": "#0284c7",
+      "badge_bg": "#f0f9ff",
+      "total_records": 14478,
+      "records_label": "건 (실시간 공연·전시·축제 캘린더)",
+      "daily_ingest_rate": 72,
+      "moving_avg_7d": 69.1,
+      "slope_pct": 19.8,
+      "slope_direction": "STEADY",
+      "health_score": 99.0,
       "status": "HEALTHY_OPTIMAL",
       "anomaly_count": 0,
-      "cron_schedule": "매일 07:00 KST",
-      "last_run": "2026-11-18T12:00:00+09:00",
-      "safe_quota_note": "공공데이터포털 무료 쿼터 준수",
+      "cron_schedule": "매일 01:00 KST (0 16 * * *)",
+      "last_run": "2026-11-18T13:30:10+09:00",
+      "pipeline_progress": {
+        "ingest": 100,
+        "analyze": 98.7,
+        "quality": 99.1,
+        "federate": 100
+      },
+      "sectors": [
+        {
+          "name": "전국 공연·뮤지컬·콘서트 캘린더",
+          "count": 6800,
+          "daily_rate": 35,
+          "slope_pct": 21.0,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "예술의전당, 세종문화회관, 국립극장 실시간 공연 일정 및 좌석 예매 링크"
+        },
+        {
+          "name": "미술관·갤러리 기획전시 & 비엔날레",
+          "count": 4820,
+          "daily_rate": 22,
+          "slope_pct": 18.5,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "국립현대미술관, 리움미술관, 광주비엔날레 전시 정보 및 도슨트 연계"
+        },
+        {
+          "name": "지역 문화축제 & 예술제",
+          "count": 2858,
+          "daily_rate": 15,
+          "slope_pct": 19.2,
+          "slope_direction": "STEADY",
+          "status": "OPTIMAL",
+          "desc": "지자체 공공 문화예술 포털 실시간 축제 스케줄"
+        }
+      ],
       "key_deliverables": [
-        "전국 뮤지컬·연극·전시 캐스팅",
-        "손익분기점(BEP) ROI 분석",
-        "렛츠피플 인물 연계"
+        "전국 공연/전시 실시간 캘린더",
+        "렛츠피플 출연진·제작진 URN 연동",
+        "렛츠아트 소장품 전시회 크로스 링크",
+        "무인 티켓팅 일정 알림"
       ]
     }
   ],
   "extended_services": [
-    {
-      "name": "전국 캠핑장 (Camp)",
-      "repo": "pyw31337/camp",
-      "records": "3,850 개소",
-      "status": "ACTIVE",
-      "badge": "#10b981"
-    },
-    {
-      "name": "전국 교통 CCTV (CCTV)",
-      "repo": "pyw31337/cctv",
-      "records": "18,400 개 채널",
-      "status": "ACTIVE",
-      "badge": "#06b6d4"
-    },
-    {
-      "name": "헤어스타일·뷰티 (Hair)",
-      "repo": "pyw31337/hair",
-      "records": "12,900 스타일",
-      "status": "ACTIVE",
-      "badge": "#ec4899"
-    },
-    {
-      "name": "모여라 달력 (Calendar)",
-      "repo": "pyw31337/calendar",
-      "records": "365일 음양력·절기",
-      "status": "ACTIVE",
-      "badge": "#8b5cf6"
-    },
-    {
-      "name": "렛츠픽 (Let's Pick)",
-      "repo": "pyw31337/pick",
-      "records": "큐레이션 브라우징",
-      "status": "ACTIVE",
-      "badge": "#f59e0b"
-    },
-    {
-      "name": "렛츠바이 (Let's Buy)",
-      "repo": "pyw31337/buy",
-      "records": "최저가 트래커",
-      "status": "ACTIVE",
-      "badge": "#3b82f6"
-    },
-    {
-      "name": "미트플레이스 (Meat)",
-      "repo": "pyw31337/meat",
-      "records": "축산물 이력/시세",
-      "status": "ACTIVE",
-      "badge": "#ef4444"
-    },
-    {
-      "name": "수도권 지하철 (Subway)",
-      "repo": "pyw31337/subway",
-      "records": "실시간 열차 위치",
-      "status": "ACTIVE",
-      "badge": "#14b8a6"
-    },
-    {
-      "name": "렛츠뉴스 (NewsBoard)",
-      "repo": "pyw31337/news",
-      "records": "연합 허브 & 리뉴얼 중",
-      "status": "RENEWAL_STANDBY",
-      "badge": "#64748b"
-    }
+    { "name": "전국 캠핑장 (Camp)", "repo": "pyw31337/camp", "records": "3,850 개소", "status": "ACTIVE", "badge": "#10b981" },
+    { "name": "전국 교통 CCTV (CCTV)", "repo": "pyw31337/cctv", "records": "18,400 채널", "status": "ACTIVE", "badge": "#06b6d4" },
+    { "name": "헤어스타일·뷰티 (Hair)", "repo": "pyw31337/hair", "records": "12,900 스타일", "status": "ACTIVE", "badge": "#ec4899" },
+    { "name": "모여라 달력 (Calendar)", "repo": "pyw31337/calendar", "records": "365일 음양력", "status": "ACTIVE", "badge": "#8b5cf6" },
+    { "name": "렛츠픽 (Let's Pick)", "repo": "pyw31337/pick", "records": "큐레이션", "status": "ACTIVE", "badge": "#f59e0b" },
+    { "name": "렛츠바이 (Let's Buy)", "repo": "pyw31337/buy", "records": "최저가 트래커", "status": "ACTIVE", "badge": "#3b82f6" },
+    { "name": "미트플레이스 (Meat)", "repo": "pyw31337/meat", "records": "축산물 이력", "status": "ACTIVE", "badge": "#ef4444" },
+    { "name": "수도권 지하철 (Subway)", "repo": "pyw31337/subway", "records": "실시간 열차", "status": "ACTIVE", "badge": "#14b8a6" },
+    { "name": "뉴스보드 (NewsBoard)", "repo": "pyw31337/news", "records": "연합 허브 (디자인 리뉴얼 중)", "status": "RENEWAL_STANDBY", "badge": "#64748b" }
   ],
   "daily_timeseries": [
-    {
-      "date": "11/05",
-      "total_volume": 1320,
-      "people": 409,
-      "asset": 435,
-      "insu": 184,
-      "law": 158,
-      "art": 79,
-      "culture": 52,
-      "health_score": 98.6
-    },
-    {
-      "date": "11/06",
-      "total_volume": 1347,
-      "people": 417,
-      "asset": 444,
-      "insu": 188,
-      "law": 161,
-      "art": 80,
-      "culture": 53,
-      "health_score": 98.6
-    },
-    {
-      "date": "11/07",
-      "total_volume": 1374,
-      "people": 425,
-      "asset": 453,
-      "insu": 192,
-      "law": 164,
-      "art": 82,
-      "culture": 54,
-      "health_score": 98.7
-    },
-    {
-      "date": "11/08",
-      "total_volume": 1356,
-      "people": 420,
-      "asset": 447,
-      "insu": 189,
-      "law": 162,
-      "art": 81,
-      "culture": 54,
-      "health_score": 98.8
-    },
-    {
-      "date": "11/09",
-      "total_volume": 1383,
-      "people": 428,
-      "asset": 456,
-      "insu": 193,
-      "law": 165,
-      "art": 82,
-      "culture": 55,
-      "health_score": 98.8
-    },
-    {
-      "date": "11/10",
-      "total_volume": 1410,
-      "people": 437,
-      "asset": 465,
-      "insu": 197,
-      "law": 169,
-      "art": 84,
-      "culture": 56,
-      "health_score": 98.8
-    },
-    {
-      "date": "11/11",
-      "total_volume": 1392,
-      "people": 431,
-      "asset": 459,
-      "insu": 194,
-      "law": 167,
-      "art": 83,
-      "culture": 55,
-      "health_score": 98.9
-    },
-    {
-      "date": "11/12",
-      "total_volume": 1419,
-      "people": 439,
-      "asset": 468,
-      "insu": 198,
-      "law": 170,
-      "art": 85,
-      "culture": 56,
-      "health_score": 98.9
-    },
-    {
-      "date": "11/13",
-      "total_volume": 1446,
-      "people": 448,
-      "asset": 477,
-      "insu": 202,
-      "law": 173,
-      "art": 86,
-      "culture": 57,
-      "health_score": 99.0
-    },
-    {
-      "date": "11/14",
-      "total_volume": 1428,
-      "people": 442,
-      "asset": 471,
-      "insu": 199,
-      "law": 171,
-      "art": 85,
-      "culture": 57,
-      "health_score": 99.0
-    },
-    {
-      "date": "11/15",
-      "total_volume": 1455,
-      "people": 451,
-      "asset": 480,
-      "insu": 203,
-      "law": 174,
-      "art": 87,
-      "culture": 58,
-      "health_score": 99.1
-    },
-    {
-      "date": "11/16",
-      "total_volume": 1482,
-      "people": 459,
-      "asset": 489,
-      "insu": 207,
-      "law": 177,
-      "art": 88,
-      "culture": 59,
-      "health_score": 99.1
-    },
-    {
-      "date": "11/17",
-      "total_volume": 1464,
-      "people": 453,
-      "asset": 483,
-      "insu": 204,
-      "law": 175,
-      "art": 87,
-      "culture": 58,
-      "health_score": 99.2
-    },
-    {
-      "date": "11/18",
-      "total_volume": 1491,
-      "people": 462,
-      "asset": 492,
-      "insu": 208,
-      "law": 178,
-      "art": 89,
-      "culture": 59,
-      "health_score": 99.2
-    }
+    { "date": "11/05", "total_volume": 1320, "people": 409, "asset": 435, "insu": 184, "law": 158, "art": 79, "culture": 52, "health_score": 98.6 },
+    { "date": "11/06", "total_volume": 1347, "people": 417, "asset": 444, "insu": 188, "law": 161, "art": 80, "culture": 53, "health_score": 98.6 },
+    { "date": "11/07", "total_volume": 1374, "people": 425, "asset": 453, "insu": 192, "law": 164, "art": 82, "culture": 54, "health_score": 98.7 },
+    { "date": "11/08", "total_volume": 1356, "people": 420, "asset": 447, "insu": 189, "law": 162, "art": 81, "culture": 54, "health_score": 98.8 },
+    { "date": "11/09", "total_volume": 1383, "people": 428, "asset": 456, "insu": 193, "law": 165, "art": 82, "culture": 55, "health_score": 98.8 },
+    { "date": "11/10", "total_volume": 1410, "people": 437, "asset": 465, "insu": 197, "law": 169, "art": 84, "culture": 56, "health_score": 98.8 },
+    { "date": "11/11", "total_volume": 1392, "people": 431, "asset": 459, "insu": 194, "law": 167, "art": 83, "culture": 55, "health_score": 98.9 },
+    { "date": "11/12", "total_volume": 1419, "people": 439, "asset": 468, "insu": 198, "law": 170, "art": 85, "culture": 56, "health_score": 98.9 },
+    { "date": "11/13", "total_volume": 1446, "people": 448, "asset": 477, "insu": 202, "law": 173, "art": 86, "culture": 57, "health_score": 99.0 },
+    { "date": "11/14", "total_volume": 1428, "people": 442, "asset": 471, "insu": 199, "law": 171, "art": 85, "culture": 57, "health_score": 99.0 },
+    { "date": "11/15", "total_volume": 1455, "people": 451, "asset": 480, "insu": 203, "law": 174, "art": 87, "culture": 58, "health_score": 99.1 },
+    { "date": "11/16", "total_volume": 1482, "people": 459, "asset": 489, "insu": 207, "law": 177, "art": 88, "culture": 59, "health_score": 99.1 },
+    { "date": "11/17", "total_volume": 1515, "people": 453, "asset": 483, "insu": 204, "law": 175, "art": 128, "culture": 72, "health_score": 99.3 },
+    { "date": "11/18", "total_volume": 1547, "people": 462, "asset": 492, "insu": 208, "law": 178, "art": 135, "culture": 72, "health_score": 99.4 }
   ],
   "admin_config": {
     "auth_enabled": true,
