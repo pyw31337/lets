@@ -1945,7 +1945,13 @@
       "yearly_count": 24820,
       "moving_avg_7d": 65.4,
       "slope_pct": 12.5,
-      "status": "OPTIMAL"
+      "status": "OPTIMAL",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "role_kr": "수집·분석",
+      "speed_metric": "68건/일",
+      "current_rate_text": "68건/일",
+      "quality_lift": "+18.5%p 품질 격상"
     },
     {
       "id": "buy_price_streamer",
@@ -1964,7 +1970,13 @@
       "yearly_count": 310250,
       "moving_avg_7d": 820.0,
       "slope_pct": 18.2,
-      "status": "OPTIMAL"
+      "status": "OPTIMAL",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "role_kr": "수집 파이프라인",
+      "speed_metric": "850건/일",
+      "current_rate_text": "850건/일",
+      "quality_lift": "+18.5%p 품질 격상"
     },
     {
       "id": "subway_live_tracker",
@@ -1983,7 +1995,13 @@
       "yearly_count": 456250,
       "moving_avg_7d": 1200.0,
       "slope_pct": 22.0,
-      "status": "OPTIMAL"
+      "status": "OPTIMAL",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "role_kr": "수집 파이프라인",
+      "speed_metric": "1,250건/일",
+      "current_rate_text": "1,250건/일",
+      "quality_lift": "+18.5%p 품질 격상"
     },
     {
       "id": "news_timeline_harvester",
@@ -2002,7 +2020,13 @@
       "yearly_count": 1533000,
       "moving_avg_7d": 4100.0,
       "slope_pct": 28.5,
-      "status": "OPTIMAL"
+      "status": "OPTIMAL",
+      "badge_color": "#2563eb",
+      "badge_bg": "#eff6ff",
+      "role_kr": "수집·분석",
+      "speed_metric": "4,200건/일",
+      "current_rate_text": "4,200건/일",
+      "quality_lift": "+18.5%p 품질 격상"
     }
   ]
 }

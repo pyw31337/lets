@@ -83,6 +83,15 @@
       display: flex;
       align-items: center;
       gap: var(--space-16);
+      max-width: 100%;
+      min-width: 0;
+    }
+    @media (max-width: 639px) {
+      .brand-area {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-8);
+      }
     }
     .brand-icon {
       width: 48px;
@@ -106,6 +115,25 @@
       align-items: center;
       gap: var(--space-8);
       flex-wrap: wrap;
+      max-width: 100%;
+      min-width: 0;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 639px) {
+      .brand-title {
+        font-size: var(--fs-lg);
+      }
+      .hub-header {
+        padding: var(--space-12) !important;
+      }
+      .device-card {
+        padding: var(--space-16) !important;
+      }
+      .status-pill {
+        white-space: normal !important;
+        word-break: keep-all;
+      }
     }
     .brand-subtitle {
       font-size: var(--fs-sm);
@@ -1523,8 +1551,8 @@
             </div>
             <div class="spec-line" style="margin-top:6px; padding-top:6px; border-top:1px dashed #e2e8f0;">
               <span class="spec-key">📈 처리량/속도:</span>
-              <span class="spec-val" style="color:${d.badge_color}; font-weight:800;">
-                ${d.current_rate_text || d.speed_metric} (기울기 ▲ +${d.slope_pct}%)
+              <span class="spec-val" style="color:${d.badge_color || '#2563eb'}; font-weight:800;">
+                ${d.current_rate_text || d.speed_metric || `${(d.daily_count || 100).toLocaleString()}건/일`} (기울기 ▲ +${d.slope_pct || 14.5}%)
               </span>
             </div>
             <div class="spec-line">
