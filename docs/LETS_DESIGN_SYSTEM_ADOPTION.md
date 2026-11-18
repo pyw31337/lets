@@ -9,8 +9,8 @@
 |---|---|---|
 | NewsBoard v2 | `pyw31337/news` | main integrated; v2 home/live/reports use LDS 1.1 |
 | Lets Calendar | `pyw31337/calendar` | `design-system/lds-v1.1` PR branch |
-| Lets InSu | `pyw31337/insu` | `design-system/lds-v1.1` PR branch |
-| Lets Ro | `pyw31337/law` | `design-system/lds-v1.1` PR branch |
+| Let's Insu (렛츠인슈) | `pyw31337/insu` | main integrated; LDS/PWA shell |
+| Let's Law (렛츠로) | `pyw31337/law` | main integrated; LDS/PWA shell |
 | Lets People | `pyw31337/people` | `design-system/lds-v1.1` PR branch |
 | Lets Asset | `pyw31337/asset` | `design-system/lds-v1.1` PR branch |
 | Lets Art | `pyw31337/art` | `design-system/lds-v1.1` PR branch |
