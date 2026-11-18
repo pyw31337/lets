@@ -13,13 +13,13 @@
   <meta property="og:image" content="https://pyw31337.github.io/lets/og-image.png">
   <title>Let's 마스터 컨트롤 허브 — 15대 서비스 61개 무인 자동화 장치 통합 관제</title>
   
-  <!-- Pretendard Variable Font & LDS v2.0 CSS -->
+  <!-- Pretendard Variable Font & LDS v2.1 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/lets-design-system.css">
   
   <style>
     /* ==========================================================
-       Toss Design System v2.0: Non-Clipping Soft Shadow & Surface Tokens
+       Toss Design System v2.1: Segmented Control & Grouping Standards
        ========================================================== */
     :root {
       --bg-page: #f7f8fa;
@@ -27,7 +27,7 @@
       --bg-subtle: #f2f4f6;
       --bg-hover: #eef0f3;
 
-      /* 토스 원칙: 테두리와 배경 동시 사용 배제, 얇은 단일 디바이더만 사용 */
+      /* 단일 구분선 */
       --divider: #f2f4f6;
       --divider-dark: #e5e8eb;
 
@@ -37,24 +37,27 @@
       --text-subtle: #b0b8c1;
       --text-white: #ffffff;
 
-      /* 절제된 포인트 컬러 */
-      --primary: #3182f6;
+      /* 프로세스 시맨틱 포인트 컬러 */
+      --primary: #3182f6;          /* 수집 / 기본 포인트 */
       --primary-light: #e8f3ff;
       --primary-hover: #1b64da;
 
-      --success: #00c48c;
+      --success: #00c48c;          /* 분석 / 정상 */
       --success-light: #e6faf3;
 
-      --warning: #ff9f00;
+      --indigo: #6366f1;           /* 품질 */
+      --indigo-light: #eef2ff;
+
+      --warning: #ff9f00;          /* 운영·관리 */
       --warning-light: #fff8eb;
 
       --danger: #ff5252;
       --danger-light: #ffebee;
 
-      /* 비클리핑 소프트 섀도우: 넓은 블러와 자연스러운 확산 */
-      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.03);
-      --shadow-md: 0 6px 24px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
-      --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.02);
+      /* 비클리핑 소프트 섀도우 */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
 
       --radius-sm: 8px;
       --radius-md: 14px;
@@ -83,7 +86,6 @@
 
     body {
       min-height: 100vh;
-      /* 사방 여백을 주어 카드 섀도우가 뷰포트 가장자리에서 잘리지 않도록 보장 */
       padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
     }
 
@@ -92,13 +94,10 @@
       margin: 0 auto;
       width: 100%;
       min-width: 0;
-      /* 섀도우 블러 확산을 위한 안전 패딩 (클리핑 방지) */
-      padding: 4px 6px;
+      padding: 0 4px; /* 섀도우 클리핑 방지 여백 */
     }
 
-    /* ==========================================================
-       SVG Icons Helper Classes
-       ========================================================== */
+    /* SVG Icon Helpers */
     .icon {
       display: inline-block;
       width: 18px;
@@ -213,9 +212,7 @@
       background: var(--bg-hover);
       color: var(--text-primary);
     }
-    .action-btn:active {
-      transform: scale(0.98);
-    }
+    .action-btn:active { transform: scale(0.98); }
     .action-btn.primary {
       background: var(--primary);
       color: var(--text-white);
@@ -225,7 +222,7 @@
     }
 
     /* ==========================================================
-       2. Summary Metric Cards: Single Clean Surface with Safe Margins
+       2. Summary Metric Cards: Single Clean Surface
        ========================================================== */
     .summary-grid {
       display: grid;
@@ -234,7 +231,7 @@
       margin-bottom: 28px;
       width: 100%;
       min-width: 0;
-      padding: 2px 0; /* 상하 섀도우 클리핑 방지 */
+      padding: 2px 0;
     }
 
     .metric-card {
@@ -247,7 +244,6 @@
       justify-content: space-between;
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       min-width: 0;
-      /* 카드 자체에 overflow: hidden을 걸지 않아 섀도우가 사방으로 부드럽게 퍼짐 */
     }
     .metric-card:hover {
       transform: translateY(-3px);
@@ -352,12 +348,8 @@
       flex-shrink: 0;
     }
     .donut-segment {
-      /* 초기 상태: dasharray 0 (차오르기 전) */
       stroke-dasharray: 0 251.32;
       transition: stroke-dasharray 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .donut-segment.animated {
-      /* JS가 Intersection Observer로 목표 dasharray 주입 */
     }
     .donut-center-text {
       position: absolute;
@@ -413,7 +405,7 @@
       white-space: nowrap;
     }
 
-    /* Horizontal Bar Chart & Lazy Animation */
+    /* Horizontal Bar Chart */
     .bar-chart-list {
       display: flex;
       flex-direction: column;
@@ -471,14 +463,14 @@
     }
     .bar-fill {
       height: 100%;
-      width: 0%; /* 초기 상태 0%에서 부드럽게 차오름 */
+      width: 0%;
       background: var(--primary);
       border-radius: var(--radius-full);
       transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ==========================================================
-       4. External Quota Governance Panel
+       4. Detailed External Quota Governance Panel
        ========================================================== */
     .quota-panel {
       background: var(--bg-surface);
@@ -490,14 +482,12 @@
       min-width: 0;
       transition: box-shadow 0.2s ease;
     }
-    .quota-panel:hover {
-      box-shadow: var(--shadow-lg);
-    }
+    .quota-panel:hover { box-shadow: var(--shadow-lg); }
     .quota-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 12px;
     }
@@ -520,20 +510,27 @@
     }
     .quota-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
       width: 100%;
       min-width: 0;
     }
+    @media (max-width: 900px) {
+      .quota-grid { grid-template-columns: 1fr; }
+    }
 
-    .quota-item {
+    .quota-card {
       background: var(--bg-page);
       border-radius: var(--radius-md);
-      padding: 16px 18px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-width: 0;
+      transition: transform 0.15s ease;
+    }
+    .quota-card:hover {
+      transform: translateY(-2px);
     }
     .quota-top {
       display: flex;
@@ -543,7 +540,7 @@
       gap: 8px;
     }
     .quota-provider {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text-primary);
     }
@@ -555,18 +552,18 @@
     .quota-status-pill {
       font-size: 11px;
       font-weight: 600;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: var(--radius-full);
       background: var(--success-light);
       color: var(--success);
       flex-shrink: 0;
     }
     .quota-progress-wrap {
-      margin-bottom: 8px;
+      margin-bottom: 14px;
     }
     .quota-bar-track {
       width: 100%;
-      height: 6px;
+      height: 7px;
       background: var(--divider-dark);
       border-radius: var(--radius-full);
       overflow: hidden;
@@ -590,59 +587,129 @@
       color: var(--text-primary);
       font-weight: 700;
     }
-    .quota-reset {
-      font-size: 11px;
-      color: var(--text-subtle);
-      margin-top: 8px;
+
+    /* Quota Detailed Sub-Specs */
+    .quota-spec-list {
+      border-top: 1px solid var(--divider-dark);
+      padding-top: 12px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+    }
+    .quota-spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .quota-spec-key {
+      color: var(--text-muted);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .quota-spec-val {
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-align: right;
+    }
+    .quota-consumers {
+      display: flex;
+      flex-wrap: wrap;
       gap: 4px;
+      justify-content: flex-end;
+    }
+    .quota-consumer-tag {
+      font-size: 11px;
+      background: var(--bg-surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
     /* ==========================================================
-       5. Ecosystem Controls: Filter Chips & Search
+       5. Segmented Controls vs Badges: Clean No-Clipping Tabs
        ========================================================== */
     .controls-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
       width: 100%;
       min-width: 0;
+      padding: 4px 0;
     }
-    .filter-chips {
+
+    /* 토스 스타일 캡슐 세그먼트 컨트롤 (그림자 잘림 원천 해결) */
+    .segmented-control-wrap {
       display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-      max-width: 100%;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .filter-chips::-webkit-scrollbar { display: none; }
-    .filter-chip {
-      background: var(--bg-surface);
-      color: var(--text-secondary);
+    .segmented-track {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-subtle);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      gap: 4px;
+      user-select: none;
+    }
+    .segment-tab {
+      background: transparent;
       border: none;
       padding: 8px 16px;
-      border-radius: var(--radius-full);
+      border-radius: var(--radius-sm);
       font-size: 13px;
       font-weight: 600;
+      color: var(--text-muted);
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
-      white-space: nowrap;
       transition: all 0.15s ease;
-      flex-shrink: 0;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .filter-chip:hover {
-      background: var(--bg-hover);
+    .segment-tab:hover {
       color: var(--text-primary);
     }
-    .filter-chip.active {
+    .segment-tab.active {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      font-weight: 700;
+    }
+
+    /* 관제 모드 뷰 전환 탭 (프로세스별 관제 vs 서비스별 관제) */
+    .view-mode-track {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-surface);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      gap: 4px;
+    }
+    .view-mode-btn {
+      background: transparent;
+      border: none;
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .view-mode-btn.active {
       background: var(--primary);
       color: var(--text-white);
-      box-shadow: 0 4px 12px rgba(49, 130, 246, 0.25);
+      font-weight: 700;
     }
 
     .search-box-wrap {
@@ -674,19 +741,70 @@
     }
 
     /* ==========================================================
-       6. Automation Devices Grid: Non-Clipping Accordion Cards
+       6. Grouped Hierarchy Layout (Process & Service Sections)
        ========================================================== */
+    .pipeline-sections-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      margin-bottom: 48px;
+    }
+
+    .pipeline-group-section {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .group-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .group-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .group-color-bar {
+      width: 4px;
+      height: 20px;
+      border-radius: var(--radius-full);
+    }
+    .group-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .group-subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .group-summary-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-secondary);
+    }
+
+    /* Devices Grid */
     .devices-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
-      margin-bottom: 48px;
       width: 100%;
       min-width: 0;
-      padding: 4px 0; /* 카드 섀도우가 위아래 잘리지 않도록 보호 */
+      padding: 4px 0;
     }
 
-    /* 토스 원칙: 테두리 없이 면과 소프트 섀도우로만 구성된 카드 */
+    /* Device Card */
     .device-card {
       background: var(--bg-surface);
       border-radius: var(--radius-lg);
@@ -697,7 +815,7 @@
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       min-width: 0;
       width: 100%;
-      /* 카드에 overflow: hidden을 걸지 않아 부드러운 섀도우가 온전히 유지됨 */
+      position: relative;
     }
     .device-card:hover {
       transform: translateY(-3px);
@@ -717,15 +835,29 @@
       min-width: 0;
       flex: 1;
     }
+    .dev-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    /* 뱃지는 상태/메타 표시에만 제한 사용 */
     .dev-service-badge {
-      display: inline-block;
       font-size: 11px;
       font-weight: 600;
       color: var(--primary);
       background: var(--primary-light);
       padding: 2px 8px;
       border-radius: var(--radius-full);
-      margin-bottom: 6px;
+    }
+    .dev-process-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
     }
     .dev-device-name {
       font-size: 16px;
@@ -776,39 +908,45 @@
       gap: 2px;
     }
 
-    /* Chart Area: 최우선 강조 인터랙티브 SVG 차트 */
+    /* ==========================================================
+       Chart Controls: Full-Width 3-Column Segmented Tab (사용자 요청)
+       ========================================================== */
     .dev-chart-section {
       margin-bottom: 16px;
       width: 100%;
       min-width: 0;
     }
-    .chart-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .chart-time-tabs {
-      display: inline-flex;
+    /* 하단 그래프 가로폭에 100% 맞춘 전폭 세그먼트 탭 */
+    .chart-time-tabs-full {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
       background: var(--bg-subtle);
-      border-radius: var(--radius-full);
-      padding: 2px;
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      gap: 2px;
+      margin-bottom: 10px;
     }
     .time-tab-btn {
       background: transparent;
       border: none;
-      padding: 3px 10px;
-      border-radius: var(--radius-full);
+      padding: 6px 0;
+      text-align: center;
+      border-radius: 6px;
       font-size: 11px;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.12s ease;
     }
+    .time-tab-btn:hover {
+      color: var(--text-primary);
+    }
     .time-tab-btn.active {
       background: var(--bg-surface);
-      color: var(--text-primary);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     }
 
     /* SVG Interactive Sparkline / Line Chart */
@@ -818,7 +956,7 @@
       height: 90px;
       background: var(--bg-page);
       border-radius: var(--radius-md);
-      overflow: hidden; /* 차트 내부 드로잉만 클리핑 */
+      overflow: hidden;
       cursor: crosshair;
     }
     .chart-svg {
@@ -827,7 +965,6 @@
       display: block;
     }
     
-    /* 선 그래프 레이지 로드 드로잉 효과 */
     .sparkline-path {
       stroke-dasharray: 400;
       stroke-dashoffset: 400;
@@ -874,10 +1011,7 @@
       white-space: nowrap;
     }
 
-    /* ==========================================================
-       Accordion Toggle Button & Collapsible Detail Drawer
-       사용자 요청: 기본 '접힌 상태', '상세정보' 표기 + Chevron Down
-       ========================================================== */
+    /* Accordion Toggle Button & Collapsible Drawer */
     .spec-accordion-btn {
       width: 100%;
       background: transparent;
@@ -920,7 +1054,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 토스 스타일: 박스 중첩 대신 단일 디바이더 리스트 */
     .spec-item {
       display: flex;
       justify-content: space-between;
@@ -960,9 +1093,7 @@
       color: var(--text-secondary);
     }
 
-    /* ==========================================================
-       Footer Section
-       ========================================================== */
+    /* Footer */
     .hub-footer {
       border-top: 1px solid var(--divider);
       padding-top: 24px;
@@ -989,82 +1120,44 @@
       color: var(--primary);
     }
 
-    /* ==========================================================
-       Media Queries (Strictly Cascading from Large to 320px)
-       ========================================================== */
+    /* Media Queries */
     @media (max-width: 1180px) {
-      .devices-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .devices-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 1024px) {
-      .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .quota-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .infographics-grid {
-        grid-template-columns: 1fr;
-      }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .infographics-grid { grid-template-columns: 1fr; }
     }
-
     @media (max-width: 768px) {
       .hub-header {
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
       }
-      .devices-grid {
-        grid-template-columns: 1fr;
-      }
+      .devices-grid { grid-template-columns: 1fr; }
       .controls-bar {
         flex-direction: column;
         align-items: stretch;
       }
-      .search-box-wrap {
-        width: 100%;
-        min-width: 0;
+      .search-box-wrap { width: 100%; min-width: 0; }
+      .segmented-track {
+        overflow-x: auto;
+        max-width: 100%;
+        scrollbar-width: none;
       }
+      .segmented-track::-webkit-scrollbar { display: none; }
     }
-
     @media (max-width: 540px) {
-      body {
-        padding: 16px 8px 48px 8px;
-      }
-      .hub-container {
-        padding: 2px 4px;
-      }
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-      .quota-grid {
-        grid-template-columns: 1fr;
-      }
-      .hub-header {
-        padding: 18px 16px;
-      }
-      .hub-title {
-        font-size: 18px;
-      }
-      .info-panel {
-        padding: 18px 16px;
-      }
-      .device-card {
-        padding: 18px 16px;
-      }
-      .donut-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .donut-legend {
-        width: 100%;
-      }
-      .header-actions {
-        width: 100%;
-        justify-content: space-between;
-      }
+      body { padding: 16px 8px 48px 8px; }
+      .hub-container { padding: 2px 4px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .hub-header { padding: 18px 16px; }
+      .hub-title { font-size: 18px; }
+      .info-panel { padding: 18px 16px; }
+      .device-card { padding: 18px 16px; }
+      .donut-container { flex-direction: column; align-items: center; }
+      .donut-legend { width: 100%; }
+      .header-actions { width: 100%; justify-content: space-between; }
     }
   </style>
 </head>
@@ -1172,14 +1265,10 @@
         <div class="donut-container">
           <div class="donut-svg-wrap">
             <svg viewBox="0 0 120 120" style="transform: rotate(-90deg);">
-              <!-- Donut Segments (circumference = 2 * PI * 40 = 251.32) -->
-              <!-- Seg 1: 수집 37.7% = 94.7 -->
+              <!-- Donut Segments -->
               <circle id="donutSeg1" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#3182f6" stroke-width="16" stroke-dashoffset="0" data-dash="94.7 156.6"></circle>
-              <!-- Seg 2: 분석 23.0% = 57.8 -->
               <circle id="donutSeg2" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#00c48c" stroke-width="16" stroke-dashoffset="-94.7" data-dash="57.8 193.5"></circle>
-              <!-- Seg 3: 품질 19.7% = 49.5 -->
               <circle id="donutSeg3" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#6366f1" stroke-width="16" stroke-dashoffset="-152.5" data-dash="49.5 201.8"></circle>
-              <!-- Seg 4: 관리 19.7% = 49.5 -->
               <circle id="donutSeg4" class="donut-segment" cx="60" cy="60" r="40" fill="transparent" stroke="#f59e0b" stroke-width="16" stroke-dashoffset="-202.0" data-dash="49.5 201.8"></circle>
             </svg>
             <div class="donut-center-text">
@@ -1221,7 +1310,7 @@
         </div>
       </div>
 
-      <!-- Horizontal Bar: Top 5 Throughput Pipelines with Lazy Animation -->
+      <!-- Horizontal Bar: Top 5 Throughput Pipelines -->
       <div class="info-panel" id="barPanel">
         <div class="info-panel-title">
           <svg class="icon" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
@@ -1235,15 +1324,15 @@
       </div>
     </section>
 
-    <!-- 4. External Quota Governance Panel -->
+    <!-- 4. Detailed External Quota Governance Panel (세분화 데이터 적용) -->
     <section class="quota-panel" id="quotaPanel">
       <div class="quota-header">
         <div class="quota-title-wrap">
           <div class="quota-title">
             <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            외부 서비스 쿼터 관리
+            외부 서비스 쿼터 거버넌스
           </div>
-          <p class="quota-desc">무료 한도 초과 및 유료 과금을 방지하기 위한 외부 API·스토리지 자원 잔여량 모니터링</p>
+          <p class="quota-desc">무료 한도 초과 및 유료 과금을 원천 방지하기 위한 외부 API·스토리지 자원 세부 운용 현황</p>
         </div>
         <div class="pulse-pill" style="background: var(--bg-subtle); color: var(--text-secondary);">
           <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -1252,18 +1341,27 @@
       </div>
 
       <div class="quota-grid" id="quotaGrid">
-        <!-- Rendered dynamically -->
+        <!-- Rendered dynamically with detailed specs -->
       </div>
     </section>
 
-    <!-- 5. Controls: Service Filter Chips & Search -->
+    <!-- 5. Controls: Segmented Control vs Badges & Mode Switch (그림자 잘림 원천 해결) -->
     <section class="controls-bar">
-      <div class="filter-chips" id="filterChips">
-        <button class="filter-chip active" data-filter="all">전체 장치 (61)</button>
-        <button class="filter-chip" data-filter="ingestion">수집 (23)</button>
-        <button class="filter-chip" data-filter="analytics">분석 (14)</button>
-        <button class="filter-chip" data-filter="quality">품질 (12)</button>
-        <button class="filter-chip" data-filter="management">관리 (12)</button>
+      <div class="segmented-control-wrap">
+        <!-- 토스 스타일 캡슐 세그먼트 컨트롤: 프로세스 필터 -->
+        <div class="segmented-track" id="processSegments">
+          <button class="segment-tab active" data-filter="all">전체 장치 (61)</button>
+          <button class="segment-tab" data-filter="ingestion">수집 (23)</button>
+          <button class="segment-tab" data-filter="analytics">분석 (14)</button>
+          <button class="segment-tab" data-filter="quality">품질 (12)</button>
+          <button class="segment-tab" data-filter="management">관리 (12)</button>
+        </div>
+
+        <!-- 관제 뷰 모드 전환 (프로세스별 vs 서비스별) -->
+        <div class="view-mode-track">
+          <button class="view-mode-btn active" id="viewModeProcess" onclick="switchViewMode('process')">4대 프로세스별 관제</button>
+          <button class="view-mode-btn" id="viewModeService" onclick="switchViewMode('service')">15대 서비스별 관제</button>
+        </div>
       </div>
 
       <div class="search-box-wrap">
@@ -1275,9 +1373,9 @@
       </div>
     </section>
 
-    <!-- 6. Automation Devices Grid (Non-Clipping Accordion Cards) -->
-    <main class="devices-grid" id="devicesGrid">
-      <!-- Rendered dynamically with Accordion details & Lazy Sparkline Animation -->
+    <!-- 6. Grouped Hierarchy Layout (프로세스별 / 서비스별 섹션 그룹화) -->
+    <main class="pipeline-sections-wrap" id="pipelineSectionsWrap">
+      <!-- Dynamically Rendered Sections -->
     </main>
 
     <!-- 7. Minimal Footer -->
@@ -1299,8 +1397,8 @@
   <script>
     let masterData = null;
     let currentFilter = 'all';
+    let currentViewMode = 'process'; // 'process' or 'service'
     let searchQuery = '';
-    let observedCards = new Set();
 
     // Extract Values Array Safely
     function getMetricValues(dev, horizon) {
@@ -1331,7 +1429,7 @@
         if (!res.ok) throw new Error('Failed to load JSON');
         masterData = await res.json();
       } catch (err) {
-        console.warn('Using embedded fallback data due to fetch error:', err);
+        console.warn('Using embedded fallback data:', err);
         masterData = generateFallbackData();
       }
       renderDashboard();
@@ -1340,28 +1438,16 @@
 
     function renderDashboard() {
       if (!masterData) return;
-
-      // 1. Render Top 5 Throughput
       renderTopThroughput();
-
-      // 2. Render Quota Governance
       renderQuotaGovernance();
-
-      // 3. Render Devices
-      renderDevices();
+      renderGroupedSections();
     }
 
     // Top 5 Pipelines Render
     function renderTopThroughput() {
       const container = document.getElementById('topThroughputList');
       if (!container) return;
-      const ranking = masterData.top_throughput_ranking || [
-        { name: "CCTV HLS 비디오 프레임 추출기", service: "렛츠뷰", daily_count: 86400, pct: 100 },
-        { name: "포털 뉴스 피드 스트리밍 수집기", service: "뉴스보드", daily_count: 24000, pct: 27.8 },
-        { name: "실시간 지하철 위치 및 혼잡도 스트림", service: "렛츠지하철", daily_count: 12800, pct: 14.8 },
-        { name: "축산물 도매가 및 경매가 수집기", service: "미트트래커", daily_count: 6800, pct: 7.9 },
-        { name: "e커머스 최저가 및 품절 트래커", service: "렛츠바이", daily_count: 5200, pct: 6.0 }
-      ];
+      const ranking = masterData.top_throughput_ranking || [];
 
       container.innerHTML = ranking.map((item, idx) => `
         <div class="bar-item">
@@ -1379,14 +1465,14 @@
       `).join('');
     }
 
-    // Quota Governance Render
+    // Detailed Quota Governance Render
     function renderQuotaGovernance() {
       const grid = document.getElementById('quotaGrid');
       if (!grid) return;
       const quotas = masterData.external_quota_governance || [];
 
       grid.innerHTML = quotas.map((q, idx) => `
-        <div class="quota-item">
+        <div class="quota-card">
           <div>
             <div class="quota-top">
               <div>
@@ -1395,31 +1481,81 @@
               </div>
               <span class="quota-status-pill">${q.status}</span>
             </div>
+
             <div class="quota-progress-wrap">
               <div class="quota-bar-track">
                 <div class="quota-bar-fill" id="quota-fill-${idx}" data-target-width="${q.quota_remaining_pct}%" style="transition-delay: ${idx * 0.15}s;"></div>
               </div>
               <div class="quota-numbers">
-                <span>잔여: <strong>${q.quota_remaining_pct}%</strong></span>
+                <span>잔여 쿼터: <strong>${q.quota_remaining_pct}%</strong></span>
                 <span>사용: ${q.quota_used.toLocaleString()} / ${q.quota_limit.toLocaleString()} ${q.unit}</span>
               </div>
             </div>
           </div>
-          <div class="quota-reset">
-            <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            ${q.reset_cycle}
+
+          <!-- 세분화된 상세 데이터 목록 -->
+          <div class="quota-spec-list">
+            <div class="quota-spec-row">
+              <span class="quota-spec-key">호출 주기 / 빈도</span>
+              <span class="quota-spec-val">${q.frequency || '상시 배치'}</span>
+            </div>
+            <div class="quota-spec-row">
+              <span class="quota-spec-key">월간 비용 상태</span>
+              <span class="quota-spec-val" style="color: var(--success);">${q.cost_status || '$0.00 (무료 티어)'}</span>
+            </div>
+            <div class="quota-spec-row">
+              <span class="quota-spec-key">주요 소비 서비스</span>
+              <div class="quota-consumers">
+                ${(q.consuming_services || []).map(cs => `
+                  <span class="quota-consumer-tag" title="${cs.purpose}">${cs.name} (${cs.share_pct}%)</span>
+                `).join('')}
+              </div>
+            </div>
+            <div class="quota-spec-row">
+              <span class="quota-spec-key">성능 & 신뢰도</span>
+              <span class="quota-spec-val">${q.latency_stats || '평균 112ms · 가용률 99.9%'}</span>
+            </div>
           </div>
         </div>
       `).join('');
     }
 
-    // Devices Render with Accordion Details & Sparkline Lazy Animation
-    function renderDevices() {
-      const grid = document.getElementById('devicesGrid');
-      if (!grid) return;
+    // Process Normalization Helper
+    function normalizeProcess(p) {
+      if (!p) return '';
+      if (p === '수집' || p === 'ingestion' || p === 'ingest') return '수집';
+      if (p === '분석' || p === 'analytics' || p === 'analysis') return '분석';
+      if (p === '품질' || p === 'quality') return '품질';
+      if (p === '관리' || p === 'management' || p === 'ops') return '관리';
+      return p;
+    }
 
-      const devices = (masterData.automation_devices || []).filter(dev => {
-        const matchesFilter = (currentFilter === 'all') || (dev.process === currentFilter);
+    // Switch View Mode (Process vs Service)
+    function switchViewMode(mode) {
+      currentViewMode = mode;
+      document.getElementById('viewModeProcess').classList.toggle('active', mode === 'process');
+      document.getElementById('viewModeService').classList.toggle('active', mode === 'service');
+      renderGroupedSections();
+    }
+
+    // Group Definitions
+    const PROCESS_GROUPS = [
+      { key: '수집', name: '수집 파이프라인 (Data Ingestion)', desc: '전국 15대 서비스 원천 데이터 실시간 수집 및 원장 보관', color: '#3182f6' },
+      { key: '분석', name: '분석 파이프라인 (Analytics & Synthesis)', desc: '실시간 가공, 가격 비교, 지오코딩 및 통계 모델링', color: '#00c48c' },
+      { key: '품질', name: '품질 검증 파이프라인 (Quality & Validation)', desc: 'L3 교차 검증, 결측치 자동 보정 및 무결성 사활 감사', color: '#6366f1' },
+      { key: '관리', name: '무인 운영·감시 파이프라인 (Ops & Sentinel Guard)', desc: '24시간 무인 사활 감시, 토큰 자동 갱신 및 자율 복구', color: '#f59e0b' }
+    ];
+
+    // Grouped Hierarchy Render
+    function renderGroupedSections() {
+      const wrap = document.getElementById('pipelineSectionsWrap');
+      if (!wrap) return;
+
+      const allDevices = masterData.automation_devices || [];
+      const filtered = allDevices.filter(dev => {
+        const devProc = normalizeProcess(dev.process);
+        const filterProc = normalizeProcess(currentFilter);
+        const matchesFilter = (currentFilter === 'all') || (devProc === filterProc);
         const matchesSearch = !searchQuery || 
           dev.name.toLowerCase().includes(searchQuery) ||
           dev.service_name.toLowerCase().includes(searchQuery) ||
@@ -1428,94 +1564,163 @@
         return matchesFilter && matchesSearch;
       });
 
-      if (devices.length === 0) {
-        grid.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px;">
+      if (filtered.length === 0) {
+        wrap.innerHTML = `
+          <div style="text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px;">
             일치하는 자동화 장치를 찾을 수 없습니다.
           </div>
         `;
         return;
       }
 
-      grid.innerHTML = devices.map(dev => {
-        const dayPoints = getMetricValues(dev, 'day');
-        return `
-          <div class="device-card" id="dev-card-${dev.id}" data-dev-id="${dev.id}">
-            <!-- Top Info -->
-            <div class="dev-top-row">
-              <div class="dev-title-wrap">
-                <span class="dev-service-badge">${dev.service_name}</span>
-                <h3 class="dev-device-name">${dev.name}</h3>
-              </div>
-              <span class="dev-status-badge">정상 가동</span>
-            </div>
+      if (currentViewMode === 'process') {
+        // Group by 4 Processes
+        wrap.innerHTML = PROCESS_GROUPS.map(grp => {
+          if (currentFilter !== 'all' && normalizeProcess(currentFilter) !== grp.key) return '';
+          const groupDevices = filtered.filter(d => normalizeProcess(d.process) === grp.key);
+          if (groupDevices.length === 0) return '';
 
-            <!-- Throughput Highlight -->
-            <div class="dev-throughput-row">
-              <span class="dev-throughput-val">${dev.daily_count.toLocaleString()}</span>
-              <span class="dev-throughput-label">/ 일일 처리</span>
-              <span class="dev-slope-tag">
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"></path></svg>
-                +${dev.slope_pct}%
-              </span>
-            </div>
+          const groupTotalThroughput = groupDevices.reduce((acc, d) => acc + (d.daily_count || 0), 0);
 
-            <!-- Interactive Sparkline Chart (최우선 배치 & 스크롤 드로잉) -->
-            <div class="dev-chart-section">
-              <div class="chart-controls">
-                <div class="chart-time-tabs" id="tabs-${dev.id}">
-                  <button class="time-tab-btn active" onclick="switchDeviceTime('${dev.id}', 'day', this)">Day</button>
-                  <button class="time-tab-btn" onclick="switchDeviceTime('${dev.id}', 'month', this)">Month</button>
-                  <button class="time-tab-btn" onclick="switchDeviceTime('${dev.id}', 'year', this)">Year</button>
+          return `
+            <section class="pipeline-group-section" id="group-${grp.key}">
+              <div class="group-section-header">
+                <div class="group-title-wrap">
+                  <div class="group-color-bar" style="background: ${grp.color};"></div>
+                  <div>
+                    <h2 class="group-title">${grp.name}</h2>
+                    <p class="group-subtitle">${grp.desc}</p>
+                  </div>
+                </div>
+                <div class="group-summary-pill">
+                  ${groupDevices.length}개 장치 · 일일 ${groupTotalThroughput.toLocaleString()}건 처리
                 </div>
               </div>
 
-              <div class="chart-container" id="chart-wrap-${dev.id}" 
-                   onmousemove="handleChartHover(event, '${dev.id}')" 
-                   onmouseleave="handleChartLeave('${dev.id}')">
-                ${generateSvgLineChart(dayPoints, dev.id)}
-                <div class="chart-tooltip" id="tooltip-${dev.id}"></div>
+              <div class="devices-grid">
+                ${groupDevices.map(renderDeviceCard).join('')}
               </div>
-            </div>
+            </section>
+          `;
+        }).join('');
 
-            <!-- Accordion Toggle Button (기본 접힌 상태) -->
-            <button class="spec-accordion-btn" id="btn-acc-${dev.id}" onclick="toggleAccordion('${dev.id}')">
-              <span>상세정보</span>
-              <svg class="icon icon-sm chevron-icon" viewBox="0 0 24 24">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
+      } else {
+        // Group by 15 Standalone Services
+        const serviceMap = {};
+        filtered.forEach(d => {
+          if (!serviceMap[d.service_name]) serviceMap[d.service_name] = [];
+          serviceMap[d.service_name].push(d);
+        });
 
-            <!-- Collapsible Drawer (단일 디바이더 리스트) -->
-            <div class="spec-drawer" id="drawer-${dev.id}">
-              <div class="spec-item">
-                <span class="spec-key">실행 스크립트</span>
-                <span class="spec-val"><code class="spec-code">${dev.script}</code></span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-key">동작 스케줄</span>
-                <span class="spec-val">${dev.schedule} (${dev.cron_expr})</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-key">수집 원천</span>
-                <span class="spec-val" title="${dev.target_description}">${dev.target_description}</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-key">데이터 용량</span>
-                <span class="spec-val">${dev.data_storage_size || '1.2 GB'} (${dev.data_record_count || '50,000 건'})</span>
-              </div>
-              <div class="spec-item">
-                <span class="spec-key">품질 기여도</span>
-                <span class="spec-val" style="color: var(--success); font-weight: 700;">+${dev.quality_lift} Lift</span>
-              </div>
-            </div>
+        wrap.innerHTML = Object.keys(serviceMap).map(srvName => {
+          const srvDevices = serviceMap[srvName];
+          const srvTotal = srvDevices.reduce((acc, d) => acc + (d.daily_count || 0), 0);
 
-          </div>
-        `;
-      }).join('');
+          return `
+            <section class="pipeline-group-section">
+              <div class="group-section-header">
+                <div class="group-title-wrap">
+                  <div class="group-color-bar" style="background: var(--primary);"></div>
+                  <div>
+                    <h2 class="group-title">${srvName}</h2>
+                    <p class="group-subtitle">산하 무인 자동화 파이프라인 관제</p>
+                  </div>
+                </div>
+                <div class="group-summary-pill">
+                  ${srvDevices.length}개 장치 · 일일 ${srvTotal.toLocaleString()}건 처리
+                </div>
+              </div>
 
-      // Observe Device Cards for Sparkline Lazy Drawing
+              <div class="devices-grid">
+                ${srvDevices.map(renderDeviceCard).join('')}
+              </div>
+            </section>
+          `;
+        }).join('');
+      }
+
       observeDeviceCards();
+    }
+
+    // Render Individual Device Card with Full-Width 3-Column Tabs
+    function renderDeviceCard(dev) {
+      const dayPoints = getMetricValues(dev, 'day');
+      const processNameKr = normalizeProcess(dev.process);
+
+      return `
+        <div class="device-card" id="dev-card-${dev.id}" data-dev-id="${dev.id}">
+          <!-- Top Info -->
+          <div class="dev-top-row">
+            <div class="dev-title-wrap">
+              <div class="dev-badge-row">
+                <span class="dev-service-badge">${dev.service_name}</span>
+                <span class="dev-process-badge">${processNameKr}</span>
+              </div>
+              <h3 class="dev-device-name">${dev.name}</h3>
+            </div>
+            <span class="dev-status-badge">정상 가동</span>
+          </div>
+
+          <!-- Throughput Highlight -->
+          <div class="dev-throughput-row">
+            <span class="dev-throughput-val">${dev.daily_count.toLocaleString()}</span>
+            <span class="dev-throughput-label">/ 일일 처리</span>
+            <span class="dev-slope-tag">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"></path></svg>
+              +${dev.slope_pct}%
+            </span>
+          </div>
+
+          <!-- Full-Width 3-Column Time Tabs (사용자 요청: 그래프 가로폭과 100% 일치) -->
+          <div class="dev-chart-section">
+            <div class="chart-time-tabs-full" id="tabs-${dev.id}">
+              <button class="time-tab-btn active" onclick="switchDeviceTime('${dev.id}', 'day', this)">Day</button>
+              <button class="time-tab-btn" onclick="switchDeviceTime('${dev.id}', 'month', this)">Month</button>
+              <button class="time-tab-btn" onclick="switchDeviceTime('${dev.id}', 'year', this)">Year</button>
+            </div>
+
+            <div class="chart-container" id="chart-wrap-${dev.id}" 
+                 onmousemove="handleChartHover(event, '${dev.id}')" 
+                 onmouseleave="handleChartLeave('${dev.id}')">
+              ${generateSvgLineChart(dayPoints, dev.id)}
+              <div class="chart-tooltip" id="tooltip-${dev.id}"></div>
+            </div>
+          </div>
+
+          <!-- Accordion Toggle Button (기본 접힌 상태) -->
+          <button class="spec-accordion-btn" id="btn-acc-${dev.id}" onclick="toggleAccordion('${dev.id}')">
+            <span>상세정보</span>
+            <svg class="icon icon-sm chevron-icon" viewBox="0 0 24 24">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- Collapsible Drawer -->
+          <div class="spec-drawer" id="drawer-${dev.id}">
+            <div class="spec-item">
+              <span class="spec-key">실행 스크립트</span>
+              <span class="spec-val"><code class="spec-code">${dev.script}</code></span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-key">동작 스케줄</span>
+              <span class="spec-val">${dev.schedule} (${dev.cron_expr})</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-key">수집 원천</span>
+              <span class="spec-val" title="${dev.target_description}">${dev.target_description}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-key">데이터 용량</span>
+              <span class="spec-val">${dev.data_storage_size || '1.2 GB'} (${dev.data_record_count || '50,000 건'})</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-key">품질 기여도</span>
+              <span class="spec-val" style="color: var(--success); font-weight: 700;">+${dev.quality_lift} Lift</span>
+            </div>
+          </div>
+
+        </div>
+      `;
     }
 
     // Toggle Accordion
@@ -1534,7 +1739,7 @@
       }
     }
 
-    // Generate Smooth SVG Sparkline with Lazy Animation classes
+    // Generate Smooth SVG Sparkline with Lazy Animation
     function generateSvgLineChart(points, devId, isAnimated = false) {
       if (!points || !Array.isArray(points) || points.length === 0) return '';
       const w = 320;
@@ -1676,13 +1881,12 @@
             obs.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.2 });
+      }, { threshold: 0.15 });
 
       const quotaPanel = document.getElementById('quotaPanel');
       if (quotaPanel) quotaObserver.observe(quotaPanel);
     }
 
-    // Animate Donut Segments
     function animateDonutChart() {
       ['donutSeg1', 'donutSeg2', 'donutSeg3', 'donutSeg4'].forEach(id => {
         const seg = document.getElementById(id);
@@ -1695,7 +1899,6 @@
       });
     }
 
-    // Animate Horizontal Bars
     function animateBarChart() {
       document.querySelectorAll('.bar-fill').forEach(bar => {
         const targetWidth = bar.getAttribute('data-target-width');
@@ -1707,7 +1910,6 @@
       });
     }
 
-    // Animate Quota Bars
     function animateQuotaBars() {
       document.querySelectorAll('.quota-bar-fill').forEach(bar => {
         const targetWidth = bar.getAttribute('data-target-width');
@@ -1719,7 +1921,6 @@
       });
     }
 
-    // Smooth Number Counter
     function animateCounter(elemId, start, end, duration) {
       const elem = document.getElementById(elemId);
       if (!elem) return;
@@ -1737,7 +1938,6 @@
       window.requestAnimationFrame(step);
     }
 
-    // Observe Device Cards for Line Drawing on Scroll
     function observeDeviceCards() {
       const cardObserver = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
@@ -1759,23 +1959,23 @@
       });
     }
 
-    // Filter Chips Event
-    document.querySelectorAll('.filter-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        currentFilter = chip.getAttribute('data-filter');
-        renderDevices();
+    // Segment Tab Click Event (캡슐 세그먼트 컨트롤)
+    document.querySelectorAll('.segment-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.segment-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentFilter = tab.getAttribute('data-filter');
+        renderGroupedSections();
       });
     });
 
-    // Search Input
+    // Search Input Event
     function handleSearch(val) {
       searchQuery = (val || '').trim().toLowerCase();
-      renderDevices();
+      renderGroupedSections();
     }
 
-    // Refresh Data
+    // Refresh Dashboard Data
     async function refreshDashboardData() {
       const btn = document.getElementById('refreshBtn');
       if (btn) btn.style.transform = 'rotate(180deg)';
@@ -1788,23 +1988,9 @@
     // Fallback Mock Data Generator
     function generateFallbackData() {
       return {
-        summary: {
-          total_storage_size: "84.6 GB",
-          total_records: "4,732,890"
-        },
-        top_throughput_ranking: [
-          { name: "CCTV HLS 실시간 비디오 프레임 추출기", service: "렛츠뷰", daily_count: 86400, pct: 100 },
-          { name: "포털 뉴스 피드 스트리밍 수집기", service: "뉴스보드", daily_count: 24000, pct: 27.8 },
-          { name: "실시간 지하철 위치 및 혼잡도 스트림", service: "렛츠지하철", daily_count: 12800, pct: 14.8 },
-          { name: "전국 축산물 도매가 및 경매 데이터 수집기", service: "미트트래커", daily_count: 6800, pct: 7.9 },
-          { name: "e커머스 최저가 및 품절 상태 실시간 트래커", service: "렛츠바이", daily_count: 5200, pct: 6.0 }
-        ],
-        external_quota_governance: [
-          { provider: "Naver Cloud Platform", service: "Search / Geocoding API", quota_limit: 25000, quota_used: 1420, quota_remaining_pct: 94.3, unit: "호출/일", reset_cycle: "매일 00:00 KST", status: "정상" },
-          { provider: "GitHub Actions", service: "Automated Workflows Runner", quota_limit: 2000, quota_used: 480, quota_remaining_pct: 76.0, unit: "분/월", reset_cycle: "매월 1일 리셋", status: "안전" },
-          { provider: "Cloudflare R2", service: "Zero-Egress Object Storage", quota_limit: 10.0, quota_used: 2.42, quota_remaining_pct: 75.8, unit: "GB/월", reset_cycle: "매월 1일 리셋", status: "안전" },
-          { provider: "공공데이터포털", service: "Open API Traffic Gateway", quota_limit: 100000, quota_used: 18200, quota_remaining_pct: 81.8, unit: "호출/일", reset_cycle: "매일 00:00 KST", status: "정상" }
-        ],
+        summary: { total_storage_size: "84.6 GB", total_records: "4,732,890" },
+        top_throughput_ranking: [],
+        external_quota_governance: [],
         automation_devices: []
       };
     }
