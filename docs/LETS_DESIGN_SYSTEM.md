@@ -1,4 +1,4 @@
-# 렛츠 패밀리 통합 디자인 시스템 (Let's Design System, LDS v1.0.0)
+# 렛츠 패밀리 통합 디자인 시스템 (Let's Design System, LDS v1.1.0)
 > **최종 개정일**: 2026-11-18  
 > **기준 레퍼런스**: 렛츠캘린더 (`/calendar`), 뉴스보드 인물 상세 페이지 (`/news/person/`), Apple HIG, Toss Simplicity, Supabase Design, Naver Design System  
 > **적용 대상**: `Let's Law`, `Let's Insu`, `Let's People`, `Let's Asset`, `Let's Art`, `Let's View`, `MeatTracker`, `Let's Hub` 등 생태계 전 서비스
@@ -10,6 +10,7 @@
 ### 1.1 힉스의 법칙 (Hick's Law) & 선택지 최소화
 - 사용자가 결정을 내리는 시간은 선택지의 수와 복잡성에 비례하여 증가합니다.
 - 복잡한 법률·금융·인물 데이터를 표출할 때 한 화면에 모든 옵션을 나열하지 않고, **가장 중요한 1차 판단 지표(Hero Metric)를 최상단에 배치**하고 부차적 옵션은 접거나 탭/모달로 분리합니다.
+- 모든 화면은 `Hero → 핵심 근거 → 비교/흐름 → 세부 원장 → 다음 탐색` 순서로 구성합니다. 같은 수준의 카드를 무한 반복하지 않고 정보의 부모·자식 관계를 크기·색·여백으로 표현합니다.
 
 ### 1.2 피츠의 법칙 (Fitts's Law) & 터치 친화적 상호작용
 - 모바일(320px~430px) 및 터치 디바이스에서 모든 인터랙티브 요소(버튼, 탭, 칩)의 **최소 터치 타깃 영역은 44×44px**을 보장합니다.
@@ -185,3 +186,12 @@ body {
    - 시세: `urn:meat:item:{trace_id}`
 2. **글로벌 옴니서치 (Global Omnibox Search Bar)**:
    - 렛츠허브 상단에 통합 검색창을 구비하여 사용자가 "교통사고", "자하 하디드", "삼성전자", "한우 시세" 등을 입력하면 15개 서비스 전체의 URN 엔티티를 즉시 교차 탐색하여 다이렉트 딥링크로 안내합니다.
+
+## 11. 구현·검수 계약
+
+- 모든 신규 서비스는 이 문서와 `tokens/lets-design-tokens.json`, `css/lets-design-system.css`, `js/lets-design-system.js`를 기준으로 시작합니다.
+- 서비스별 차이는 시그니처 색·아이콘·데이터 시각화 방식으로만 만들고, 폰트·간격·컨테이너·포커스·반응형 규칙은 공유합니다.
+- 320px, 375px, 768px, 1024px, 1440px에서 실제 화면을 확인합니다. 가로 overflow가 0이어야 하며, 4→2→1단 전환과 세로 적층을 확인합니다.
+- 키보드 Tab/Enter, 터치 44px 타깃, WCAG AA 대비, `prefers-reduced-motion`, PWA safe-area를 릴리스 전 검수합니다.
+- 공유 메타데이터(OG title/description/image), favicon, 180px apple-touch-icon, manifest, 서비스워커 등록, 알림 설정/해제 UI가 없으면 완성으로 보지 않습니다.
+- 화면 구현 전에 이 문서의 토큰을 먼저 사용하고, 예외가 필요하면 서비스 저장소의 `docs/DESIGN_EXCEPTION.md`에 이유·범위·폐기일을 기록합니다.

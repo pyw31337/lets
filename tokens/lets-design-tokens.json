@@ -1,0 +1,9 @@
+{
+  "version": "1.1.0",
+  "font": {"family": "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif"},
+  "breakpoints": {"mobile": 320, "tablet": 640, "desktop": 1024, "wide": 1440},
+  "spacing": {"2": 2, "4": 4, "6": 6, "8": 8, "12": 12, "16": 16, "20": 20, "24": 24, "32": 32, "40": 40, "48": 48, "64": 64},
+  "colors": {"page": "#f8fafc", "surface": "#ffffff", "subtle": "#f1f5f9", "primary": "#0f172a", "secondary": "#334155", "muted": "#475569", "line": "#e2e8f0", "focus": "#1d4ed8"},
+  "interaction": {"minTouchTarget": 44, "focusRing": "0 0 0 3px color-mix(in srgb, var(--lds-focus) 28%, transparent)", "motionDuration": 250},
+  "services": {"calendar": "#6366f1", "news": "#1d4ed8", "people": "#e11d48", "law": "#2563eb", "insu": "#059669", "asset": "#4f46e5", "art": "#d97706"}
+}
