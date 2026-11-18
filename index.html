@@ -36,11 +36,17 @@
       --teal-light: #f0fdfa;
     }
 
+    html, body {
+      box-sizing: border-box;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
     body {
       background: var(--bg-page);
       color: var(--text-primary);
       overflow-x: hidden;
-      min-width: 320px;
+      min-width: 0;
+      width: 100%;
     }
 
     /* Container */
@@ -48,6 +54,9 @@
       max-width: 1480px;
       margin: 0 auto;
       width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     /* Top Nav Header */
@@ -791,10 +800,14 @@
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
-      transition: transform var(--transition-base);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform var(--transition-base), visibility var(--transition-base);
     }
     .lds-drawer.is-open {
       transform: translateX(0);
+      visibility: visible;
+      pointer-events: auto;
     }
     .lds-drawer-header {
       padding: var(--space-20);
@@ -830,8 +843,13 @@
     }
     .services-showcase-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
       gap: var(--space-16);
+    }
+    @media (max-width: 639px) {
+      .services-showcase-grid {
+        grid-template-columns: 1fr;
+      }
     }
     .service-showcase-card {
       background: var(--bg-subtle);
@@ -1317,17 +1335,24 @@
       const drawer = document.getElementById('drawerBody');
       const alerts = pulseData?.caution_alerts || [];
 
-      const alertHtml = alerts.map(a => `
-        <div class="caution-card" style="border-left: 3px solid ${a.color};">
+      const alertHtml = alerts.map(a => {
+        const color = a.color || a.badge_color || '#059669';
+        const service = a.service_name || a.service || '센티널 감시';
+        const badge = a.badge_text || a.badge || '정상';
+        const title = a.title || '알림';
+        const desc = a.desc || a.message || '';
+        const bg = a.badge_bg || `${color}15`;
+        return `
+        <div class="caution-card" style="border-left: 3px solid ${color};">
           <div class="caution-top">
-            <span class="caution-service">${a.service}</span>
-            <span class="caution-badge" style="background:${a.color}15; color:${a.color}; border:1px solid ${a.color}40;">${a.badge}</span>
+            <span class="caution-service">${service}</span>
+            <span class="caution-badge" style="background:${bg}; color:${color}; border:1px solid ${color}40;">${badge}</span>
           </div>
-          <div class="caution-card-title">${a.title}</div>
-          <div class="caution-card-msg">${a.message}</div>
+          <div class="caution-card-title">${title}</div>
+          <div class="caution-card-msg">${desc}</div>
           <div style="font-size:10px; color:var(--text-muted); margin-top:auto;">감지: ${a.timestamp}</div>
         </div>
-      `).join('');
+      `}).join('');
 
       if (grid) grid.innerHTML = alertHtml;
       if (drawer) drawer.innerHTML = alertHtml;
