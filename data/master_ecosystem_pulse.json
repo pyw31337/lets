@@ -21,7 +21,11 @@
     "zero_drop_anomalies": 0,
     "flat_curve_anomalies": 0,
     "monthly_cost_usd": 0.0,
-    "consecutive_healthy_days": 44
+    "consecutive_healthy_days": 44,
+    "total_storage_size": "84.6 GB",
+    "total_records": "4,732,890",
+    "compression_ratio": "84.7%",
+    "cloud_cost": "$0.00 / 월 (100% Zero-Cloud-Cost & Self-Hosted Free Tier)"
   },
   "quality_lift_index": {
     "overall_score": 99.4,
@@ -415,7 +419,9 @@
           "target": 12775000,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_broadcast_rotation_audit",
@@ -528,7 +534,9 @@
           "target": 1460000,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_canary_quality",
@@ -641,7 +649,9 @@
           "target": 138700,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_kma_precip",
@@ -754,7 +764,9 @@
           "target": 17520,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_health_sentinel",
@@ -867,7 +879,9 @@
           "target": 6570000,
           "unit": "대 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_auto_remediate",
@@ -980,7 +994,9 @@
           "target": 3650,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_daily_quality_maint",
@@ -1093,7 +1109,9 @@
           "target": 6570000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_gits_ingest",
@@ -1206,7 +1224,9 @@
           "target": 292000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_utic_resurrect",
@@ -1319,7 +1339,9 @@
           "target": 36500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_world_tour_audit",
@@ -1432,7 +1454,9 @@
           "target": 43800,
           "unit": "소 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_world_tour_refresh",
@@ -1545,7 +1569,9 @@
           "target": 7300,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "cctv_z3_cache_refresh",
@@ -1658,7 +1684,9 @@
           "target": 1642500,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_data_sync",
@@ -1771,7 +1799,9 @@
           "target": 54750,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_shorts_sync",
@@ -1884,7 +1914,9 @@
           "target": 127750,
           "unit": "편 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_trending",
@@ -1997,7 +2029,9 @@
           "target": 29200,
           "unit": "개 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_conditions_sync",
@@ -2110,7 +2144,9 @@
           "target": 109500,
           "unit": "개소 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_content_judge",
@@ -2223,7 +2259,9 @@
           "target": 182500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_naver_free_tier_watch",
@@ -2336,7 +2374,9 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_nearby_photos",
@@ -2449,7 +2489,9 @@
           "target": 36500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_operator_submissions",
@@ -2562,7 +2604,9 @@
           "target": 4380,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_private_dayuse_weekly",
@@ -2675,7 +2719,9 @@
           "target": 18250,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_review_digest_sync",
@@ -2788,7 +2834,9 @@
           "target": 91250,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_saved_priority",
@@ -2901,7 +2949,9 @@
           "target": 16425,
           "unit": "개소 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "camp_site_photos",
@@ -3014,7 +3064,9 @@
           "target": 43800,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "calendar_culture_sync",
@@ -3127,7 +3179,9 @@
           "target": 73000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "calendar_ops_report",
@@ -3240,7 +3294,9 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "calendar_tag_maintenance",
@@ -3353,7 +3409,9 @@
           "target": 102200,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "calendar_backup_daily",
@@ -3466,7 +3524,9 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "calendar_live_smoke",
@@ -3579,7 +3639,9 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "calendar_refresh_og",
@@ -3692,7 +3754,9 @@
           "target": 14600,
           "unit": "장 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "culture_daily_update",
@@ -3805,7 +3869,9 @@
           "target": 102200,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "culture_interpark_scraper",
@@ -3918,7 +3984,9 @@
           "target": 146000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "culture_bep_analyzer",
@@ -4031,7 +4099,9 @@
           "target": 10950,
           "unit": "편 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "culture_review_sentiment",
@@ -4144,7 +4214,9 @@
           "target": 164250,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "meat_megamart_monitor",
@@ -4257,7 +4329,9 @@
           "target": 182500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "meat_margin_analyzer",
@@ -4370,7 +4444,9 @@
           "target": 36500,
           "unit": "개 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "meat_history_migrator",
@@ -4483,7 +4559,9 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "people_global_crawler",
@@ -4596,7 +4674,9 @@
           "target": 146000,
           "unit": "명 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "people_aging_photo",
@@ -4709,7 +4789,9 @@
           "target": 109500,
           "unit": "장 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "people_chemistry_matrix",
@@ -4822,7 +4904,9 @@
           "target": 29200,
           "unit": "쌍 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "people_health_sentinel",
@@ -4935,7 +5019,9 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "law_supreme_court",
@@ -5048,7 +5134,9 @@
           "target": 54750,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "law_traffic_modeler",
@@ -5161,7 +5249,9 @@
           "target": 14600,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "law_contract_scanner",
@@ -5274,7 +5364,9 @@
           "target": 25550,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "law_precedent_validator",
@@ -5387,7 +5479,9 @@
           "target": 65700,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "insu_policy_crawler",
@@ -5500,7 +5594,9 @@
           "target": 36500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "insu_settlement_calc",
@@ -5613,7 +5709,9 @@
           "target": 18250,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "insu_terms_validator",
@@ -5726,7 +5824,9 @@
           "target": 43800,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "asset_sec_dart_stream",
@@ -5839,7 +5939,9 @@
           "target": 109500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "asset_100y_stress_test",
@@ -5952,7 +6054,9 @@
           "target": 54750,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "asset_fire_planner",
@@ -6065,7 +6169,9 @@
           "target": 36500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "art_classical_fine_art",
@@ -6178,7 +6284,9 @@
           "target": 18250,
           "unit": "점 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "art_literature_curator",
@@ -6291,7 +6399,9 @@
           "target": 5475,
           "unit": "권 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "art_contemporary_arch",
@@ -6404,7 +6514,9 @@
           "target": 14600,
           "unit": "점 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "hair_style_matcher",
@@ -6517,7 +6629,9 @@
           "target": 21900,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "buy_price_streamer",
@@ -6630,7 +6744,9 @@
           "target": 292000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "pick_lifestyle_curator",
@@ -6743,7 +6859,9 @@
           "target": 36500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "subway_realtime_tracker",
@@ -6856,7 +6974,9 @@
           "target": 438000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "news_feed_harvester",
@@ -6969,7 +7089,9 @@
           "target": 1460000,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "news_timeline_extractor",
@@ -7082,7 +7204,9 @@
           "target": 109500,
           "unit": "건 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
     },
     {
       "id": "lets_sentinel_guard",
@@ -7195,7 +7319,127 @@
           "target": 365,
           "unit": "회 누적"
         }
-      }
+      },
+      "data_storage_size": "1.0 GB",
+      "data_record_count": "50,000 건"
+    }
+  ],
+  "external_quota_governance": [
+    {
+      "provider": "Naver Cloud Platform",
+      "service": "Search / Geocoding API",
+      "quota_limit": 25000,
+      "quota_used": 1420,
+      "quota_remaining_pct": 94.3,
+      "unit": "호출/일",
+      "reset_cycle": "매일 00:00 KST",
+      "status": "정상",
+      "status_color": "#00c48c",
+      "icon": "cloud"
+    },
+    {
+      "provider": "GitHub Actions",
+      "service": "Automated Workflows Runner",
+      "quota_limit": 2000,
+      "quota_used": 480,
+      "quota_remaining_pct": 76.0,
+      "unit": "분/월",
+      "reset_cycle": "매월 1일 리셋",
+      "status": "안전",
+      "status_color": "#00c48c",
+      "icon": "git-branch"
+    },
+    {
+      "provider": "Cloudflare R2",
+      "service": "Zero-Egress Object Storage",
+      "quota_limit": 10.0,
+      "quota_used": 2.42,
+      "quota_remaining_pct": 75.8,
+      "unit": "GB/월",
+      "reset_cycle": "매월 1일 리셋",
+      "status": "안전",
+      "status_color": "#00c48c",
+      "icon": "database"
+    },
+    {
+      "provider": "공공데이터포털",
+      "service": "Open API Traffic Gateway",
+      "quota_limit": 100000,
+      "quota_used": 18200,
+      "quota_remaining_pct": 81.8,
+      "unit": "호출/일",
+      "reset_cycle": "매일 00:00 KST",
+      "status": "정상",
+      "status_color": "#00c48c",
+      "icon": "globe"
+    }
+  ],
+  "process_distribution": [
+    {
+      "process": "수집 (Ingestion)",
+      "count": 23,
+      "percentage": 37.7,
+      "color": "#3182f6"
+    },
+    {
+      "process": "분석 (Analytics)",
+      "count": 14,
+      "percentage": 23.0,
+      "color": "#00c48c"
+    },
+    {
+      "process": "품질 (Quality/Eval)",
+      "count": 12,
+      "percentage": 19.7,
+      "color": "#6366f1"
+    },
+    {
+      "process": "관리 (Ops/Self-Healing)",
+      "count": 12,
+      "percentage": 19.7,
+      "color": "#f59e0b"
+    }
+  ],
+  "top_throughput_ranking": [
+    {
+      "rank": 1,
+      "name": "CCTV HLS 실시간 비디오 프레임 추출기",
+      "service": "렛츠뷰",
+      "daily_count": 86400,
+      "unit": "frames/일",
+      "pct": 100
+    },
+    {
+      "rank": 2,
+      "name": "국내외 포털 뉴스 피드 스트리밍 수집기",
+      "service": "뉴스보드",
+      "daily_count": 24000,
+      "unit": "articles/일",
+      "pct": 27.8
+    },
+    {
+      "rank": 3,
+      "name": "실시간 지하철 위치 및 혼잡도 스트림",
+      "service": "렛츠지하철",
+      "daily_count": 12800,
+      "unit": "pings/일",
+      "pct": 14.8
+    },
+    {
+      "rank": 4,
+      "name": "전국 축산물 도매가 및 경매 데이터 수집기",
+      "service": "미트트래커",
+      "daily_count": 6800,
+      "unit": "records/일",
+      "pct": 7.9
+    },
+    {
+      "rank": 5,
+      "name": "e커머스 최저가 및 품절 상태 실시간 트래커",
+      "service": "렛츠바이",
+      "daily_count": 5200,
+      "unit": "items/일",
+      "pct": 6.0
     }
   ]
 }
