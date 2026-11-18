@@ -194,4 +194,5 @@ body {
 - 320px, 375px, 768px, 1024px, 1440px에서 실제 화면을 확인합니다. 가로 overflow가 0이어야 하며, 4→2→1단 전환과 세로 적층을 확인합니다.
 - 키보드 Tab/Enter, 터치 44px 타깃, WCAG AA 대비, `prefers-reduced-motion`, PWA safe-area를 릴리스 전 검수합니다.
 - 공유 메타데이터(OG title/description/image), favicon, 180px apple-touch-icon, manifest, 서비스워커 등록, 알림 설정/해제 UI가 없으면 완성으로 보지 않습니다.
+- 알림은 사용자 동의 후에만 `LDS.enableNotifications()`로 권한을 요청하고, 서비스워커가 있으면 `LDS.registerPWA()`로 등록합니다. 거부 상태에서도 화면 내 알림센터는 사용할 수 있어야 합니다.
 - 화면 구현 전에 이 문서의 토큰을 먼저 사용하고, 예외가 필요하면 서비스 저장소의 `docs/DESIGN_EXCEPTION.md`에 이유·범위·폐기일을 기록합니다.

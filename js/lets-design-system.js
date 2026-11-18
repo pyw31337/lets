@@ -12,7 +12,14 @@
     root.addEventListener('pointerup', up); root.addEventListener('pointercancel', up);
     root.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
   }
+  async function registerPWA(path = '/sw.js') { if (!('serviceWorker' in navigator)) return null; try { return await navigator.serviceWorker.register(path, { scope: './' }); } catch (_) { return null; } }
+  async function enableNotifications() {
+    if (!('Notification' in window)) return { supported: false, permission: 'unsupported' };
+    const permission = Notification.permission === 'default' ? await Notification.requestPermission() : Notification.permission;
+    return { supported: true, permission };
+  }
+  function notify(title, options = {}) { if ('Notification' in window && Notification.permission === 'granted') return new Notification(title, options); return null; }
   function init() { document.querySelectorAll('[data-lds-carousel]').forEach(carousel); document.documentElement.classList.toggle('lds-reduced-motion', reduce); }
-  window.LDS = Object.assign(window.LDS || {}, { init, carousel });
+  window.LDS = Object.assign(window.LDS || {}, { init, carousel, registerPWA, enableNotifications, notify });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
