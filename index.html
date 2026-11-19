@@ -16,6 +16,7 @@
   <!-- Pretendard Variable Font & LDS v2.1 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/lets-design-system.css">
+  <script src="js/lets-design-system.js"></script>
   
   <style>
     /* ==========================================================
@@ -1707,70 +1708,77 @@
     @media (max-width: 640px) { .ops-command-center { padding:18px; border-radius:18px; }.ops-command-header { flex-direction:column; }.ops-command-meta { justify-content:flex-start; }.ops-kpi-row { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-service-grid { grid-template-columns:1fr; }.ops-check-strip { grid-template-columns:1fr; } }
 
     /* ==========================================================
-       Service Navigation Menu & Drilldown Detail View (LDS v2.2)
+       Service Navigation Menu & Drilldown Detail View (LDS v2.3 Tactile Modernism)
        ========================================================== */
     .service-nav-bar {
-      background: var(--bg-surface);
-      border-radius: var(--radius-xl, 20px);
-      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
-      padding: 8px 12px;
-      box-shadow: var(--shadow-sm);
+      background: #eaecf0;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 6px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
       margin-bottom: 24px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       max-width: 100%;
       min-width: 0;
       box-sizing: border-box;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .service-nav-bar::-webkit-scrollbar { display: none; }
+    .service-nav-bar.is-dragging {
+      cursor: grabbing !important;
+      scroll-behavior: auto !important;
+    }
 
     .service-nav-tab {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       padding: 8px 14px;
-      border-radius: var(--radius-full);
+      border-radius: 11px;
       font-size: 13px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: #475569;
       background: transparent;
       border: 1px solid transparent;
       white-space: nowrap;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
       flex-shrink: 0;
       user-select: none;
     }
     .service-nav-tab:hover {
-      background: var(--bg-subtle);
-      color: var(--text-primary);
-      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.6);
+      color: #0f172a;
     }
     .service-nav-tab:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
     .service-nav-tab.active {
-      background: var(--text-primary);
-      color: #ffffff;
+      background: #ffffff;
+      color: #0f172a;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(25, 31, 40, 0.15);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04), inset 0 1px 0 #ffffff;
     }
     .service-nav-tab .tab-badge {
       font-size: 11px;
       font-family: var(--font-family-mono, monospace);
-      padding: 1px 6px;
-      border-radius: var(--radius-full);
-      background: var(--bg-subtle);
-      color: var(--text-muted);
-      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.06);
+      color: #64748b;
+      font-weight: 700;
     }
     .service-nav-tab.active .tab-badge {
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
+      background: #eff2f6;
+      color: #1e293b;
     }
 
     /* Service Detail View Components */
@@ -1783,11 +1791,11 @@
       animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .service-hero-card {
-      background: var(--bg-surface);
-      border-radius: var(--radius-xl, 20px);
-      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
-      padding: 26px 30px;
-      box-shadow: var(--shadow-sm);
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 24px 28px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03), inset 0 1px 0 #ffffff;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -1806,19 +1814,22 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--divider-dark);
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
       padding: 7px 14px;
-      border-radius: var(--radius-full);
+      border-radius: 10px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: #334155;
       cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), inset 0 1px 0 #ffffff;
       transition: all 0.15s ease;
     }
     .service-back-btn:hover {
-      background: var(--bg-hover);
-      color: var(--text-primary);
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
     }
     .service-hero-main {
       display: flex;
@@ -1836,8 +1847,10 @@
     .service-hero-icon {
       width: 54px;
       height: 54px;
-      border-radius: var(--radius-lg, 16px);
-      background: var(--bg-subtle);
+      border-radius: 14px;
+      background: #f1f4f8;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1877,14 +1890,15 @@
       .service-kpi-grid { grid-template-columns: 1fr; }
     }
     .service-kpi-card {
-      background: var(--bg-surface);
-      border-radius: var(--radius-lg, 16px);
-      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+      border-radius: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
       padding: 18px 20px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), inset 0 1px 0 #ffffff;
       display: flex;
       flex-direction: column;
       gap: 5px;
+      border-left: 3.5px solid #3182f6;
     }
     .service-kpi-label {
       font-size: 12px;
@@ -1892,7 +1906,7 @@
       color: var(--text-muted);
     }
     .service-kpi-val {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--text-primary);
       font-family: var(--font-family-mono, monospace);
@@ -2958,6 +2972,9 @@
       });
 
       nav.innerHTML = html;
+      if (window.LDS && typeof window.LDS.carousel === 'function') {
+        window.LDS.carousel(nav);
+      }
     }
 
     function selectService(serviceId) {

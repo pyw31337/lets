@@ -1,25 +1,140 @@
-/* LDS interaction primitives. No framework dependency. */
+/**
+ * Let's Design System (LDS v2.3.0)
+ * Interaction Primitives: Tactile Carousel, Momentum Drag-to-Scroll & Touch Swipe
+ */
 (function () {
   'use strict';
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function carousel(root) {
-    if (root.dataset.ldsCarouselReady) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /**
+   * Universal Touch Swipe & Mouse Drag-to-Scroll Controller
+   * Supports mouse pointer dragging with click suppression and touch momentum.
+   */
+  function enableTactileCarousel(root) {
+    if (!root || root.dataset.ldsCarouselReady === '1') return;
     root.dataset.ldsCarouselReady = '1';
-    let down = false, startX = 0, startScroll = 0, moved = false;
-    root.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse' && e.button !== 0) return; down = true; moved = false; startX = e.clientX; startScroll = root.scrollLeft; root.classList.add('is-dragging'); root.setPointerCapture?.(e.pointerId); });
-    root.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 4) moved = true; root.scrollLeft = startScroll - dx; });
-    const up = e => { if (!down) return; down = false; root.classList.remove('is-dragging'); root.releasePointerCapture?.(e.pointerId); };
-    root.addEventListener('pointerup', up); root.addEventListener('pointercancel', up);
-    root.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let hasDragged = false;
+    let lastX = 0;
+    let lastTime = 0;
+    let velocity = 0;
+    let momentumFrame = null;
+
+    root.style.overflowX = 'auto';
+    root.style.webkitOverflowScrolling = 'touch';
+    root.style.scrollbarWidth = 'none';
+    root.style.touchAction = 'pan-x pan-y';
+    root.classList.add('lds-tactile-carousel');
+
+    // Pointer Down (Mouse & Touch)
+    root.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (momentumFrame) {
+        cancelAnimationFrame(momentumFrame);
+        momentumFrame = null;
+      }
+
+      isDown = true;
+      hasDragged = false;
+      startX = e.clientX;
+      lastX = e.clientX;
+      startScrollLeft = root.scrollLeft;
+      lastTime = performance.now();
+      velocity = 0;
+
+      root.classList.add('is-dragging');
+      if (typeof root.setPointerCapture === 'function') {
+        try { root.setPointerCapture(e.pointerId); } catch (_) {}
+      }
+    });
+
+    // Pointer Move
+    root.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      const currentX = e.clientX;
+      const dx = currentX - startX;
+      
+      if (Math.abs(dx) > 4) {
+        hasDragged = true;
+      }
+
+      root.scrollLeft = startScrollLeft - dx;
+
+      const now = performance.now();
+      const dt = Math.max(1, now - lastTime);
+      velocity = (currentX - lastX) / dt;
+      lastX = currentX;
+      lastTime = now;
+    });
+
+    // Pointer Up & Cancel with Momentum Glide
+    const handlePointerEnd = (e) => {
+      if (!isDown) return;
+      isDown = false;
+      root.classList.remove('is-dragging');
+
+      if (typeof root.releasePointerCapture === 'function') {
+        try { root.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+
+      // Apply light momentum glide on mouse release if velocity was significant
+      if (!reduceMotion && Math.abs(velocity) > 0.25) {
+        let currentVelocity = velocity * 14;
+        const friction = 0.92;
+
+        const stepMomentum = () => {
+          if (Math.abs(currentVelocity) < 0.5 || isDown) {
+            momentumFrame = null;
+            return;
+          }
+          root.scrollLeft -= currentVelocity;
+          currentVelocity *= friction;
+          momentumFrame = requestAnimationFrame(stepMomentum);
+        };
+        momentumFrame = requestAnimationFrame(stepMomentum);
+      }
+    };
+
+    root.addEventListener('pointerup', handlePointerEnd);
+    root.addEventListener('pointercancel', handlePointerEnd);
+
+    // Suppress click events if the user was dragging
+    root.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+        hasDragged = false;
+      }
+    }, true);
   }
-  async function registerPWA(path = '/sw.js') { if (!('serviceWorker' in navigator)) return null; try { return await navigator.serviceWorker.register(path, { scope: './' }); } catch (_) { return null; } }
-  async function enableNotifications() {
-    if (!('Notification' in window)) return { supported: false, permission: 'unsupported' };
-    const permission = Notification.permission === 'default' ? await Notification.requestPermission() : Notification.permission;
-    return { supported: true, permission };
+
+  function init() {
+    // Select all carousels, nav tracks, and segment tracks
+    const selectors = [
+      '[data-lds-carousel]',
+      '.service-nav-bar',
+      '.cat-carousel',
+      '.segment-tabs',
+      '#serviceNavBar',
+      '#catBar'
+    ];
+    document.querySelectorAll(selectors.join(', ')).forEach(enableTactileCarousel);
+    document.documentElement.classList.toggle('lds-reduced-motion', reduceMotion);
   }
-  function notify(title, options = {}) { if ('Notification' in window && Notification.permission === 'granted') return new Notification(title, options); return null; }
-  function init() { document.querySelectorAll('[data-lds-carousel]').forEach(carousel); document.documentElement.classList.toggle('lds-reduced-motion', reduce); }
-  window.LDS = Object.assign(window.LDS || {}, { init, carousel, registerPWA, enableNotifications, notify });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+
+  window.LDS = Object.assign(window.LDS || {}, {
+    version: '2.3.0',
+    init,
+    carousel: enableTactileCarousel
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
