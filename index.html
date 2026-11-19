@@ -1585,6 +1585,49 @@
       .donut-legend { width: 100%; }
       .header-actions { width: 100%; justify-content: space-between; }
     }
+    /* ==========================================================
+       Operations Command Center — live condition layer
+       ========================================================== */
+    .ops-command-center { margin: 0 0 28px; padding: 28px; border: 1px solid rgba(49,130,246,.14); border-radius: 24px; background: linear-gradient(135deg,#fafdff 0%,#fff 52%,#f7fbff 100%); box-shadow: var(--shadow-md); }
+    .ops-command-header { display:flex; justify-content:space-between; gap:24px; align-items:flex-start; margin-bottom:22px; }
+    .eyebrow-label { color:var(--primary); font:700 11px/1.2 var(--font-family-mono,monospace); letter-spacing:.12em; }
+    .ops-command-title { margin-top:7px; font-size:25px; letter-spacing:-.04em; }
+    .ops-command-desc { margin-top:7px; color:var(--text-secondary); font-size:14px; line-height:1.55; }
+    .ops-command-meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+    .ops-updated { color:var(--text-muted); font-size:12px; margin-right:6px; }
+    .ops-filter-btn { border:1px solid var(--divider-dark); background:#fff; color:var(--text-secondary); border-radius:999px; padding:8px 12px; font:600 12px inherit; cursor:pointer; }
+    .ops-filter-btn.active { color:#fff; background:var(--text-primary); border-color:var(--text-primary); }
+    .ops-kpi-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:18px; }
+    .ops-kpi { padding:15px 16px; border:1px solid var(--divider); border-radius:16px; background:#fff; }
+    .ops-kpi-label { display:block; color:var(--text-muted); font-size:12px; margin-bottom:6px; }
+    .ops-kpi-value { display:block; font-size:24px; font-weight:800; letter-spacing:-.04em; }
+    .ops-kpi-note { display:block; color:var(--text-secondary); font-size:11px; margin-top:4px; }
+    .ops-main-grid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr); gap:14px; }
+    .ops-service-panel,.ops-incident-panel { border:1px solid var(--divider); border-radius:18px; background:#fff; padding:18px; min-width:0; }
+    .ops-panel-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .ops-panel-heading strong { display:block; font-size:15px; }
+    .ops-panel-heading span { display:block; color:var(--text-muted); font-size:11px; margin-top:4px; }
+    .ops-live-chip { display:inline-flex!important; align-items:center; gap:5px; padding:5px 8px; border-radius:999px; background:var(--success-light); color:var(--success)!important; font:700 10px/1 var(--font-family-mono,monospace); white-space:nowrap; }
+    .ops-live-chip i { width:6px; height:6px; border-radius:50%; background:currentColor; box-shadow:0 0 0 4px rgba(0,196,140,.12); animation:opsPulse 1.8s infinite; }
+    @keyframes opsPulse { 50% { opacity:.35; transform:scale(.7); } }
+    .ops-service-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
+    .ops-service-card { display:block; min-width:0; padding:13px; border:1px solid var(--divider); border-radius:14px; color:inherit; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .ops-service-card:hover { transform:translateY(-2px); border-color:rgba(49,130,246,.35); box-shadow:0 8px 20px rgba(25,31,40,.07); }
+    .ops-service-card.is-attention { background:linear-gradient(145deg,#fffaf4,#fff); border-color:rgba(255,159,0,.28); }
+    .ops-service-top { display:flex; align-items:center; justify-content:space-between; gap:6px; }
+    .ops-service-name { font-weight:750; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ops-state { flex:0 0 auto; padding:4px 7px; border-radius:999px; font-size:10px; font-weight:750; }
+    .ops-state.healthy { color:#087f5b; background:#e6faf3; }.ops-state.degraded { color:#a15c00; background:#fff4d8; }.ops-state.blocked { color:#b42318; background:#ffebee; }
+    .ops-service-detail { margin-top:9px; color:var(--text-secondary); font-size:11px; line-height:1.45; min-height:32px; }
+    .ops-service-next { margin-top:8px; color:var(--primary); font-size:11px; font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ops-incident-list { display:flex; flex-direction:column; gap:9px; }
+    .ops-incident { display:block; padding:12px; border-radius:13px; border:1px solid var(--divider); text-decoration:none; color:inherit; }
+    .ops-incident:hover { background:var(--bg-subtle); }.ops-incident.high { border-left:3px solid var(--danger); }.ops-incident.medium { border-left:3px solid var(--warning); }.ops-incident.low { border-left:3px solid var(--primary); }
+    .ops-incident-title { font-size:12px; font-weight:750; }.ops-incident-why { color:var(--text-secondary); font-size:11px; line-height:1.45; margin-top:5px; }.ops-incident-action { color:var(--primary); font-size:11px; font-weight:700; margin-top:7px; }
+    .ops-check-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-top:14px; }
+    .ops-check { display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; background:var(--bg-subtle); color:var(--text-secondary); font-size:11px; }.ops-check strong { color:var(--success); font-size:14px; }.ops-check span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    @media (max-width: 900px) { .ops-main-grid { grid-template-columns:1fr; }.ops-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-check-strip { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width: 640px) { .ops-command-center { padding:18px; border-radius:18px; }.ops-command-header { flex-direction:column; }.ops-command-meta { justify-content:flex-start; }.ops-kpi-row { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-service-grid { grid-template-columns:1fr; }.ops-check-strip { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -1634,9 +1677,9 @@
       </div>
 
       <div class="header-actions">
-        <div class="pulse-pill">
+        <div class="pulse-pill" id="headerStatusPill">
           <span class="pulse-dot"></span>
-          <span>61/61 전 장치 정상 가동</span>
+          <span>운영 상태 집계 중</span>
         </div>
         <button class="action-btn" id="sweepBtn" onclick="runSentinelSweep()">
           <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -1734,6 +1777,37 @@
         <div class="metric-value">$0.00</div>
         <div class="metric-sub">100% Zero-Cloud-Cost (무료 티어 유지)</div>
       </div>
+    </section>
+
+    <!-- 2.5. Live Operations Command Center -->
+    <section class="ops-command-center" id="opsCommandCenter">
+      <div class="ops-command-header">
+        <div>
+          <div class="eyebrow-label">OPERATIONS / REAL STATUS</div>
+          <h2 class="ops-command-title">전체 서비스 컨디션</h2>
+          <p class="ops-command-desc">정적 성공률이 아니라, 최근 heartbeat·배포·quota·자동화 실패를 분리해서 보여줍니다.</p>
+        </div>
+        <div class="ops-command-meta">
+          <span class="ops-updated" id="opsUpdated">상태 스냅샷 로딩 중</span>
+          <button class="ops-filter-btn active" data-ops-filter="all">전체</button>
+          <button class="ops-filter-btn" data-ops-filter="attention">주의만</button>
+        </div>
+      </div>
+      <div class="ops-kpi-row" id="opsKpiRow"></div>
+      <div class="ops-main-grid">
+        <div class="ops-service-panel">
+          <div class="ops-panel-heading">
+            <div><strong>서비스 상태 매트릭스</strong><span>클릭하면 서비스·저장소·다음 조치로 이동합니다.</span></div>
+            <span class="ops-live-chip"><i></i>LIVE SNAPSHOT</span>
+          </div>
+          <div class="ops-service-grid" id="opsServiceGrid"></div>
+        </div>
+        <aside class="ops-incident-panel">
+          <div class="ops-panel-heading"><div><strong>지금 처리할 일</strong><span>운영 영향도 순</span></div></div>
+          <div class="ops-incident-list" id="opsIncidentList"></div>
+        </aside>
+      </div>
+      <div class="ops-check-strip" id="opsCheckStrip"></div>
     </section>
 
     <!-- 3. Diverse Infographics (Donut Pie + Top 5 Horizontal Bars) -->
@@ -2082,6 +2156,8 @@
   <!-- Client App Logic -->
   <script>
     let masterData = null;
+    let operationsData = null;
+    let operationsFilter = 'all';
     let currentFilter = 'all';
     let currentViewMode = 'process';
     let searchQuery = '';
@@ -2345,12 +2421,17 @@
 
     async function initDashboard() {
       try {
-        const res = await fetch('data/master_ecosystem_pulse.json?v=' + Date.now());
-        if (!res.ok) throw new Error('Failed to load JSON');
-        masterData = await res.json();
+        const [masterRes, opsRes] = await Promise.all([
+          fetch('data/master_ecosystem_pulse.json?v=' + Date.now()),
+          fetch('data/operations_status.json?v=' + Date.now())
+        ]);
+        if (!masterRes.ok) throw new Error('Failed to load master pulse');
+        masterData = await masterRes.json();
+        operationsData = opsRes.ok ? await opsRes.json() : null;
       } catch (err) {
         console.warn('Using embedded fallback data:', err);
         masterData = generateFallbackData();
+        operationsData = null;
       }
       renderDashboard();
       setupIntersectionObservers();
@@ -2361,8 +2442,59 @@
       renderTopThroughput();
       renderQuotaGovernance();
       renderLocalEdgeAI();
+      renderOperationsCommandCenter();
       renderGroupedSections();
     }
+
+    function formatOpsTime(value) {
+      if (!value) return '최근 기록 없음';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return new Intl.DateTimeFormat('ko-KR', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(date);
+    }
+
+    function renderOperationsCommandCenter() {
+      const data = operationsData;
+      const kpi = document.getElementById('opsKpiRow');
+      const grid = document.getElementById('opsServiceGrid');
+      const incidents = document.getElementById('opsIncidentList');
+      const checks = document.getElementById('opsCheckStrip');
+      const updated = document.getElementById('opsUpdated');
+      if (!data || !kpi || !grid || !incidents || !checks) return;
+      const overall = data.overall || {};
+      const services = data.services || [];
+      const visible = operationsFilter === 'attention' ? services.filter(s => s.status !== 'healthy') : services;
+      if (updated) updated.textContent = `마지막 집계 ${formatOpsTime(data.generated_at)}`;
+      const headerPill = document.querySelector('#headerStatusPill span:last-child');
+      if (headerPill) headerPill.textContent = `${overall.healthy ?? 0}개 정상 · ${overall.degraded ?? 0}개 주의`;
+      kpi.innerHTML = [
+        ['정상 서비스', overall.healthy ?? services.filter(s => s.status === 'healthy').length, '최근 확인 통과'],
+        ['주의 서비스', overall.degraded ?? services.filter(s => s.status === 'degraded').length, '다음 조치 필요'],
+        ['차단 서비스', overall.blocked ?? services.filter(s => s.status === 'blocked').length, '즉시 복구 대상'],
+        ['운영 이벤트', (data.incidents || []).length, '우선순위로 정렬']
+      ].map(([label, value, note]) => `<div class="ops-kpi"><span class="ops-kpi-label">${label}</span><strong class="ops-kpi-value">${value}</strong><span class="ops-kpi-note">${note}</span></div>`).join('');
+      grid.innerHTML = visible.map(service => `
+        <a class="ops-service-card ${service.status !== 'healthy' ? 'is-attention' : ''}" href="${service.url || service.repo || '#'}" target="_blank" rel="noopener">
+          <div class="ops-service-top"><span class="ops-service-name">${service.name}</span><span class="ops-state ${service.status}">${service.label}</span></div>
+          <div class="ops-service-detail">${service.detail}</div>
+          <div class="ops-service-next">다음: ${service.next}</div>
+          <div style="margin-top:7px;color:var(--text-muted);font-size:10px">갱신 ${formatOpsTime(service.updated_at)} · 저장소 ↗</div>
+        </a>`).join('') || '<div style="padding:24px;color:var(--text-muted)">현재 주의 항목이 없습니다.</div>';
+      incidents.innerHTML = (data.incidents || []).map(item => `
+        <a class="ops-incident ${item.severity}" href="${item.href || '#'}" target="_blank" rel="noopener">
+          <div class="ops-incident-title">${item.title}</div><div class="ops-incident-why">${item.why}</div><div class="ops-incident-action">→ ${item.action}</div>
+        </a>`).join('');
+      checks.innerHTML = (data.checks || []).map(check => `<div class="ops-check"><strong>${check.state === 'pass' ? '✓' : '!'}</strong><span><b>${check.name}</b> · ${check.value}</span></div>`).join('');
+    }
+
+    document.querySelectorAll('.ops-filter-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.ops-filter-btn').forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        operationsFilter = button.dataset.opsFilter || 'all';
+        renderOperationsCommandCenter();
+      });
+    });
 
     function renderTopThroughput() {
       const container = document.getElementById('topThroughputList');
