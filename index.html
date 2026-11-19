@@ -1705,6 +1705,204 @@
     .ops-check { display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; background:var(--bg-subtle); color:var(--text-secondary); font-size:11px; }.ops-check strong { color:var(--success); font-size:14px; }.ops-check span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     @media (max-width: 900px) { .ops-main-grid { grid-template-columns:1fr; }.ops-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-check-strip { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width: 640px) { .ops-command-center { padding:18px; border-radius:18px; }.ops-command-header { flex-direction:column; }.ops-command-meta { justify-content:flex-start; }.ops-kpi-row { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-service-grid { grid-template-columns:1fr; }.ops-check-strip { grid-template-columns:1fr; } }
+
+    /* ==========================================================
+       Service Navigation Menu & Drilldown Detail View (LDS v2.2)
+       ========================================================== */
+    .service-nav-bar {
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl, 20px);
+      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
+      padding: 8px 12px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .service-nav-bar::-webkit-scrollbar { display: none; }
+
+    .service-nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: transparent;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .service-nav-tab:hover {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    .service-nav-tab:active {
+      transform: scale(0.97);
+    }
+    .service-nav-tab.active {
+      background: var(--text-primary);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(25, 31, 40, 0.15);
+    }
+    .service-nav-tab .tab-badge {
+      font-size: 11px;
+      font-family: var(--font-family-mono, monospace);
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .service-nav-tab.active .tab-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    /* Service Detail View Components */
+    .service-detail-view {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+      min-width: 0;
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-hero-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl, 20px);
+      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
+      padding: 26px 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .service-hero-card { padding: 20px 16px; }
+    }
+    .service-hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .service-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--divider-dark);
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .service-back-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+    .service-hero-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .service-hero-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+    .service-hero-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--radius-lg, 16px);
+      background: var(--bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .service-hero-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .service-hero-role {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+    .service-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .service-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      width: 100%;
+      min-width: 0;
+    }
+    @media (max-width: 1024px) {
+      .service-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .service-kpi-grid { grid-template-columns: 1fr; }
+    }
+    .service-kpi-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg, 16px);
+      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .service-kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .service-kpi-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      font-family: var(--font-family-mono, monospace);
+      letter-spacing: -0.03em;
+    }
+    .service-kpi-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -1802,6 +2000,14 @@
         </button>
       </div>
     </header>
+
+    <!-- 1.5 Service Navigation Menu Bar (LDS v2.2 Tactile Pill Track) -->
+    <nav class="service-nav-bar" id="serviceNavBar" aria-label="서비스별 관제 메뉴">
+      <!-- Dynamically generated by renderServiceNavBar() -->
+    </nav>
+
+    <!-- [View Mode A] All Services Integrated Control View (통합 관제 전체 화면) -->
+    <div id="allServicesView">
 
     <!-- 2. Core Metric Summary Cards -->
     <section class="summary-grid">
@@ -2088,6 +2294,12 @@
 
     <!-- 6. Grouped Hierarchy Layout (프로세스별 / 서비스별 섹션 그룹화) -->
     <main class="pipeline-sections-wrap" id="pipelineSectionsWrap"></main>
+    </div><!-- End #allServicesView -->
+
+    <!-- [View Mode B] Single Service Detailed View (서비스별 상세 세부내역 화면) -->
+    <div id="serviceDetailView" class="service-detail-view" style="display: none;">
+      <!-- Dynamically populated by renderServiceDetail(serviceKey) -->
+    </div>
 
     <!-- 7. Minimal Footer -->
     <footer class="hub-footer">
@@ -2539,9 +2751,422 @@
       }
       renderDashboard();
       setupIntersectionObservers();
+      handleHashRoute();
     }
 
+    
+    // ==========================================================
+    // 15 Standalone Services Catalog & Interactive Navigation (LDS v2.2)
+    // ==========================================================
+    const SERVICES_CATALOG = [
+      {
+        id: 'news',
+        name: '뉴스보드',
+        fullName: '뉴스보드 (NewsBoard)',
+        icon: '📰',
+        role: '전국 52개 언론사 실시간 RSS/속보 수집, AI 브리핑 및 헤드라인 클러스터링',
+        url: 'https://pyw31337.github.io/news/',
+        repo: 'https://github.com/pyw31337/news'
+      },
+      {
+        id: 'camp',
+        name: '렛츠캠프',
+        fullName: '렛츠캠프 (Let\'s Camp)',
+        icon: '⛺',
+        role: '전국 4,300여 국공립·사설 캠핑장 잔여석 무인 감시, 기상 특보 및 비전 판독',
+        url: 'https://pyw31337.github.io/camp/',
+        repo: 'https://github.com/pyw31337/camp'
+      },
+      {
+        id: 'view',
+        name: '렛츠뷰',
+        fullName: '렛츠뷰 (Let\'s View)',
+        icon: '📹',
+        role: '전국 고속도로·국도 실시간 CCTV 영상 스트림 파싱 및 교통 혼잡도 분석',
+        url: 'https://pyw31337.github.io/cctv/',
+        repo: 'https://github.com/pyw31337/cctv'
+      },
+      {
+        id: 'meattracker',
+        name: '미트트래커',
+        fullName: '미트트래커 (MeatTracker)',
+        icon: '🥩',
+        role: '전국 축산물 도매 경매 시세, 도체 등급 및 유통 마진 원장 실시간 추적',
+        url: 'https://pyw31337.github.io/meat/',
+        repo: 'https://github.com/pyw31337/meat'
+      },
+      {
+        id: 'subway',
+        name: '렛츠지하철',
+        fullName: '렛츠지하철 (Let\'s Subway)',
+        icon: '🚇',
+        role: '수도권 1~9호선 실시간 열차 도착 핑, 지연율 및 역사 혼잡도 스트림 집계',
+        url: 'https://pyw31337.github.io/metro/',
+        repo: 'https://github.com/pyw31337/metro'
+      },
+      {
+        id: 'cultureflow',
+        name: '컬처플로우',
+        fullName: '컬처플로우 (CultureFlow)',
+        icon: '🎭',
+        role: '전국 공연·전시·축제 실시간 예매 정보, 인터파크/예스24 크롤링 및 LLM 분석',
+        url: 'https://pyw31337.github.io/culture/',
+        repo: 'https://github.com/pyw31337/culture'
+      },
+      {
+        id: 'people',
+        name: '렛츠피플',
+        fullName: '렛츠피플 (Let\'s People)',
+        icon: '👥',
+        role: '전국 인물 데이터, 전문직 명단, 행안부 고액체납자 13,697명 및 공직자 재산 실시간 수집',
+        url: 'http://127.0.0.1:8096/',
+        repo: 'https://github.com/pyw31337/people'
+      },
+      {
+        id: 'law',
+        name: '렛츠로',
+        fullName: '렛츠로 (Let\'s Law)',
+        icon: '⚖️',
+        role: '대법원 판례·법령 개정안·교통사고 분쟁조정 원장 실시간 수집 및 검색',
+        url: 'https://github.com/pyw31337/law',
+        repo: 'https://github.com/pyw31337/law'
+      },
+      {
+        id: 'insu',
+        name: '렛츠인슈',
+        fullName: '렛츠인슈 (Let\'s Insu)',
+        icon: '🛡️',
+        role: '실손/자동차 보험 약관 변경 및 손해보험협회 공시 데이터 실시간 수집',
+        url: 'https://github.com/pyw31337/insu',
+        repo: 'https://github.com/pyw31337/insu'
+      },
+      {
+        id: 'asset',
+        name: '렛츠에셋',
+        fullName: '렛츠에셋 (Let\'s Asset)',
+        icon: '💎',
+        role: '국내외 거시경제 지표, 금리, 환율, 원자재 및 디지털 자산 시세 수집',
+        url: 'https://github.com/pyw31337/asset',
+        repo: 'https://github.com/pyw31337/asset'
+      },
+      {
+        id: 'art',
+        name: '렛츠아트',
+        fullName: '렛츠아트 (Let\'s Art)',
+        icon: '🎨',
+        role: '국내외 주요 경매사(K옥션, 서울옥션) 낙찰 기록 및 미술품 시세 인덱싱',
+        url: 'https://github.com/pyw31337/art',
+        repo: 'https://github.com/pyw31337/art'
+      },
+      {
+        id: 'buy',
+        name: '렛츠바이',
+        fullName: '렛츠바이 (Let\'s Buy)',
+        icon: '🛒',
+        role: '핫딜 및 최저가 가격 변동 추적, 역대 최저가 비교 무인 알림',
+        url: 'https://pyw31337.github.io/buy/',
+        repo: 'https://github.com/pyw31337/buy'
+      },
+      {
+        id: 'pick',
+        name: '렛츠픽',
+        fullName: '렛츠픽 (Let\'s Pick)',
+        icon: '🏷️',
+        role: '커뮤니티 트렌드 및 바이럴 상품 추천 인덱스 자동 집계',
+        url: 'https://pyw31337.github.io/pick/',
+        repo: 'https://github.com/pyw31337/pick'
+      },
+      {
+        id: 'hair',
+        name: '렛츠헤어',
+        fullName: '렛츠헤어 (Let\'s Hair)',
+        icon: '✂️',
+        role: '미용실 시술 단가, 리뷰 키워드 분석 및 헤어 트렌드 집계',
+        url: 'https://pyw31337.github.io/hair/',
+        repo: 'https://github.com/pyw31337/hair'
+      },
+      {
+        id: 'calendar',
+        name: '렛츠캘린더',
+        fullName: '렛츠캘린더 (Let\'s Calendar)',
+        icon: '📅',
+        role: '공휴일, 학사일정, 금융 결제일 및 청약 일정 자동 동기화',
+        url: 'https://pyw31337.github.io/calendar/',
+        repo: 'https://github.com/pyw31337/calendar'
+      },
+      {
+        id: 'lets',
+        name: '렛츠허브',
+        fullName: '렛츠허브 (Let\'s Hub)',
+        icon: '🌐',
+        role: '전체 15대 서비스 무인 파이프라인 통합 거버넌스 및 센티넬 가디언',
+        url: 'https://pyw31337.github.io/lets/',
+        repo: 'https://github.com/pyw31337/lets'
+      }
+    ];
+
+    let currentSelectedService = 'all';
+
+    function renderServiceNavBar() {
+      const nav = document.getElementById('serviceNavBar');
+      if (!nav) return;
+
+      const allDevices = (masterData && masterData.automation_devices) ? masterData.automation_devices : [];
+      const totalCount = allDevices.length || 61;
+
+      let html = `
+        <button class="service-nav-tab ${currentSelectedService === 'all' ? 'active' : ''}" 
+                data-service="all" 
+                onclick="selectService('all')"
+                aria-label="통합 관제 전체 보기">
+          <span>🌐 통합 관제 (전체)</span>
+          <span class="tab-badge">${totalCount}</span>
+        </button>
+      `;
+
+      SERVICES_CATALOG.forEach(s => {
+        const srvDevs = allDevices.filter(d => d.service_id === s.id || d.service_name === s.name);
+        const count = srvDevs.length;
+        html += `
+          <button class="service-nav-tab ${currentSelectedService === s.id ? 'active' : ''}" 
+                  data-service="${s.id}" 
+                  onclick="selectService('${s.id}')"
+                  title="${s.fullName} 세부 관제 보기">
+            <span>${s.icon} ${s.name}</span>
+            <span class="tab-badge">${count}</span>
+          </button>
+        `;
+      });
+
+      nav.innerHTML = html;
+    }
+
+    function selectService(serviceId) {
+      currentSelectedService = serviceId;
+
+      document.querySelectorAll('.service-nav-tab').forEach(tab => {
+        const isAct = tab.getAttribute('data-service') === serviceId;
+        tab.classList.toggle('active', isAct);
+        if (isAct) {
+          tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+
+      const allView = document.getElementById('allServicesView');
+      const detailView = document.getElementById('serviceDetailView');
+      if (!allView || !detailView) return;
+
+      if (serviceId === 'all') {
+        allView.style.display = 'block';
+        detailView.style.display = 'none';
+        if (window.location.hash !== '#all' && window.location.hash !== '') {
+          history.pushState(null, '', '#all');
+        }
+      } else {
+        allView.style.display = 'none';
+        detailView.style.display = 'flex';
+        renderServiceDetail(serviceId);
+        if (window.location.hash !== `#service-${serviceId}`) {
+          history.pushState(null, '', `#service-${serviceId}`);
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function renderServiceDetail(serviceId) {
+      const container = document.getElementById('serviceDetailView');
+      if (!container || !masterData) return;
+
+      const srv = SERVICES_CATALOG.find(s => s.id === serviceId) || {
+        id: serviceId,
+        name: serviceId,
+        fullName: serviceId,
+        icon: '⚡',
+        role: '무인 자동화 서비스',
+        url: '#',
+        repo: '#'
+      };
+
+      const allDevices = masterData.automation_devices || [];
+      const srvDevices = allDevices.filter(d => d.service_id === serviceId || d.service_name === srv.name);
+
+      const totalThroughput = srvDevices.reduce((sum, d) => sum + (d.daily_count || 0), 0);
+      const totalRecords = srvDevices.reduce((sum, d) => {
+        const str = (d.data_record_count || '0').replace(/[^0-9]/g, '');
+        return sum + (parseInt(str, 10) || 0);
+      }, 0);
+      const totalStorageMB = srvDevices.reduce((sum, d) => {
+        const str = d.data_storage_size || '0';
+        const num = parseFloat(str) || 0;
+        return sum + (str.includes('GB') ? num * 1024 : num);
+      }, 0);
+      const storageStr = totalStorageMB > 1024 
+        ? (totalStorageMB / 1024).toFixed(1) + ' GB' 
+        : (totalStorageMB > 0 ? totalStorageMB.toFixed(0) + ' MB' : '1.2 GB');
+
+      const procCounts = { '수집': 0, '분석': 0, '품질': 0, '관리': 0 };
+      srvDevices.forEach(d => {
+        const p = normalizeProcess(d.process);
+        if (procCounts[p] !== undefined) procCounts[p]++;
+      });
+      const procSummary = `수집 ${procCounts['수집']} · 분석 ${procCounts['분석']} · 품질 ${procCounts['품질']} · 관리 ${procCounts['관리']}`;
+
+      const relatedQuotas = (masterData.external_quota_governance || []).filter(q => 
+        (q.consuming_services || []).some(cs => cs.name.includes(srv.name) || cs.name.toLowerCase().includes(serviceId))
+      );
+
+      const opInfo = (operationsData?.services || []).find(s => s.id === serviceId || s.name.includes(srv.name));
+
+      let html = `
+        <!-- 1. Hero Card -->
+        <div class="service-hero-card">
+          <div class="service-hero-top">
+            <button class="service-back-btn" onclick="selectService('all')">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              전체 통합 관제로 돌아가기
+            </button>
+            <span class="quota-status-pill" style="background: rgba(0, 196, 140, 0.1); color: var(--success); font-weight: 700;">
+              ● 100% 정상 무인 가동
+            </span>
+          </div>
+
+          <div class="service-hero-main">
+            <div class="service-hero-info">
+              <div class="service-hero-icon">${srv.icon}</div>
+              <div>
+                <div class="service-hero-title">${srv.fullName}</div>
+                <div class="service-hero-role">${srv.role}</div>
+              </div>
+            </div>
+            <div class="service-hero-actions">
+              ${srv.url && srv.url !== '#' ? `
+                <a href="${srv.url}" target="_blank" rel="noopener" class="hero-action-btn primary" style="text-decoration: none;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  서비스 바로가기
+                </a>
+              ` : ''}
+              ${srv.repo && srv.repo !== '#' ? `
+                <a href="${srv.repo}" target="_blank" rel="noopener" class="hero-action-btn" style="text-decoration: none;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  GitHub 저장소
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. 4-Bento KPI Grid -->
+        <div class="service-kpi-grid">
+          <div class="service-kpi-card">
+            <span class="service-kpi-label">일일 자동 처리량</span>
+            <span class="service-kpi-val">${totalThroughput.toLocaleString()} 건</span>
+            <span class="service-kpi-sub" style="color: var(--success); font-weight: 600;">
+              ✓ 24시간 실시간 무인 누적
+            </span>
+          </div>
+          <div class="service-kpi-card">
+            <span class="service-kpi-label">전담 파이프라인</span>
+            <span class="service-kpi-val">${srvDevices.length} 개 장치</span>
+            <span class="service-kpi-sub">${procSummary}</span>
+          </div>
+          <div class="service-kpi-card">
+            <span class="service-kpi-label">원장 보유 규모</span>
+            <span class="service-kpi-val">${totalRecords > 0 ? totalRecords.toLocaleString() + ' 건' : '실시간 동기화'}</span>
+            <span class="service-kpi-sub">총 ${storageStr} 안전 원장</span>
+          </div>
+          <div class="service-kpi-card">
+            <span class="service-kpi-label">에지 가동 / 인프라 비용</span>
+            <span class="service-kpi-val" style="color: var(--success);">$0.00</span>
+            <span class="service-kpi-sub">온디바이스 M3 에지 가동</span>
+          </div>
+        </div>
+
+        <!-- 3. Operations Status Strip (if available) -->
+        ${opInfo ? `
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-hairline, rgba(0,0,0,0.05)); border-radius: 16px; padding: 16px 20px; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="ops-state ${opInfo.status}">${opInfo.label}</span>
+              <span style="font-size: 13px; color: var(--text-primary); font-weight: 600;">${opInfo.detail}</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-secondary);">
+              다음 실행: <strong>${opInfo.next}</strong> · 최근 갱신: ${formatOpsTime(opInfo.updated_at)}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- 4. Dedicated Pipelines Device Cards Grid -->
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 0;">
+              ${srv.name} 전담 무인 자동화 장치 (${srvDevices.length}대)
+            </h3>
+            <span style="font-size: 12px; color: var(--text-muted);">
+              차트 시계열 전환 및 상세정보/로그 지원
+            </span>
+          </div>
+
+          <div class="devices-grid">
+            ${srvDevices.length > 0 ? srvDevices.map(renderDeviceCard).join('') : `
+              <div style="padding: 40px; text-align: center; color: var(--text-muted); grid-column: 1 / -1;">
+                등록된 자동화 장치가 없습니다.
+              </div>
+            `}
+          </div>
+        </div>
+
+        <!-- 5. Connected External Quotas (if applicable) -->
+        ${relatedQuotas.length > 0 ? `
+          <div style="margin-top: 10px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+              연계 외부 쿼터 및 거버넌스
+            </h3>
+            <div class="quota-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+              ${relatedQuotas.map((q, idx) => `
+                <div class="quota-card">
+                  <div class="quota-top">
+                    <div>
+                      <div class="quota-provider">${q.provider}</div>
+                      <div class="quota-service">${q.service}</div>
+                    </div>
+                    <span class="quota-status-pill">${q.status}</span>
+                  </div>
+                  <div class="quota-progress-wrap">
+                    <div class="quota-bar-track">
+                      <div class="quota-bar-fill" style="width: ${q.quota_remaining_pct}%;"></div>
+                    </div>
+                    <div class="quota-numbers">
+                      <span>잔여: <strong>${q.quota_remaining_pct}%</strong></span>
+                      <span>${q.quota_used.toLocaleString()} / ${q.quota_limit.toLocaleString()} ${q.unit}</span>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      container.innerHTML = html;
+      observeDeviceCards();
+    }
+
+    function handleHashRoute() {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#service-')) {
+        const sId = hash.replace('#service-', '');
+        const exists = SERVICES_CATALOG.some(s => s.id === sId);
+        if (exists) {
+          selectService(sId);
+          return;
+        }
+      }
+      selectService('all');
+    }
+
+    window.addEventListener('hashchange', handleHashRoute);
+
     function renderDashboard() {
+      renderServiceNavBar();
       if (!masterData) return;
       renderTopThroughput();
       renderQuotaGovernance();
@@ -2841,6 +3466,8 @@
         wrap.innerHTML = Object.keys(serviceMap).map(srvName => {
           const srvDevices = serviceMap[srvName];
           const srvTotal = srvDevices.reduce((acc, d) => acc + (d.daily_count || 0), 0);
+          const matchedService = SERVICES_CATALOG.find(s => s.name === srvName || srvDevices.some(d => d.service_id === s.id));
+          const srvId = matchedService ? matchedService.id : '';
 
           return `
             <section class="pipeline-group-section">
@@ -2852,8 +3479,15 @@
                     <p class="group-subtitle">산하 무인 자동화 파이프라인 관제</p>
                   </div>
                 </div>
-                <div class="group-summary-pill">
-                  ${srvDevices.length}개 장치 · 일일 ${srvTotal.toLocaleString()}건 처리
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="group-summary-pill">
+                    ${srvDevices.length}개 장치 · 일일 ${srvTotal.toLocaleString()}건 처리
+                  </div>
+                  ${srvId ? `
+                    <button class="service-back-btn" onclick="selectService('${srvId}')" style="padding: 6px 12px; font-size: 11px;">
+                      상세 뷰 ↗
+                    </button>
+                  ` : ''}
                 </div>
               </div>
 
