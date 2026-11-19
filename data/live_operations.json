@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-19T10:44:08.282357+00:00",
+  "generated_at": "2026-11-19T19:10:12.063529+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
-    "label": "운영 주의 4건",
-    "healthy": 10,
-    "degraded": 4,
+    "label": "운영 주의 2건",
+    "healthy": 12,
+    "degraded": 2,
     "blocked": 0,
     "note": "GitHub Actions·열린 이슈를 5분 주기로 집계합니다."
   },
@@ -17,33 +17,33 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T00:40:44Z",
+      "updated_at": "2026-11-19T16:38:18Z",
       "url": "https://github.com/pyw31337/culture/actions",
       "repo": "https://github.com/pyw31337/culture",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Daily Data Update",
+        "name": "Deploy to GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/culture/actions/runs/44425955808"
+        "url": "https://github.com/pyw31337/culture/actions/runs/44567276650"
       },
-      "open_issues": 1
+      "open_issues": 0
     },
     {
       "id": "news",
       "name": "렛츠뉴스",
-      "status": "degraded",
-      "label": "진행 중",
-      "detail": "collect-news 실행 중",
-      "updated_at": "2026-11-19T10:42:13Z",
+      "status": "healthy",
+      "label": "정상",
+      "detail": "최근 GitHub Actions 실행 정상",
+      "updated_at": "2026-11-19T19:02:55Z",
       "url": "https://github.com/pyw31337/news/actions",
       "repo": "https://github.com/pyw31337/news",
-      "next": "완료 결과 확인",
+      "next": "예약 실행 유지",
       "latest_run": {
-        "name": "collect-news",
-        "conclusion": null,
-        "status": "in_progress",
-        "url": "https://github.com/pyw31337/news/actions/runs/44508084708"
+        "name": "workflow-recovery",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/news/actions/runs/44594141491"
       },
       "open_issues": 2
     },
@@ -71,15 +71,15 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T09:32:24Z",
+      "updated_at": "2026-11-19T18:36:56Z",
       "url": "https://github.com/pyw31337/cctv/actions",
       "repo": "https://github.com/pyw31337/cctv",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Actions Failure Auto-Remediation",
-        "conclusion": "skipped",
+        "name": "Refresh KMA precipitation grid",
+        "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/cctv/actions/runs/44497336619"
+        "url": "https://github.com/pyw31337/cctv/actions/runs/44589612308"
       },
       "open_issues": 0
     },
@@ -104,18 +104,18 @@
     {
       "id": "camp",
       "name": "렛츠캠핑",
-      "status": "degraded",
-      "label": "실패 감지",
-      "detail": "최근 workflow failure · Site photos",
-      "updated_at": "2026-11-19T10:28:53Z",
+      "status": "healthy",
+      "label": "정상",
+      "detail": "최근 GitHub Actions 실행 정상",
+      "updated_at": "2026-11-19T18:38:01Z",
       "url": "https://github.com/pyw31337/camp/actions",
       "repo": "https://github.com/pyw31337/camp",
-      "next": "실패 로그 확인 후 재실행",
+      "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Site photos",
-        "conclusion": "failure",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/camp/actions/runs/44505910833"
+        "name": "Weekly forecast",
+        "conclusion": null,
+        "status": "pending",
+        "url": "https://github.com/pyw31337/camp/actions/runs/44589870041"
       },
       "open_issues": 3
     },
@@ -275,13 +275,13 @@
       "updated_at": "2026-11-19T10:28:53Z"
     },
     {
-      "severity": "medium",
-      "title": "culture 이슈 #20: Mac mini local data update is failing",
-      "service": "렛츠컬처",
-      "why": "GitHub 운영 조치 필요",
-      "action": "이슈 확인 및 대응",
-      "href": "https://github.com/pyw31337/culture/issues/20",
-      "updated_at": "2026-11-19T00:20:04Z"
+      "severity": "high",
+      "title": "camp 실행 실패: Data sync",
+      "service": "렛츠캠핑",
+      "why": "failure · bot/data-site-photos",
+      "action": "실패 로그 확인 후 재실행",
+      "href": "https://github.com/pyw31337/camp/actions/runs/44557702057",
+      "updated_at": "2026-11-19T15:54:19Z"
     },
     {
       "severity": "medium",
