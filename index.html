@@ -2040,6 +2040,22 @@
           </div>
         </div>
       </div>
+
+      <!-- Subcard 3: Tangible Cost-Savings Breakdown Ledger -->
+      <div style="margin-top: 18px; padding: 16px 18px; background: var(--bg-page); border-radius: var(--radius-lg, 16px); border: 1px solid var(--border-hairline, rgba(0,0,0,0.04));">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom: 12px; border-bottom: 1px solid var(--divider-dark); padding-bottom: 10px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--success);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <strong style="font-size: 13px; color: var(--text-primary);">클라우드 및 상용 API 비용 절감 원장 (Cost-Savings ROI Ledger)</strong>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: var(--success); background: var(--success-light); padding: 3px 10px; border-radius: var(--radius-full);">
+            월 약 485만 원 상당 (연간 5,820만 원) 100% 무료 방어 중
+          </span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px;" id="costSavingsGrid">
+          <!-- Dynamically populated by renderLocalEdgeAI -->
+        </div>
+      </div>
     </section>
 
     <!-- 5. Controls: Segmented Control vs Badges & Mode Switch -->
@@ -2705,6 +2721,20 @@
               <span class="daemon-status-live">가동중 (${agent.status})</span>
             </td>
           </tr>
+        `).join('');
+      }
+
+      const savingsGrid = document.getElementById('costSavingsGrid');
+      const ledger = masterData.cost_savings_ledger;
+      if (savingsGrid && ledger && ledger.savings_sources) {
+        savingsGrid.innerHTML = ledger.savings_sources.map(s => `
+          <div style="background: var(--bg-surface); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border-hairline, rgba(0,0,0,0.04)); display: flex; flex-direction: column; gap: 4px;">
+            <div style="font-size: 12px; font-weight: 700; color: var(--text-primary);">${s.item}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-top: 2px;">
+              <span style="color: var(--text-muted); text-decoration: line-through;">${s.cloud_price_est}</span>
+              <strong class="tabular-nums" style="color: var(--success); font-weight: 700;">${s.actual_cost}</strong>
+            </div>
+          </div>
         `).join('');
       }
     }

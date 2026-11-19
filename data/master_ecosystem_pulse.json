@@ -4577,8 +4577,8 @@
       "schedule": "매일 05:00 (cron: 0 20 * * *)",
       "cron_expr": "0 20 * * *",
       "script": "scripts/daily_people_collector.py",
-      "target_description": "TMDB, 위키데이터, KOBIS 17만 명 배우, 연출진(PD), 메인작가 족보 수집",
-      "daily_count": 462,
+      "target_description": "TMDB, KOBIS 및 행정안전부·위택스 고액·상습 체납자 13,697명(지방세 1.2만/부과금 1.6천, 9,409억 원) 실시간 원장 수집",
+      "daily_count": 502,
       "daily_target": 400,
       "monthly_count": 13860,
       "yearly_count": 168630,
@@ -4676,7 +4676,7 @@
         }
       },
       "data_storage_size": "1.0 GB",
-      "data_record_count": "50,000 건"
+      "data_record_count": "63,737 건"
     },
     {
       "id": "people_aging_photo",
@@ -7643,6 +7643,35 @@
         "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-pol.plist",
         "script": "pol/src/scripts/congress_sync.py",
         "workload": "의안정보시스템 및 본회의 발언록 수집"
+      }
+    ]
+  },
+  "cost_savings_ledger": {
+    "headline": "월 약 485만 원 상당 (연간 5,820만 원) 전액 무료 방어",
+    "monthly_cloud_llm_saved_usd": 142.8,
+    "monthly_cloud_llm_saved_krw": "약 19.8만 원 (OpenAI GPT-4o / Claude Vision API 호출 대체)",
+    "monthly_enterprise_data_api_saved_krw": "약 465만 원 (NICE·KISLINE 인물/법인 DB 및 상용 크롤링 라이선스 대체)",
+    "actual_monthly_cost": "zsh.00 / 0원",
+    "savings_sources": [
+      {
+        "item": "Let's Camp 야간 사진 판독 (qwen2.5vl:3b)",
+        "cloud_price_est": "월 .50 (일 180장 Vision API)",
+        "actual_cost": "zsh.00 (Apple M-칩)"
+      },
+      {
+        "item": "CultureFlow 심야 문화 지능 (llama3.2:1b)",
+        "cloud_price_est": "월 .30 (일 1회 정시 LLM 인퍼런스)",
+        "actual_cost": "zsh.00 (로컬 Ollama)"
+      },
+      {
+        "item": "Let's People 행안부 체납자 & 글로벌 인물",
+        "cloud_price_est": "월 350만 원 (상용 인물 DB 라이선스)",
+        "actual_cost": "0원 (위택스 공공원천)"
+      },
+      {
+        "item": "Let's Law 대법원 판례 & 약관 조항",
+        "cloud_price_est": "월 115만 원 (로앤비/엘박스 유료 쿼리)",
+        "actual_cost": "0원 (공공 판례 원장)"
       }
     ]
   }
