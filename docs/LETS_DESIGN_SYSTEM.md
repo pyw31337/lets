@@ -1,64 +1,42 @@
-# 렛츠 패밀리 통합 디자인 시스템 (Let's Design System, LDS v2.1.0)
+# 렛츠 패밀리 통합 디자인 시스템 (Let's Design System, LDS v2.2.0)
 > **최종 개정일**: 2026-11-19  
-> **기준 레퍼런스**: 토스(Toss Simplicity) 미니멀 서피스, Apple HIG 세그먼트 컨트롤 표준, 렛츠캘린더 (`/calendar`), 뉴스보드 인물 상세 페이지 (`/news/person/`)  
-> **적용 대상**: `Let's Law`, `Let's Insu`, `Let's People`, `Let's Asset`, `Let's Art`, `Let's View`, `MeatTracker`, `Let's Hub` 등 생태계 전 서비스
+> **기준 레퍼런스**: Taste Skill 분석 결과 ("Tactile Modernism & Digital Craft"), Apple HIG 스퀘어클 규격, Dieter Rams 물리적 에르고노믹스, Linear/Raycast 마이크로 인터랙션  
+> **적용 대상**: `Let's Hub`, `Let's Law`, `Let's Insu`, `Let's People`, `Let's Asset`, `Let's Art`, `Let's View`, `MeatTracker`, `Let's Camp` 등 생태계 전 서비스
 
 ---
 
-## 1. 뱃지(Badge) vs 세그먼트 컨트롤(Segmented Control) 분리 원칙
+## 1. Taste Archetype: Tactile Modernism & Digital Craft
 
-### 1.1 뱃지 남발 방지 & 시각적 위계 확립
-- **뱃지(Badge, `.lds-badge`)의 용도**:
-  - 오직 **상태 표시(정상, 안전, 주의, 중단)** 및 **원천 메타 정보(서비스명, 프로세스명)**와 같은 "정적 라벨"에만 제한적으로 사용합니다.
-  - 클릭 가능한 메뉴나 필터에 알약 모양 뱃지를 남발하여 사용자가 상태인지 메뉴인지 혼동하는 현상을 엄격히 금지합니다.
-- **세그먼트 컨트롤(Segmented Control, `.lds-segmented-control`)의 용도**:
-  - 카테고리 전환, 프로세스 필터, 관제 모드 전환 등 "선택 가능한 인터랙티브 메뉴"는 회색 캡슐 트랙 위에 순백색 서피스 탭이 올라가는 세그먼트 컨트롤 또는 언더라인 탭을 사용합니다.
-  - 선택된 탭은 부드러운 화이트 서피스와 가벼운 소프트 섀도우(`0 2px 8px rgba(0,0,0,0.05)`)로 활성 상태를 명확히 표현합니다.
+### 1.1 스퀘어클 벤토 박스 (Squircle Bento Architecture)
+- **수학적 곡률 일치 (`R_outer = R_inner + padding`)**:
+  - 컨테이너와 내부 요소의 라운딩이 비례하여 조화를 이루는 스퀘어클 곡률 체계를 적용합니다.
+  - 최상위 카드 곡률: `20px~26px`, 내부 세그먼트/버튼 곡률: `8px~14px`.
+- **1px 초미세 헤어라인 보더 (`rgba(0, 0, 0, 0.05)`)**:
+  - 탁한 1px solid 테두리가 아닌, 순백색 서피스 가장자리에 자연스러운 빛의 굴절감을 주는 초미세 투명 헤어라인을 적용합니다.
+- **비클리핑 앰비언트 섀도우**:
+  - `box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)`
 
-### 1.2 카드 내부 전폭 세그먼트 탭 (Full-Width Chart Time Tabs)
-- 카드 내부의 그래프 기간 제어(Day / Month / Year) 탭은 애매하게 좌/우측으로 치우쳐 여백을 낭비하지 않습니다.
-- 하단 그래프의 가로폭에 맞추어 **100% 전폭(Full Width)을 균등 분할(`grid-template-columns: repeat(3, 1fr)`)**하여 안정적이고 대칭적인 레이아웃을 형성합니다.
+### 1.2 고정폭 타뷸러 숫자 (Tabular Figures Standard)
+- 대시보드의 실시간 수집량, 처리율, 타임스탬프, 인퍼런스 건수 등 모든 메트릭 수치에는 반드시 **`font-variant-numeric: tabular-nums;`** 속성을 강제합니다.
+- 숫자가 카운트업되거나 변할 때 텍스트 폭이 좌우로 흔들리는(jittering) 현상을 원천 방지하여 시각적 안정감을 보장합니다.
 
----
-
-## 2. 토스(Toss) 스타일 미니멀 서피스 & 비클리핑 섀도우
-
-### 2.1 선과 면의 최소화 (No Border & Background Overlap)
-- **테두리(Border)와 배경색(Background) 동시 중첩 절대 금지**:
-  - `background: #ffffff` + `border: 1px solid #e2e8f0` 형태의 박스 중첩을 배제합니다.
-  - 오프화이트 배경(`--bg-page: #f7f8fa`) 위에 순백색 서피스(`background: #ffffff`)와 섬세한 소프트 섀도우만 적용합니다.
-- **단일 얇은 디바이더(Single Divider Line)**:
-  - 카드 내부의 세부 영역 구분은 박스 중첩 대신 **1px 높이의 옅은 단일 구분선(`border-top: 1px solid #f2f4f6`)**만 사용합니다.
-
-### 2.2 비클리핑 소프트 섀도우 (Non-Clipping Elevation)
-- `overflow-x: auto` 등으로 인해 상하 수직 섀도우가 잘려나가는(clipping) 문제를 방지하기 위해, 컨트롤 컨테이너에 충분한 수직 패딩을 확보하거나 세그먼트 트랙 내부로 섀도우를 격리합니다.
-- **섀도우 토큰**:
-  - `--shadow-sm`: `0 2px 8px rgba(0, 0, 0, 0.03)`
-  - `--shadow-md`: `0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)`
-  - `--shadow-lg`: `0 8px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02)`
+### 1.3 스프링 피직스 트랜지션 (Spring Physics)
+- 기계적인 선형(Linear) 페이드를 금지하고, 실제 물리적 탄성을 모사한 **감쇠 스프링 커브(`cubic-bezier(0.16, 1, 0.3, 1)`)**를 기본 모션으로 사용합니다.
 
 ---
 
-## 3. 프로세스 및 서비스 시맨틱 그룹화 레이아웃 (Grouping Hierarchy)
+## 2. 로컬 에지 AI & Ollama 무인 관제 표준 (Local Edge AI Sentinel)
 
-- 단조롭게 동일한 형태의 카드가 수십 개 나열되는 구성을 탈피합니다.
-- **2대 관제 모드 전환**:
-  1. **프로세스별 관제 (기본)**:
-     - 1) **수집 파이프라인 (23개)**: 블루 포인트, 원천 데이터 입수량 및 기울기
-     - 2) **분석 파이프라인 (14개)**: 에메랄드 포인트, 가공·파생 데이터 및 모델링
-     - 3) **품질 파이프라인 (12개)**: 인디고 포인트, L3 교차검증 및 무결성 지수
-     - 4) **관리 파이프라인 (12개)**: 앰버 포인트, 사활 감시 및 복구 센티널
-  2. **서비스별 관제 (Service-Centric)**:
-     - 15대 독립 서비스(뉴스보드, 렛츠뷰, 미트트래커 등)별로 카드를 그룹화하여 장애 발생 시 서비스 단위로 즉각 격리 점검.
-- **섹션 헤더**:
-  - 각 그룹마다 대표 아이콘 + 명칭 + 실시간 합계 지표를 헤더로 노출하여 데이터의 맥락을 즉각 전달합니다.
+- 클라우드 API뿐만 아니라, 로컬 머신에서 독립적으로 가동되는 온디바이스 AI 파이프라인을 동일한 규격으로 관제합니다:
+  - **Ollama 모델 2종 규격**:
+    1. `qwen2.5vl:3b` (3.2 GB): 캠핑장 주변 사진 비전 판독 및 Apple Vision OCR 연동
+    2. `llama3.2:1b` (1.3 GB): 매일 02:20 문화 지능 브리핑 로컬 요약 모델
+  - **9대 로컬 LaunchAgents 데몬 사활 감시**:
+    - `sh.brew.ollama`, `com.letscamp.nightshift`, `com.moyeora.culture-intelligence`, `com.pyw31337.letsview.*`, `com.pyw31337.newsboard.*`
 
 ---
 
-## 4. 외부 서비스 쿼터 거버넌스 세분화 (Detailed Quota Governance)
+## 3. PC 이관 및 무중단 인계 (Ecosystem Handoff System)
 
-- 단순한 사용량/한도 표기를 넘어 다음 4가지 핵심 인프라 지표를 명문화합니다:
-  1. **호출 주기 및 빈도(Frequency)**: 배치 주기 및 초당 피크 호출 수치
-  2. **주요 소비 서비스(Consuming Services)**: 서비스별 사용 점유율(%) 및 사용 목적
-  3. **비용 거버넌스(Cost Status)**: 무료 티어 안착 상태 및 유료 과금 위험도
-  4. **성능 및 신뢰성(Latency & Reliability)**: 평균 레이턴시 및 캐시 적중률
+- 회사 PC, 홈 PC, 신규 Mac mini 등 작업 머신이 변경되어도 파이프라인이 1초도 중단되지 않도록 **원클릭 인계 패키지(`scripts/ecosystem_handoff_bundle.sh` & `restore_on_new_pc.sh`)**를 표준화합니다.
+- LaunchAgents plist, Ollama 모델 다운로드 스크립트, 파이썬 가상환경 의존성을 단일 번들로 패키징하여 새 환경에서 자동 복구할 수 있도록 지원합니다.

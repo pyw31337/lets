@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>Label</key><string>com.pyw31337.newsboard-dispatch</string>
+<key>ProgramArguments</key><array><string>/bin/bash</string><string>/Users/pyw31337/Developer/newsboard-local/bin/dispatch.sh</string></array>
+<key>StartCalendarInterval</key><array>
+<dict><key>Minute</key><integer>12</integer></dict>
+<dict><key>Minute</key><integer>42</integer></dict>
+</array>
+<key>StandardErrorPath</key><string>/Users/pyw31337/Developer/newsboard-local/logs/dispatch.err</string>
+</dict></plist>

@@ -7516,5 +7516,134 @@
       "unit": "items/일",
       "pct": 6.0
     }
-  ]
+  ],
+  "local_edge_ai_infra": {
+    "summary": {
+      "total_models": 2,
+      "total_launchagents": 9,
+      "total_model_disk_size": "4.5 GB",
+      "monthly_cloud_llm_cost_saved_usd": 142.8,
+      "status": "ALL_LOCAL_AGENTS_ACTIVE",
+      "active_host": "회사 PC (Apple Silicon)",
+      "target_handoff_host": "Mac mini / 홈 Mac / 신규 macOS"
+    },
+    "ollama_models": [
+      {
+        "model_id": "qwen2.5vl:3b",
+        "name": "Qwen 2.5 Vision-Language (3B)",
+        "disk_size": "3.2 GB",
+        "role": "Let's Camp 야간 사진 판독 (간판 OCR + 시각 검증)",
+        "schedule": "매일 4시간마다 (야간·주말 집중)",
+        "recent_throughput": "11/17: 181장, 11/18: 14장 판독 완료",
+        "status": "LOADED_READY",
+        "service": "렛츠캠프",
+        "quantization": "Q4_K_M",
+        "latency_avg": "420ms"
+      },
+      {
+        "model_id": "llama3.2:1b",
+        "name": "Llama 3.2 Ultra-Light (1B)",
+        "disk_size": "1.3 GB",
+        "role": "CultureFlow 매일 심야 문화 인텔리전스 브리핑",
+        "schedule": "매일 02:20 AM 정시 인퍼런스",
+        "recent_throughput": "11/19 02:20 리포트 정상 인덱싱 완료",
+        "status": "LOADED_READY",
+        "service": "컬처플로우",
+        "quantization": "Q4_K_M",
+        "latency_avg": "110ms"
+      }
+    ],
+    "local_launchagents": [
+      {
+        "label": "com.letscamp.nightshift",
+        "service": "렛츠캠프",
+        "type": "AI 비전 / OCR 무인 수집",
+        "schedule": "15분 간격 체크 (야간·주말 집중)",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.letscamp.nightshift.plist",
+        "script": "camp/local/macmini/nightshift.mjs",
+        "workload": "Apple Vision OCR + Ollama qwen2.5vl:3b"
+      },
+      {
+        "label": "com.moyeora.culture-intelligence",
+        "service": "컬처플로우",
+        "type": "LLM 인텔리전스 브리핑",
+        "schedule": "매일 02:20 AM",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.moyeora.culture-intelligence.plist",
+        "script": "CultureFlow/scripts/culture_intelligence.mjs",
+        "workload": "Ollama llama3.2:1b 요약 파이프라인"
+      },
+      {
+        "label": "com.pyw31337.letsview.playback-addresses",
+        "service": "렛츠뷰",
+        "type": "CCTV 스트리밍 주소 헬스체크",
+        "schedule": "매일 07:24 AM",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.letsview.playback-addresses.plist",
+        "script": "cctv/scripts/check_hls_streams.py",
+        "workload": "전국 교통 CCTV HLS 유효성 검증"
+      },
+      {
+        "label": "com.pyw31337.newsboard-ai",
+        "service": "뉴스보드",
+        "type": "뉴스 요약 및 맥락 인덱싱",
+        "schedule": "매시 30분",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-ai.plist",
+        "script": "news/scripts/ai_summarizer.py",
+        "workload": "언론사 기사 벡터화 및 브리핑"
+      },
+      {
+        "label": "com.pyw31337.newsboard-analyze",
+        "service": "뉴스보드",
+        "type": "정치·경제 심층 분석 및 URN 매핑",
+        "schedule": "2시간 간격",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-analyze.plist",
+        "script": "news/scripts/ontology_mapper.py",
+        "workload": "인물·기관 온톨로지 지식그래프"
+      },
+      {
+        "label": "com.pyw31337.newsboard-dispatch",
+        "service": "뉴스보드",
+        "type": "실시간 뉴스 속보 배포",
+        "schedule": "5분 간격",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-dispatch.plist",
+        "script": "news/scripts/dispatch_feed.py",
+        "workload": "웹소켓 및 피드 발행"
+      },
+      {
+        "label": "com.pyw31337.newsboard-gov",
+        "service": "뉴스보드",
+        "type": "정부 브리핑 및 정책 보도자료 수집",
+        "schedule": "매일 05:36 AM",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-gov.plist",
+        "script": "gov/main/scripts/gov_briefing.py",
+        "workload": "대한민국 정책포털 보도자료 정제"
+      },
+      {
+        "label": "com.pyw31337.newsboard-journalists",
+        "service": "뉴스보드",
+        "type": "출입 기자단 바이라인 메타데이터",
+        "schedule": "매일 15:38 PM",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-journalists.plist",
+        "script": "news/scripts/journalist_db.py",
+        "workload": "언론인 DB 동기화"
+      },
+      {
+        "label": "com.pyw31337.newsboard-pol",
+        "service": "뉴스보드",
+        "type": "국회·정당 의정활동 데이터 수집",
+        "schedule": "매일 16:36 PM",
+        "status": "RUNNING",
+        "path": "~/Library/LaunchAgents/com.pyw31337.newsboard-pol.plist",
+        "script": "pol/src/scripts/congress_sync.py",
+        "workload": "의안정보시스템 및 본회의 발언록 수집"
+      }
+    ]
+  }
 }

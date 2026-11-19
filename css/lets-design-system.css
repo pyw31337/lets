@@ -1,20 +1,19 @@
 /**
- * Let's Design System (LDS v2.1.0)
+ * Let's Design System (LDS v2.2.0)
  * 렛츠 패밀리 서비스 공통 디자인 시스템 CSS 라이브러리
- * - 세그먼트 컨트롤(Segmented Control) vs 뱃지(Badge) 명확한 시각적·기능적 분리
- * - 카드 내부 전폭 세그먼트 탭(Full-Width Segment Tabs for Charts)
- * - 토스(Toss) 스타일 미니멀 서피스 (테두리와 배경 동시 사용 배제, 단일 얇은 디바이더)
- * - 비클리핑 소프트 섀도우 체계 (섀도우 잘림 방지 안전 여백)
- * - 4대 프로세스 및 15대 서비스 시맨틱 그룹화 레이아웃
- * - 인터랙티브 차트 & 레이지 로드 애니메이션 (스크롤 진입 시 부드러운 차오름 효과)
- * - 8-Point Grid 여백 체계 & Pretendard Variable 기반 타이포그래피 (WCAG 2.1 AA/AAA)
- * - 320px 모바일 완벽 지원 & 세로 적층(Stacking) 구조
+ * - Taste Skill 기반: "Tactile Modernism & Digital Craft"
+ * - 스퀘어클 벤토 그리드(Squircle Bento Architecture, 16~24px 곡률 + 1px 섬세한 헤어라인)
+ * - 고정폭 타뷸러 숫자 (Tabular Figures: font-variant-numeric: tabular-nums)
+ * - 스프링 피직스 트랜지션 (Spring Physics: cubic-bezier(0.16, 1, 0.3, 1))
+ * - 세그먼트 컨트롤 vs 뱃지 분리 & 3열 풀위드 차트 탭
+ * - 로컬 에지 AI & Ollama 인프라 관제 컴포넌트
+ * - 320px 모바일 완벽 대응
  */
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
 :root {
-  --lds-version: "2.1.0";
+  --lds-version: "2.2.0";
   --lds-focus: #3182f6;
   --lds-safe-top: env(safe-area-inset-top, 0px);
   --lds-safe-right: env(safe-area-inset-right, 0px);
@@ -35,8 +34,8 @@
   --space-48: 48px;
   --space-64: 64px;
 
-  /* Typography Scale */
-  --font-family-base: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* Typography Scale (Tabular Numerals Default for Metrics) */
+  --font-family-base: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
   --fs-xs: 11px;
@@ -58,58 +57,61 @@
   --lh-snug: 1.45;
   --lh-body: 1.6;
 
-  /* Toss Minimal Neutral Surface Palette */
+  /* Taste Palette: Apple Warm Neutral & Surfaces */
   --bg-page: #f7f8fa;
   --bg-surface: #ffffff;
   --bg-subtle: #f2f4f6;
   --bg-hover: #eef0f3;
 
-  /* 단일 구분선 (박스 중첩 금지) */
+  /* 1px 미세 헤어라인 (스퀘어클 벤토 보더) */
+  --border-hairline: rgba(0, 0, 0, 0.05);
   --divider: #f2f4f6;
   --divider-dark: #e5e8eb;
 
-  --text-primary: #191f28;   /* WCAG AAA 16.2:1 */
-  --text-secondary: #4e5968; /* WCAG AAA 9.2:1 */
-  --text-muted: #8b95a1;     /* WCAG AA 4.6:1 */
+  --text-primary: #191f28;
+  --text-secondary: #4e5968;
+  --text-muted: #8b95a1;
   --text-subtle: #b0b8c1;
   --text-white: #ffffff;
 
-  /* 절제된 포인트 컬러 (토스 블루 & 시맨틱) */
-  --primary: #3182f6;
+  /* 절제된 시맨틱 포인트 컬러 */
+  --primary: #3182f6;          /* 수집 / 기본 포인트 */
   --primary-light: #e8f3ff;
   --primary-hover: #1b64da;
 
-  --success: #00c48c;
+  --success: #00c48c;          /* 분석 / 로컬 AI 정상 */
   --success-light: #e6faf3;
 
-  --warning: #ff9f00;
-  --warning-light: #fff8eb;
-
-  --danger: #ff5252;
-  --danger-light: #ffebee;
-
-  --indigo: #6366f1;
+  --indigo: #6366f1;           /* 품질 */
   --indigo-light: #eef2ff;
 
-  /* 비클리핑 소프트 섀도우 */
+  --warning: #ff9f00;          /* 운영·관리 */
+  --warning-light: #fff8eb;
+
+  --danger: #ff5252;           /* 위험 */
+  --danger-light: #ffebee;
+
+  --purple: #8b5cf6;           /* 로컬 에지 AI / Ollama */
+  --purple-light: #f3e8ff;
+
+  /* 스퀘어클 비클리핑 섀도우 */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
 
-  /* Corner Radii */
+  /* 스퀘어클 곡률 토큰 */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-xl: 26px;
   --radius-full: 9999px;
 
-  /* Transitions */
-  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-base: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  /* 스프링 피직스 트랜지션 (Spring Damper feel: stiffness 300, damping 28) */
+  --transition-spring: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-smooth: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* CSS Reset & Baseline */
+/* Baseline & Typography */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -126,35 +128,29 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  min-height: 100vh;
-  line-height: var(--lh-body);
-  word-break: keep-all;
-  overflow-wrap: break-word;
-  -webkit-font-smoothing: antialiased;
-  padding-top: max(var(--space-24), env(safe-area-inset-top));
-  padding-bottom: max(var(--space-64), env(safe-area-inset-bottom));
-  padding-left: max(var(--space-16), env(safe-area-inset-left));
-  padding-right: max(var(--space-16), env(safe-area-inset-right));
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
+/* 숫자 표시 시 글자 폭이 흔들리지 않는 고정폭 타뷸러 넘버 */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
-/* 섀도우 잘림 방지 컨테이너 */
-.lds-container {
-  width: 100%;
-  max-width: 1360px;
-  margin: 0 auto;
+/* 스퀘어클 벤토 카드 (Taste Archetype) */
+.lds-bento-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-spring), box-shadow var(--transition-spring);
+  position: relative;
   min-width: 0;
-  padding: 0 4px;
+}
+.lds-bento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
 
-/* ==========================================================
-   LDS Component: Segmented Control vs Badge (명확한 분리)
-   ========================================================== */
-
-/* 1. 세그먼트 컨트롤: 카테고리/모드 전환용 캡슐 트랙 */
+/* 세그먼트 컨트롤 컴포넌트 */
 .lds-segmented-control {
   display: inline-flex;
   align-items: center;
@@ -162,7 +158,6 @@ body {
   padding: 4px;
   border-radius: var(--radius-md);
   gap: 4px;
-  position: relative;
   user-select: none;
 }
 .lds-segmented-btn {
@@ -174,156 +169,12 @@ body {
   font-weight: var(--fw-semibold);
   color: var(--text-muted);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-spring);
   white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.lds-segmented-btn:hover {
-  color: var(--text-primary);
 }
 .lds-segmented-btn.active {
   background: var(--bg-surface);
   color: var(--text-primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   font-weight: var(--fw-bold);
-}
-
-/* 2. 전폭 세그먼트 탭: 카드 내부 그래프 시간 제어(Day/Month/Year) 전폭 확장 */
-.lds-fullwidth-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
-  background: var(--bg-subtle);
-  padding: 3px;
-  border-radius: var(--radius-sm);
-  gap: 2px;
-  margin-bottom: var(--space-10, 10px);
-}
-.lds-fullwidth-tab-btn {
-  background: transparent;
-  border: none;
-  padding: 6px 0;
-  text-align: center;
-  border-radius: 6px;
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-.lds-fullwidth-tab-btn:hover {
-  color: var(--text-primary);
-}
-.lds-fullwidth-tab-btn.active {
-  background: var(--bg-surface);
-  color: var(--primary);
-  font-weight: var(--fw-bold);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
-
-/* 3. 단순 상태/메타 뱃지 (인터랙션 없음, 비메뉴용) */
-.lds-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  line-height: 1.2;
-}
-.lds-badge.primary { background: var(--primary-light); color: var(--primary); }
-.lds-badge.success { background: var(--success-light); color: var(--success); }
-.lds-badge.warning { background: var(--warning-light); color: var(--warning); }
-.lds-badge.danger  { background: var(--danger-light); color: var(--danger); }
-.lds-badge.indigo  { background: var(--indigo-light); color: var(--indigo); }
-.lds-badge.neutral { background: var(--bg-subtle); color: var(--text-secondary); }
-
-/* 토스 스타일 카드 컴포넌트 */
-.lds-card {
-  background: var(--bg-surface);
-  border: none;
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  min-width: 0;
-  position: relative;
-}
-.lds-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* 단일 디바이더 */
-.lds-divider {
-  border: none;
-  border-top: 1px solid var(--divider);
-  margin: var(--space-16) 0;
-}
-
-/* 아코디언 컴포넌트 */
-.lds-accordion-btn {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-top: 1px solid var(--divider);
-  padding: var(--space-12) 0 var(--space-4) 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color var(--transition-fast);
-}
-.lds-accordion-btn:hover {
-  color: var(--text-primary);
-}
-.lds-accordion-btn .chevron {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.lds-accordion-btn.expanded .chevron {
-  transform: rotate(180deg);
-}
-
-.lds-accordion-drawer {
-  display: none;
-  padding-top: var(--space-12);
-  margin-top: var(--space-8);
-  border-top: 1px solid var(--divider);
-}
-.lds-accordion-drawer.expanded {
-  display: block;
-  animation: ldsFadeIn 0.25s ease-in-out;
-}
-@keyframes ldsFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 차트 레이지 로드 애니메이션 유틸리티 */
-.lds-chart-path {
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
-  transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.lds-chart-path.animated {
-  stroke-dashoffset: 0;
-}
-
-.lds-chart-area {
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-}
-.lds-chart-area.animated {
-  opacity: 1;
-}
-
-.lds-bar-fill {
-  width: 0%;
-  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
 }

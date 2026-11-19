@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>Label</key><string>com.pyw31337.newsboard-ai</string>
+<key>ProgramArguments</key><array><string>/bin/bash</string><string>/Users/pyw31337/Developer/newsboard-local/news/local/run.sh</string></array>
+<key>StartInterval</key><integer>1800</integer>
+<key>StandardOutPath</key><string>/Users/pyw31337/Developer/newsboard-local/logs/launchd.out.log</string>
+<key>StandardErrorPath</key><string>/Users/pyw31337/Developer/newsboard-local/logs/launchd.err.log</string>
+<key>LowPriorityIO</key><true/><key>Nice</key><integer>10</integer>
+</dict></plist>

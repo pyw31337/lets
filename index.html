@@ -764,6 +764,219 @@
     }
 
     /* ==========================================================
+       4.5 Local Edge AI & 무인 백그라운드 관제 Panel (Tactile Bento)
+       ========================================================== */
+    .local-ai-panel {
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl, 20px);
+      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.05));
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 28px;
+      width: 100%;
+      min-width: 0;
+      transition: box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .local-ai-panel:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .local-ai-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .local-ai-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .local-ai-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .local-ai-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .local-ai-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .local-ai-bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 18px;
+      width: 100%;
+      min-width: 0;
+    }
+    @media (max-width: 960px) {
+      .local-ai-bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .bento-subcard {
+      background: var(--bg-page);
+      border-radius: var(--radius-lg, 16px);
+      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.04));
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-subcard:hover {
+      transform: translateY(-2px);
+    }
+    .bento-subcard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--divider-dark);
+    }
+    .bento-subcard-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ollama-model-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .ollama-model-item {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md, 12px);
+      padding: 14px 16px;
+      border: 1px solid var(--border-hairline, rgba(0,0,0,0.04));
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ollama-model-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ollama-model-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-family-mono, monospace);
+    }
+    .ollama-model-badge {
+      font-family: var(--font-family-mono, monospace);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .ollama-model-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .ollama-model-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .launchagent-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--radius-md, 12px);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline, rgba(0,0,0,0.04));
+    }
+    .launchagent-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .launchagent-table th {
+      text-align: left;
+      padding: 10px 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--divider-dark);
+      font-size: 11px;
+    }
+    .launchagent-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--divider);
+      color: var(--text-secondary);
+    }
+    .launchagent-table tr:last-child td {
+      border-bottom: none;
+    }
+    .daemon-status-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--success);
+      font-weight: 600;
+      font-size: 11px;
+    }
+    .daemon-status-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px var(--success);
+    }
+    .handoff-code-box {
+      background: #1e293b;
+      color: #f1f5f9;
+      padding: 12px 14px;
+      border-radius: var(--radius-md, 10px);
+      font-family: var(--font-family-mono, monospace);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    .handoff-copy-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+    .handoff-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================
        5. Segmented Controls vs Badges: Clean No-Clipping Tabs
        ========================================================== */
     .controls-bar {
@@ -1431,6 +1644,14 @@
           </svg>
           사활 일괄 스캔
         </button>
+        <button class="action-btn" onclick="openHandoffModal()" style="border-color: rgba(49, 130, 246, 0.3); background: rgba(49, 130, 246, 0.05); color: var(--primary); font-weight: 600;">
+          <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          PC 이관 패키지
+        </button>
         <button class="action-btn" id="exportBtn" onclick="exportPulseJson()">
           <svg class="icon icon-sm" viewBox="0 0 24 24">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1603,6 +1824,73 @@
       <div class="quota-grid" id="quotaGrid"></div>
     </section>
 
+    <!-- 4.5 Local Edge AI & 무인 백그라운드 데몬 관제 Panel (Squircle Bento) -->
+    <section class="local-ai-panel" id="localEdgeAIPanel">
+      <div class="local-ai-header">
+        <div class="local-ai-title-wrap">
+          <div class="local-ai-title">
+            <svg class="icon" viewBox="0 0 24 24" style="color: var(--primary);"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+            로컬 에지 AI & 무인 백그라운드 관제
+          </div>
+          <p class="local-ai-desc">회사 PC 온디바이스 에지 연산 · 월 $142.80 클라우드 AI 비용 절감 · 9대 LaunchAgent 무중단 수집</p>
+        </div>
+        <div class="local-ai-actions">
+          <div class="pulse-pill" style="background: var(--success-light); color: var(--success); font-weight: 600;">
+            <span class="pulse-dot" style="background: var(--success);"></span>
+            <span>로컬 에지 모델 2종 & 데몬 9종 정상</span>
+          </div>
+          <button class="action-btn" onclick="openHandoffModal()" style="font-weight: 600; color: var(--primary); border-color: rgba(49, 130, 246, 0.3); background: rgba(49, 130, 246, 0.05);">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            무중단 PC 이관
+          </button>
+        </div>
+      </div>
+
+      <div class="local-ai-bento-grid">
+        <!-- Subcard 1: Ollama On-device Models -->
+        <div class="bento-subcard">
+          <div class="bento-subcard-header">
+            <span class="bento-subcard-title">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--primary);"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10h-10z"></path></svg>
+              활성 온디바이스 AI 모델 (Ollama 2종)
+            </span>
+            <span class="quota-consumer-tag" style="background: var(--bg-surface); color: var(--success); font-weight: 700;">비용 $0.00 / 온디바이스</span>
+          </div>
+
+          <div class="ollama-model-list" id="ollamaModelList">
+            <!-- Dynamically populated by renderLocalEdgeAI -->
+          </div>
+        </div>
+
+        <!-- Subcard 2: 9 LaunchAgents Daemons Matrix -->
+        <div class="bento-subcard">
+          <div class="bento-subcard-header">
+            <span class="bento-subcard-title">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--primary);"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              회사 PC 백그라운드 9대 LaunchAgent 무인 데몬
+            </span>
+            <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-family-mono, monospace);">~/Library/LaunchAgents</span>
+          </div>
+
+          <div class="launchagent-table-wrap">
+            <table class="launchagent-table">
+              <thead>
+                <tr>
+                  <th>데몬 식별자</th>
+                  <th>서비스</th>
+                  <th>실행 스케줄</th>
+                  <th>사활 상태</th>
+                </tr>
+              </thead>
+              <tbody id="launchagentTableBody">
+                <!-- Dynamically populated by renderLocalEdgeAI -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 5. Controls: Segmented Control vs Badges & Mode Switch -->
     <section class="controls-bar">
       <div class="segmented-control-wrap">
@@ -1730,6 +2018,64 @@
       <button class="action-btn" onclick="resetMasterKeyToDefault()" style="width: 100%; justify-content: center; font-size: 12px;">
         기본 마스터 키로 초기화
       </button>
+    </div>
+  </div>
+
+  <!-- PC Handoff & Migration Modal -->
+  <div class="admin-modal-overlay" id="handoffModal">
+    <div class="admin-modal-box" style="max-width: 620px;">
+      <div class="admin-modal-header">
+        <div class="admin-modal-title">
+          <svg class="icon" viewBox="0 0 24 24" style="color: var(--primary);"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          생태계 무중단 PC 이관 & 워크플로우 인계
+        </div>
+        <button class="admin-modal-close" onclick="closeAdminModal('handoffModal')">&times;</button>
+      </div>
+
+      <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        현재 <strong>회사 PC (Apple Silicon)</strong>에서 가동 중인 9대 무인 수집기 설정과 Ollama AI 모델을 신규 머신(새 Mac mini 또는 홈 PC)으로 끊김 없이 즉시 이관합니다.
+      </div>
+
+      <!-- Past Handoff Analysis Callout -->
+      <div style="background: var(--bg-subtle); border-radius: var(--radius-md, 10px); padding: 12px 14px; margin-bottom: 16px; font-size: 12px; line-height: 1.5; border-left: 3px solid var(--primary);">
+        <strong style="color: var(--text-primary); display: block; margin-bottom: 4px;">💡 'macmini-workflow-handoff'와의 관계</strong>
+        과거 캠프(<code>camp/local/macmini</code>)와 뉴스보드(<code>macmini_health.py</code>)에 각자 파편화되어 있던 야간 비전 OCR 판독 및 헬스체크 프로세스가 본 이관 시스템을 통해 <strong>렛츠 생태계 전체 15개 서비스 공통 원클릭 규격</strong>으로 통합 완성되었습니다.
+      </div>
+
+      <!-- Quick Restore Command -->
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">
+          신규 PC(새 Mac mini 등) 터미널 1줄 복원 명령어
+        </label>
+        <div class="handoff-code-box">
+          <span id="restoreCmdText">git clone https://github.com/pyw31337/lets.git && cd lets && ./scripts/restore_on_new_pc.sh</span>
+          <button class="handoff-copy-btn" onclick="copyRestoreCommand()">복사</button>
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+          ※ 실행 시 Homebrew, Ollama 모델 2종 풀링, 9대 LaunchAgent 데몬 등록이 완전 자동으로 진행됩니다.
+        </p>
+      </div>
+
+      <!-- Included Components Matrix -->
+      <div style="background: var(--bg-page); border-radius: var(--radius-md, 10px); padding: 14px; margin-bottom: 18px; font-size: 12px;">
+        <strong style="display: block; font-size: 12px; color: var(--text-primary); margin-bottom: 8px;">📦 이관 패키지 구성 인벤토리</strong>
+        <ul style="margin: 0; padding-left: 18px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px;">
+          <li><strong>Ollama 로컬 모델 2종:</strong> qwen2.5vl:3b (3.2GB), llama3.2:1b (1.3GB)</li>
+          <li><strong>LaunchAgents 9대 데몬 plist:</strong> 렛츠캠프, 컬처플로우, 렛츠뷰, 뉴스보드 6종</li>
+          <li><strong>자동 복원 셸 스크립트:</strong> <code>scripts/restore_on_new_pc.sh</code></li>
+          <li><strong>비용 및 가용성:</strong> $0.00 / 100% 무인 자동 복구</li>
+        </ul>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="security-btn" onclick="downloadHandoffBundle()" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          이관 번들 아카이브 다운로드
+        </button>
+        <button class="action-btn" onclick="closeAdminModal('handoffModal')" style="padding: 0 18px;">
+          닫기
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2014,6 +2360,7 @@
       if (!masterData) return;
       renderTopThroughput();
       renderQuotaGovernance();
+      renderLocalEdgeAI();
       renderGroupedSections();
     }
 
@@ -2089,6 +2436,79 @@
           </div>
         </div>
       `).join('');
+    }
+
+    function renderLocalEdgeAI() {
+      const modelContainer = document.getElementById('ollamaModelList');
+      const agentTableBody = document.getElementById('launchagentTableBody');
+      const infra = masterData.local_edge_ai_infra;
+      if (!infra) return;
+
+      if (modelContainer && infra.ollama_models) {
+        modelContainer.innerHTML = infra.ollama_models.map(m => `
+          <div class="ollama-model-item">
+            <div class="ollama-model-top">
+              <span class="ollama-model-name">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--primary);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                ${m.model_id}
+              </span>
+              <span class="ollama-model-badge">${m.status}</span>
+            </div>
+            <div class="ollama-model-meta">
+              <div class="ollama-model-row">
+                <span style="font-weight: 600; color: var(--text-primary); font-size: 13px;">${m.name}</span>
+                <span class="tabular-nums" style="font-family: var(--font-family-mono, monospace); font-weight: 700; color: var(--primary); font-size: 13px;">${m.disk_size}</span>
+              </div>
+              <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4;">${m.role}</div>
+              <div class="ollama-model-row" style="margin-top: 4px; font-size: 11px; border-top: 1px dashed var(--divider-dark); padding-top: 4px;">
+                <span>실행 주기: <strong>${m.schedule}</strong></span>
+                <span class="tabular-nums">평균 지연: <strong>${m.latency_avg}</strong></span>
+              </div>
+              <div style="font-size: 11px; color: var(--success); font-weight: 600;">
+                ✓ 최근 실적: ${m.recent_throughput}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (agentTableBody && infra.local_launchagents) {
+        agentTableBody.innerHTML = infra.local_launchagents.map(agent => `
+          <tr>
+            <td style="font-family: var(--font-family-mono, monospace); font-weight: 600; color: var(--text-primary);">
+              ${agent.label}
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: normal; margin-top: 2px;">${agent.workload}</div>
+            </td>
+            <td><span class="bar-badge" style="background: var(--bg-subtle); color: var(--text-primary); font-size: 11px;">${agent.service}</span></td>
+            <td style="font-size: 11px; color: var(--text-secondary);">${agent.schedule}</td>
+            <td>
+              <span class="daemon-status-live">가동중 (${agent.status})</span>
+            </td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function openHandoffModal() {
+      document.getElementById('handoffModal').classList.add('open');
+    }
+
+    function copyRestoreCommand() {
+      const cmd = document.getElementById('restoreCmdText').innerText;
+      navigator.clipboard.writeText(cmd).then(() => {
+        alert('복원 명령어가 클립보드에 복사되었습니다!\n신규 머신(Mac mini 등) 터미널에 붙여넣어 실행하십시오.');
+      }).catch(err => {
+        prompt('아래 명령어를 복사하십시오:', cmd);
+      });
+    }
+
+    function downloadHandoffBundle() {
+      const link = document.createElement('a');
+      link.href = 'bundle/lets_ecosystem_handoff_pack.tar.gz';
+      link.download = 'lets_ecosystem_handoff_pack.tar.gz';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
 
     function switchViewMode(mode) {
@@ -2541,6 +2961,7 @@
         summary: { total_storage_size: "84.6 GB", total_records: "4,732,890" },
         top_throughput_ranking: [],
         external_quota_governance: [],
+        local_edge_ai_infra: { summary: {}, ollama_models: [], local_launchagents: [] },
         automation_devices: []
       };
     }

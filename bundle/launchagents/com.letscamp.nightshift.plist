@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.letscamp.nightshift</string>
+  <key>ProgramArguments</key><array>
+    <string>/bin/bash</string><string>-c</string>
+    <string>[ -f "/Users/pyw31337/.letscamp/env" ] &amp;&amp; . "/Users/pyw31337/.letscamp/env"; exec "/opt/homebrew/bin/node" "/Users/pyw31337/.letscamp/camp/local/macmini/nightshift.mjs"</string>
+  </array>
+  <key>EnvironmentVariables</key><dict><key>PATH</key><string>/opt/homebrew/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin</string></dict>
+  <key>StartInterval</key><integer>900</integer>
+  <key>LowPriorityIO</key><true/>
+  <key>Nice</key><integer>10</integer>
+  <key>StandardOutPath</key><string>/Users/pyw31337/.letscamp/logs/launchd.log</string>
+  <key>StandardErrorPath</key><string>/Users/pyw31337/.letscamp/logs/launchd.log</string>
+</dict></plist>

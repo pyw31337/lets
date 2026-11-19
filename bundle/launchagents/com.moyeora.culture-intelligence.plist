@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.moyeora.culture-intelligence</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>/Users/pyw31337/Developer/calendar/tools/local-culture-worker/run-culture-intelligence.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/pyw31337/Developer/calendar</string>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>2</integer>
+    <key>Minute</key><integer>20</integer>
+  </dict>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>MOYEORA_CULTURE_REPO_DIR</key>
+    <string>/Users/pyw31337/Developer/calendar</string>
+    <key>MOYEORA_CULTURE_REPORT_DIR</key>
+    <string>/Users/pyw31337/Library/Application Support/Moyeora/culture-reports</string>
+    <key>OLLAMA_HOST</key>
+    <string>http://127.0.0.1:11434</string>
+    <key>OLLAMA_CULTURE_MODEL</key>
+    <string>llama3.2:1b</string>
+    <key>MOYEORA_CULTURE_AUTO_PULL</key>
+    <string>1</string>
+    <key>MOYEORA_CULTURE_PUSH</key>
+    <string>1</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>ThrottleInterval</key>
+  <integer>300</integer>
+  <key>StandardOutPath</key>
+  <string>/Users/pyw31337/Library/Logs/Moyeora/culture-intelligence.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/pyw31337/Library/Logs/Moyeora/culture-intelligence.error.log</string>
+</dict>
+</plist>
