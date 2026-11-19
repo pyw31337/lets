@@ -2071,7 +2071,7 @@
           <p class="ops-command-desc">정적 성공률이 아니라, 최근 heartbeat·배포·quota·자동화 실패를 분리해서 보여줍니다.</p>
         </div>
         <div class="ops-command-meta">
-          <span class="ops-updated" id="opsUpdated">상태 스냅샷 로딩 중</span>
+          <span class="ops-updated" id="opsUpdated">실시간 상태 연결 중</span>
           <button class="ops-filter-btn active" data-ops-filter="all">전체</button>
           <button class="ops-filter-btn" data-ops-filter="attention">주의만</button>
         </div>
@@ -2081,7 +2081,7 @@
         <div class="ops-service-panel">
           <div class="ops-panel-heading">
             <div><strong>서비스 상태 매트릭스</strong><span>클릭하면 서비스·저장소·다음 조치로 이동합니다.</span></div>
-            <span class="ops-live-chip"><i></i>LIVE SNAPSHOT</span>
+            <span class="ops-live-chip"><i></i><span id="opsLiveLabel">LIVE · 5분 집계</span></span>
           </div>
           <div class="ops-service-grid" id="opsServiceGrid"></div>
         </div>
@@ -2737,13 +2737,15 @@
 
     async function initDashboard() {
       try {
-        const [masterRes, opsRes] = await Promise.all([
+        const [masterRes, opsRes, liveRes] = await Promise.all([
           fetch('data/master_ecosystem_pulse.json?v=' + Date.now()),
-          fetch('data/operations_status.json?v=' + Date.now())
+          fetch('data/operations_status.json?v=' + Date.now()),
+          fetch('data/live_operations.json?v=' + Date.now())
         ]);
         if (!masterRes.ok) throw new Error('Failed to load master pulse');
         masterData = await masterRes.json();
-        operationsData = opsRes.ok ? await opsRes.json() : null;
+        const live = liveRes.ok ? await liveRes.json() : null;
+        operationsData = live && Array.isArray(live.services) ? live : (opsRes.ok ? await opsRes.json() : null);
       } catch (err) {
         console.warn('Using embedded fallback data:', err);
         masterData = generateFallbackData();
@@ -2752,6 +2754,23 @@
       renderDashboard();
       setupIntersectionObservers();
       handleHashRoute();
+      setInterval(refreshLiveOperations, 60000);
+    }
+
+    async function refreshLiveOperations() {
+      try {
+        const response = await fetch('data/live_operations.json?v=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) return;
+        const next = await response.json();
+        if (!next || !Array.isArray(next.services)) return;
+        operationsData = next;
+        const liveLabel = document.getElementById('opsLiveLabel');
+        if (liveLabel) liveLabel.textContent = `LIVE · ${formatOpsTime(next.generated_at)}`;
+        renderOperationsCommandCenter();
+      } catch (error) {
+        const liveLabel = document.getElementById('opsLiveLabel');
+        if (liveLabel) liveLabel.textContent = 'LIVE · 재연결 중';
+      }
     }
 
     
@@ -3194,6 +3213,8 @@
       const services = data.services || [];
       const visible = operationsFilter === 'attention' ? services.filter(s => s.status !== 'healthy') : services;
       if (updated) updated.textContent = `마지막 집계 ${formatOpsTime(data.generated_at)}`;
+      const liveLabel = document.getElementById('opsLiveLabel');
+      if (liveLabel) liveLabel.textContent = `LIVE · ${formatOpsTime(data.generated_at)}`;
       const headerPill = document.querySelector('#headerStatusPill span:last-child');
       if (headerPill) headerPill.textContent = `${overall.healthy ?? 0}개 정상 · ${overall.degraded ?? 0}개 주의`;
       kpi.innerHTML = [
