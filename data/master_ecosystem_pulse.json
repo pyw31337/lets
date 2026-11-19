@@ -7651,17 +7651,17 @@
     "monthly_cloud_llm_saved_usd": 142.8,
     "monthly_cloud_llm_saved_krw": "약 19.8만 원 (OpenAI GPT-4o / Claude Vision API 호출 대체)",
     "monthly_enterprise_data_api_saved_krw": "약 465만 원 (NICE·KISLINE 인물/법인 DB 및 상용 크롤링 라이선스 대체)",
-    "actual_monthly_cost": "zsh.00 / 0원",
+    "actual_monthly_cost": "$0.00 / 0원",
     "savings_sources": [
       {
         "item": "Let's Camp 야간 사진 판독 (qwen2.5vl:3b)",
-        "cloud_price_est": "월 .50 (일 180장 Vision API)",
-        "actual_cost": "zsh.00 (Apple M-칩)"
+        "cloud_price_est": "월 $94.50 (일 180장 Vision API)",
+        "actual_cost": "$0.00 (Apple M-칩)"
       },
       {
         "item": "CultureFlow 심야 문화 지능 (llama3.2:1b)",
-        "cloud_price_est": "월 .30 (일 1회 정시 LLM 인퍼런스)",
-        "actual_cost": "zsh.00 (로컬 Ollama)"
+        "cloud_price_est": "월 $48.30 (일 1회 정시 LLM 인퍼런스)",
+        "actual_cost": "$0.00 (로컬 Ollama)"
       },
       {
         "item": "Let's People 행안부 체납자 & 글로벌 인물",
