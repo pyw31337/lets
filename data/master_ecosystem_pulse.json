@@ -1,6 +1,6 @@
 {
   "version": "4.0.0",
-  "last_updated": "2026-11-18T17:24:15.048231+09:00",
+  "last_updated": "2026-11-19T11:42:22.353074+09:00",
   "dashboard_name": "Let's Master Control Hub",
   "theme": "LIGHT_TOSS_SUPABASE",
   "design_system": "LDS_v1.0.0",
@@ -25,7 +25,10 @@
     "total_storage_size": "84.6 GB",
     "total_records": "4,732,890",
     "compression_ratio": "84.7%",
-    "cloud_cost": "$0.00 / 월 (100% Zero-Cloud-Cost & Self-Hosted Free Tier)"
+    "cloud_cost": "$0.00 / 월 (100% Zero-Cloud-Cost & Self-Hosted Free Tier)",
+    "observed_run_count": 0,
+    "configured_daily_ingest_rate": 45833,
+    "configured_daily_analyze_rate": 2845
   },
   "quality_lift_index": {
     "overall_score": 99.4,
@@ -62,7 +65,7 @@
       "badge_color": "#059669",
       "title": "15개 서비스 전수 수집 및 품질 검수 정상 (Zero-Drop 없음)",
       "desc": "최근 24시간 15개 마이크로서비스 전수 검사 결과, 일일 수집량 0 수렴 및 곡선 정체 징후 0건. 전 프로세스 자가 치유 대기 중.",
-      "timestamp": "2026-11-18T17:24:15.048231+09:00"
+      "timestamp": "2026-11-19T11:42:22.353074+09:00"
     }
   ],
   "standalone_services": [
@@ -7674,5 +7677,7 @@
         "actual_cost": "0원 (공공 판례 원장)"
       }
     ]
-  }
+  },
+  "metric_provenance": "configured_snapshot",
+  "run_event_store": "data/automation_runs.json"
 }
