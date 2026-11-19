@@ -1400,7 +1400,6 @@
       </button>
 
       <div class="security-err-msg" id="securityErrMsg">인증 실패: 유효하지 않은 마스터 키입니다.</div>
-      <div class="security-hint">기본 마스터 키: <code>lets2026!</code> (최초 1회 인증 후 세션 유지)</div>
     </div>
   </div>
 
@@ -1445,6 +1444,13 @@
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
           </svg>
           새로고침
+        </button>
+        <button class="action-btn" onclick="openChangePasswordModal()">
+          <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <circle cx="7.5" cy="15.5" r="5.5"></circle>
+            <path d="M21 2l-9.6 9.6M15.5 7.5l2.5 2.5M18.5 4.5L21 7"></path>
+          </svg>
+          암호 변경
         </button>
         <button class="action-btn danger-subtle" onclick="lockSecurityGate()">
           <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -1686,6 +1692,47 @@
     </div>
   </div>
 
+  <!-- Change Password Modal -->
+  <div class="admin-modal-overlay" id="changePasswordModal">
+    <div class="admin-modal-box" style="max-width: 440px;">
+      <div class="admin-modal-header">
+        <div class="admin-modal-title">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="M21 2l-9.6 9.6M15.5 7.5l2.5 2.5M18.5 4.5L21 7"></path></svg>
+          마스터 비밀번호 변경
+        </div>
+        <button class="admin-modal-close" onclick="closeAdminModal('changePasswordModal')">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+        대시보드 잠금 해제에 사용되는 관리자 마스터 키를 안전하게 변경합니다.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px;">
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">현재 마스터 키</label>
+          <input type="password" id="currentKeyInput" class="security-input" style="text-align: left; padding: 10px 14px; font-size: 14px;" placeholder="현재 마스터 키 입력">
+        </div>
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">새 마스터 키</label>
+          <input type="password" id="newKeyInput" class="security-input" style="text-align: left; padding: 10px 14px; font-size: 14px;" placeholder="새 마스터 키 입력 (최소 4자 이상)">
+        </div>
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">새 마스터 키 확인</label>
+          <input type="password" id="confirmKeyInput" class="security-input" style="text-align: left; padding: 10px 14px; font-size: 14px;" placeholder="새 마스터 키 다시 입력">
+        </div>
+      </div>
+
+      <div id="pwdErrMsg" style="font-size: 12px; color: var(--danger); font-weight: 600; margin-bottom: 12px; display: none;"></div>
+      <div id="pwdSuccessMsg" style="font-size: 12px; color: var(--success); font-weight: 600; margin-bottom: 12px; display: none;"></div>
+
+      <button class="security-btn" onclick="saveNewMasterKey()" style="margin-bottom: 10px;">
+        비밀번호 변경 저장
+      </button>
+      <button class="action-btn" onclick="resetMasterKeyToDefault()" style="width: 100%; justify-content: center; font-size: 12px;">
+        기본 마스터 키로 초기화
+      </button>
+    </div>
+  </div>
+
   <!-- Client App Logic -->
   <script>
     let masterData = null;
@@ -1696,7 +1743,11 @@
     // ==========================================================
     // Master Security Gate & Authentication Logic
     // ==========================================================
-    const MASTER_HASH = "d8628b05f778a05c31758c5c768c4a169b14c34d83d1c19b02a28178129e1eb7"; // SHA-256 for 'lets2026!'
+    const DEFAULT_MASTER_HASH = "d8628b05f778a05c31758c5c768c4a169b14c34d83d1c19b02a28178129e1eb7"; // SHA-256 for default 'lets2026!'
+
+    function getMasterHash() {
+      return localStorage.getItem('lets_master_custom_hash') || DEFAULT_MASTER_HASH;
+    }
 
     async function sha256(message) {
       const msgBuffer = new TextEncoder().encode(message);
@@ -1717,16 +1768,85 @@
       }
 
       const inputHash = await sha256(val);
-      if (inputHash === MASTER_HASH || val === 'lets2026!' || val === 'admin') {
-        // Unlock
+      const targetHash = getMasterHash();
+
+      // Only match against SHA-256 hash (never plain text)
+      if (inputHash === targetHash) {
         sessionStorage.setItem('lets_master_auth', 'granted');
         sessionStorage.setItem('lets_auth_time', Date.now().toString());
         unlockDashboard();
       } else {
-        showSecurityError('유효하지 않은 마스터 키입니다.');
+        showSecurityError('인증 실패: 유효하지 않은 마스터 키입니다.');
         card.classList.remove('shake-anim');
         void card.offsetWidth;
         card.classList.add('shake-anim');
+      }
+    }
+
+    function openChangePasswordModal() {
+      document.getElementById('currentKeyInput').value = '';
+      document.getElementById('newKeyInput').value = '';
+      document.getElementById('confirmKeyInput').value = '';
+      document.getElementById('pwdErrMsg').style.display = 'none';
+      document.getElementById('pwdSuccessMsg').style.display = 'none';
+      document.getElementById('changePasswordModal').classList.add('open');
+    }
+
+    async function saveNewMasterKey() {
+      const currentVal = (document.getElementById('currentKeyInput').value || '').trim();
+      const newVal = (document.getElementById('newKeyInput').value || '').trim();
+      const confirmVal = (document.getElementById('confirmKeyInput').value || '').trim();
+      const err = document.getElementById('pwdErrMsg');
+      const success = document.getElementById('pwdSuccessMsg');
+
+      err.style.display = 'none';
+      success.style.display = 'none';
+
+      if (!currentVal || !newVal || !confirmVal) {
+        err.textContent = '모든 필드를 입력해주십시오.';
+        err.style.display = 'block';
+        return;
+      }
+
+      const currentHash = await sha256(currentVal);
+      if (currentHash !== getMasterHash()) {
+        err.textContent = '현재 마스터 키가 일치하지 않습니다.';
+        err.style.display = 'block';
+        return;
+      }
+
+      if (newVal.length < 4) {
+        err.textContent = '새 마스터 키는 최소 4자 이상이어야 합니다.';
+        err.style.display = 'block';
+        return;
+      }
+
+      if (newVal !== confirmVal) {
+        err.textContent = '새 마스터 키와 확인 입력이 일치하지 않습니다.';
+        err.style.display = 'block';
+        return;
+      }
+
+      const newHash = await sha256(newVal);
+      localStorage.setItem('lets_master_custom_hash', newHash);
+
+      success.textContent = '마스터 키가 성공적으로 변경되었습니다!';
+      success.style.display = 'block';
+
+      setTimeout(() => {
+        closeAdminModal('changePasswordModal');
+      }, 1200);
+    }
+
+    function resetMasterKeyToDefault() {
+      if (confirm('마스터 키를 초기 기본값으로 리셋하시겠습니까?')) {
+        localStorage.removeItem('lets_master_custom_hash');
+        const success = document.getElementById('pwdSuccessMsg');
+        success.textContent = '마스터 키가 기본값으로 초기화되었습니다.';
+        success.style.display = 'block';
+        setTimeout(() => {
+          closeAdminModal('changePasswordModal');
+        }, 1200);
       }
     }
 
