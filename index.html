@@ -90,21 +90,21 @@
 
     body {
       min-height: 100vh;
-      padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      margin: 0;
+      padding: 0 0 max(64px, env(safe-area-inset-bottom)) 0;
     }
 
     .hub-container {
-      max-width: 1680px;
-      margin: 0 auto;
+      max-width: 100%;
       width: 100%;
-      min-width: 0;
-      padding: 0 32px;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
       overflow-x: clip;
       transition: filter 0.3s ease;
     }
     @media (max-width: 768px) {
-      .hub-container { padding: 0 16px; }
+      .hub-container { padding: 0; }
     }
 
     .hub-container.locked {
@@ -257,22 +257,30 @@
 
     /* ==========================================================
        1. Header & Service Navigation Unified Cockpit Bar
+       (브라우저 가로폭 100% 풀위드 밀착 + 상단 여백 0px Sticky)
        ========================================================== */
     .header-nav-unified-wrap {
       position: sticky;
       top: 0;
       z-index: 1000;
-      margin-bottom: 24px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-      background: var(--bg-surface);
-      border: var(--border-card);
+      width: 100%;
+      margin: 0 0 24px 0;
+      border-radius: 0;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
     .hub-header {
-      background: var(--bg-surface);
-      padding: 18px 24px 14px 24px;
+      background: transparent;
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 14px 32px 10px 32px;
       margin-bottom: 0;
       border: none;
       border-radius: 0;
@@ -283,6 +291,7 @@
       gap: 16px;
       flex-wrap: wrap;
       width: 100%;
+      box-sizing: border-box;
       min-width: 0;
     }
 
@@ -1415,14 +1424,15 @@
       color: var(--text-secondary);
     }
 
-    /* Devices Grid */
+    /* Devices Grid (PC 4단 그리드 시스템) */
     .devices-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
       width: 100%;
       min-width: 0;
       padding: 4px 0;
+      box-sizing: border-box;
     }
 
     /* Device Card: Level 0 Surface Flush */
@@ -1688,11 +1698,22 @@
       transition: opacity 0.1s ease;
     }
     .chart-crosshair-dot {
-      fill: var(--primary);
-      stroke: var(--bg-surface);
-      stroke-width: 2;
+      display: none;
+    }
+    /* HTML 기반 크로스헤어 닷 (SVG 종횡비 왜곡 없이 언제나 완벽한 정원 Circle 보장) */
+    .chart-crosshair-dot-html {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50% !important;
+      background: #3182f6;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
       opacity: 0;
       transition: opacity 0.1s ease;
+      transform: translate(-50%, -50%);
+      z-index: 5;
     }
     .chart-tooltip {
       position: absolute;
@@ -1907,19 +1928,41 @@
     }
     .footer-link:hover { color: var(--primary); }
 
+    /* 본문 뷰 및 푸터 중앙 정렬 (최대폭 1680px 그리드 일치) */
+    #allServicesView,
+    #serviceDetailView,
+    .hub-footer {
+      max-width: 1680px;
+      margin: 0 auto;
+      padding-left: 32px;
+      padding-right: 32px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
     /* Media Queries */
-    @media (max-width: 1180px) {
-      .devices-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 1400px) {
+      .devices-grid { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 1024px) {
+      .devices-grid { grid-template-columns: repeat(2, 1fr); }
       .summary-grid { grid-template-columns: repeat(2, 1fr); }
       .infographics-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
+      #allServicesView,
+      #serviceDetailView,
+      .hub-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
       .hub-header {
-        padding: 20px;
+        padding: 14px 16px;
         flex-direction: column;
         align-items: flex-start;
+      }
+      .service-nav-bar {
+        padding: 6px 16px 10px 16px;
       }
       .header-actions {
         width: 100%;
@@ -2038,20 +2081,21 @@
        Service Navigation Menu & Drilldown Detail View (LDS v2.5 Unified Top Bar)
        ========================================================== */
     .service-nav-bar {
-      background: var(--bg-surface);
+      background: transparent;
       border-radius: 0;
       border: none;
-      border-top: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 8px 18px 12px 18px;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 8px 32px 12px 32px;
       box-shadow: none;
-      margin-bottom: 0;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       gap: 6px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      max-width: 100%;
+      max-width: 1680px;
+      width: 100%;
       min-width: 0;
       box-sizing: border-box;
       cursor: grab;
@@ -2064,17 +2108,18 @@
       scroll-behavior: auto !important;
     }
 
+    /* 플랫 보더리스 내비게이션 탭 (의미 없는 박스/테두리 완전 제거) */
     .service-nav-tab {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 7px 14px;
-      border-radius: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
       color: #64748b;
-      background: var(--bg-subtle);
-      border: 1px solid rgba(0, 0, 0, 0.04);
+      background: transparent;
+      border: 1px solid transparent;
       white-space: nowrap;
       cursor: pointer;
       transition: all 0.16s ease;
@@ -2082,9 +2127,9 @@
       user-select: none;
     }
     .service-nav-tab:hover {
-      background: rgba(49, 130, 246, 0.08);
-      color: var(--primary);
-      border-color: rgba(49, 130, 246, 0.2);
+      background: rgba(15, 23, 42, 0.04);
+      color: #0f172a;
+      border-color: transparent;
     }
     .service-nav-tab:active {
       transform: scale(0.98);
@@ -2094,27 +2139,36 @@
       color: #ffffff;
       font-weight: 700;
       border: 1px solid #0f172a;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
     }
     .service-nav-tab .tab-badge {
       font-size: 11px;
       font-family: var(--font-family-mono, monospace);
-      padding: 1px 7px;
+      padding: 1px 6px;
       border-radius: 6px;
-      background: rgba(0, 0, 0, 0.06);
+      background: rgba(15, 23, 42, 0.06);
       color: #64748b;
-      font-weight: 700;
+      font-weight: 600;
     }
     .service-nav-tab.active .tab-badge {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.22);
       color: #ffffff;
     }
 
-    /* ── 서비스 상태 매트릭스 카드 (SVG 아이콘 및 타이포 계층화) ── */
+    /* ── 서비스 상태 매트릭스 카드 (PC 4단 그리드 & 타이포 계층화) ── */
     .ops-service-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
+    }
+    @media (max-width: 1280px) {
+      .ops-service-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 900px) {
+      .ops-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .ops-service-grid { grid-template-columns: 1fr; }
     }
     .ops-service-card {
       display: flex;
@@ -2295,16 +2349,17 @@
       background: #ecfdf5;
       color: #059669;
     }
-      color: #1e293b;
-    }
 
-    /* Service Detail View Components */
+    /* Service Detail View Components (메뉴 클릭 시 상세 관제 뷰 - 반응형 수직 플렉스 보장) */
     .service-detail-view {
       display: flex;
-      flex-direction: column;
+      flex-direction: column !important;
       gap: 24px;
       width: 100%;
+      max-width: 1680px;
+      margin: 0 auto;
       min-width: 0;
+      box-sizing: border-box;
       animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .service-hero-card {
@@ -3499,6 +3554,7 @@
       } else {
         allView.style.display = 'none';
         detailView.style.display = 'flex';
+        detailView.style.flexDirection = 'column';
         renderServiceDetail(serviceId);
         if (window.location.hash !== `#service-${serviceId}`) {
           history.pushState(null, '', `#service-${serviceId}`);
@@ -4353,6 +4409,7 @@
                  onmousemove="handleChartHover(event, '${dev.id}')" 
                  onmouseleave="handleChartLeave('${dev.id}')">
               ${generateSvgChart(dev, dayPoints, dev.id)}
+              <div class="chart-crosshair-dot-html" id="cross-dot-${dev.id}"></div>
               <div class="chart-tooltip" id="tooltip-${dev.id}"></div>
             </div>
           </div>
@@ -4464,7 +4521,6 @@
           <line x1="${pad}" y1="${h - pad}" x2="${w - pad}" y2="${h - pad}" stroke="rgba(0,0,0,0.06)" stroke-width="1" />
           ${bars}
           <line id="cross-line-${devId}" class="chart-crosshair-line" x1="0" y1="0" x2="0" y2="${h}" stroke="#3182f6" />
-          <circle id="cross-dot-${devId}" class="chart-crosshair-dot" cx="0" cy="0" r="4.5" fill="#3182f6" />
         </svg>
       `;
     }
@@ -4495,7 +4551,6 @@
           <path class="sparkline-area ${animClass}" id="area-${devId}" d="${areaData}" fill="url(#grad-ana-${devId})" />
           <path class="sparkline-path ${animClass}" id="path-${devId}" d="${pathData}" fill="none" stroke="#00c48c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           <line id="cross-line-${devId}" class="chart-crosshair-line" x1="0" y1="0" x2="0" y2="${h}" stroke="#00c48c" />
-          <circle id="cross-dot-${devId}" class="chart-crosshair-dot" cx="0" cy="0" r="4.5" fill="#00c48c" stroke="#fff" stroke-width="2" />
         </svg>
       `;
     }
@@ -4531,7 +4586,6 @@
           <path class="sparkline-area ${animClass}" id="area-${devId}" d="${stepArea}" fill="url(#grad-step-${devId})" />
           <path class="sparkline-path ${animClass}" id="path-${devId}" d="${stepPath}" fill="none" stroke="#6366f1" stroke-width="2.5" />
           <line id="cross-line-${devId}" class="chart-crosshair-line" x1="0" y1="0" x2="0" y2="${h}" stroke="#6366f1" />
-          <circle id="cross-dot-${devId}" class="chart-crosshair-dot" cx="0" cy="0" r="4.5" fill="#6366f1" stroke="#fff" stroke-width="2" />
         </svg>
       `;
     }
@@ -4560,7 +4614,6 @@
           <line x1="${pad}" y1="${h / 2}" x2="${w - pad}" y2="${h / 2}" stroke="rgba(0,0,0,0.06)" stroke-width="1" stroke-dasharray="2,2" />
           ${blocks}
           <line id="cross-line-${devId}" class="chart-crosshair-line" x1="0" y1="0" x2="0" y2="${h}" stroke="#f59e0b" />
-          <circle id="cross-dot-${devId}" class="chart-crosshair-dot" cx="0" cy="0" r="4.5" fill="#f59e0b" stroke="#fff" stroke-width="2" />
         </svg>
       `;
     }
@@ -4580,6 +4633,7 @@
       if (wrap) {
         wrap.innerHTML = `
           ${generateSvgChart(dev, points, devId, true)}
+          <div class="chart-crosshair-dot-html" id="cross-dot-${devId}"></div>
           <div class="chart-tooltip" id="tooltip-${devId}"></div>
         `;
       }
@@ -4608,12 +4662,19 @@
       const val = pts[idx];
       const lbl = labels[idx] || `${activeTab.toUpperCase()} ${idx + 1}`;
 
+      // 수직 크로스헤어 점선 위치 동기화
       crossLine.setAttribute('x1', (pct * 320).toString());
       crossLine.setAttribute('x2', (pct * 320).toString());
       crossLine.style.opacity = '1';
 
-      crossDot.setAttribute('cx', (pct * 320).toString());
-      crossDot.setAttribute('cy', '45');
+      // HTML 기반 정원 Circle 닷 위치 및 프로세스 테마 색상 동기화 (종횡비 왜곡 완전 방지)
+      crossDot.style.left = `${x}px`;
+      crossDot.style.top = `${rect.height / 2}px`;
+      const proc = normalizeProcess(dev.process);
+      if (proc === '수집') crossDot.style.background = '#3182f6';
+      else if (proc === '분석') crossDot.style.background = '#00c48c';
+      else if (proc === '품질') crossDot.style.background = '#6366f1';
+      else crossDot.style.background = '#f59e0b';
       crossDot.style.opacity = '1';
 
       tooltip.textContent = `${lbl}: ${val.toLocaleString()} ${unit}`;
