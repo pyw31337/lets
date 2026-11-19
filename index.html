@@ -95,6 +95,8 @@
       width: 100%;
       min-width: 0;
       padding: 0 4px;
+      box-sizing: border-box;
+      overflow-x: clip;
       transition: filter 0.3s ease;
     }
 
@@ -775,6 +777,9 @@
       margin-bottom: 28px;
       width: 100%;
       min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
       transition: box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .local-ai-panel:hover {
@@ -792,6 +797,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      min-width: 0;
     }
     .local-ai-title {
       font-size: 16px;
@@ -809,17 +815,20 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .local-ai-bento-grid {
       display: grid;
-      grid-template-columns: 1fr 1.35fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
       gap: 18px;
       width: 100%;
       min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
     }
     @media (max-width: 960px) {
       .local-ai-bento-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
     }
     .bento-subcard {
@@ -830,6 +839,10 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .bento-subcard:hover {
@@ -841,6 +854,8 @@
       align-items: center;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--divider-dark);
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .bento-subcard-title {
       font-size: 14px;
@@ -854,6 +869,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      min-width: 0;
     }
     .ollama-model-item {
       background: var(--bg-surface);
@@ -863,11 +879,13 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      min-width: 0;
     }
     .ollama-model-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
     .ollama-model-name {
       font-size: 14px;
@@ -886,6 +904,7 @@
       border-radius: var(--radius-full);
       background: var(--success-light);
       color: var(--success);
+      flex-shrink: 0;
     }
     .ollama-model-meta {
       display: flex;
@@ -893,18 +912,25 @@
       gap: 4px;
       font-size: 12px;
       color: var(--text-secondary);
+      min-width: 0;
     }
     .ollama-model-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
     .launchagent-table-wrap {
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      display: block;
       border-radius: var(--radius-md, 12px);
       background: var(--bg-surface);
       border: 1px solid var(--border-hairline, rgba(0,0,0,0.04));
+      box-sizing: border-box;
     }
     .launchagent-table {
       width: 100%;
@@ -1560,6 +1586,17 @@
         flex-direction: column;
         align-items: flex-start;
       }
+      .header-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-start;
+      }
+      .action-btn {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
       .devices-grid { grid-template-columns: 1fr; }
       .controls-bar {
         flex-direction: column;
@@ -1575,15 +1612,34 @@
     }
     @media (max-width: 540px) {
       body { padding: 16px 8px 48px 8px; }
-      .hub-container { padding: 2px 4px; }
+      .hub-container { padding: 0; }
       .summary-grid { grid-template-columns: 1fr; }
-      .hub-header { padding: 18px 16px; }
+      .hub-header { padding: 18px 14px; }
       .hub-title { font-size: 18px; }
-      .info-panel { padding: 18px 16px; }
-      .device-card { padding: 18px 16px; }
+      .info-panel { padding: 18px 14px; }
+      .device-card { padding: 18px 14px; }
+      .local-ai-panel { padding: 18px 14px; }
+      .bento-subcard { padding: 16px 12px; }
       .donut-container { flex-direction: column; align-items: center; }
       .donut-legend { width: 100%; }
-      .header-actions { width: 100%; justify-content: space-between; }
+      .header-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: flex-start;
+      }
+      .header-actions .action-btn {
+        font-size: 11px;
+        padding: 7px 10px;
+        flex: 1 1 calc(50% - 6px);
+        text-align: center;
+        justify-content: center;
+      }
+      .pulse-pill {
+        width: 100%;
+        justify-content: center;
+      }
     }
     /* ==========================================================
        Operations Command Center — live condition layer
