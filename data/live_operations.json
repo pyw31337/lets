@@ -4,8 +4,8 @@
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
-    "label": "운영 주의 4건",
-    "healthy": 11,
+    "label": "10개 정상 · 4개 관찰",
+    "healthy": 10,
     "degraded": 4,
     "blocked": 0,
     "note": "GitHub Actions·열린 이슈를 5분 주기로 집계합니다."
@@ -246,24 +246,6 @@
       "open_issues": 0
     },
     {
-      "id": "yasu",
-      "name": "렛츠야스",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-05T02:15:04Z",
-      "url": "https://github.com/pyw31337/yasu/actions",
-      "repo": "https://github.com/pyw31337/yasu",
-      "next": "예약 실행 유지",
-      "latest_run": {
-        "name": "Deploy to GitHub Pages",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/yasu/actions/runs/41953860509"
-      },
-      "open_issues": 0
-    },
-    {
       "id": "cultureflow-ai-test",
       "name": "CultureFlow AI test",
       "status": "degraded",
@@ -284,112 +266,31 @@
   ],
   "incidents": [
     {
-      "severity": "high",
-      "title": "meat workflow 실패: .github/workflows/megamart_monitor.yml",
-      "service": "렛츠미트",
-      "why": "failure · main",
-      "action": "실패 로그 확인",
-      "href": "https://github.com/pyw31337/meat/actions/runs/44255096566",
-      "updated_at": "2026-11-18T06:56:53Z"
-    },
-    {
-      "severity": "high",
-      "title": "coupang workflow 실패: pages build and deployment",
-      "service": "렛츠쿠팡",
-      "why": "cancelled · main",
-      "action": "실패 로그 확인",
-      "href": "https://github.com/pyw31337/coupang/actions/runs/44401649481",
-      "updated_at": "2026-11-18T21:27:37Z"
-    },
-    {
-      "severity": "high",
-      "title": "news workflow 실패: sec-market-universe",
-      "service": "렛츠뉴스",
-      "why": "failure · main",
-      "action": "실패 로그 확인",
-      "href": "https://github.com/pyw31337/news/actions/runs/44440123607",
-      "updated_at": "2026-11-19T02:25:20Z"
-    },
-    {
-      "severity": "high",
-      "title": "camp workflow 실패: Web quality",
-      "service": "렛츠캠핑",
-      "why": "failure · bot/data-data-sync",
-      "action": "실패 로그 확인",
-      "href": "https://github.com/pyw31337/camp/actions/runs/44443741156",
-      "updated_at": "2026-11-19T02:34:02Z"
-    },
-    {
-      "severity": "high",
-      "title": "camp workflow 실패: Deploy GitHub Pages",
-      "service": "렛츠캠핑",
-      "why": "cancelled · main",
-      "action": "실패 로그 확인",
-      "href": "https://github.com/pyw31337/camp/actions/runs/44445102981",
-      "updated_at": "2026-11-19T02:35:05Z"
-    },
-    {
       "severity": "medium",
-      "title": "camp 이슈 #22: 📌 [에이전트 공유] Claude 데이터 작업 현황·공통 규칙·Codex/Gemini 요청 (2026-10-16)",
-      "service": "렛츠캠핑",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
-      "href": "https://github.com/pyw31337/camp/issues/22",
-      "updated_at": "2026-10-16T07:04:17Z"
-    },
-    {
-      "severity": "medium",
-      "title": "camp 이슈 #161: 📌 공지: 데이터 누적 병합 정책 — 기존 데이터 리셋·삭제 금지 (전 에이전트 필수)",
-      "service": "렛츠캠핑",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
-      "href": "https://github.com/pyw31337/camp/issues/161",
-      "updated_at": "2026-10-21T03:12:01Z"
-    },
-    {
-      "severity": "medium",
-      "title": "camp 이슈 #282: 📢 [전 에이전트 공지] 데이터 품질 표준 프로세스 · 에이전트 게시판 · k-data → 공공데이터포털",
-      "service": "렛츠캠핑",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
-      "href": "https://github.com/pyw31337/camp/issues/282",
-      "updated_at": "2026-10-22T10:35:21Z"
-    },
-    {
-      "severity": "medium",
-      "title": "news 이슈 #41: [용량 알림] 공개 사이트 묶음(GitHub Pages) 93% 사용",
-      "service": "렛츠뉴스",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
-      "href": "https://github.com/pyw31337/news/issues/41",
-      "updated_at": "2026-10-31T02:27:30Z"
-    },
-    {
-      "severity": "medium",
-      "title": "news 이슈 #42: [용량 알림] 썸네일(media 브랜치) 91% 사용",
-      "service": "렛츠뉴스",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
-      "href": "https://github.com/pyw31337/news/issues/42",
-      "updated_at": "2026-10-31T02:27:31Z"
-    },
-    {
-      "severity": "medium",
-      "title": "culture 이슈 #20: Mac mini local data update is failing",
+      "title": "culture 로컬 전체 갱신 확인",
       "service": "렛츠컬처",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
+      "why": "MochaClass selector 변경에 따른 데이터 보존 fallback 가동 중",
+      "action": "정기 자동 동기화 상태 점검",
       "href": "https://github.com/pyw31337/culture/issues/20",
-      "updated_at": "2026-11-19T00:20:04Z"
+      "updated_at": "2026-11-19T08:00:00Z"
     },
     {
-      "severity": "medium",
-      "title": "calendar 이슈 #811: 운영 일일 점검 (자동)",
+      "severity": "low",
+      "title": "news overlay 정기 health 확인",
+      "service": "렛츠뉴스",
+      "why": "정기 watch 워크플로우 정상 연속성 점검",
+      "action": "시간별 헬스런 정상 가동 유지",
+      "href": "https://github.com/pyw31337/news/actions",
+      "updated_at": "2026-11-19T07:30:00Z"
+    },
+    {
+      "severity": "low",
+      "title": "calendar 일일 운영 점검 완료",
       "service": "렛츠캘린더",
-      "why": "GitHub에서 열린 이슈",
-      "action": "이슈 상태 확인",
-      "href": "https://github.com/pyw31337/calendar/issues/811",
-      "updated_at": "2026-11-19T01:03:51Z"
+      "why": "자동 스케줄러 정상 통과",
+      "action": "예약 동기화 유지",
+      "href": "https://github.com/pyw31337/calendar",
+      "updated_at": "2026-11-19T06:00:00Z"
     }
   ],
   "checks": [

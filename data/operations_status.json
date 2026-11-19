@@ -23,7 +23,6 @@
     {"id":"hair","name":"렛츠헤어","status":"healthy","label":"정상","detail":"최근 배포 성공","updated_at":"2026-11-18T00:31:00+09:00","url":"https://pyw31337.github.io/hair/","repo":"https://github.com/pyw31337/hair","next":"예약 배포 유지"},
     {"id":"coupang","name":"렛츠쿠팡","status":"healthy","label":"정상","detail":"최근 실행 성공 · 과거 취소 1회","updated_at":"2026-11-18T00:00:00+09:00","url":"https://pyw31337.github.io/coupang/","repo":"https://github.com/pyw31337/coupang","next":"예약 실행 유지"},
     {"id":"all","name":"포트폴리오 허브","status":"healthy","label":"정상","detail":"Portfolio Hub 최근 배포 성공","updated_at":"2026-11-05T00:00:00+09:00","url":"https://pyw31337.github.io/all/","repo":"https://github.com/pyw31337/all","next":"운영 상태판 링크 유지"},
-    {"id":"yasu","name":"렛츠야스","status":"healthy","label":"정상","detail":"최근 배포 성공","updated_at":"2026-11-05T00:00:00+09:00","url":"https://pyw31337.github.io/yasu/","repo":"https://github.com/pyw31337/yasu","next":"예약 배포 유지"},
     {"id":"cultureflow-ai-test","name":"CultureFlow AI test","status":"degraded","label":"보류","detail":"운영용 culture와 중복되는 테스트 저장소 · secrets·외부 수집 실패 반복","updated_at":"2026-11-18T00:00:00+09:00","url":"https://github.com/pyw31337/cultureflow-ai-test/actions","repo":"https://github.com/pyw31337/cultureflow-ai-test","next":"운영에서 분리하거나 archive 정책 결정"}
   ],
   "incidents": [

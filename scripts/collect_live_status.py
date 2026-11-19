@@ -21,7 +21,7 @@ REPOS = [
     ("calendar", "렛츠캘린더"), ("camp", "렛츠캠핑"), ("meat", "렛츠미트"),
     ("metro", "렛츠메트로"), ("pick", "렛츠픽"), ("buy", "렛츠바이"),
     ("hair", "렛츠헤어"), ("coupang", "렛츠쿠팡"), ("all", "포트폴리오 허브"),
-    ("yasu", "렛츠야스"), ("cultureflow-ai-test", "CultureFlow AI test"),
+    ("cultureflow-ai-test", "CultureFlow AI test"),
 ]
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data/live_operations.json"
@@ -94,13 +94,34 @@ def main() -> int:
             status, label = "degraded", "진행 중"
             detail = f"{latest.get('name', 'workflow')} 실행 중"
             next_action = "완료 결과 확인"
-        if open_items:
-            # Open issues are surfaced as events, but do not make every service
-            # red: many repositories intentionally keep planning issues open.
-            for issue in open_items[:3]:
-                incidents.append({"severity": "medium", "title": f"{repo} 이슈 #{issue['number']}: {issue['title']}", "service": name, "why": "GitHub에서 열린 이슈", "action": "이슈 상태 확인", "href": issue["html_url"], "updated_at": issue.get("updated_at")})
+        # 단순 공지나 핀 고정 정보성 이슈는 실제 긴급 처리 장애(incident)가 아니므로 제외
+        actual_issues = [
+            i for i in open_items
+            if not any(k in i.get("title", "") for k in ["공지", "📌", "📢", "에이전트 공유", "용량 알림", "표준 프로세스"])
+        ]
+        if actual_issues:
+            for issue in actual_issues[:2]:
+                incidents.append({
+                    "severity": "medium",
+                    "title": f"{repo} 이슈 #{issue['number']}: {issue['title']}",
+                    "service": name,
+                    "why": "GitHub 운영 조치 필요",
+                    "action": "이슈 확인 및 대응",
+                    "href": issue["html_url"],
+                    "updated_at": issue.get("updated_at")
+                })
         for run in recent_failures[:2]:
-            incidents.append({"severity": "high", "title": f"{repo} workflow 실패: {run.get('name', 'workflow')}", "service": name, "why": f"{run.get('conclusion')} · {run.get('head_branch', 'main')}", "action": "실패 로그 확인", "href": run.get("html_url", f"https://github.com/{OWNER}/{repo}/actions"), "updated_at": run.get("updated_at")})
+            if run.get("conclusion") == "cancelled":
+                continue # 수동 취소는 장애 인시던트로 잡지 않음
+            incidents.append({
+                "severity": "high",
+                "title": f"{repo} 실행 실패: {run.get('name', 'workflow')}",
+                "service": name,
+                "why": f"{run.get('conclusion')} · {run.get('head_branch', 'main')}",
+                "action": "실패 로그 확인 후 재실행",
+                "href": run.get("html_url", f"https://github.com/{OWNER}/{repo}/actions"),
+                "updated_at": run.get("updated_at")
+            })
         services.append({
             "id": repo, "name": name, "status": status, "label": label,
             "detail": detail, "updated_at": iso(latest_time),
