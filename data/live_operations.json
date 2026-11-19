@@ -1,10 +1,10 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-19T02:38:22.290944+00:00",
+  "generated_at": "2026-11-19T09:34:58.855454+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
-    "label": "10개 정상 · 4개 관찰",
+    "label": "운영 주의 4건",
     "healthy": 10,
     "degraded": 4,
     "blocked": 0,
@@ -34,16 +34,16 @@
       "name": "렛츠뉴스",
       "status": "degraded",
       "label": "진행 중",
-      "detail": "people-photos 실행 중",
-      "updated_at": "2026-11-19T02:37:51Z",
+      "detail": "collect-news 실행 중",
+      "updated_at": "2026-11-19T09:28:48Z",
       "url": "https://github.com/pyw31337/news/actions",
       "repo": "https://github.com/pyw31337/news",
       "next": "완료 결과 확인",
       "latest_run": {
-        "name": "people-photos",
+        "name": "collect-news",
         "conclusion": null,
         "status": "in_progress",
-        "url": "https://github.com/pyw31337/news/actions/runs/44445710317"
+        "url": "https://github.com/pyw31337/news/actions/runs/44496768573"
       },
       "open_issues": 2
     },
@@ -68,18 +68,18 @@
     {
       "id": "cctv",
       "name": "렛츠뷰",
-      "status": "degraded",
-      "label": "진행 중",
-      "detail": "Refresh Playback Addresses 실행 중",
-      "updated_at": "2026-11-19T02:37:40Z",
+      "status": "healthy",
+      "label": "정상",
+      "detail": "최근 GitHub Actions 실행 정상",
+      "updated_at": "2026-11-19T09:32:24Z",
       "url": "https://github.com/pyw31337/cctv/actions",
       "repo": "https://github.com/pyw31337/cctv",
-      "next": "완료 결과 확인",
+      "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Refresh Playback Addresses",
-        "conclusion": null,
-        "status": "in_progress",
-        "url": "https://github.com/pyw31337/cctv/actions/runs/44445689789"
+        "name": "Actions Failure Auto-Remediation",
+        "conclusion": "skipped",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/cctv/actions/runs/44497336619"
       },
       "open_issues": 0
     },
@@ -89,15 +89,15 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T01:03:55Z",
+      "updated_at": "2026-11-19T09:00:08Z",
       "url": "https://github.com/pyw31337/calendar/actions",
       "repo": "https://github.com/pyw31337/calendar",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Daily Ops Report",
+        "name": "Daily Calendar Backup",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/calendar/actions/runs/44433801502"
+        "url": "https://github.com/pyw31337/calendar/actions/runs/44492298414"
       },
       "open_issues": 1
     },
@@ -107,17 +107,17 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T02:34:56Z",
+      "updated_at": "2026-11-19T08:53:54Z",
       "url": "https://github.com/pyw31337/camp/actions",
       "repo": "https://github.com/pyw31337/camp",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Culture events",
-        "conclusion": null,
-        "status": "pending",
-        "url": "https://github.com/pyw31337/camp/actions/runs/44445358398"
+        "name": "Web quality",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/camp/actions/runs/44489796057"
       },
-      "open_issues": 3
+      "open_issues": 0
     },
     {
       "id": "meat",
@@ -140,18 +140,18 @@
     {
       "id": "metro",
       "name": "렛츠메트로",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-15T23:25:03Z",
+      "status": "degraded",
+      "label": "실패 감지",
+      "detail": "최근 workflow failure · Deploy to GitHub Pages",
+      "updated_at": "2026-11-19T08:48:26Z",
       "url": "https://github.com/pyw31337/metro/actions",
       "repo": "https://github.com/pyw31337/metro",
-      "next": "예약 실행 유지",
+      "next": "실패 로그 확인 후 재실행",
       "latest_run": {
         "name": "Deploy to GitHub Pages",
-        "conclusion": "success",
+        "conclusion": "failure",
         "status": "completed",
-        "url": "https://github.com/pyw31337/metro/actions/runs/43774540787"
+        "url": "https://github.com/pyw31337/metro/actions/runs/44490553859"
       },
       "open_issues": 0
     },
@@ -233,7 +233,7 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-05T23:45:22Z",
+      "updated_at": "2026-11-19T03:01:27Z",
       "url": "https://github.com/pyw31337/all/actions",
       "repo": "https://github.com/pyw31337/all",
       "next": "예약 실행 유지",
@@ -241,7 +241,7 @@
         "name": "Deploy Portfolio Hub to GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/all/actions/runs/42131643723"
+        "url": "https://github.com/pyw31337/all/actions/runs/44448431334"
       },
       "open_issues": 0
     },
@@ -266,38 +266,38 @@
   ],
   "incidents": [
     {
+      "severity": "high",
+      "title": "metro 실행 실패: Deploy to GitHub Pages",
+      "service": "렛츠메트로",
+      "why": "failure · main",
+      "action": "실패 로그 확인 후 재실행",
+      "href": "https://github.com/pyw31337/metro/actions/runs/44490553859",
+      "updated_at": "2026-11-19T08:48:26Z"
+    },
+    {
       "severity": "medium",
-      "title": "culture 로컬 전체 갱신 확인",
+      "title": "culture 이슈 #20: Mac mini local data update is failing",
       "service": "렛츠컬처",
-      "why": "MochaClass selector 변경에 따른 데이터 보존 fallback 가동 중",
-      "action": "정기 자동 동기화 상태 점검",
+      "why": "GitHub 운영 조치 필요",
+      "action": "이슈 확인 및 대응",
       "href": "https://github.com/pyw31337/culture/issues/20",
-      "updated_at": "2026-11-19T08:00:00Z"
+      "updated_at": "2026-11-19T00:20:04Z"
     },
     {
-      "severity": "low",
-      "title": "news overlay 정기 health 확인",
-      "service": "렛츠뉴스",
-      "why": "정기 watch 워크플로우 정상 연속성 점검",
-      "action": "시간별 헬스런 정상 가동 유지",
-      "href": "https://github.com/pyw31337/news/actions",
-      "updated_at": "2026-11-19T07:30:00Z"
-    },
-    {
-      "severity": "low",
-      "title": "calendar 일일 운영 점검 완료",
+      "severity": "medium",
+      "title": "calendar 이슈 #811: 운영 일일 점검 (자동)",
       "service": "렛츠캘린더",
-      "why": "자동 스케줄러 정상 통과",
-      "action": "예약 동기화 유지",
-      "href": "https://github.com/pyw31337/calendar",
-      "updated_at": "2026-11-19T06:00:00Z"
+      "why": "GitHub 운영 조치 필요",
+      "action": "이슈 확인 및 대응",
+      "href": "https://github.com/pyw31337/calendar/issues/811",
+      "updated_at": "2026-11-19T01:03:51Z"
     }
   ],
   "checks": [
     {
       "name": "GitHub API",
       "state": "warn",
-      "value": "15개 저장소 · 4개 경고"
+      "value": "14개 저장소 · 4개 경고"
     },
     {
       "name": "실시간 집계",
