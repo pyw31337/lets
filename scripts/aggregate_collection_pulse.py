@@ -3,11 +3,21 @@
 scripts/aggregate_collection_pulse.py
 매일 자동 집계: 각 서비스 collector 상태 · GitHub Actions 결과 · 관측 로그를
 data/collection_pulse.json 으로 통합한다.
+
+- live_operations.json (GitHub Actions 신선도/결론)
+- data/observability/latest.json (NewsBoard 실측)
+- data/automation_runs.json (실행 이벤트, 있으면 우선)
+- 기존 collection_pulse.json 의 서비스 목록을 기반으로 갱신
+
+이상징후 규칙:
+  ZERO_DROP : 오늘 수집 0 이고 전일 > 0
+  SHARP_DROP: 전일 대비 -30% 이하
+  STALE     : live_operations 기준 age_hours 초과 또는 status=stale
+  FAILED    : 최근 workflow conclusion=failure 또는 status=failed
 """
 from __future__ import annotations
 
 import json
-import os
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
