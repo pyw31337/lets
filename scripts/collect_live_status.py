@@ -38,6 +38,8 @@ PRIMARY_WORKFLOWS = {
 }
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data/live_operations.json"
+RUN_EVENTS = ROOT / "data/automation_runs.json"
+NEWS_OBSERVABILITY_URL = "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
 
 
 def get_json(path: str, token: str | None):
@@ -72,6 +74,56 @@ def get_json(path: str, token: str | None):
 
 def iso(value: str | None) -> str | None:
     return value
+
+
+def get_public_json(url: str):
+    try:
+        stamp = int(time.time() // 60)
+        with urlopen(Request(f"{url}?t={stamp}", headers={"Accept": "application/json", "User-Agent": "letshub-live-ops"}), timeout=15) as response:
+            return json.loads(response.read().decode("utf-8")), None
+    except Exception as exc:
+        return None, str(exc)
+
+
+def record_workflow_events(services: list[dict]) -> None:
+    """Keep a deduplicated execution ledger without inventing record volume.
+
+    GitHub Actions tells us that a workflow ran, not how many business records
+    it collected.  This ledger is intentionally limited to execution evidence;
+    individual collectors may append ``observed.count`` when they know it.
+    """
+    try:
+        ledger = json.loads(RUN_EVENTS.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        ledger = {"schema_version": "1.1.0", "runs": []}
+    runs = ledger.setdefault("runs", [])
+    seen = {str(run.get("source_run_id")) for run in runs if run.get("source_run_id")}
+    for service in services:
+        latest = service.get("latest_run") or {}
+        url = latest.get("url")
+        # The URL is stable per Actions run and works as an opaque run key.
+        if not url or url in seen:
+            continue
+        conclusion, status = latest.get("conclusion"), latest.get("status")
+        event_status = "SUCCESS" if conclusion == "success" else "FAILED" if conclusion in {"failure", "timed_out"} else "PENDING"
+        runs.append({
+            "source_run_id": url,
+            "service_id": service.get("id"),
+            "source": "github_actions",
+            "workflow": latest.get("name"),
+            "stage": "UNCLASSIFIED",
+            "status": event_status,
+            "completed_at": service.get("updated_at"),
+            "observed": {"count": None, "unit": None},
+            "note": "Workflow execution evidence only; collection volume was not reported by the workflow.",
+        })
+    # Prevent an indefinitely growing public asset.  90 days of 5-minute scans
+    # is excessive because only new workflow runs are recorded; 5,000 is ample.
+    ledger["schema_version"] = "1.1.0"
+    ledger["generated_at"] = datetime.now(timezone.utc).isoformat()
+    ledger["runs"] = runs[-5000:]
+    ledger["note"] = "Workflow execution evidence. observed.count is populated only by collectors that report a real persisted-record count."
+    RUN_EVENTS.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -177,6 +229,45 @@ def main() -> int:
             "latest_run": {"name": latest.get("name"), "conclusion": conclusion, "status": latest.get("status"), "url": latest.get("html_url"), "failed_steps": failed_steps[:10]},
             "open_issues": len(open_items),
         })
+    # NewsBoard의 실제 산출물 원장을 workflow 실행 상태와 별도로 확인한다.
+    # GitHub Actions 성공만으로 분석·품질·게시가 끝났다고 판단하지 않는다.
+    news_obs, news_obs_error = get_public_json(NEWS_OBSERVABILITY_URL)
+    news_service = next((s for s in services if s.get("id") == "news"), None)
+    if news_service is not None:
+        if news_obs_error:
+            warnings.append(f"news observability: {news_obs_error}")
+            news_service["observability"] = {"status": "access_unknown", "url": NEWS_OBSERVABILITY_URL}
+        else:
+            observed_at = news_obs.get("observed_at") if isinstance(news_obs, dict) else None
+            obs_age = None
+            if observed_at:
+                try:
+                    obs_age = round((now - datetime.fromisoformat(observed_at.replace("Z", "+00:00"))).total_seconds() / 3600, 2)
+                except ValueError:
+                    pass
+            stages = (news_obs or {}).get("stages", {}) if isinstance(news_obs, dict) else {}
+            news_service["observability"] = {
+                "status": "observed",
+                "observed_at": observed_at,
+                "age_hours": obs_age,
+                "run_id": (news_obs or {}).get("run_id"),
+                "stages": stages,
+                "counts": (news_obs or {}).get("counts", {}),
+                "artifacts": (news_obs or {}).get("artifacts", {}),
+                "url": NEWS_OBSERVABILITY_URL,
+            }
+            if obs_age is None or obs_age > MAX_AGE_HOURS["news"]:
+                news_service["status"] = "degraded"
+                news_service["label"] = "원장 신선도 경과"
+                news_service["detail"] = "NewsBoard 실행 원장이 최신 수집 회차와 연결되지 않았습니다"
+            elif any((stages.get(k) or {}).get("status") in {"failed", "degraded", "unknown"} for k in ("collect", "analyze", "quality")):
+                news_service["status"] = "degraded"
+                news_service["label"] = "데이터 단계 주의"
+                news_service["detail"] = "실행 원장에 수집·분석·품질 단계 주의가 기록되어 있습니다"
+            elif (stages.get("publish") or {}).get("status") != "success":
+                news_service["status"] = "degraded"
+                news_service["label"] = "게시 확인 대기"
+                news_service["detail"] = "수집 원장은 있으나 data 게시 확인이 완료되지 않았습니다"
     incidents.sort(key=lambda x: (0 if x["severity"] == "high" else 1, x.get("updated_at") or ""), reverse=False)
     healthy = sum(s["status"] == "healthy" for s in services)
     degraded = sum(s["status"] == "degraded" for s in services)
@@ -195,8 +286,10 @@ def main() -> int:
     old = json.loads(OUT.read_text()) if OUT.exists() else None
     comparable = lambda x: {k: v for k, v in x.items() if k != "generated_at"}
     if old and comparable(old) == comparable(snapshot):
+        record_workflow_events(services)
         return 0
     OUT.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
+    record_workflow_events(services)
     return 0
 
 
