@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-19T19:10:12.063529+00:00",
+  "generated_at": "2026-11-19T23:59:15.151784+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
-    "label": "운영 주의 2건",
-    "healthy": 12,
-    "degraded": 2,
+    "label": "운영 주의 5건",
+    "healthy": 9,
+    "degraded": 5,
     "blocked": 0,
     "note": "GitHub Actions·열린 이슈를 5분 주기로 집계합니다."
   },
@@ -17,7 +17,8 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T16:38:18Z",
+      "updated_at": "2026-11-19T20:38:13Z",
+      "age_hours": 3.35,
       "url": "https://github.com/pyw31337/culture/actions",
       "repo": "https://github.com/pyw31337/culture",
       "next": "예약 실행 유지",
@@ -25,7 +26,8 @@
         "name": "Deploy to GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/culture/actions/runs/44567276650"
+        "url": "https://github.com/pyw31337/culture/actions/runs/44609776796",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -35,33 +37,37 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T19:02:55Z",
+      "updated_at": "2026-11-19T23:53:35Z",
+      "age_hours": 0.09,
       "url": "https://github.com/pyw31337/news/actions",
       "repo": "https://github.com/pyw31337/news",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "workflow-recovery",
+        "name": "collect-news",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/news/actions/runs/44594141491"
+        "url": "https://github.com/pyw31337/news/actions/runs/44639843085",
+        "failed_steps": []
       },
       "open_issues": 2
     },
     {
       "id": "macmini-workflow-handoff",
       "name": "Mac mini handoff",
-      "status": "degraded",
-      "label": "접근 확인",
-      "detail": "GitHub Actions API 접근 권한 또는 저장소 공개 범위를 확인해야 합니다",
-      "updated_at": null,
+      "status": "healthy",
+      "label": "정상",
+      "detail": "최근 GitHub Actions 실행 정상",
+      "updated_at": "2026-11-19T00:29:10Z",
+      "age_hours": 23.5,
       "url": "https://github.com/pyw31337/macmini-workflow-handoff/actions",
       "repo": "https://github.com/pyw31337/macmini-workflow-handoff",
-      "next": "workflow 실행 또는 권한 확인",
+      "next": "예약 실행 유지",
       "latest_run": {
-        "name": null,
-        "conclusion": null,
-        "status": null,
-        "url": null
+        "name": "Sync workflow handoff inventory",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/macmini-workflow-handoff/actions/runs/44429335757",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -71,15 +77,17 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T18:36:56Z",
+      "updated_at": "2026-11-19T23:13:48Z",
+      "age_hours": 0.76,
       "url": "https://github.com/pyw31337/cctv/actions",
       "repo": "https://github.com/pyw31337/cctv",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Refresh KMA precipitation grid",
+        "name": "Broadcast Rotation Audit",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/cctv/actions/runs/44589612308"
+        "url": "https://github.com/pyw31337/cctv/actions/runs/44635449312",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -89,15 +97,17 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T10:25:19Z",
+      "updated_at": "2026-11-19T22:49:25Z",
+      "age_hours": 1.16,
       "url": "https://github.com/pyw31337/calendar/actions",
       "repo": "https://github.com/pyw31337/calendar",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Daily Photo Tag Maintenance",
+        "name": "Culture Performances Daily Sync",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/calendar/actions/runs/44505182854"
+        "url": "https://github.com/pyw31337/calendar/actions/runs/44632090402",
+        "failed_steps": []
       },
       "open_issues": 1
     },
@@ -107,33 +117,37 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T18:38:01Z",
+      "updated_at": "2026-11-19T23:55:42Z",
+      "age_hours": 0.06,
       "url": "https://github.com/pyw31337/camp/actions",
       "repo": "https://github.com/pyw31337/camp",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Weekly forecast",
-        "conclusion": null,
-        "status": "pending",
-        "url": "https://github.com/pyw31337/camp/actions/runs/44589870041"
+        "name": "Operator submissions",
+        "conclusion": "success",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/camp/actions/runs/44641557954",
+        "failed_steps": []
       },
-      "open_issues": 3
+      "open_issues": 0
     },
     {
       "id": "meat",
       "name": "렛츠미트",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
+      "status": "degraded",
+      "label": "신선도 경과",
+      "detail": "최근 성공 실행이 41.0시간 전입니다",
       "updated_at": "2026-11-18T06:57:19Z",
+      "age_hours": 41.03,
       "url": "https://github.com/pyw31337/meat/actions",
       "repo": "https://github.com/pyw31337/meat",
-      "next": "예약 실행 유지",
+      "next": "예약 실행과 수집 신선도 확인",
       "latest_run": {
         "name": "Deploy GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/meat/actions/runs/44255098579"
+        "url": "https://github.com/pyw31337/meat/actions/runs/44255098579",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -144,6 +158,7 @@
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
       "updated_at": "2026-11-19T09:36:45Z",
+      "age_hours": 14.38,
       "url": "https://github.com/pyw31337/metro/actions",
       "repo": "https://github.com/pyw31337/metro",
       "next": "예약 실행 유지",
@@ -151,61 +166,68 @@
         "name": "Deploy to GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/metro/actions/runs/44490553859"
+        "url": "https://github.com/pyw31337/metro/actions/runs/44490553859",
+        "failed_steps": []
       },
       "open_issues": 0
     },
     {
       "id": "pick",
       "name": "렛츠픽",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
+      "status": "degraded",
+      "label": "신선도 경과",
+      "detail": "최근 성공 실행이 87.3시간 전입니다",
       "updated_at": "2026-11-16T08:39:20Z",
+      "age_hours": 87.33,
       "url": "https://github.com/pyw31337/pick/actions",
       "repo": "https://github.com/pyw31337/pick",
-      "next": "예약 실행 유지",
+      "next": "예약 실행과 수집 신선도 확인",
       "latest_run": {
         "name": "pages build and deployment",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/pick/actions/runs/43832925765"
+        "url": "https://github.com/pyw31337/pick/actions/runs/43832925765",
+        "failed_steps": []
       },
       "open_issues": 0
     },
     {
       "id": "buy",
       "name": "렛츠바이",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
+      "status": "degraded",
+      "label": "신선도 경과",
+      "detail": "최근 성공 실행이 39.0시간 전입니다",
       "updated_at": "2026-11-18T08:58:51Z",
+      "age_hours": 39.01,
       "url": "https://github.com/pyw31337/buy/actions",
       "repo": "https://github.com/pyw31337/buy",
-      "next": "예약 실행 유지",
+      "next": "예약 실행과 수집 신선도 확인",
       "latest_run": {
         "name": "pages build and deployment",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/buy/actions/runs/44271559316"
+        "url": "https://github.com/pyw31337/buy/actions/runs/44271559316",
+        "failed_steps": []
       },
       "open_issues": 0
     },
     {
       "id": "hair",
       "name": "렛츠헤어",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
+      "status": "degraded",
+      "label": "신선도 경과",
+      "detail": "최근 성공 실행이 47.5시간 전입니다",
       "updated_at": "2026-11-18T00:31:52Z",
+      "age_hours": 47.46,
       "url": "https://github.com/pyw31337/hair/actions",
       "repo": "https://github.com/pyw31337/hair",
-      "next": "예약 실행 유지",
+      "next": "예약 실행과 수집 신선도 확인",
       "latest_run": {
         "name": "Deploy J.Hair Demo to GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/hair/actions/runs/44208515687"
+        "url": "https://github.com/pyw31337/hair/actions/runs/44208515687",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -216,6 +238,7 @@
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
       "updated_at": "2026-11-19T00:10:54Z",
+      "age_hours": 23.81,
       "url": "https://github.com/pyw31337/coupang/actions",
       "repo": "https://github.com/pyw31337/coupang",
       "next": "예약 실행 유지",
@@ -223,7 +246,8 @@
         "name": "pages build and deployment",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/coupang/actions/runs/44426808203"
+        "url": "https://github.com/pyw31337/coupang/actions/runs/44426808203",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -234,6 +258,7 @@
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
       "updated_at": "2026-11-19T03:01:27Z",
+      "age_hours": 20.96,
       "url": "https://github.com/pyw31337/all/actions",
       "repo": "https://github.com/pyw31337/all",
       "next": "예약 실행 유지",
@@ -241,7 +266,8 @@
         "name": "Deploy Portfolio Hub to GitHub Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/all/actions/runs/44448431334"
+        "url": "https://github.com/pyw31337/all/actions/runs/44448431334",
+        "failed_steps": []
       },
       "open_issues": 0
     },
@@ -249,30 +275,52 @@
       "id": "cultureflow-ai-test",
       "name": "CultureFlow AI test",
       "status": "degraded",
-      "label": "접근 확인",
-      "detail": "GitHub Actions API 접근 권한 또는 저장소 공개 범위를 확인해야 합니다",
-      "updated_at": null,
+      "label": "실패 감지",
+      "detail": "최근 workflow failure · Daily Data Update",
+      "updated_at": "2026-11-19T00:33:48Z",
+      "age_hours": 23.42,
       "url": "https://github.com/pyw31337/cultureflow-ai-test/actions",
       "repo": "https://github.com/pyw31337/cultureflow-ai-test",
-      "next": "workflow 실행 또는 권한 확인",
+      "next": "실패 로그 확인 후 재실행",
       "latest_run": {
-        "name": null,
-        "conclusion": null,
-        "status": null,
-        "url": null
+        "name": "Daily Data Update",
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/cultureflow-ai-test/actions/runs/44426582287",
+        "failed_steps": [
+          "update-data: Run Data Processing, Validation, and Commit"
+        ]
       },
-      "open_issues": 0
+      "open_issues": 1
     }
   ],
   "incidents": [
     {
       "severity": "high",
-      "title": "camp 실행 실패: Site photos",
-      "service": "렛츠캠핑",
+      "title": "macmini-workflow-handoff 실행 실패: Sync workflow handoff inventory",
+      "service": "Mac mini handoff",
       "why": "failure · main",
       "action": "실패 로그 확인 후 재실행",
-      "href": "https://github.com/pyw31337/camp/actions/runs/44505910833",
-      "updated_at": "2026-11-19T10:28:53Z"
+      "href": "https://github.com/pyw31337/macmini-workflow-handoff/actions/runs/44427158076",
+      "updated_at": "2026-11-19T00:12:57Z"
+    },
+    {
+      "severity": "high",
+      "title": "macmini-workflow-handoff 실행 실패: Sync workflow handoff inventory",
+      "service": "Mac mini handoff",
+      "why": "failure · main",
+      "action": "실패 로그 확인 후 재실행",
+      "href": "https://github.com/pyw31337/macmini-workflow-handoff/actions/runs/44427249268",
+      "updated_at": "2026-11-19T00:13:35Z"
+    },
+    {
+      "severity": "high",
+      "title": "cultureflow-ai-test 실행 실패: Daily Data Update",
+      "service": "CultureFlow AI test",
+      "why": "failure · main",
+      "action": "실패 로그 확인 후 재실행",
+      "href": "https://github.com/pyw31337/cultureflow-ai-test/actions/runs/44426582287",
+      "updated_at": "2026-11-19T00:33:48Z"
     },
     {
       "severity": "high",
@@ -282,6 +330,15 @@
       "action": "실패 로그 확인 후 재실행",
       "href": "https://github.com/pyw31337/camp/actions/runs/44557702057",
       "updated_at": "2026-11-19T15:54:19Z"
+    },
+    {
+      "severity": "medium",
+      "title": "cultureflow-ai-test 이슈 #1: Daily data update is failing",
+      "service": "CultureFlow AI test",
+      "why": "GitHub 운영 조치 필요",
+      "action": "이슈 확인 및 대응",
+      "href": "https://github.com/pyw31337/cultureflow-ai-test/issues/1",
+      "updated_at": "2026-11-19T00:33:44Z"
     },
     {
       "severity": "medium",
@@ -296,8 +353,8 @@
   "checks": [
     {
       "name": "GitHub API",
-      "state": "warn",
-      "value": "14개 저장소 · 4개 경고"
+      "state": "pass",
+      "value": "14개 저장소 · 0개 경고"
     },
     {
       "name": "실시간 집계",
@@ -305,10 +362,5 @@
       "value": "5분 주기 Actions"
     }
   ],
-  "warnings": [
-    "macmini-workflow-handoff: HTTP 404",
-    "macmini-workflow-handoff runs: HTTP 404",
-    "cultureflow-ai-test: HTTP 404",
-    "cultureflow-ai-test runs: HTTP 404"
-  ]
+  "warnings": []
 }

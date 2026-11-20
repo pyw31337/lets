@@ -37,11 +37,24 @@ def run_sentinel():
     services = data.get("standalone_services", [])
     devices = data.get("automation_devices", [])
 
+    # A configured inventory is not evidence that a collector ran. Keep the
+    # hub explicitly unverified until a real SUCCESS/FAILED run event exists.
+    run_path = os.path.join(base_dir, "data", "automation_runs.json")
+    try:
+        with open(run_path, "r", encoding="utf-8") as f:
+            run_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        run_data = {"runs": []}
+    observed_runs = [r for r in run_data.get("runs", []) if r.get("status") in {"SUCCESS", "FAILED"}]
+    data["metric_provenance"] = "observed_runs" if observed_runs else "configured_snapshot"
+    data["run_event_store"] = "data/automation_runs.json"
+
     anomalies_detected = []
     remediations_performed = []
 
-    # 1. 15개 서비스 전수 이상징후 검사
-    for s in services:
+    # 1. Without observed runs, do not infer anomalies or perform fake healing
+    # from planned rates. The state is unverified, not healthy.
+    for s in (services if observed_runs else []):
         s_id = s.get("id")
         s_name = s.get("name", s_id)
         daily_rate = s.get("daily_ingest_rate", 0)
@@ -118,8 +131,21 @@ def run_sentinel():
                 "desc": f"{anom['msg']}{rem_text}",
                 "timestamp": now_kst
             })
+    elif not observed_runs:
+        alerts = [{
+            "id": f"alert_sentinel_unverified_{today_label}",
+            "level": "WARNING",
+            "service_id": "all",
+            "service_name": "센티널 통합 감시",
+            "badge_text": "실측 대기",
+            "badge_bg": "#fef3c7",
+            "badge_color": "#92400e",
+            "title": "실행 이벤트가 없어 운영 상태를 검증할 수 없습니다",
+            "desc": "서비스 원장과 설정값은 존재하지만 최근 SUCCESS/FAILED 실행 이벤트가 없습니다. 정상 가동이나 자동 치유로 표시하지 않습니다.",
+            "timestamp": now_kst
+        }]
     else:
-        # 정상 상태 기본 경보 유지 (센티널 무결성 보장)
+        # 정상 상태 기본 경보 유지 (실측 실행 이벤트가 있는 경우에만)
         alerts = [
             {
                 "id": "alert_sentinel_all_clear",
@@ -143,18 +169,24 @@ def run_sentinel():
     avg_health = round(sum(s.get("health_score", 98.0) for s in services) / max(len(services), 1), 1)
 
     data["summary"]["total_indexed_records"] = tot_records
-    data["summary"]["total_daily_ingest_rate"] = tot_daily
+    data["summary"]["total_daily_ingest_rate"] = tot_daily if observed_runs else None
+    if not observed_runs:
+        data["summary"]["configured_daily_ingest_rate"] = tot_daily
     data["summary"]["ecosystem_health_score"] = avg_health
     data["summary"]["zero_drop_anomalies"] = len([a for a in anomalies_detected if a["type"] == "ZERO_DROP"])
     data["summary"]["flat_curve_anomalies"] = len([a for a in anomalies_detected if a["type"] == "FLAT_CURVE"])
     data["summary"]["total_standalone_services"] = len(services)
-    data["summary"]["status"] = "ALL_PIPELINES_OPTIMAL" if not anomalies_detected else "AUTO_HEALED_STABLE"
+    data["summary"]["status"] = (
+        "UNVERIFIED_NO_RUN_EVENTS" if not observed_runs
+        else ("ALL_PIPELINES_OPTIMAL" if not anomalies_detected else "AUTO_HEALED_STABLE")
+    )
 
     with open(pulse_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     print(f"[{now_kst}] 렛츠 자가진화 센티널 검수 완료:")
-    print(f"  - 15개 서비스 검수 완료 (총 {tot_records:,}건, 일일 +{tot_daily:,}건, 평균품질 {avg_health}점)")
+    daily_text = f"일일 실측 +{tot_daily:,}건" if observed_runs else "일일 실측 대기 (설정값 별도 보관)"
+    print(f"  - 15개 서비스 검수 완료 (총 {tot_records:,}건, {daily_text}, 평균품질 {avg_health}점)")
     print(f"  - 감지된 이상징후: {len(anomalies_detected)}건 (Zero-Drop: {data['summary']['zero_drop_anomalies']}, Flat-Curve: {data['summary']['flat_curve_anomalies']})")
     print(f"  - 무인 자가 치유(Self-Healing) 조치 실행: {len(remediations_performed)}건")
     return True

@@ -23,6 +23,19 @@ REPOS = [
     ("hair", "렛츠헤어"), ("coupang", "렛츠쿠팡"), ("all", "포트폴리오 허브"),
     ("cultureflow-ai-test", "CultureFlow AI test"),
 ]
+# A recent deployment is not enough to call a collector healthy. These
+# windows make stale schedules visible instead of silently reporting green.
+MAX_AGE_HOURS = {
+    "news": 2, "culture": 36, "cctv": 12, "calendar": 36,
+    "camp": 36, "meat": 36, "metro": 36, "pick": 36, "buy": 36,
+    "hair": 36, "coupang": 36, "all": 72,
+}
+# Some repositories have deployment/recovery workflows that can run after a
+# collector. Prefer the primary data workflow so a recovery run cannot mask a
+# stale or failed ingestion run.
+PRIMARY_WORKFLOWS = {
+    "news": {"collect-news", "collect.yml"},
+}
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data/live_operations.json"
 
@@ -75,10 +88,32 @@ def main() -> int:
         if runs_error:
             warnings.append(f"{repo} runs: {runs_error}")
         run_items = (runs or {}).get("workflow_runs", []) if isinstance(runs, dict) else []
-        latest = run_items[0] if run_items else {}
+        primary = PRIMARY_WORKFLOWS.get(repo)
+        relevant_runs = [
+            r for r in run_items
+            if not primary or r.get("name") in primary or str(r.get("path", "")).endswith("/collect.yml")
+        ]
+        latest = (relevant_runs or run_items)[0] if run_items else {}
+        failed_steps = []
+        jobs_error = None
+        if latest.get("id"):
+            jobs, jobs_error = get_json(f"{base}/actions/runs/{latest['id']}/jobs?per_page=100", token)
+            if isinstance(jobs, dict):
+                for job in jobs.get("jobs", []):
+                    for step in job.get("steps", []) or []:
+                        if step.get("conclusion") == "failure":
+                            failed_steps.append(f"{job.get('name', 'job')}: {step.get('name', 'step')}")
+            if jobs_error:
+                warnings.append(f"{repo} jobs: {jobs_error}")
         latest_time = latest.get("updated_at") or latest.get("created_at")
         conclusion = latest.get("conclusion")
-        recent_failures = [r for r in run_items if r.get("conclusion") in ("failure", "cancelled", "timed_out") and r.get("updated_at") and (now - datetime.fromisoformat(r["updated_at"].replace("Z", "+00:00"))).total_seconds() < 86400]
+        age_hours = None
+        if latest_time:
+            try:
+                age_hours = round((now - datetime.fromisoformat(latest_time.replace("Z", "+00:00"))).total_seconds() / 3600, 2)
+            except ValueError:
+                age_hours = None
+        recent_failures = [r for r in (relevant_runs or run_items) if r.get("conclusion") in ("failure", "cancelled", "timed_out") and r.get("updated_at") and (now - datetime.fromisoformat(r["updated_at"].replace("Z", "+00:00"))).total_seconds() < 86400]
         open_items = [i for i in (issues or []) if "pull_request" not in i]
         status = "healthy"
         label, detail, next_action = "정상", "최근 GitHub Actions 실행 정상", "예약 실행 유지"
@@ -94,6 +129,18 @@ def main() -> int:
             status, label = "degraded", "진행 중"
             detail = f"{latest.get('name', 'workflow')} 실행 중"
             next_action = "완료 결과 확인"
+        elif conclusion != "success":
+            status, label = "degraded", "결과 미확인"
+            detail = f"최근 workflow 결과가 {conclusion or 'unknown'}입니다"
+            next_action = "실행 결과와 로그 확인"
+        elif failed_steps:
+            status, label = "degraded", "단계 실패"
+            detail = f"workflow는 완료됐지만 실패 단계 {len(failed_steps)}개 감지"
+            next_action = "실패 단계 로그 확인"
+        elif age_hours is not None and age_hours > MAX_AGE_HOURS.get(repo, 36):
+            status, label = "degraded", "신선도 경과"
+            detail = f"최근 성공 실행이 {age_hours:.1f}시간 전입니다"
+            next_action = "예약 실행과 수집 신선도 확인"
         # 단순 공지나 핀 고정 정보성 이슈는 실제 긴급 처리 장애(incident)가 아니므로 제외
         actual_issues = [
             i for i in open_items
@@ -124,10 +171,10 @@ def main() -> int:
             })
         services.append({
             "id": repo, "name": name, "status": status, "label": label,
-            "detail": detail, "updated_at": iso(latest_time),
+            "detail": detail, "updated_at": iso(latest_time), "age_hours": age_hours,
             "url": f"https://github.com/{OWNER}/{repo}/actions",
             "repo": f"https://github.com/{OWNER}/{repo}", "next": next_action,
-            "latest_run": {"name": latest.get("name"), "conclusion": conclusion, "status": latest.get("status"), "url": latest.get("html_url")},
+            "latest_run": {"name": latest.get("name"), "conclusion": conclusion, "status": latest.get("status"), "url": latest.get("html_url"), "failed_steps": failed_steps[:10]},
             "open_issues": len(open_items),
         })
     incidents.sort(key=lambda x: (0 if x["severity"] == "high" else 1, x.get("updated_at") or ""), reverse=False)
@@ -140,6 +187,11 @@ def main() -> int:
         "checks": [{"name": "GitHub API", "state": "pass" if not warnings else "warn", "value": f"{len(services)}개 저장소 · {len(warnings)}개 경고"}, {"name": "실시간 집계", "state": "pass", "value": "5분 주기 Actions"}],
         "warnings": warnings,
     }
+    # Fail closed on authentication/rate-limit outages. Do not overwrite a
+    # previously valid snapshot with an all-unknown red screen.
+    if services and warnings and all(s["label"] == "접근 확인" for s in services):
+        print("GitHub API 접근 실패: 기존 live_operations.json을 보존합니다.")
+        return 2
     old = json.loads(OUT.read_text()) if OUT.exists() else None
     comparable = lambda x: {k: v for k, v in x.items() if k != "generated_at"}
     if old and comparable(old) == comparable(snapshot):

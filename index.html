@@ -6,12 +6,12 @@
   <meta name="theme-color" content="#f7f8fa">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="description" content="Let's 마스터 컨트롤 허브 — 15대 독립 서비스 산하 61개 무인 자동화 장치 통합 관제 대시보드">
+  <meta name="description" content="Let's 마스터 컨트롤 허브 — 독립 서비스와 자동화 장치의 실측 운영 상태 통합 관제 대시보드">
   <meta property="og:title" content="Let's 마스터 컨트롤 허브">
-  <meta property="og:description" content="15대 독립 서비스 61개 무인 자동화 장치 일일/월간/연간 실시간 통합 관제 시스템">
+  <meta property="og:description" content="독립 서비스와 자동화 장치의 최근 실행·실패·신선도 상태를 보여주는 통합 관제 시스템">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://pyw31337.github.io/lets/og-image.png">
-  <title>Let's 마스터 컨트롤 허브 — 15대 서비스 61개 무인 자동화 장치 통합 관제</title>
+  <title>Let's 마스터 컨트롤 허브 — 실측 운영 상태 통합 관제</title>
   
   <!-- Pretendard Variable Font & LDS v2.1 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -2503,7 +2503,7 @@
         </svg>
       </div>
       <h2 class="security-title">Let's 마스터 보안 관제</h2>
-      <p class="security-desc">15대 서비스 61개 무인 파이프라인 관제 콘솔에 접근하려면 관리자 마스터 키를 입력하십시오.</p>
+      <p class="security-desc">등록된 서비스와 자동화 장치의 운영 상태 관제 콘솔에 접근하려면 관리자 마스터 키를 입력하십시오.</p>
 
       <div class="security-input-wrap">
         <input type="password" class="security-input" id="masterKeyInput" placeholder="마스터 관리자 키 입력" autocomplete="current-password" onkeydown="if(event.key==='Enter') verifyMasterKey()">
@@ -2534,14 +2534,14 @@
           </div>
           <div>
             <h1 class="hub-title">Let's 마스터 컨트롤 허브</h1>
-            <p class="hub-subtitle">15대 독립 서비스 · 61개 무인 자동화 장치 통합 관제 대시보드</p>
+            <p class="hub-subtitle">독립 서비스와 자동화 장치의 실측 운영 상태 통합 관제</p>
           </div>
         </div>
 
         <div class="header-actions">
           <div class="pulse-pill" id="headerStatusPill">
             <span class="pulse-dot"></span>
-            <span>15개 정상 · 무장애 가동 중</span>
+            <span>실측 상태 로딩 중</span>
           </div>
           <button class="action-btn" id="refreshBtn" onclick="refreshDashboardData()" title="대시보드 지표 및 로그 즉시 갱신">
             <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -2549,7 +2549,7 @@
             </svg>
             새로고침
           </button>
-          <button class="action-btn" id="sweepBtn" onclick="runSentinelSweep()" title="전체 15개 서비스 61개 파이프라인 사활 실시간 점검">
+          <button class="action-btn" id="sweepBtn" onclick="runSentinelSweep()" title="등록된 서비스의 최근 실행 상태 점검">
             <svg class="icon icon-sm" viewBox="0 0 24 24">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
@@ -2657,7 +2657,7 @@
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10h-10z"></path></svg>
           4대 프로세스 장치 분포
         </div>
-        <p class="info-panel-desc">수집·분석·품질·관리 61개 무인 자동화 구성비</p>
+        <p class="info-panel-desc">수집·분석·품질·관리 장치의 등록 구성비</p>
 
         <div class="donut-container">
           <div class="donut-svg-wrap">
@@ -2894,14 +2894,14 @@
         <button class="admin-modal-close" onclick="closeAdminModal('sentinelSweepModal')">&times;</button>
       </div>
       <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-        15대 독립 서비스 산하 61개 무인 파이프라인의 cron 스케줄 사활과 HLS/API 엔드포인트를 전수 스캔하였습니다.
+        등록된 서비스의 최근 실행·배포·신선도 상태를 확인합니다. 실행 로그가 없으면 정상으로 표시하지 않습니다.
       </p>
       <div class="log-terminal" id="sweepTerminal">
         [INIT] Sentinel Guard v4.2 Health Sweep Starting...<br>
-        [OK] 61/61 Pipeline Triggers Active and Verified<br>
-        [OK] Zero-Drop Protocol: Passed (Drop Rate 0.00%)<br>
-        [OK] External API Quota Margin: 75.8% ~ 94.3% Safe<br>
-        [AUDIT] All automated cron runners healthy with exit code 0.
+        [WAIT] 실제 실행 이벤트와 최근 성공 시각을 확인하는 중<br>
+        [RULE] 설정값은 실측 수치로 집계하지 않음<br>
+        [RULE] 실패·진행 중·신선도 경과는 주의 상태로 표시<br>
+        [AUDIT] 근거 없는 정상/자가치유 판정을 생성하지 않음
       </div>
       <button class="action-btn primary" style="width: 100%; margin-top: 16px; justify-content: center;" onclick="closeAdminModal('sentinelSweepModal')">
         확인 완료
@@ -3316,7 +3316,13 @@
       } catch (err) {
         console.warn('Using embedded fallback data:', err);
         masterData = generateFallbackData();
-        operationsData = null;
+        operationsData = {
+          generated_at: new Date().toISOString(),
+          overall: { status: 'unknown', label: '운영 상태 확인 불가', healthy: 0, degraded: 0, blocked: 0 },
+          services: [],
+          incidents: [{ severity: 'high', service: 'LetsHub', title: '운영 상태 원본을 불러오지 못했습니다', why: '네트워크 또는 live_operations.json 접근 실패', action: '연결과 최신 집계 확인' }],
+          checks: [{ name: '실시간 집계', state: 'warn', value: '원본 상태 확인 필요' }]
+        };
       }
       renderDashboard();
       setupIntersectionObservers();
@@ -3769,9 +3775,14 @@
       const container = document.getElementById('summaryGridContainer');
       if (!container || !masterData) return;
       const timeLabel = document.getElementById('summaryTimeLabel');
+      const summary = masterData.summary || {};
+      const observed = masterData.metric_provenance === 'observed_runs' && Number(summary.observed_run_count || 0) > 0;
+      const observedOrUnknown = (value, suffix = '') => observed && value != null ? `${Number(value).toLocaleString()}${suffix}` : '미확인';
+      const deviceCount = Array.isArray(masterData.automation_devices) ? masterData.automation_devices.length : 0;
+      const healthLabel = observed ? `${summary.ecosystem_health_score ?? '미확인'}점 실측` : '실측 대기';
       
       if (currentSummaryMode === 'daily') {
-        if (timeLabel) timeLabel.textContent = `오늘 실시간 처리 집계 (${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })})`;
+        if (timeLabel) timeLabel.textContent = `${observed ? '오늘 실측 처리 집계' : '오늘 처리량 · 실측 대기'} (${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })})`;
         container.innerHTML = `
           <div class="metric-card">
             <div class="metric-header">
@@ -3780,9 +3791,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
               </div>
             </div>
-            <div class="metric-value">45,833 <small style="font-size:14px;color:#64748b;font-weight:600;">건/일</small></div>
+            <div class="metric-value">${observedOrUnknown(summary.total_daily_ingest_rate)} <small style="font-size:14px;color:#64748b;font-weight:600;">${observed ? '건/일' : ''}</small></div>
             <div class="metric-sub positive">
-              <span class="delta-badge">▲ +4,120건 (+9.8%)</span> 전일 대비 가속 수집
+              <span class="delta-badge">${observed ? '실행 이벤트 기준' : '설정값 제외'}</span> ${observed ? '전일 대비 변화 계산 가능' : '실제 실행 로그 연결 필요'}
             </div>
           </div>
 
@@ -3793,9 +3804,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
               </div>
             </div>
-            <div class="metric-value">2,845 <small style="font-size:14px;color:#64748b;font-weight:600;">건/일</small></div>
+            <div class="metric-value">${observedOrUnknown(summary.total_daily_analyze_rate)} <small style="font-size:14px;color:#64748b;font-weight:600;">${observed ? '건/일' : ''}</small></div>
             <div class="metric-sub positive">
-              <span class="delta-badge">▲ +310건 (+12.2%)</span> M-칩 온디바이스 에지 연산
+              <span class="delta-badge">${observed ? '실행 이벤트 기준' : '실측 대기'}</span> ${observed ? '실제 분석량' : '실제 분석 로그 연결 필요'}
             </div>
           </div>
 
@@ -3806,9 +3817,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
               </div>
             </div>
-            <div class="metric-value">+342 <small style="font-size:14px;color:#64748b;font-weight:600;">MB/일</small></div>
+            <div class="metric-value">미확인 <small style="font-size:14px;color:#64748b;font-weight:600;"></small></div>
             <div class="metric-sub positive">
-              <span class="delta-badge">▲ +28 MB</span> 무손실 84.7% 압축 적재
+              <span class="delta-badge">실측 대기</span> 실제 저장 바이트 계측 필요
             </div>
           </div>
 
@@ -3819,14 +3830,14 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
               </div>
             </div>
-            <div class="metric-value">61 <small style="font-size:14px;color:#64748b;font-weight:600;">개 전원 정상</small></div>
+            <div class="metric-value">${deviceCount || '미확인'} <small style="font-size:14px;color:#64748b;font-weight:600;">${deviceCount ? '개 등록 장치' : ''}</small></div>
             <div class="metric-sub positive">
-              <span class="delta-badge">45일 연속 무사고</span> 0건 장애 방어
+              <span class="delta-badge">${observed ? '실행 상태 확인됨' : '실측 대기'}</span> ${observed ? '최근 실행 기준' : '등록 수를 정상 가동 수로 해석하지 않음'}
             </div>
           </div>
         `;
       } else {
-        if (timeLabel) timeLabel.textContent = `전체 누적 원장 아카이브 (${new Date().toLocaleDateString('ko-KR')} 기준)`;
+        if (timeLabel) timeLabel.textContent = `${observed ? '전체 누적 원장 아카이브' : '원장 규모 · 설정 스냅샷'} (${new Date().toLocaleDateString('ko-KR')} 기준)`;
         container.innerHTML = `
           <div class="metric-card">
             <div class="metric-header">
@@ -3835,9 +3846,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
               </div>
             </div>
-            <div class="metric-value">4,735,952 <small style="font-size:14px;color:#64748b;font-weight:600;">건</small></div>
+            <div class="metric-value">${observedOrUnknown(summary.total_indexed_records)} <small style="font-size:14px;color:#64748b;font-weight:600;">${observed ? '건' : ''}</small></div>
             <div class="metric-sub positive">
-              <span class="delta-badge">▲ +32.1만 건 (+7.2%)</span> 전월 대비 누적
+              <span class="delta-badge">${observed ? '실행 이벤트 기준' : '설정 원장 기준'}</span> ${observed ? '검증된 누적량' : '실제 누적량으로 사용하지 않음'}
             </div>
           </div>
 
@@ -3848,9 +3859,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
               </div>
             </div>
-            <div class="metric-value">84.6 <small style="font-size:14px;color:#64748b;font-weight:600;">GB</small></div>
+            <div class="metric-value">미확인 <small style="font-size:14px;color:#64748b;font-weight:600;"></small></div>
             <div class="metric-sub">
-              총 15대 서비스 Parquet/DuckDB 원장 보관
+              저장 바이트 실측 이벤트 연결 필요
             </div>
           </div>
 
@@ -3861,9 +3872,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 6v2m0 8v2"></path></svg>
               </div>
             </div>
-            <div class="metric-value" style="color:var(--success);">$142.80 <small style="font-size:13px;color:#059669;font-weight:700;">/월 절감</small></div>
+            <div class="metric-value" style="color:var(--text-primary);">미확인 <small style="font-size:13px;color:#64748b;font-weight:700;"></small></div>
             <div class="metric-sub positive">
-              <span class="delta-badge">약 19.8만 원/월</span> 온디바이스 에지 연산
+              <span class="delta-badge">실측 대기</span> 비용 절감액 근거 연결 필요
             </div>
           </div>
 
@@ -3874,9 +3885,9 @@
                 <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
               </div>
             </div>
-            <div class="metric-value positive">+42.8%</div>
+            <div class="metric-value">${healthLabel}</div>
             <div class="metric-sub positive">
-              <span class="delta-badge">99.8% 통과</span> L3 교차 무결성 검증
+              <span class="delta-badge">${observed ? '실측 품질' : '스냅샷 품질 제외'}</span> ${observed ? 'L3 교차 무결성 검증' : '실행·검증 이벤트 연결 필요'}
             </div>
           </div>
         `;
@@ -3898,7 +3909,12 @@
     function renderWeeklyTrend() {
       const container = document.getElementById('weeklyTrendList');
       if (!container || !masterData) return;
-      const todayTotal = (masterData.summary && masterData.summary.total_daily_ingest_rate) || 45833;
+      const summary = masterData.summary || {};
+      if (masterData.metric_provenance !== 'observed_runs' || !Array.isArray(summary.daily_series)) {
+        container.innerHTML = '<div style="padding:24px;color:var(--text-muted);border:1px dashed var(--border-color);border-radius:12px;">실측 시계열 실행 이벤트 연결 대기 중입니다. 설정값으로 추세를 그리지 않습니다.</div>';
+        return;
+      }
+      const todayTotal = summary.total_daily_ingest_rate;
       const days = [
         { label: '11/12', count: 41200 },
         { label: '11/13', count: 42500 },
@@ -3954,25 +3970,6 @@
       all: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg>`
     };
 
-    const SERVICE_DAILY_RATES = {
-      cctv: { count: '18,400', unit: '건/일 수집', note: '24시간 무중단 스트림' },
-      meat: { count: '12,200', unit: '건/일 수집', note: '전국 공판장 경매 시세' },
-      news: { count: '8,500', unit: '건/일 수집', note: '52개 언론사 RSS/속보' },
-      metro: { count: '4,200', unit: '건/일 수집', note: '실시간 열차/혼잡도 핑' },
-      camp: { count: '2,533', unit: '건/일 수집', note: '전국 캠핑장 잔여석 감시' },
-      people: { count: '1,820', unit: '건/일 수집', note: '고액체납자/공직자 재산' },
-      law: { count: '1,450', unit: '건/일 수집', note: '대법원 판례·법령 개정안' },
-      asset: { count: '980', unit: '건/일 수집', note: '부호 순자산 & 42.8조 UBO' },
-      insu: { count: '820', unit: '건/일 수집', note: '보험 약관 및 분쟁조정' },
-      culture: { count: '1,240', unit: '건/일 수집', note: '공연·전시 티켓 실시간' },
-      calendar: { count: '650', unit: '건/일 동기화', note: '학사·금융·청약 일정' },
-      art: { count: '480', unit: '건/일 수집', note: '미술품 경매 낙찰가' },
-      buy: { count: '2,100', unit: '건/일 수집', note: '핫딜 최저가 가격 추적' },
-      pick: { count: '1,850', unit: '건/일 수집', note: '바이럴 트렌드 큐레이션' },
-      hair: { count: '940', unit: '건/일 수집', note: '미용실 시술 단가 리뷰' },
-      all: { count: '61개', unit: '파이프라인', note: '100% 무장애 가동' }
-    };
-
     function renderOperationsCommandCenter() {
       const data = operationsData;
       const kpi = document.getElementById('opsKpiRow');
@@ -3988,19 +3985,26 @@
       const liveLabel = document.getElementById('opsLiveLabel');
       if (liveLabel) liveLabel.textContent = `LIVE · ${formatOpsTime(data.generated_at)}`;
       const headerPill = document.querySelector('#headerStatusPill span:last-child');
-      if (headerPill) headerPill.textContent = `${overall.healthy ?? services.length}개 정상 가동 · 무장애`;
+      const degradedCount = Number(overall.degraded ?? services.filter(s => s.status === 'degraded').length);
+      const blockedCount = Number(overall.blocked ?? services.filter(s => s.status === 'blocked').length);
+      const totalCount = services.length;
+      if (headerPill) headerPill.textContent = degradedCount || blockedCount
+        ? `운영 주의 · 정상 ${overall.healthy ?? 0}/${totalCount}`
+        : `${overall.healthy ?? totalCount}/${totalCount} 최근 실행 정상`;
       
       kpi.innerHTML = [
-        ['정상 가동 서비스', overall.healthy ?? services.filter(s => s.status === 'healthy').length, '모든 파이프라인 통과'],
-        ['주의 관찰 서비스', overall.degraded ?? services.filter(s => s.status === 'degraded').length, '정상 범위 내 동작'],
-        ['차단 / 장애 서비스', overall.blocked ?? 0, '장애 0건 무결점'],
-        ['정기 검수 완료 항목', (data.incidents || []).length, '최근 자동 검수 통과']
+        ['최근 실행 정상', overall.healthy ?? services.filter(s => s.status === 'healthy').length, '최근 workflow 성공 기준'],
+        ['주의 관찰', degradedCount, '실패·진행·신선도 확인 필요'],
+        ['차단 / 장애', blockedCount, blockedCount ? '즉시 조치 필요' : '현재 차단 없음'],
+        ['운영 인시던트', (data.incidents || []).length, '열린 이슈·실행 실패·경고']
       ].map(([label, value, note]) => `<div class="ops-kpi"><span class="ops-kpi-label">${label}</span><strong class="ops-kpi-value">${value}</strong><span class="ops-kpi-note">${note}</span></div>`).join('');
 
       // ── 서비스 상태 매트릭스 카드 리빌드: 풍부한 SVG 아이콘 + 타이포 계층화 ──
       grid.innerHTML = visible.map(service => {
         const iconSvg = SERVICE_ICONS_SVG[service.id] || SERVICE_ICONS_SVG.all;
-        const rateInfo = SERVICE_DAILY_RATES[service.id] || { count: '실시간 가동', unit: '정상 99.9%', note: '' };
+        const rateInfo = service.observed_count != null
+          ? { count: Number(service.observed_count).toLocaleString(), unit: service.observed_unit || '실측 처리량', note: '실행 이벤트 기준' }
+          : { count: '미확인', unit: '실측량', note: '실행 이벤트 연결 대기' };
         return `
           <a class="ops-service-card ${service.status !== 'healthy' ? 'is-attention' : ''}" href="${service.url || service.repo || '#'}" target="_blank" rel="noopener">
             <div class="ops-service-header-row">
@@ -4023,25 +4027,28 @@
         `;
       }).join('') || '<div style="padding:24px;color:var(--text-muted)">현재 주의 항목이 없습니다.</div>';
 
-      // ── '지금 처리할 일' 패널 리빌드: 긴급 0건 안심감 + 최근 정상 검수 이력 ──
+      const opsIncidents = data.incidents || [];
+      const hasAttention = degradedCount || blockedCount || opsIncidents.length;
+      const incidentTone = hasAttention ? '#b45309' : '#15803d';
       incidents.innerHTML = `
-        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:14px; margin-bottom:12px; display:flex; align-items:center; gap:12px;">
-          <div style="width:30px; height:30px; border-radius:50%; background:#22c55e; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;">✓</div>
+        <div style="background:${hasAttention ? '#fffbeb' : '#f0fdf4'}; border:1px solid ${hasAttention ? '#fcd34d' : '#bbf7d0'}; border-radius:12px; padding:14px; margin-bottom:12px; display:flex; align-items:center; gap:12px;">
+          <div style="width:30px; height:30px; border-radius:50%; background:${hasAttention ? '#f59e0b' : '#22c55e'}; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;">${hasAttention ? '!' : '✓'}</div>
           <div>
-            <strong style="display:block; font-size:13.5px; color:#166534; font-weight:800;">현재 긴급 조치 필요 없음</strong>
-            <span style="display:block; font-size:11px; color:#15803d; margin-top:2px;">15대 서비스 61개 무인 파이프라인 정기 검수 100% 무장애 통과</span>
+            <strong style="display:block; font-size:13.5px; color:${hasAttention ? '#92400e' : '#166534'}; font-weight:800;">${hasAttention ? '확인이 필요한 운영 항목이 있습니다' : '최근 실행 기준 긴급 조치 없음'}</strong>
+            <span style="display:block; font-size:11px; color:${incidentTone}; margin-top:2px;">${hasAttention ? `${opsIncidents.length}건의 인시던트와 ${degradedCount + blockedCount}개 주의 서비스` : '실행 이벤트와 최근 성공 시각 기준으로 표시'}</span>
           </div>
         </div>
-        ${(data.incidents || []).map(item => `
-          <div class="ops-incident low" style="background:#ffffff; border:1px solid #e2e8f0; border-left:3px solid #22c55e; border-radius:11px; padding:11px 13px; margin-bottom:8px;">
+        ${opsIncidents.map(item => {
+          const sev = item.severity === 'high' ? '#b42318' : item.severity === 'medium' ? '#b45309' : '#64748b';
+          return `<div class="ops-incident ${item.severity || 'low'}" style="background:#ffffff; border:1px solid #e2e8f0; border-left:3px solid ${sev}; border-radius:11px; padding:11px 13px; margin-bottom:8px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <span style="font-size:10.5px; font-weight:800; color:#15803d; background:#dcfce7; padding:2px 6px; border-radius:5px;">✓ 정상 검수</span>
-              <span style="font-size:11px; font-weight:700; color:#64748b;">${item.service}</span>
+              <span style="font-size:10.5px; font-weight:800; color:${sev}; background:#f8fafc; padding:2px 6px; border-radius:5px;">${String(item.severity || 'info').toUpperCase()}</span>
+              <span style="font-size:11px; font-weight:700; color:#64748b;">${item.service || ''}</span>
             </div>
-            <div style="font-size:12.5px; font-weight:750; color:#1e293b; margin-top:2px;">${item.title}</div>
-            <div style="font-size:11px; color:#64748b; margin-top:3px; line-height:1.4;">${item.why}</div>
-          </div>
-        `).join('')}
+            <div style="font-size:12.5px; font-weight:750; color:#1e293b; margin-top:2px;">${item.title || '운영 확인 필요'}</div>
+            <div style="font-size:11px; color:#64748b; margin-top:3px; line-height:1.4;">${item.why || item.action || ''}</div>
+          </div>`;
+        }).join('')}
       `;
 
       checks.innerHTML = (data.checks || []).map(check => `<div class="ops-check"><strong>${check.state === 'pass' ? '✓' : '!'}</strong><span><b>${check.name}</b> · ${check.value}</span></div>`).join('');
@@ -4059,6 +4066,10 @@
     function renderTopThroughput() {
       const container = document.getElementById('topThroughputList');
       if (!container) return;
+      if (!masterData || masterData.metric_provenance !== 'observed_runs') {
+        container.innerHTML = '<div style="padding:18px;color:var(--text-muted);border:1px dashed var(--border-color);border-radius:12px;">설정 처리량은 숨겼습니다. 실제 실행 이벤트 연결 후 표시합니다.</div>';
+        return;
+      }
       const ranking = masterData.top_throughput_ranking || [];
 
       container.innerHTML = ranking.map((item, idx) => `
@@ -4081,6 +4092,10 @@
     function renderQuotaGovernance() {
       const grid = document.getElementById('quotaGrid');
       if (!grid) return;
+      if (!masterData || masterData.metric_provenance !== 'observed_runs') {
+        grid.innerHTML = '<div style="padding:18px;color:var(--text-muted);border:1px dashed var(--border-color);border-radius:12px;">쿼터 사용량은 실측 호출 로그 연결 후 표시합니다.</div>';
+        return;
+      }
       const quotas = masterData.external_quota_governance || [];
 
       grid.innerHTML = quotas.map((q, idx) => {

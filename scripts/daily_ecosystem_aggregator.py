@@ -56,17 +56,18 @@ def run_aggregation():
         data["summary"]["configured_daily_analyze_rate"] = data["summary"].get(
             "total_daily_analyze_rate", 0
         )
+        data["summary"]["total_daily_ingest_rate"] = None
+        data["summary"]["total_daily_analyze_rate"] = None
     data["summary"]["total_indexed_records"] = sum(s.get("total_records", 0) for s in services)
     data["summary"]["ecosystem_health_score"] = round(sum(s.get("health_score", 98.0) for s in services) / max(len(services), 1), 1)
 
     with open(pulse_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    print(f"[{now_kst}] 렛츠 통합 관제 허브 집계 완료: 총 누적 {data['summary']['total_indexed_records']:,}건, 일일 수집 {data['summary']['total_daily_ingest_rate']:,}건")
+    observed_label = data["summary"].get("total_daily_ingest_rate")
+    daily_text = f"{observed_label:,}건 실측" if isinstance(observed_label, (int, float)) else "실측 대기"
+    print(f"[{now_kst}] 렛츠 통합 관제 허브 집계 완료: 총 누적 {data['summary']['total_indexed_records']:,}건, 일일 수집 {daily_text}")
 
-    # 3. 자가진화 센티널 무인 검수 및 자동 치유 가동
-    from sentinel_anomaly_guard import run_sentinel
-    run_sentinel()
 
 if __name__ == "__main__":
     run_aggregation()
