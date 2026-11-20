@@ -1764,7 +1764,8 @@
     const LIVE_SERVICE_IDS = {
       newsboard: 'news', cultureflow: 'culture', letscamp: 'camp', letscctv: 'cctv',
       letscalendar: 'calendar', letsmeat: 'meat', letssubway: 'metro', letspick: 'pick',
-      letsbuy: 'buy', letshair: 'hair'
+      letsbuy: 'buy', letshair: 'hair', letslaw: 'law', letsinsu: 'insu',
+      letspeople: 'people', letsasset: 'asset', letsart: 'art'
     };
 
     async function fetchLedger(path) {
@@ -1814,7 +1815,14 @@
       const byId = new Map(liveOperationsData.services.map(service => [service.id, service]));
       SERVICES_MASTER.forEach(service => {
         const live = byId.get(LIVE_SERVICE_IDS[service.id]);
-        if (!live) return;
+        if (!live) {
+          service.status = 'stale';
+          service.staleHours = null;
+          service.dotClass = 'dot-amber';
+          service.statusText = '실측: 운영 원장 미관측';
+          service.observedDetail = '수집량 원장 미연결';
+          return;
+        }
         const isFailed = /실패|failure|timed_out/i.test(`${live.label || ''} ${live.detail || ''}`);
         service.status = live.status === 'healthy' ? 'success' : (isFailed ? 'failed' : 'stale');
         service.staleHours = typeof live.age_hours === 'number' ? Math.max(0, Math.round(live.age_hours)) : null;

@@ -16,19 +16,19 @@ from urllib.request import Request, urlopen
 
 OWNER = "pyw31337"
 REPOS = [
-    ("culture", "렛츠컬처"), ("news", "렛츠뉴스"),
-    ("macmini-workflow-handoff", "Mac mini handoff"), ("cctv", "렛츠뷰"),
-    ("calendar", "렛츠캘린더"), ("camp", "렛츠캠핑"), ("meat", "렛츠미트"),
-    ("metro", "렛츠메트로"), ("pick", "렛츠픽"), ("buy", "렛츠바이"),
-    ("hair", "렛츠헤어"), ("coupang", "렛츠쿠팡"), ("all", "포트폴리오 허브"),
-    ("cultureflow-ai-test", "CultureFlow AI test"),
+    ("news", "뉴스보드"), ("culture", "컬처플로우"),
+    ("pick", "렛츠픽"), ("hair", "렛츠헤어"), ("meat", "렛츠미트"),
+    ("buy", "렛츠바이"), ("camp", "렛츠캠핑"), ("cctv", "렛츠CCTV"),
+    ("metro", "렛츠메트로"), ("calendar", "렛츠캘린더"), ("law", "렛츠로"),
+    ("insu", "렛츠인슈"), ("people", "렛츠피플"), ("asset", "렛츠에셋"),
+    ("art", "렛츠아트"),
 ]
 # A recent deployment is not enough to call a collector healthy. These
 # windows make stale schedules visible instead of silently reporting green.
 MAX_AGE_HOURS = {
     "news": 2, "culture": 36, "cctv": 12, "calendar": 36,
     "camp": 36, "meat": 36, "metro": 36, "pick": 36, "buy": 36,
-    "hair": 36, "coupang": 36, "all": 72,
+    "hair": 36, "law": 36, "insu": 36, "people": 36, "asset": 36, "art": 36,
 }
 # Some repositories have deployment/recovery workflows that can run after a
 # collector. Prefer the primary data workflow so a recovery run cannot mask a
@@ -40,6 +40,13 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data/live_operations.json"
 RUN_EVENTS = ROOT / "data/automation_runs.json"
 NEWS_OBSERVABILITY_URL = "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
+OBSERVABILITY_SOURCES = {
+    "art": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
+    "asset": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
+    "law": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
+    "news": NEWS_OBSERVABILITY_URL,
+    "people": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
+}
 
 
 def get_json(path: str, token: str | None):
@@ -310,6 +317,43 @@ def main() -> int:
                 news_service["status"] = "degraded"
                 news_service["label"] = "게시 확인 대기"
                 news_service["detail"] = "수집 원장은 있으나 data 게시 확인이 완료되지 않았습니다"
+
+    # Other services can expose the same public contract. A workflow result is
+    # never promoted to a healthy collector without a successful collect stage.
+    for service in services:
+        service_id = service.get("id")
+        if service_id == "news" or service_id not in OBSERVABILITY_SOURCES:
+            continue
+        source_url = OBSERVABILITY_SOURCES[service_id]
+        observability, source_error = get_public_json(source_url)
+        if source_error or not isinstance(observability, dict):
+            continue
+        stages = observability.get("stages") or {}
+        collect_stage = stages.get("collect") or {}
+        collect_status = str(collect_stage.get("status") or "unknown")
+        service["observability"] = {
+            "status": "observed",
+            "observed_at": observability.get("observed_at"),
+            "run_id": observability.get("run_id"),
+            "stages": stages,
+            "counts": observability.get("counts") or {},
+            "url": source_url,
+        }
+        if collect_status not in {"success", "observed"}:
+            service["status"] = "degraded"
+            service["label"] = "수집 미구현" if collect_status == "not_implemented" else "수집 미관측"
+            service["detail"] = str(observability.get("note") or "수집 원장에 성공 근거가 없습니다")
+            service["next"] = "원천 수집기와 검증 원장 연결"
+
+    # A green workflow is operational evidence only.  It cannot establish that
+    # a source was fetched, data was persisted, or quality passed.
+    for service in services:
+        if service.get("observability"):
+            continue
+        service["status"] = "degraded"
+        service["label"] = "수집 미관측"
+        service["detail"] = "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다"
+        service["next"] = "수집기에서 observability/latest.json 발행"
     incidents.sort(key=lambda x: (0 if x["severity"] == "high" else 1, x.get("updated_at") or ""), reverse=False)
     healthy = sum(s["status"] == "healthy" for s in services)
     degraded = sum(s["status"] == "degraded" for s in services)

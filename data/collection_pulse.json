@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-20T16:37:46.963437+09:00",
+  "generated_at": "2026-11-20T17:01:01.664687+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -15,8 +15,8 @@
     "week_current": 1545374,
     "week_previous": null,
     "week_delta_pct": null,
-    "collectors_healthy": 6,
-    "collectors_total": 14,
+    "collectors_healthy": 0,
+    "collectors_total": 15,
     "registered_nodes": 61
   },
   "daily_trend": [
@@ -105,56 +105,190 @@
   },
   "services": [
     {
+      "id": "news",
+      "name": "뉴스보드",
+      "status": "degraded",
+      "label": "데이터 단계 주의",
+      "detail": "실행 원장에 수집·분석·품질 단계 주의가 기록되어 있습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/news/actions",
+      "repo": "https://github.com/pyw31337/news",
+      "next": "workflow 실행 또는 권한 확인",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-20T07:57:56+00:00",
+        "age_hours": 0.05,
+        "run_id": "44695159531",
+        "stages": {
+          "collect": {
+            "status": "degraded",
+            "ok": 300,
+            "fail": 11,
+            "errors": 11,
+            "artifact": true
+          },
+          "analyze": {
+            "status": "degraded",
+            "ok": 491,
+            "fail": 32,
+            "errors": 32,
+            "artifact": true
+          },
+          "quality": {
+            "status": "success",
+            "quality_issue_count": 10,
+            "event_quality_present": true,
+            "detail": {
+              "low_score": 8,
+              "low_photo": 2,
+              "low_source": 2,
+              "missing_event_stages": 9
+            }
+          },
+          "publish": {
+            "status": "success",
+            "published_at": "2026-11-20T07:58:18+00:00",
+            "data_commit": "903fccfeef078da1f42bb7969c484fa5bd1b550c",
+            "note": "data 브랜치 커밋 이후 게시 확인"
+          }
+        },
+        "counts": {
+          "issues": 10,
+          "sources": 185,
+          "entities": 36,
+          "global_issues": 12,
+          "quality_issues": 10
+        },
+        "artifacts": {
+          "today": "31e604919bce1a2b1671c56b3d9d809572f39097e912d563415d25ece61b2589",
+          "global": "729217f103e7d10fb7c2c0fb762962a64fd39574dca2521be24ac54c1a11c24e",
+          "quality": "cec3b4172196a1f1bda368a288ad60331360bec0e99008ac2441caf5017448cc",
+          "status": "e2dadf4400199e737e89489fde47b65e3660dc979bbd01fe1f6facf779d1ab63",
+          "event_quality": "89f3e8cec5ef01c2ea31c55e09d8cc37952a6c22dd1246f5417d080eb966bd59"
+        },
+        "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
+      }
+    },
+    {
       "id": "culture",
-      "name": "렛츠컬처",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-20T00:27:59Z",
-      "age_hours": 0.77,
+      "name": "컬처플로우",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
       "url": "https://github.com/pyw31337/culture/actions",
       "repo": "https://github.com/pyw31337/culture",
-      "next": "예약 실행 유지",
+      "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
-        "name": "Daily Data Update",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/culture/actions/runs/44645931039",
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
         "failed_steps": []
       },
       "open_issues": 0
     },
     {
-      "id": "news",
-      "name": "렛츠뉴스",
+      "id": "pick",
+      "name": "렛츠픽",
       "status": "degraded",
-      "label": "결과 미확인",
-      "detail": "최근 workflow 결과가 unknown입니다",
-      "updated_at": "2026-11-20T01:13:42Z",
-      "age_hours": 0.01,
-      "url": "https://github.com/pyw31337/news/actions",
-      "repo": "https://github.com/pyw31337/news",
-      "next": "실행 결과와 로그 확인",
-      "latest_run": {
-        "name": "collect-news",
-        "conclusion": null,
-        "status": "pending",
-        "url": "https://github.com/pyw31337/news/actions/runs/44652025354",
-        "failed_steps": []
-      },
-      "open_issues": 2
-    },
-    {
-      "id": "macmini-workflow-handoff",
-      "name": "Mac mini handoff",
-      "status": "degraded",
-      "label": "접근 확인",
-      "detail": "GitHub Actions API 접근 권한 또는 저장소 공개 범위를 확인해야 합니다",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": null,
       "age_hours": null,
-      "url": "https://github.com/pyw31337/macmini-workflow-handoff/actions",
-      "repo": "https://github.com/pyw31337/macmini-workflow-handoff",
-      "next": "workflow 실행 또는 권한 확인",
+      "url": "https://github.com/pyw31337/pick/actions",
+      "repo": "https://github.com/pyw31337/pick",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "hair",
+      "name": "렛츠헤어",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/hair/actions",
+      "repo": "https://github.com/pyw31337/hair",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "meat",
+      "name": "렛츠미트",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/meat/actions",
+      "repo": "https://github.com/pyw31337/meat",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "buy",
+      "name": "렛츠바이",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/buy/actions",
+      "repo": "https://github.com/pyw31337/buy",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "camp",
+      "name": "렛츠캠핑",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/camp/actions",
+      "repo": "https://github.com/pyw31337/camp",
+      "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -166,215 +300,15 @@
     },
     {
       "id": "cctv",
-      "name": "렛츠뷰",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-20T00:52:56Z",
-      "age_hours": 0.36,
-      "url": "https://github.com/pyw31337/cctv/actions",
-      "repo": "https://github.com/pyw31337/cctv",
-      "next": "예약 실행 유지",
-      "latest_run": {
-        "name": "Refresh KMA precipitation grid",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/cctv/actions/runs/44649295939",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "calendar",
-      "name": "렛츠캘린더",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-20T01:11:08Z",
-      "age_hours": 0.05,
-      "url": "https://github.com/pyw31337/calendar/actions",
-      "repo": "https://github.com/pyw31337/calendar",
-      "next": "예약 실행 유지",
-      "latest_run": {
-        "name": "Daily Ops Report",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/calendar/actions/runs/44651523008",
-        "failed_steps": []
-      },
-      "open_issues": 1
-    },
-    {
-      "id": "camp",
-      "name": "렛츠캠핑",
+      "name": "렛츠CCTV",
       "status": "degraded",
-      "label": "진행 중",
-      "detail": "Web quality 실행 중",
-      "updated_at": "2026-11-20T01:12:30Z",
-      "age_hours": 0.03,
-      "url": "https://github.com/pyw31337/camp/actions",
-      "repo": "https://github.com/pyw31337/camp",
-      "next": "완료 결과 확인",
-      "latest_run": {
-        "name": "Web quality",
-        "conclusion": null,
-        "status": "in_progress",
-        "url": "https://github.com/pyw31337/camp/actions/runs/44651865630",
-        "failed_steps": []
-      },
-      "open_issues": 3
-    },
-    {
-      "id": "meat",
-      "name": "렛츠미트",
-      "status": "degraded",
-      "label": "신선도 경과",
-      "detail": "최근 성공 실행이 42.3시간 전입니다",
-      "updated_at": "2026-11-18T06:57:19Z",
-      "age_hours": 42.28,
-      "url": "https://github.com/pyw31337/meat/actions",
-      "repo": "https://github.com/pyw31337/meat",
-      "next": "예약 실행과 수집 신선도 확인",
-      "latest_run": {
-        "name": "Deploy GitHub Pages",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/meat/actions/runs/44255098579",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "metro",
-      "name": "렛츠메트로",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T09:36:45Z",
-      "age_hours": 15.63,
-      "url": "https://github.com/pyw31337/metro/actions",
-      "repo": "https://github.com/pyw31337/metro",
-      "next": "예약 실행 유지",
-      "latest_run": {
-        "name": "Deploy to GitHub Pages",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/metro/actions/runs/44490553859",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "pick",
-      "name": "렛츠픽",
-      "status": "degraded",
-      "label": "신선도 경과",
-      "detail": "최근 성공 실행이 88.6시간 전입니다",
-      "updated_at": "2026-11-16T08:39:20Z",
-      "age_hours": 88.58,
-      "url": "https://github.com/pyw31337/pick/actions",
-      "repo": "https://github.com/pyw31337/pick",
-      "next": "예약 실행과 수집 신선도 확인",
-      "latest_run": {
-        "name": "pages build and deployment",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/pick/actions/runs/43832925765",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "buy",
-      "name": "렛츠바이",
-      "status": "degraded",
-      "label": "신선도 경과",
-      "detail": "최근 성공 실행이 40.3시간 전입니다",
-      "updated_at": "2026-11-18T08:58:51Z",
-      "age_hours": 40.26,
-      "url": "https://github.com/pyw31337/buy/actions",
-      "repo": "https://github.com/pyw31337/buy",
-      "next": "예약 실행과 수집 신선도 확인",
-      "latest_run": {
-        "name": "pages build and deployment",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/buy/actions/runs/44271559316",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "hair",
-      "name": "렛츠헤어",
-      "status": "degraded",
-      "label": "신선도 경과",
-      "detail": "최근 성공 실행이 48.7시간 전입니다",
-      "updated_at": "2026-11-18T00:31:52Z",
-      "age_hours": 48.71,
-      "url": "https://github.com/pyw31337/hair/actions",
-      "repo": "https://github.com/pyw31337/hair",
-      "next": "예약 실행과 수집 신선도 확인",
-      "latest_run": {
-        "name": "Deploy J.Hair Demo to GitHub Pages",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/hair/actions/runs/44208515687",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "coupang",
-      "name": "렛츠쿠팡",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-20T01:14:26Z",
-      "age_hours": -0.0,
-      "url": "https://github.com/pyw31337/coupang/actions",
-      "repo": "https://github.com/pyw31337/coupang",
-      "next": "예약 실행 유지",
-      "latest_run": {
-        "name": "pages build and deployment",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/cart/actions/runs/44652064282",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "all",
-      "name": "포트폴리오 허브",
-      "status": "healthy",
-      "label": "정상",
-      "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-19T03:01:27Z",
-      "age_hours": 22.21,
-      "url": "https://github.com/pyw31337/all/actions",
-      "repo": "https://github.com/pyw31337/all",
-      "next": "예약 실행 유지",
-      "latest_run": {
-        "name": "Deploy Portfolio Hub to GitHub Pages",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/all/actions/runs/44448431334",
-        "failed_steps": []
-      },
-      "open_issues": 0
-    },
-    {
-      "id": "cultureflow-ai-test",
-      "name": "CultureFlow AI test",
-      "status": "degraded",
-      "label": "접근 확인",
-      "detail": "GitHub Actions API 접근 권한 또는 저장소 공개 범위를 확인해야 합니다",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": null,
       "age_hours": null,
-      "url": "https://github.com/pyw31337/cultureflow-ai-test/actions",
-      "repo": "https://github.com/pyw31337/cultureflow-ai-test",
-      "next": "workflow 실행 또는 권한 확인",
+      "url": "https://github.com/pyw31337/cctv/actions",
+      "repo": "https://github.com/pyw31337/cctv",
+      "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -383,72 +317,364 @@
         "failed_steps": []
       },
       "open_issues": 0
+    },
+    {
+      "id": "metro",
+      "name": "렛츠메트로",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/metro/actions",
+      "repo": "https://github.com/pyw31337/metro",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "calendar",
+      "name": "렛츠캘린더",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/calendar/actions",
+      "repo": "https://github.com/pyw31337/calendar",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "law",
+      "name": "렛츠로",
+      "status": "degraded",
+      "label": "수집 미구현",
+      "detail": "No source-backed legal collector is configured. Synthetic counter updates are disabled.",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/law/actions",
+      "repo": "https://github.com/pyw31337/law",
+      "next": "원천 수집기와 검증 원장 연결",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-20T07:59:18.754386+00:00",
+        "run_id": "law-unimplemented-20261120T075918Z",
+        "stages": {
+          "collect": {
+            "status": "not_implemented",
+            "ok": null
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "not_started",
+            "quality_issue_count": null
+          },
+          "publish": {
+            "status": "not_started"
+          }
+        },
+        "counts": {},
+        "url": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json"
+      }
+    },
+    {
+      "id": "insu",
+      "name": "렛츠인슈",
+      "status": "degraded",
+      "label": "수집 미관측",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/insu/actions",
+      "repo": "https://github.com/pyw31337/insu",
+      "next": "수집기에서 observability/latest.json 발행",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
+    },
+    {
+      "id": "people",
+      "name": "렛츠피플",
+      "status": "degraded",
+      "label": "수집 미구현",
+      "detail": "No source-backed people collector is configured. Synthetic counter updates are disabled.",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/people/actions",
+      "repo": "https://github.com/pyw31337/people",
+      "next": "원천 수집기와 검증 원장 연결",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-20T07:59:18.837118+00:00",
+        "run_id": "people-unimplemented-20261120T075918Z",
+        "stages": {
+          "collect": {
+            "status": "not_implemented",
+            "ok": null
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "not_started",
+            "quality_issue_count": null
+          },
+          "publish": {
+            "status": "not_started"
+          }
+        },
+        "counts": {},
+        "url": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json"
+      }
+    },
+    {
+      "id": "asset",
+      "name": "렛츠에셋",
+      "status": "degraded",
+      "label": "수집 미구현",
+      "detail": "No source-backed market collector is configured. Synthetic counter updates are disabled.",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/asset/actions",
+      "repo": "https://github.com/pyw31337/asset",
+      "next": "원천 수집기와 검증 원장 연결",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-20T07:59:18.676451+00:00",
+        "run_id": "asset-unimplemented-20261120T075918Z",
+        "stages": {
+          "collect": {
+            "status": "not_implemented",
+            "ok": null
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "not_started",
+            "quality_issue_count": null
+          },
+          "publish": {
+            "status": "not_started"
+          }
+        },
+        "counts": {},
+        "url": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json"
+      }
+    },
+    {
+      "id": "art",
+      "name": "렛츠아트",
+      "status": "degraded",
+      "label": "수집 미구현",
+      "detail": "No source-backed art collector is configured. Synthetic counter updates are disabled.",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/art/actions",
+      "repo": "https://github.com/pyw31337/art",
+      "next": "원천 수집기와 검증 원장 연결",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-20T07:59:18.571594+00:00",
+        "run_id": "art-unimplemented-20261120T075918Z",
+        "stages": {
+          "collect": {
+            "status": "not_implemented",
+            "ok": null
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "not_started",
+            "quality_issue_count": null
+          },
+          "publish": {
+            "status": "not_started"
+          }
+        },
+        "counts": {},
+        "url": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json"
+      }
     }
   ],
   "anomalies": [
     {
       "type": "NEEDS_REVIEW",
       "service_id": "news",
-      "service": "렛츠뉴스",
-      "detail": "최근 workflow 결과가 unknown입니다",
-      "action": "실행 결과와 로그 확인",
+      "service": "뉴스보드",
+      "detail": "실행 원장에 수집·분석·품질 단계 주의가 기록되어 있습니다",
+      "action": "workflow 실행 또는 권한 확인",
       "href": "https://github.com/pyw31337/news/actions"
     },
     {
       "type": "NEEDS_REVIEW",
-      "service_id": "macmini-workflow-handoff",
-      "service": "Mac mini handoff",
-      "detail": "GitHub Actions API 접근 권한 또는 저장소 공개 범위를 확인해야 합니다",
-      "action": "workflow 실행 또는 권한 확인",
-      "href": "https://github.com/pyw31337/macmini-workflow-handoff/actions"
+      "service_id": "culture",
+      "service": "컬처플로우",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/culture/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "pick",
+      "service": "렛츠픽",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/pick/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "hair",
+      "service": "렛츠헤어",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/hair/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "meat",
+      "service": "렛츠미트",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/meat/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "buy",
+      "service": "렛츠바이",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/buy/actions"
     },
     {
       "type": "NEEDS_REVIEW",
       "service_id": "camp",
       "service": "렛츠캠핑",
-      "detail": "Web quality 실행 중",
-      "action": "완료 결과 확인",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
       "href": "https://github.com/pyw31337/camp/actions"
     },
     {
-      "type": "STALE",
-      "service_id": "meat",
-      "service": "렛츠미트",
-      "detail": "최근 성공 실행이 42.3시간 전입니다",
-      "action": "예약 실행과 수집 신선도 확인",
-      "href": "https://github.com/pyw31337/meat/actions"
-    },
-    {
-      "type": "STALE",
-      "service_id": "pick",
-      "service": "렛츠픽",
-      "detail": "최근 성공 실행이 88.6시간 전입니다",
-      "action": "예약 실행과 수집 신선도 확인",
-      "href": "https://github.com/pyw31337/pick/actions"
-    },
-    {
-      "type": "STALE",
-      "service_id": "buy",
-      "service": "렛츠바이",
-      "detail": "최근 성공 실행이 40.3시간 전입니다",
-      "action": "예약 실행과 수집 신선도 확인",
-      "href": "https://github.com/pyw31337/buy/actions"
-    },
-    {
-      "type": "STALE",
-      "service_id": "hair",
-      "service": "렛츠헤어",
-      "detail": "최근 성공 실행이 48.7시간 전입니다",
-      "action": "예약 실행과 수집 신선도 확인",
-      "href": "https://github.com/pyw31337/hair/actions"
+      "type": "NEEDS_REVIEW",
+      "service_id": "cctv",
+      "service": "렛츠CCTV",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/cctv/actions"
     },
     {
       "type": "NEEDS_REVIEW",
-      "service_id": "cultureflow-ai-test",
-      "service": "CultureFlow AI test",
-      "detail": "GitHub Actions API 접근 권한 또는 저장소 공개 범위를 확인해야 합니다",
-      "action": "workflow 실행 또는 권한 확인",
-      "href": "https://github.com/pyw31337/cultureflow-ai-test/actions"
+      "service_id": "metro",
+      "service": "렛츠메트로",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/metro/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "calendar",
+      "service": "렛츠캘린더",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/calendar/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "law",
+      "service": "렛츠로",
+      "detail": "No source-backed legal collector is configured. Synthetic counter updates are disabled.",
+      "action": "원천 수집기와 검증 원장 연결",
+      "href": "https://github.com/pyw31337/law/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "insu",
+      "service": "렛츠인슈",
+      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "action": "수집기에서 observability/latest.json 발행",
+      "href": "https://github.com/pyw31337/insu/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "people",
+      "service": "렛츠피플",
+      "detail": "No source-backed people collector is configured. Synthetic counter updates are disabled.",
+      "action": "원천 수집기와 검증 원장 연결",
+      "href": "https://github.com/pyw31337/people/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "asset",
+      "service": "렛츠에셋",
+      "detail": "No source-backed market collector is configured. Synthetic counter updates are disabled.",
+      "action": "원천 수집기와 검증 원장 연결",
+      "href": "https://github.com/pyw31337/asset/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "art",
+      "service": "렛츠아트",
+      "detail": "No source-backed art collector is configured. Synthetic counter updates are disabled.",
+      "action": "원천 수집기와 검증 원장 연결",
+      "href": "https://github.com/pyw31337/art/actions"
     },
     {
       "type": "VOLUME_NOT_CONNECTED",
