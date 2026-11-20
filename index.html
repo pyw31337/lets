@@ -1778,6 +1778,7 @@
       if (liveResult.status === 'fulfilled') {
         liveOperationsData = liveResult.value;
         applyLiveOperations();
+        renderLiveAttentionStrip();
       } else {
         dataLoadErrors.push('GitHub Actions 운영 원장');
       }
@@ -1802,6 +1803,31 @@
         service.observedDetail = `실측 실행 · ${live.updated_at || '시각 미확인'}`;
         service.liveActionsUrl = live.url;
       });
+    }
+
+    function renderLiveAttentionStrip() {
+      const strip = document.getElementById('truthAlertStrip');
+      const list = document.getElementById('truthItemList');
+      if (!strip || !list || !liveOperationsData?.services) return;
+      const attention = liveOperationsData.services.filter(service => service.status === 'degraded');
+      const tag = strip.querySelector('.truth-tag');
+      const dot = strip.querySelector('.truth-left .dot');
+      if (tag) tag.textContent = attention.length ? `주의 (${attention.length}건)` : '전체 정상';
+      if (dot) dot.className = `dot ${attention.some(service => /실패|failure|timed_out/i.test(`${service.label || ''} ${service.detail || ''}`)) ? 'dot-red' : (attention.length ? 'dot-amber' : 'dot-green')}`;
+      if (!attention.length) {
+        list.innerHTML = '<span style="color:#64748b;">실측 운영 원장 기준 주의 항목 없음</span>';
+        return;
+      }
+      const byLiveId = new Map(Object.entries(LIVE_SERVICE_IDS).map(([serviceId, liveId]) => [liveId, serviceId]));
+      list.innerHTML = attention.slice(0, 5).map(service => {
+        const serviceId = byLiveId.get(service.id);
+        const color = /실패|failure|timed_out/i.test(`${service.label || ''} ${service.detail || ''}`) ? '#dc2626' : '#d97706';
+        const action = serviceId ? `onclick="openServiceActions('${serviceId}')"` : `onclick="window.open('${escapeHtml(service.url || '')}', '_blank', 'noopener')"`;
+        return `<button class="truth-btn" ${action} title="${escapeHtml(service.next || service.detail || '')}">
+          <span class="dot" style="background:${color};"></span>
+          <span>${escapeHtml(service.name || service.id)} <b style="color:${color}; font-weight:700;">${escapeHtml(service.label || '확인')}</b></span>
+        </button>`;
+      }).join('<span class="truth-sep">·</span>');
     }
 
     function applyObservabilityToNewsBoard() {
