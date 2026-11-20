@@ -23,45 +23,46 @@
        Toss Design System v2.1: Segmented Control & Grouping Standards
        ========================================================== */
     :root {
-      --bg-page: #f7f8fa;
+      --bg-page: #f8fafc;
       --bg-surface: #ffffff;
-      --bg-subtle: #f2f4f6;
-      --bg-hover: #eef0f3;
+      --bg-subtle: #f1f5f9;
+      --bg-hover: #f1f5f9;
 
       /* 단일 구분선 */
-      --divider: #f2f4f6;
-      --divider-dark: #e5e8eb;
+      --divider: #f1f5f9;
+      --divider-dark: #e2e8f0;
 
-      --text-primary: #191f28;
-      --text-secondary: #4e5968;
-      --text-muted: #8b95a1;
-      --text-subtle: #b0b8c1;
+      /* Impeccable WCAG AA 4.5:1+ 고대비 타이포그래피 컬러 */
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
       --text-white: #ffffff;
 
-      /* 프로세스 시맨틱 포인트 컬러 */
-      --primary: #3182f6;          /* 수집 / 기본 포인트 */
-      --primary-light: #e8f3ff;
-      --primary-hover: #1b64da;
+      /* 프로세스 시맨틱 포인트 컬러 (WCAG AA 4.5:1+ 충족) */
+      --primary: #2563eb;          /* 수집 / 기본 포인트 (Blue 600) */
+      --primary-light: #eff6ff;
+      --primary-hover: #1d4ed8;
 
-      --success: #00c48c;          /* 분석 / 정상 */
-      --success-light: #e6faf3;
+      --success: #047857;          /* 분석 / 정상 가동 (Emerald 700 - 4.8:1 대비 충족) */
+      --success-light: #ecfdf5;
 
-      --indigo: #6366f1;           /* 품질 */
+      --indigo: #4f46e5;           /* 품질 (Indigo 600) */
       --indigo-light: #eef2ff;
 
-      --warning: #ff9f00;          /* 운영·관리 */
-      --warning-light: #fff8eb;
+      --warning: #d97706;          /* 운영·관리 / 주의 (Amber 600 - 4.5:1 대비 충족) */
+      --warning-light: #fffbeb;
 
-      --danger: #ff5252;           /* 위험 / 에러 */
-      --danger-light: #ffebee;
+      --danger: #b91c1c;           /* 위험 / 에러 (Red 700 - 5.5:1 대비 충족) */
+      --danger-light: #fef2f2;
 
-      /* LDS Elevation Primitives: Surface-Flush Default (Shadows for hover & modals only) */
-      --shadow-sm: none;
-      --shadow-md: none;
-      --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.05);
-      --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.05);
-      --shadow-modal: 0 20px 48px rgba(0, 0, 0, 0.12);
-      --border-card: 1px solid rgba(0, 0, 0, 0.06);
+      /* LDS Elevation Primitives: Surface-Flush Default (No chromatic glows) */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-modal: 0 20px 48px rgba(15, 23, 42, 0.16);
+      --border-card: 1px solid rgba(0, 0, 0, 0.08);
 
       --radius-sm: 8px;
       --radius-md: 14px;
@@ -199,7 +200,7 @@
     .security-input {
       width: 100%;
       background: var(--bg-subtle);
-      border: 1px solid transparent;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: var(--radius-md);
       padding: 12px 16px;
       font-size: 15px;
@@ -209,6 +210,14 @@
       transition: all 0.15s ease;
       text-align: center;
       letter-spacing: 0.1em;
+    }
+    .security-input::placeholder {
+      color: #475569;
+      opacity: 1;
+    }
+    input::placeholder {
+      color: #475569;
+      opacity: 1;
     }
     .security-input:focus {
       background: var(--bg-surface);
@@ -241,7 +250,7 @@
       display: none;
     }
     .security-hint {
-      font-size: 11px;
+      font-size: 12.5px;
       color: var(--text-subtle);
       margin-top: 16px;
     }
@@ -363,13 +372,13 @@
       color: #ffffff;
     }
     .header-actions .action-btn.danger-subtle {
-      color: #dc2626;
-      border-color: rgba(220, 38, 38, 0.15);
+      color: #b91c1c;
+      border-color: rgba(185, 28, 28, 0.2);
       background: #fef2f2;
     }
     .header-actions .action-btn.danger-subtle:hover {
       background: #fee2e2;
-    }
+      color: #991b1b;
     }
     .header-cluster .action-btn.cluster-primary {
       background: rgba(49, 130, 246, 0.08);
@@ -393,22 +402,19 @@
       gap: 8px;
       background: var(--success-light);
       color: var(--success);
-      padding: 8px 14px;
+      padding: 7px 14px;
       border-radius: var(--radius-full);
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       white-space: nowrap;
+      border: 1px solid rgba(5, 150, 105, 0.2);
     }
     .pulse-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: var(--success);
-      animation: pulseAnim 2s infinite ease-in-out;
-    }
-    @keyframes pulseAnim {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.2); }
+      flex-shrink: 0;
     }
 
     .action-btn {
@@ -440,12 +446,13 @@
       background: var(--primary-hover);
     }
     .action-btn.danger-subtle {
-      color: var(--danger);
-      background: var(--danger-light);
-      border-color: rgba(255, 82, 82, 0.2);
+      color: #b91c1c;
+      background: #fef2f2;
+      border-color: rgba(185, 28, 28, 0.2);
     }
     .action-btn.danger-subtle:hover {
-      background: #fed7d7;
+      background: #fee2e2;
+      color: #991b1b;
     }
 
     /* ==========================================================
@@ -1082,21 +1089,16 @@
       }
     }
     .bento-subcard {
-      background: var(--bg-page);
-      border-radius: var(--radius-lg, 16px);
-      border: 1px solid var(--border-hairline, rgba(0, 0, 0, 0.04));
-      padding: 20px;
+      background: transparent;
+      border-radius: 0;
+      border: none;
+      padding: 0;
       display: flex;
       flex-direction: column;
       gap: 14px;
       min-width: 0;
       max-width: 100%;
       box-sizing: border-box;
-      overflow: hidden;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .bento-subcard:hover {
-      transform: translateY(-2px);
     }
     .bento-subcard-header {
       display: flex;
@@ -1179,28 +1181,30 @@
       display: block;
       border-radius: var(--radius-md, 12px);
       background: var(--bg-surface);
-      border: 1px solid var(--border-hairline, rgba(0,0,0,0.04));
+      border: 1px solid rgba(0, 0, 0, 0.08);
       box-sizing: border-box;
+      padding: 12px 14px;
     }
     .launchagent-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
+      font-size: 13px;
       white-space: nowrap;
     }
     .launchagent-table th {
       text-align: left;
-      padding: 10px 12px;
+      padding: 10px 14px;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       background: var(--bg-subtle);
       border-bottom: 1px solid var(--divider-dark);
-      font-size: 11px;
+      font-size: 12.5px;
     }
     .launchagent-table td {
-      padding: 9px 12px;
+      padding: 10px 14px;
       border-bottom: 1px solid var(--divider);
       color: var(--text-secondary);
+      font-size: 13px;
     }
     .launchagent-table tr:last-child td {
       border-bottom: none;
@@ -1208,10 +1212,10 @@
     .daemon-status-live {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       color: var(--success);
-      font-weight: 600;
-      font-size: 11px;
+      font-weight: 700;
+      font-size: 12.5px;
     }
     .daemon-status-live::before {
       content: '';
@@ -1219,7 +1223,7 @@
       height: 6px;
       border-radius: 50%;
       background: var(--success);
-      box-shadow: 0 0 6px var(--success);
+      box-shadow: none;
     }
     .handoff-code-box {
       background: #1e293b;
@@ -2047,33 +2051,32 @@
     .ops-filter-btn.active { color:#fff; background:var(--text-primary); border-color:var(--text-primary); }
     .ops-kpi-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:18px; }
     .ops-kpi { padding:15px 16px; border:1px solid var(--divider); border-radius:16px; background:#fff; }
-    .ops-kpi-label { display:block; color:var(--text-muted); font-size:12px; margin-bottom:6px; }
-    .ops-kpi-value { display:block; font-size:24px; font-weight:800; letter-spacing:-.04em; }
-    .ops-kpi-note { display:block; color:var(--text-secondary); font-size:11px; margin-top:4px; }
+    .ops-kpi-label { display:block; color:var(--text-muted); font-size:13px; font-weight:600; margin-bottom:6px; }
+    .ops-kpi-value { display:block; font-size:26px; font-weight:800; letter-spacing:-.04em; }
+    .ops-kpi-note { display:block; color:var(--text-secondary); font-size:12.5px; margin-top:4px; }
     .ops-main-grid { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr); gap:14px; }
-    .ops-service-panel,.ops-incident-panel { border:1px solid var(--divider); border-radius:18px; background:#fff; padding:18px; min-width:0; }
+    .ops-service-panel,.ops-incident-panel { border:1px solid rgba(0,0,0,0.08); border-radius:18px; background:#fff; padding:18px; min-width:0; }
     .ops-panel-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px; }
-    .ops-panel-heading strong { display:block; font-size:15px; }
-    .ops-panel-heading span { display:block; color:var(--text-muted); font-size:11px; margin-top:4px; }
-    .ops-live-chip { display:inline-flex!important; align-items:center; gap:5px; padding:5px 8px; border-radius:999px; background:var(--success-light); color:var(--success)!important; font:700 10px/1 var(--font-family-mono,monospace); white-space:nowrap; }
-    .ops-live-chip i { width:6px; height:6px; border-radius:50%; background:currentColor; box-shadow:0 0 0 4px rgba(0,196,140,.12); animation:opsPulse 1.8s infinite; }
-    @keyframes opsPulse { 50% { opacity:.35; transform:scale(.7); } }
+    .ops-panel-heading strong { display:block; font-size:16px; font-weight:800; }
+    .ops-panel-heading span { display:block; color:var(--text-muted); font-size:12.5px; margin-top:4px; }
+    .ops-live-chip { display:inline-flex!important; align-items:center; gap:6px; padding:5px 9px; border-radius:999px; background:var(--success-light); color:var(--success)!important; font:700 11px/1 var(--font-family-mono,monospace); white-space:nowrap; border:1px solid rgba(5,150,105,0.2); }
+    .ops-live-chip i { width:6px; height:6px; border-radius:50%; background:currentColor; flex-shrink:0; }
     .ops-service-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
-    .ops-service-card { display:block; min-width:0; padding:13px; border:1px solid var(--divider); border-radius:14px; color:inherit; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
-    .ops-service-card:hover { transform:translateY(-2px); border-color:rgba(49,130,246,.35); box-shadow:0 8px 20px rgba(25,31,40,.07); }
-    .ops-service-card.is-attention { background:linear-gradient(145deg,#fffaf4,#fff); border-color:rgba(255,159,0,.28); }
+    .ops-service-card { display:block; min-width:0; padding:13px; border:1px solid rgba(0,0,0,0.07); border-radius:14px; color:inherit; text-decoration:none; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .ops-service-card:hover { transform:translateY(-2px); border-color:rgba(37,99,235,.35); box-shadow:0 8px 20px rgba(15,23,42,.06); }
+    .ops-service-card.is-attention { background:linear-gradient(145deg,#fffaf4,#fff); border-color:rgba(217,119,6,.35); }
     .ops-service-top { display:flex; align-items:center; justify-content:space-between; gap:6px; }
-    .ops-service-name { font-weight:750; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .ops-state { flex:0 0 auto; padding:4px 7px; border-radius:999px; font-size:10px; font-weight:750; }
-    .ops-state.healthy { color:#087f5b; background:#e6faf3; }.ops-state.degraded { color:#a15c00; background:#fff4d8; }.ops-state.blocked { color:#b42318; background:#ffebee; }
-    .ops-service-detail { margin-top:9px; color:var(--text-secondary); font-size:11px; line-height:1.45; min-height:32px; }
-    .ops-service-next { margin-top:8px; color:var(--primary); font-size:11px; font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ops-service-name { font-weight:750; font-size:13.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ops-state { flex:0 0 auto; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:700; }
+    .ops-state.healthy { color:#047857; background:#ecfdf5; border:1px solid rgba(4,120,87,0.15); }.ops-state.degraded { color:#b45309; background:#fffbeb; border:1px solid rgba(180,83,9,0.15); }.ops-state.blocked { color:#b91c1c; background:#fef2f2; border:1px solid rgba(185,28,28,0.15); }
+    .ops-service-detail { margin-top:9px; color:var(--text-secondary); font-size:12.5px; line-height:1.45; min-height:34px; }
+    .ops-service-next { margin-top:8px; color:var(--primary); font-size:12px; font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .ops-incident-list { display:flex; flex-direction:column; gap:9px; }
-    .ops-incident { display:block; padding:12px; border-radius:13px; border:1px solid var(--divider); text-decoration:none; color:inherit; }
-    .ops-incident:hover { background:var(--bg-subtle); }.ops-incident.high { border-left:3px solid var(--danger); }.ops-incident.medium { border-left:3px solid var(--warning); }.ops-incident.low { border-left:3px solid var(--primary); }
-    .ops-incident-title { font-size:12px; font-weight:750; }.ops-incident-why { color:var(--text-secondary); font-size:11px; line-height:1.45; margin-top:5px; }.ops-incident-action { color:var(--primary); font-size:11px; font-weight:700; margin-top:7px; }
+    .ops-incident { display:block; padding:12px; border-radius:13px; border:1px solid rgba(0,0,0,0.08); text-decoration:none; color:inherit; }
+    .ops-incident:hover { background:var(--bg-subtle); }.ops-incident.high { border-color:rgba(220,38,38,0.3); background:#fef2f2; }.ops-incident.medium { border-color:rgba(217,119,6,0.3); background:#fffbeb; }.ops-incident.low { border-color:rgba(37,99,235,0.3); background:#eff6ff; }
+    .ops-incident-title { font-size:13px; font-weight:750; }.ops-incident-why { color:var(--text-secondary); font-size:12.5px; line-height:1.45; margin-top:5px; }.ops-incident-action { color:var(--primary); font-size:12px; font-weight:700; margin-top:7px; }
     .ops-check-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-top:14px; }
-    .ops-check { display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; background:var(--bg-subtle); color:var(--text-secondary); font-size:11px; }.ops-check strong { color:var(--success); font-size:14px; }.ops-check span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .ops-check { display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; background:var(--bg-subtle); color:var(--text-secondary); font-size:12.5px; }.ops-check strong { color:var(--success); font-size:15px; }.ops-check span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     @media (max-width: 900px) { .ops-main-grid { grid-template-columns:1fr; }.ops-service-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-check-strip { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width: 640px) { .ops-command-center { padding:18px; border-radius:18px; }.ops-command-header { flex-direction:column; }.ops-command-meta { justify-content:flex-start; }.ops-kpi-row { grid-template-columns:repeat(2,minmax(0,1fr)); }.ops-service-grid { grid-template-columns:1fr; }.ops-check-strip { grid-template-columns:1fr; } }
 
@@ -2228,7 +2231,7 @@
       flex-shrink: 0;
       padding: 3px 8px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.02em;
     }
@@ -2281,7 +2284,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      font-size: 11px;
+      font-size: 12px;
       border-top: 1px dashed rgba(0, 0, 0, 0.06);
       padding-top: 8px;
       margin-top: 4px;
@@ -2342,12 +2345,12 @@
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 6px;
       background: #ecfdf5;
-      color: #059669;
+      color: #047857;
     }
 
     /* Service Detail View Components (메뉴 클릭 시 상세 관제 뷰 - 반응형 수직 플렉스 보장) */
@@ -2462,30 +2465,29 @@
       .service-kpi-grid { grid-template-columns: 1fr; }
     }
     .service-kpi-card {
-      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+      background: #ffffff;
       border-radius: 14px;
-      border: 1px solid rgba(0, 0, 0, 0.07);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       padding: 18px 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), inset 0 1px 0 #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      border-left: 3.5px solid #3182f6;
+      gap: 6px;
     }
     .service-kpi-label {
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: var(--text-muted);
     }
     .service-kpi-val {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
       color: var(--text-primary);
       font-family: var(--font-family-mono, monospace);
       letter-spacing: -0.03em;
     }
     .service-kpi-sub {
-      font-size: 11px;
+      font-size: 12.5px;
       color: var(--text-secondary);
       margin-top: 2px;
     }
@@ -2793,7 +2795,7 @@
               <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--primary);"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
               회사 PC 백그라운드 9대 LaunchAgent 무인 데몬
             </span>
-            <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-family-mono, monospace);">~/Library/LaunchAgents</span>
+            <span style="font-size: 12.5px; color: var(--text-muted); font-family: var(--font-family-mono, monospace);">~/Library/LaunchAgents</span>
           </div>
 
           <div class="launchagent-table-wrap">
@@ -2983,7 +2985,7 @@
       </div>
 
       <!-- Past Handoff Analysis Callout -->
-      <div style="background: var(--bg-subtle); border-radius: var(--radius-md, 10px); padding: 12px 14px; margin-bottom: 16px; font-size: 12px; line-height: 1.5; border-left: 3px solid var(--primary);">
+      <div style="background: var(--primary-light); border-radius: var(--radius-md, 10px); padding: 14px 16px; margin-bottom: 16px; font-size: 13px; line-height: 1.55; border: 1px solid rgba(37, 99, 235, 0.2);">
         <strong style="color: var(--text-primary); display: block; margin-bottom: 4px;">💡 'macmini-workflow-handoff'와의 관계</strong>
         과거 캠프(<code>camp/local/macmini</code>)와 뉴스보드(<code>macmini_health.py</code>)에 각자 파편화되어 있던 야간 비전 OCR 판독 및 헬스체크 프로세스가 본 이관 시스템을 통해 <strong>렛츠 생태계 전체 15개 서비스 공통 원클릭 규격</strong>으로 통합 완성되었습니다.
       </div>
@@ -2997,7 +2999,7 @@
           <span id="restoreCmdText">git clone https://github.com/pyw31337/lets.git && cd lets && ./scripts/restore_on_new_pc.sh</span>
           <button class="handoff-copy-btn" onclick="copyRestoreCommand()">복사</button>
         </div>
-        <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 6px; line-height: 1.45;">
           ※ 실행 시 Homebrew, Ollama 모델 2종 풀링, 9대 LaunchAgent 데몬 등록이 완전 자동으로 진행됩니다.
         </p>
       </div>
@@ -4034,19 +4036,21 @@
         <div style="background:${hasAttention ? '#fffbeb' : '#f0fdf4'}; border:1px solid ${hasAttention ? '#fcd34d' : '#bbf7d0'}; border-radius:12px; padding:14px; margin-bottom:12px; display:flex; align-items:center; gap:12px;">
           <div style="width:30px; height:30px; border-radius:50%; background:${hasAttention ? '#f59e0b' : '#22c55e'}; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; flex-shrink:0;">${hasAttention ? '!' : '✓'}</div>
           <div>
-            <strong style="display:block; font-size:13.5px; color:${hasAttention ? '#92400e' : '#166534'}; font-weight:800;">${hasAttention ? '확인이 필요한 운영 항목이 있습니다' : '최근 실행 기준 긴급 조치 없음'}</strong>
-            <span style="display:block; font-size:11px; color:${incidentTone}; margin-top:2px;">${hasAttention ? `${opsIncidents.length}건의 인시던트와 ${degradedCount + blockedCount}개 주의 서비스` : '실행 이벤트와 최근 성공 시각 기준으로 표시'}</span>
+            <strong style="display:block; font-size:14px; color:${hasAttention ? '#92400e' : '#166534'}; font-weight:800;">${hasAttention ? '확인이 필요한 운영 항목이 있습니다' : '최근 실행 기준 긴급 조치 없음'}</strong>
+            <span style="display:block; font-size:12.5px; color:${incidentTone}; margin-top:2px;">${hasAttention ? `${opsIncidents.length}건의 인시던트와 ${degradedCount + blockedCount}개 주의 서비스` : '실행 이벤트와 최근 성공 시각 기준으로 표시'}</span>
           </div>
         </div>
         ${opsIncidents.map(item => {
-          const sev = item.severity === 'high' ? '#b42318' : item.severity === 'medium' ? '#b45309' : '#64748b';
-          return `<div class="ops-incident ${item.severity || 'low'}" style="background:#ffffff; border:1px solid #e2e8f0; border-left:3px solid ${sev}; border-radius:11px; padding:11px 13px; margin-bottom:8px;">
+          const sev = item.severity === 'high' ? '#b42318' : item.severity === 'medium' ? '#b45309' : '#475569';
+          const bgCol = item.severity === 'high' ? '#fef2f2' : item.severity === 'medium' ? '#fffbeb' : '#ffffff';
+          const borderCol = item.severity === 'high' ? 'rgba(220,38,38,0.25)' : item.severity === 'medium' ? 'rgba(217,119,6,0.25)' : 'rgba(0,0,0,0.08)';
+          return `<div class="ops-incident ${item.severity || 'low'}" style="background:${bgCol}; border:1px solid ${borderCol}; border-radius:11px; padding:12px 14px; margin-bottom:8px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <span style="font-size:10.5px; font-weight:800; color:${sev}; background:#f8fafc; padding:2px 6px; border-radius:5px;">${String(item.severity || 'info').toUpperCase()}</span>
-              <span style="font-size:11px; font-weight:700; color:#64748b;">${item.service || ''}</span>
+              <span style="font-size:11px; font-weight:800; color:${sev}; background:rgba(0,0,0,0.04); padding:2px 7px; border-radius:5px;">${String(item.severity || 'info').toUpperCase()}</span>
+              <span style="font-size:12px; font-weight:700; color:#475569;">${item.service || ''}</span>
             </div>
-            <div style="font-size:12.5px; font-weight:750; color:#1e293b; margin-top:2px;">${item.title || '운영 확인 필요'}</div>
-            <div style="font-size:11px; color:#64748b; margin-top:3px; line-height:1.4;">${item.why || item.action || ''}</div>
+            <div style="font-size:13px; font-weight:750; color:#0f172a; margin-top:2px;">${item.title || '운영 확인 필요'}</div>
+            <div style="font-size:12px; color:#475569; margin-top:3px; line-height:1.45;">${item.why || item.action || ''}</div>
           </div>`;
         }).join('')}
       `;

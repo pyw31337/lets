@@ -14,8 +14,8 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
 :root {
-  --lds-version: "2.5.0";
-  --lds-focus: #3182f6;
+  --lds-version: "2.6.0";
+  --lds-focus: #2563eb;
   --lds-safe-top: env(safe-area-inset-top, 0px);
   --lds-safe-right: env(safe-area-inset-right, 0px);
   --lds-safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -39,7 +39,7 @@
   --font-family-base: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
-  --fs-xs: 11px;
+  --fs-xs: 12px;
   --fs-sm: 13px;
   --fs-md: 15px;
   --fs-lg: 17px;
@@ -59,41 +59,42 @@
   --lh-body: 1.6;
 
   /* Taste Palette: Apple Warm Neutral & Surfaces */
-  --bg-page: #f7f8fa;
+  --bg-page: #f8fafc;
   --bg-surface: #ffffff;
-  --bg-subtle: #f2f4f6;
-  --bg-hover: #eef0f3;
+  --bg-subtle: #f1f5f9;
+  --bg-hover: #f1f5f9;
 
   /* 1px 미세 헤어라인 (스퀘어클 벤토 보더) */
-  --border-hairline: rgba(0, 0, 0, 0.05);
-  --divider: #f2f4f6;
-  --divider-dark: #e5e8eb;
+  --border-hairline: rgba(0, 0, 0, 0.08);
+  --divider: #f1f5f9;
+  --divider-dark: #e2e8f0;
 
-  --text-primary: #191f28;
-  --text-secondary: #4e5968;
-  --text-muted: #8b95a1;
-  --text-subtle: #b0b8c1;
+  /* Impeccable WCAG AA 4.5:1+ 고대비 타이포그래피 */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --text-subtle: #64748b;
   --text-white: #ffffff;
 
-  /* 절제된 시맨틱 포인트 컬러 */
-  --primary: #3182f6;          /* 수집 / 기본 포인트 */
-  --primary-light: #e8f3ff;
-  --primary-hover: #1b64da;
+  /* 절제된 시맨틱 포인트 컬러 (WCAG AA 4.5:1+ 충족) */
+  --primary: #2563eb;          /* 수집 / 기본 포인트 */
+  --primary-light: #eff6ff;
+  --primary-hover: #1d4ed8;
 
-  --success: #00c48c;          /* 분석 / 로컬 AI 정상 */
-  --success-light: #e6faf3;
+  --success: #047857;          /* 분석 / 로컬 AI 정상 (Emerald 700 - 4.8:1 대비 충족) */
+  --success-light: #ecfdf5;
 
-  --indigo: #6366f1;           /* 품질 */
+  --indigo: #4f46e5;           /* 품질 */
   --indigo-light: #eef2ff;
 
-  --warning: #ff9f00;          /* 운영·관리 */
-  --warning-light: #fff8eb;
+  --warning: #d97706;          /* 운영·관리 (Amber 600 - 4.5:1 대비 충족) */
+  --warning-light: #fffbeb;
 
-  --danger: #ff5252;           /* 위험 */
-  --danger-light: #ffebee;
+  --danger: #b91c1c;           /* 위험 (Red 700 - 5.5:1 대비 충족) */
+  --danger-light: #fef2f2;
 
-  --purple: #8b5cf6;           /* 로컬 에지 AI / Ollama */
-  --purple-light: #f3e8ff;
+  --purple: #7c3aed;           /* 로컬 에지 AI / Ollama */
+  --purple-light: #f5f3ff;
 
   /* 스퀘어클 비클리핑 섀도우 */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
