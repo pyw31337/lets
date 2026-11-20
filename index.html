@@ -1,1 +1,141 @@
-FULL_CONTENT_FROM_LOCAL
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let's 마스터 컨트롤 허브 — 수집 펄스 및 이상 징후 관제">
+<title>Let's 수집 펄스</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --brand: #2563eb;
+    --text: #0f172a;
+    --text-secondary: #334155;
+    --muted: #64748b;
+    --faint: #94a3b8;
+    --line: #f1f5f9;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Pretendard Variable", -apple-system, sans-serif;
+    background: #fff;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 32px 40px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 20px; font-weight: 800; color: var(--text); }
+  h2 { font-size: 15px; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  .mono { font-family: ui-monospace, Menlo, Consolas, monospace; }
+  .muted { color: var(--muted); }
+  .faint { color: var(--faint); }
+  .row { display: flex; gap: 32px; flex-wrap: wrap; }
+  .kpi { flex: 1; min-width: 160px; }
+  .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .kpi-value { font-size: 28px; font-weight: 800; color: var(--text); }
+  .kpi-unit { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+  .alert-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .dot-red { background: var(--red); }
+  .dot-amber { background: var(--amber); }
+  .sev-critical { color: var(--red); font-weight: 700; }
+  .sev-warning { color: var(--amber); font-weight: 700; }
+  a.action { color: var(--brand); text-decoration: none; font-weight: 600; font-size: 12px; }
+  .chart-bars { display: flex; align-items: flex-end; height: 100px; gap: 3px; }
+  .bar { flex: 1; background: #bfdbfe; border-radius: 2px 2px 0 0; min-height: 4px; }
+  .bar.today { background: var(--brand); }
+  .bar-label { font-size: 9px; color: var(--faint); text-align: center; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { text-align: left; font-weight: 600; color: var(--faint); font-size: 11px; padding: 6px 8px; border-bottom: 1px solid #e2e8f0; }
+  td { padding: 8px; border-bottom: 1px solid var(--line); }
+  .status-healthy { color: var(--green); }
+  .status-failed { color: var(--red); }
+  .status-stale { color: var(--amber); }
+</style>
+</head>
+<body>
+  <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+    <h1>수집 펄스</h1>
+    <span class="mono faint" id="updated">로딩 중</span>
+  </div>
+  <p class="muted" style="margin-bottom:24px;">오늘·전일 수집량, 수집기 상태, 이상 징후, 누적 추이</p>
+
+  <div class="row" id="kpis"></div>
+  <div id="alerts" style="margin:16px 0 24px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:12px 0;"></div>
+
+  <div class="row">
+    <div style="flex:1.4;">
+      <h2>14일 수집량</h2>
+      <div id="chart"></div>
+    </div>
+    <div style="flex:1;">
+      <h2>품질 퍼널</h2>
+      <div id="funnel"></div>
+    </div>
+  </div>
+
+  <h2>서비스별 수집기</h2>
+  <div id="matrix"></div>
+
+  <script>
+    async function load() {
+      try {
+        const resp = await fetch('data/collection_pulse.json');
+        if (!resp.ok) throw new Error();
+        render(await resp.json());
+      } catch (e) {
+        document.getElementById('updated').textContent = '데이터 로드 실패';
+      }
+    }
+    function render(d) {
+      const o = d.overall || {};
+      document.getElementById('updated').textContent = new Date(d.generated_at).toLocaleString('ko-KR', {hour:'2-digit', minute:'2-digit'}) + ' 기준';
+      const dc = (o.delta_pct||0) >= 0 ? 'up' : 'down';
+      const ds = (o.delta_pct||0) >= 0 ? '▲' : '▼';
+      document.getElementById('kpis').innerHTML = `
+        <div class="kpi"><div class="kpi-label">오늘 수집</div><div class="kpi-value">${(o.today_collected||0).toLocaleString()} <span class="kpi-unit">건</span></div><div class="${dc}">${ds} ${Math.abs(o.delta_pct||0)}%</div></div>
+        <div class="kpi"><div class="kpi-label">수집기 정상</div><div class="kpi-value">${o.collectors_healthy||0}<span class="kpi-unit"> / ${o.collectors_total||0}</span></div></div>
+        <div class="kpi"><div class="kpi-label">누적 원장</div><div class="kpi-value">${((o.cumulative_records||0)/1e6).toFixed(2)}M</div></div>
+      `;
+      const anomalies = d.anomalies || [];
+      document.getElementById('alerts').innerHTML = anomalies.length ? anomalies.map(a => {
+        const sc = a.severity === 'critical' ? 'sev-critical' : 'sev-warning';
+        const dc2 = a.severity === 'critical' ? 'dot-red' : 'dot-amber';
+        const link = a.action_url ? `<a class="action" href="${a.action_url}" target="_blank">${a.action} ↗</a>` : '';
+        return `<div class="alert-item"><span class="dot ${dc2}"></span><span class="${sc}">${a.type}</span><span style="flex:1">${a.message}</span>${link}</div>`;
+      }).join('') : '<div class="muted">이상 징후 없음</div>';
+      const trend = d.daily_trend || [];
+      if (trend.length) {
+        const max = Math.max(...trend.map(t => t.collected||0), 1);
+        document.getElementById('chart').innerHTML = `<div class="chart-bars">${trend.map((t,i) => {
+          const h = Math.round((t.collected/max)*100);
+          return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div class="bar ${i===trend.length-1?'today':''}" style="height:${h}%" title="${t.date}: ${t.collected}"></div><div class="bar-label">${(t.date||'').slice(8)}</div></div>`;
+        }).join('')}</div>`;
+      }
+      const last = trend[trend.length-1];
+      if (last) {
+        const c = last.collected || 1;
+        document.getElementById('funnel').innerHTML = `
+          <div style="display:flex;align-items:center;gap:8px;margin:6px 0;"><span style="width:48px;color:var(--muted)">수집</span><div style="flex:1;height:8px;background:var(--line);border-radius:2px;"><div style="width:100%;height:100%;background:#2563eb;"></div></div><span class="mono">${last.collected?.toLocaleString()}</span></div>
+          <div style="display:flex;align-items:center;gap:8px;margin:6px 0;"><span style="width:48px;color:var(--muted)">분석</span><div style="flex:1;height:8px;background:var(--line);border-radius:2px;"><div style="width:${Math.round((last.analyzed||0)/c*100)}%;height:100%;background:#3b82f6;"></div></div><span class="mono">${(last.analyzed||0).toLocaleString()}</span></div>
+          <div style="display:flex;align-items:center;gap:8px;margin:6px 0;"><span style="width:48px;color:var(--muted)">품질</span><div style="flex:1;height:8px;background:var(--line);border-radius:2px;"><div style="width:${Math.round((last.quality_passed||0)/c*100)}%;height:100%;background:#059669;"></div></div><span class="mono">${(last.quality_passed||0).toLocaleString()}</span></div>
+        `;
+      }
+      const services = d.services || [];
+      document.getElementById('matrix').innerHTML = `<table><thead><tr><th>서비스</th><th>상태</th><th>오늘</th><th>전일비</th></tr></thead><tbody>${services.map(s => {
+        const sc = s.status==='healthy'?'status-healthy':s.status==='failed'?'status-failed':'status-stale';
+        const st = s.status==='healthy'?'정상':s.status==='failed'?'실패':'지연';
+        return `<tr><td style="font-weight:600">${s.name}</td><td class="${sc}">${st}</td><td class="mono">${(s.today||0).toLocaleString()}</td><td class="mono">${s.delta_pct||0}%</td></tr>`;
+      }).join('')}</tbody></table>`;
+    }
+    load();
+  </script>
+</body>
+</html>
