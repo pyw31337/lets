@@ -126,6 +126,47 @@ def record_workflow_events(services: list[dict]) -> None:
     RUN_EVENTS.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def record_observed_news_ingest(observability: dict | None) -> None:
+    """Append a NewsBoard run only when its public observability ledger proves a count.
+
+    The collector never derives a record count from an Actions result.  NewsBoard
+    exposes both a stable run id and its persisted vote-row count, so it can be
+    represented as a genuine INGEST event in the shared ledger.
+    """
+    if not isinstance(observability, dict):
+        return
+    run_id = observability.get("run_id")
+    observed_at = observability.get("observed_at") or observability.get("observed_at_kst")
+    count = (observability.get("counts") or {}).get("vote_rows")
+    collect = (observability.get("stages") or {}).get("collect") or {}
+    if not run_id or not observed_at or not isinstance(count, (int, float)) or collect.get("status") != "success":
+        return
+    try:
+        ledger = json.loads(RUN_EVENTS.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        ledger = {"schema_version": "1.1.0", "runs": []}
+    runs = ledger.setdefault("runs", [])
+    source_run_id = f"news-observability:{run_id}"
+    if any(run.get("source_run_id") == source_run_id for run in runs):
+        return
+    runs.append({
+        "source_run_id": source_run_id,
+        "service_id": "news",
+        "source": "newsboard_observability",
+        "workflow": observability.get("workflow"),
+        "stage": "INGEST",
+        "status": "SUCCESS",
+        "completed_at": observed_at,
+        "observed": {"count": int(count), "unit": "vote_rows"},
+        "note": "NewsBoard public observability ledger: persisted vote-row count.",
+    })
+    ledger["schema_version"] = "1.1.0"
+    ledger["generated_at"] = datetime.now(timezone.utc).isoformat()
+    ledger["runs"] = runs[-5000:]
+    ledger["note"] = "Workflow execution evidence. observed.count is populated only by collectors that report a real persisted-record count."
+    RUN_EVENTS.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     token = os.getenv("LETS_STATUS_TOKEN") or os.getenv("GITHUB_TOKEN")
     now = datetime.now(timezone.utc)
@@ -256,6 +297,7 @@ def main() -> int:
                 "artifacts": (news_obs or {}).get("artifacts", {}),
                 "url": NEWS_OBSERVABILITY_URL,
             }
+            record_observed_news_ingest(news_obs)
             if obs_age is None or obs_age > MAX_AGE_HOURS["news"]:
                 news_service["status"] = "degraded"
                 news_service["label"] = "원장 신선도 경과"

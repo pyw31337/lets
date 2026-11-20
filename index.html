@@ -242,15 +242,13 @@
     
     /* Horizontal Category Tabs (Minimal Words & Generous Breathing Space) */
     .tab-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
       align-items: center;
-      gap: 32px;
+      gap: 0;
       border-bottom: 1px solid var(--line-subtle);
       margin-bottom: 28px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap;
+      overflow: visible;
       width: 100%;
       max-width: 100%;
       padding-bottom: 2px;
@@ -265,9 +263,10 @@
       position: relative;
       text-decoration: none;
       white-space: nowrap;
-      flex-shrink: 0;
+      min-width: 0;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
     }
     .tab-link.active {
@@ -554,11 +553,12 @@
       background: #f8fafc;
     }
     .sort-icon {
-      display: inline-block;
+      display: inline-flex;
+      width: 12px;
+      height: 12px;
       margin-left: 3px;
-      font-size: 10px;
       color: var(--brand-blue);
-      font-weight: 700;
+      vertical-align: -2px;
     }
     .kpi-col {
       cursor: pointer;
@@ -679,16 +679,56 @@
       min-width: 0;
     }
 
-    /* Word Break and Text Wrapping everywhere */
+    /* LDS v3.6: terms stay intact; narrow layouts stack information instead. */
     h1, h2, h3, h4, p, span, div, td, th, button, pre, code {
-      word-break: break-word;
-      overflow-wrap: anywhere;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
     
     .mono {
       word-break: break-all;
       overflow-wrap: anywhere;
     }
+
+    .info-icon {
+      position: relative;
+      display: inline-flex;
+      width: 14px;
+      height: 14px;
+      margin-left: 4px;
+      vertical-align: -2px;
+      color: var(--text-light);
+      cursor: help;
+    }
+    .info-icon svg, .icon-svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .info-icon::after {
+      content: attr(data-tip);
+      position: absolute;
+      z-index: 20;
+      left: 0;
+      bottom: calc(100% + 8px);
+      width: max-content;
+      max-width: min(260px, calc(100vw - 32px));
+      padding: 7px 9px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.45;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(2px);
+      transition: opacity 150ms ease, transform 150ms ease;
+    }
+    .info-icon:hover::after, .info-icon:focus-visible::after { opacity: 1; transform: translateY(0); }
+    .icon-button { width: 28px; height: 28px; padding: 6px; justify-content: center; color: var(--brand-blue); }
+    .icon-button:hover { background: var(--brand-blue-subtle); }
+
+    .pipeline-signal-list { display: grid; gap: 0; }
+    .pipeline-signal { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line-subtle); }
+    .pipeline-signal:last-child { border-bottom: 0; }
+    .signal-name { color: var(--text-secondary); font-size: 12px; }
+    .signal-value { color: var(--text-primary); font-weight: 700; font-size: 12px; text-align: right; }
 
     /* Desktop default table */
     .master-table {
@@ -744,10 +784,14 @@
 
       /* Horizontal Tab Scroll */
       .tab-row {
-        gap: 16px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0;
         margin-bottom: 24px;
-        padding-bottom: 8px;
+        padding-bottom: 0;
+        overflow: visible;
       }
+      .tab-link { justify-content: center; min-width: 0; padding-inline: 4px; }
 
       /* Ground Truth Strip */
       .truth-strip {
@@ -762,6 +806,8 @@
         gap: 6px;
         width: 100%;
       }
+      .truth-sep { display: none; }
+      .truth-btn { width: 100%; justify-content: flex-start; line-height: 1.4; }
 
       /* KPI Metrics: Responsive Grid */
       .kpi-row {
@@ -782,6 +828,9 @@
         margin-bottom: 28px;
         padding-bottom: 24px;
       }
+      .mid-head { align-items: flex-start; gap: 8px; flex-direction: column; }
+      .pipeline-signal { grid-template-columns: 1fr; gap: 3px; }
+      .signal-value { text-align: left; }
 
       /* CONVERT MASTER TABLE TO CLEAN MOBILE CARDS / ROWS */
       .master-table, 
@@ -859,6 +908,7 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
+      .tab-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .kpi-hero {
         font-size: 22px;
       }
@@ -931,7 +981,7 @@
         <div class="top-actions" style="position:relative;">
           <button class="btn-quiet" onclick="exportSnapshotData()">스냅샷 백업</button>
           <button class="btn-quiet" onclick="triggerRestorePrompt()">오프라인 복원</button>
-          <button class="btn-primary-subtle" id="syncDropdownBtn" onclick="toggleSyncMenu(event)">실시간 동기화 ▾</button>
+          <button class="btn-primary-subtle" id="syncDropdownBtn" onclick="toggleSyncMenu(event)">실시간 동기화</button>
           <div id="syncDropdownMenu" class="lds-dropdown-menu" style="display:none; position:absolute; right:0; top:36px; background:#ffffff; border:1px solid var(--line-border); border-radius:4px; box-shadow:0 8px 24px rgba(15,23,42,0.12); z-index:100; min-width:200px; padding:6px 0;">
             <a onclick="refreshDashboardData('latest')" style="display:flex; align-items:center; gap:8px; padding:8px 14px; font-size:12px; cursor:pointer; color:var(--text-primary); text-decoration:none;">
               <span class="dot dot-green"></span>
@@ -942,7 +992,6 @@
               <span>15대 서비스 무인 핑 스윕</span>
             </a>
             <a onclick="exportSnapshotData()" style="display:flex; align-items:center; gap:8px; padding:8px 14px; font-size:12px; cursor:pointer; color:var(--text-primary); text-decoration:none; border-top:1px solid var(--line-subtle);">
-              <span>📥</span>
               <span>오프라인 스냅샷 파일 백업</span>
             </a>
           </div>
@@ -995,48 +1044,32 @@
         </div>
       </div>
 
-      <!-- 4 Macro KPI Columns (Interactive Filters - Img 1 & Img 2 Refined) -->
+      <!-- Observed collection pulse -->
       <div class="kpi-row">
-        <div class="kpi-col" onclick="toggleSort('throughput')" title="클릭: 처리량순 정렬">
-          <div class="kpi-label">일일 총 수집 & 연산</div>
+        <div class="kpi-col" onclick="toggleSort('throughput')" title="처리량순 정렬">
+          <div class="kpi-label">오늘 수집 <span class="info-icon" tabindex="0" data-tip="수집기가 기록한 실제 적재 건수만 표시합니다."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span></div>
           <div class="kpi-hero">
             <span id="kpiDailyThroughput">실측 대기</span> <span class="kpi-unit" id="kpiDailyThroughputUnit"></span>
           </div>
-          <div class="kpi-desc" id="kpiDailyThroughputDetail">
-            <span class="mono">수집량 원장 연결 대기</span>
-          </div>
+          <div class="kpi-desc mono" id="kpiDailyThroughputDetail">원장 대기</div>
         </div>
 
-        <div class="kpi-col" onclick="openAttentionService('newsboard')" title="클릭: NewsBoard 실측 콕핏으로 이동">
-          <div class="kpi-label">NewsBoard 로컬 실측 수집</div>
-          <div class="kpi-hero">
-            <span id="kpiObservedRows">1,545,374</span> <span class="kpi-unit">투표 행</span>
-          </div>
-          <div class="kpi-desc mono" style="color:#059669;">
-            <span>● OBSERVED</span>
-            <span style="color:#64748b;">인물 487 · 사진 3,262건 동기화</span>
-          </div>
+        <div class="kpi-col" onclick="toggleSort('throughput')" title="전일 비교">
+          <div class="kpi-label">전일 비교 <span class="info-icon" tabindex="0" data-tip="두 날짜 모두 실제 적재 건수가 있을 때만 계산합니다."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span></div>
+          <div class="kpi-hero"><span id="kpiDayDelta">비교 대기</span></div>
+          <div class="kpi-desc mono" id="kpiDayDeltaDetail">전일 원장 대기</div>
         </div>
 
-        <div class="kpi-col" onclick="toggleAllDevicesView()" title="클릭: 84대 무인장치 전체 전개/접기">
-          <div class="kpi-label">가동 자동화 아키텍처</div>
-          <div class="kpi-hero">
-            <span id="kpiDeviceCount">84</span> <span class="kpi-unit">대</span>
-          </div>
-          <div class="kpi-desc mono">
-            <span>수집 24 · 분석 24 · 검증 20 · 운영 16</span>
-          </div>
+        <div class="kpi-col" onclick="filterByNav('attention')" title="수집기 상태">
+          <div class="kpi-label">수집기 <span class="info-icon" tabindex="0" data-tip="GitHub Actions의 최신 실행과 신선도를 기준으로 계산합니다."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span></div>
+          <div class="kpi-hero"><span id="kpiCollectorHealth">대기</span> <span class="kpi-unit">정상</span></div>
+          <div class="kpi-desc mono" id="kpiCollectorHealthDetail">운영 원장 대기</div>
         </div>
 
-        <div class="kpi-col" onclick="showLocalInferenceInfo()" title="클릭: M3 로컬 가속 스펙 확인">
-          <div class="kpi-label">맥북 클라우드 인프라 비용</div>
-          <div class="kpi-hero" style="color:#059669;">
-            $0.00
-          </div>
-          <div class="kpi-desc">
-            <span style="color:#059669; font-weight:700;">Zero-Cloud-Cost</span>
-            <span class="mono">M3 Neural Engine 로컬</span>
-          </div>
+        <div class="kpi-col" onclick="openAttentionService('newsboard')" title="품질 단계">
+          <div class="kpi-label">품질 단계 <span class="info-icon" tabindex="0" data-tip="수집, 분석, 검증 단계의 원장 상태입니다."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span></div>
+          <div class="kpi-hero"><span id="kpiQualityState">대기</span></div>
+          <div class="kpi-desc mono" id="kpiQualityDetail">검증 원장 대기</div>
         </div>
       </div>
 
@@ -1044,7 +1077,7 @@
       <div class="mid-section">
         <div>
           <div class="mid-head">
-            <div class="mid-title">24시간 생태계 처리량 & 추론 지연시간 실시간 스트림</div>
+            <div class="mid-title">수집 추이 <span class="info-icon" tabindex="0" data-tip="실제 적재 건수만 선으로 표시합니다."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span></div>
             <div class="filter-pills">
               <button class="pill-btn active" onclick="setChartFilter('day', this)">일</button>
               <button class="pill-btn" onclick="setChartFilter('month', this)">월</button>
@@ -1063,39 +1096,16 @@
             </defs>
           </svg>
           <div id="chartTimeLabels" style="display:flex; justify-content:space-between; margin-top:6px; font-size:11px;" class="mono">
-            <span style="color:#94a3b8;">00:00 (기저 4,200건)</span>
-            <span style="color:#94a3b8;">06:00 (크론 가동)</span>
-            <span style="color:#94a3b8;">12:00 (피크)</span>
-            <span style="color:#2563eb; font-weight:700;">현재 1.54M Ingest</span>
+            <span style="color:#94a3b8;">실측 원장 대기</span>
           </div>
         </div>
 
         <div>
           <div class="mid-head">
-            <div class="mid-title">외부 서비스 무료 쿼터 거버넌스</div>
-            <span class="mono" style="font-size:11px; color:#94a3b8; font-weight:700;">실측 원장 미연결</span>
+            <div class="mid-title">품질 흐름 <span class="info-icon" tabindex="0" data-tip="단계별 원장 상태입니다. 성공 실행과 품질 통과는 구분합니다."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span></div>
+            <span class="mono" id="qualityObservedAt" style="font-size:11px; color:#94a3b8; font-weight:700;">원장 대기</span>
           </div>
-          <div class="quota-block">
-            <div class="quota-meta">
-              <span>Naver Search API</span>
-              <span class="mono" style="color:#94a3b8; font-weight:700;">실측 원장 미연결</span>
-            </div>
-            <div class="hairline-bar"><div class="hairline-fill" style="width:0%;"></div></div>
-          </div>
-          <div class="quota-block">
-            <div class="quota-meta">
-              <span>GitHub Actions Minutes</span>
-              <span class="mono" style="color:#94a3b8; font-weight:700;">실측 원장 미연결</span>
-            </div>
-            <div class="hairline-bar"><div class="hairline-fill" style="width:0%;"></div></div>
-          </div>
-          <div class="quota-block">
-            <div class="quota-meta">
-              <span>Vercel Edge Network</span>
-              <span class="mono" style="color:#94a3b8; font-weight:700;">실측 원장 미연결</span>
-            </div>
-            <div class="hairline-bar"><div class="hairline-fill" style="width:0%;"></div></div>
-          </div>
+          <div class="pipeline-signal-list" id="qualityFlowList"></div>
         </div>
       </div>
 
@@ -1104,9 +1114,9 @@
         <div class="table-title">15대 서비스 무인 프로세스 운영 매트릭스</div>
         <div style="font-size:12px; color:#64748b;">
           <select id="sortSelect" onchange="handleSortChange(this.value)" style="border:none; background:transparent; font-size:12px; color:#64748b; cursor:pointer;">
-            <option value="default">기본 서순 ▾</option>
-            <option value="throughput">처리량순 ▾</option>
-            <option value="status">이상/지연 우선순 ▾</option>
+            <option value="default">기본</option>
+            <option value="throughput">처리량</option>
+            <option value="status">이상</option>
           </select>
         </div>
       </div>
@@ -1118,7 +1128,7 @@
               <span>서비스 도메인</span> <span id="sortIcon-name" class="sort-icon"></span>
             </th>
             <th style="width:13%; cursor:pointer;" onclick="toggleSort('throughput')" title="일일 처리량순 정렬">
-              <span>일일 처리량</span> <span id="sortIcon-throughput" class="sort-icon">▾</span>
+              <span>일일 처리량</span> <span id="sortIcon-throughput" class="sort-icon"><svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
             </th>
             <th style="width:36%; cursor:pointer;" onclick="toggleSort('devices')" title="가동 노드수순 정렬">
               <span>세부 현장 파이프라인 (수집·분석·품질·운영) & 장치 노드</span> <span id="sortIcon-devices" class="sort-icon"></span>
@@ -1793,6 +1803,7 @@
       }
 
       updateMacroHeaderKPIs();
+      renderOperationalMetrics();
       renderSidebar();
       renderMasterTable();
       handleHashRoute();
@@ -1882,7 +1893,11 @@
 
       if (value) value.textContent = Number(overall.today_collected).toLocaleString('ko-KR');
       if (unit) unit.textContent = '건/일';
-      if (detail) detail.innerHTML = `<span style="color:${overall.delta_pct >= 0 ? '#059669' : '#dc2626'}; font-weight:700;">${overall.delta_pct >= 0 ? '▲' : '▼'} ${Math.abs(overall.delta_pct || 0)}%</span><span class="mono">[전일 ${Number(overall.yesterday_collected || 0).toLocaleString('ko-KR')}건]</span>`;
+      if (detail) {
+        detail.textContent = typeof overall.delta_pct === 'number'
+          ? `전일 ${Number(overall.yesterday_collected).toLocaleString('ko-KR')}건 · ${overall.delta_pct >= 0 ? '+' : ''}${overall.delta_pct}%`
+          : '전일 비교 대기';
+      }
       if (!trend.length) return;
       const max = Math.max(...trend.map(day => day.collected), 1);
       const points = trend.map((day, index) => {
@@ -1895,6 +1910,10 @@
       if (area) { area.setAttribute('d', `${path} L 530 75 L 10 75 Z`); area.style.opacity = '0.08'; }
       if (dot) { dot.setAttribute('cx', points.at(-1)[0]); dot.setAttribute('cy', points.at(-1)[1]); dot.style.opacity = '1'; }
       if (labels) {
+        if (trend.length === 1) {
+          labels.innerHTML = `<span style="color:#2563eb; font-weight:700;">${escapeHtml(trend[0].date.slice(5))} · ${Number(trend[0].collected).toLocaleString('ko-KR')}건</span><span style="color:#94a3b8;">비교 원장 대기</span>`;
+          return;
+        }
         const marks = [trend[0], trend[Math.floor(trend.length / 2)], trend.at(-1)];
         labels.innerHTML = marks.map(day => `<span style="color:#94a3b8;">${escapeHtml(day.date.slice(5))} (${Number(day.collected).toLocaleString('ko-KR')}건)</span>`).join('');
       }
@@ -1919,6 +1938,49 @@
           nb.hashes = observabilityData.artifacts;
         }
       }
+    }
+
+    function renderOperationalMetrics() {
+      const overall = collectionPulseData?.overall || {};
+      const quality = collectionPulseData?.quality || {};
+      const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      };
+      const todayReady = typeof overall.today_collected === 'number';
+      const yesterdayReady = typeof overall.yesterday_collected === 'number';
+      setText('kpiDayDelta', typeof overall.delta_pct === 'number' ? `${overall.delta_pct >= 0 ? '+' : ''}${overall.delta_pct}%` : '비교 대기');
+      setText('kpiDayDeltaDetail', yesterdayReady ? `어제 ${overall.yesterday_collected.toLocaleString('ko-KR')}건` : '전일 원장 대기');
+      const healthy = typeof overall.collectors_healthy === 'number' ? overall.collectors_healthy : null;
+      const total = typeof overall.collectors_total === 'number' ? overall.collectors_total : null;
+      setText('kpiCollectorHealth', healthy !== null && total !== null ? `${healthy}/${total}` : '대기');
+      setText('kpiCollectorHealthDetail', healthy !== null && total !== null ? `주의 ${Math.max(total - healthy, 0)}개` : '운영 원장 대기');
+
+      const stages = observabilityData?.stages || {};
+      const qualityState = stages.quality?.status;
+      const qualityLabel = qualityState === 'success' ? '통과' : qualityState === 'unknown' ? '확인 대기' : qualityState || '대기';
+      setText('kpiQualityState', qualityLabel);
+      setText('kpiQualityDetail', typeof quality.quality_issue_count === 'number' ? `이슈 ${quality.quality_issue_count}건` : '검증 원장 대기');
+      setText('qualityObservedAt', quality.observed_at ? String(quality.observed_at).replace('T', ' ').slice(0, 16) : '원장 대기');
+
+      const flow = document.getElementById('qualityFlowList');
+      if (!flow) return;
+      const stageRows = [
+        ['수집', stages.collect, 'ok'],
+        ['분석', stages.analyze, 'ok'],
+        ['검증', stages.quality, 'quality_issue_count'],
+        ['게시', stages.publish, 'note']
+      ];
+      flow.innerHTML = stageRows.map(([name, stage, valueKey]) => {
+        const state = stage?.status || '대기';
+        const color = /success|observed/i.test(state) ? '#059669' : /failed|degraded/i.test(state) ? '#dc2626' : '#d97706';
+        let value = '원장 대기';
+        if (valueKey === 'quality_issue_count' && typeof stage?.quality_issue_count === 'number') value = `이슈 ${stage.quality_issue_count}건`;
+        else if (valueKey === 'ok' && typeof stage?.ok === 'number') value = `${stage.ok.toLocaleString('ko-KR')}건`;
+        else if (valueKey === 'note' && stage?.note) value = '확인';
+        return `<div class="pipeline-signal"><span class="signal-name">${name}</span><span class="signal-value" style="color:${color};">${escapeHtml(state)} · ${escapeHtml(value)}</span></div>`;
+      }).join('');
+      if (!todayReady) setText('kpiDailyThroughputDetail', '원장 대기');
     }
 
     function updateMacroHeaderKPIs() {
@@ -2004,6 +2066,15 @@
       selectServiceFromSidebar(serviceId);
     }
 
+    function chevronIcon(direction) {
+      const path = direction === 'up' ? 'm6 15 6-6 6 6' : 'm6 9 6 6 6-6';
+      return `<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"></path></svg>`;
+    }
+
+    function infoIcon(text) {
+      return `<span class="info-icon" tabindex="0" data-tip="${escapeHtml(text)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7h.01"></path></svg></span>`;
+    }
+
     function renderMasterTable() {
       const tbody = document.getElementById('masterTableBody');
       if (!tbody) return;
@@ -2073,9 +2144,9 @@
             </td>
             <td>
               ${s.pipeline.map(p => `
-                <div style="margin-top:3px;">
-                  <span class="stage-tag ${p.stage==='ingest'?'tag-ingest':(p.stage==='analyze'?'tag-analyze':'tag-quality')}">${p.stage==='ingest'?'수집':(p.stage==='analyze'?'분석':'검증')}</span>
-                  <span style="font-size:11.5px; color:${p.alert?'#dc2626':'inherit'}; font-weight:${p.alert?'600':'400'};">${escapeHtml(p.text)}</span>
+                <div style="display:inline-flex; align-items:center; margin:3px 7px 3px 0;">
+                  <span class="stage-tag ${p.stage==='ingest'?'tag-ingest':(p.stage==='analyze'?'tag-analyze':(p.stage==='publish'?'tag-ops':'tag-quality'))}">${p.stage==='ingest'?'수집':(p.stage==='analyze'?'분석':(p.stage==='publish'?'게시':'검증'))}</span>
+                  ${infoIcon(p.text)}
                 </div>
               `).join('')}
             </td>
@@ -2091,8 +2162,8 @@
               <div class="mono" style="font-size:10px; color:${s.status==='failed'?'#dc2626':(s.status==='stale'?'#d97706':'#059669')};">${s.statusText}</div>
             </td>
             <td style="text-align:right;">
-              <button class="action-expand" onclick="toggleServiceExpansion('${s.id}')">
-                ${isExpanded ? '접기 ▴' : '상세 펼치기 ▾'}
+              <button class="action-expand icon-button" aria-label="${isExpanded ? '상세 닫기' : '상세 보기'}" title="${isExpanded ? '상세 닫기' : '상세 보기'}" onclick="toggleServiceExpansion('${s.id}')">
+                ${chevronIcon(isExpanded ? 'up' : 'down')}
               </button>
             </td>
           </tr>
@@ -2123,7 +2194,7 @@
         const icon = document.getElementById(`sortIcon-${c}`);
         if (icon) {
           if (c === col) {
-            icon.innerText = sortAscending ? '▲' : '▼';
+            icon.innerHTML = chevronIcon(sortAscending ? 'up' : 'down');
           } else {
             icon.innerText = '';
           }
@@ -2149,7 +2220,7 @@
             <div class="cockpit-sheet">
               <div class="cockpit-top">
                 <div style="font-weight:700; font-size:13.5px; color:#0f172a; display:flex; align-items:center; gap:8px;">
-                  <span>${escapeHtml(s.name)} 심층 관측 콕핏</span>
+                  <span>${escapeHtml(s.name)} 관측</span>
                   <span class="mono" style="font-size:10.5px; color:${s.status==='failed'?'#dc2626':(s.status==='stale'?'#d97706':'#2563eb')}; font-weight:700;">
                     ${s.status.toUpperCase()}
                   </span>
@@ -2186,19 +2257,17 @@
                   </div>
 
                   <div class="cockpit-pane" style="font-size:11.5px; line-height:1.7;">
-                    <h4>추론 파이프라인 및 가속 상태</h4>
-                    <div>• 가속 엔진: <b class="mono">Apple M3 Neural Engine (8-core)</b></div>
-                    <div>• 추론 속도: <b class="mono" style="color:#2563eb;">18.4 tok/s</b> | 지연: <b class="mono">12ms (P99)</b></div>
-                    <div>• 도메인 모델: <b class="mono">${isNb ? 'BAAI/bge-m3' : (s.category==='culture' ? 'CultureLLM-v2' : 'PricePredictor-Dense')}</b></div>
-                    <div>• 상태 요약: <b class="mono" style="color:${s.status==='failed'?'#dc2626':(s.status==='stale'?'#d97706':'#059669')};">${s.statusText}</b></div>
+                    <h4>실행</h4>
+                    <div>상태: <b class="mono" style="color:${s.status==='failed'?'#dc2626':(s.status==='stale'?'#d97706':'#059669')};">${s.statusText}</b></div>
+                    <div>마지막: <b class="mono">${escapeHtml(s.observedDetail || '원장 대기')}</b></div>
+                    <div>근거: <b class="mono">GitHub Actions</b></div>
                   </div>
 
                   <div class="cockpit-pane" style="font-size:11.5px; line-height:1.7;">
-                    <h4>품질 & 색인 레저</h4>
-                    <div>• 일일 처리량: <b class="mono">${s.dailyThroughput}</b></div>
-                    <div>• 로컬 원장 크기: <b class="mono">18.4 MB (SQLite WAL)</b></div>
-                    <div>• Quality Gate: <b class="mono" style="color:${s.status==='failed'?'#dc2626':(s.status==='stale'?'#d97706':'#059669')};">${s.status==='failed'?'에러 정지':(s.status==='stale'?'지연 점검 필요':'정상')}</b></div>
-                    <div>• 인프라 비용: <b class="mono" style="color:#059669;">$0.00 (Zero-Cloud 로컬 가동)</b></div>
+                    <h4>데이터</h4>
+                    <div>오늘: <b class="mono">${s.dailyThroughput}</b></div>
+                    <div>품질: <b class="mono" style="color:${s.status==='failed'?'#dc2626':(s.status==='stale'?'#d97706':'#059669')};">${isNb ? (obs.stages?.quality?.status || '대기') : '원장 미연결'}</b></div>
+                    <div>누적: <b class="mono">증분 원장 대기</b></div>
                   </div>
                 </div>
               </div>
@@ -2208,27 +2277,27 @@
                 <div class="cockpit-stages-grid">
                   <div style="background:#ffffff; border:1px solid #e2e8f0; padding:12px; border-radius:4px;">
                     <div style="font-weight:700; margin-bottom:4px; color:${stages.collect?.status==='stale'?'#d97706':'#059669'};">1. 수집 (Collection)</div>
-                    <div class="mono" style="font-size:11px;">상태: <b>${stages.collect?.status || 'success'}</b></div>
-                    <div class="mono" style="font-size:11px;">건수: <b>${stages.collect?.count || s.dailyThroughput}</b></div>
-                    <div style="font-size:11px; color:#64748b; margin-top:4px;">${stages.collect?.note || '원천 데이터 수집 완료'}</div>
+                    <div class="mono" style="font-size:11px;">상태: <b>${stages.collect?.status || '대기'}</b></div>
+                    <div class="mono" style="font-size:11px;">건수: <b>${typeof stages.collect?.ok === 'number' ? stages.collect.ok.toLocaleString('ko-KR') : s.dailyThroughput}</b></div>
+                    <div style="font-size:11px; color:#64748b; margin-top:4px;">${stages.collect?.detail || '원장 대기'}</div>
                   </div>
                   <div style="background:#ffffff; border:1px solid #e2e8f0; padding:12px; border-radius:4px;">
                     <div style="font-weight:700; margin-bottom:4px; color:${stages.analyze?.status==='failed'?'#dc2626':'#2563eb'};">2. 분석 (Analysis)</div>
-                    <div class="mono" style="font-size:11px;">상태: <b>${stages.analyze?.status || 'observed'}</b></div>
-                    <div class="mono" style="font-size:11px;">대상: <b>${stages.analyze?.count || '487 인물'}</b></div>
-                    <div style="font-size:11px; color:${stages.analyze?.status==='failed'?'#dc2626':'#64748b'}; margin-top:4px;">${stages.analyze?.note || 'bge-m3 임베딩 가속'}</div>
+                    <div class="mono" style="font-size:11px;">상태: <b>${stages.analyze?.status || '대기'}</b></div>
+                    <div class="mono" style="font-size:11px;">대상: <b>${typeof stages.analyze?.ok === 'number' ? stages.analyze.ok.toLocaleString('ko-KR') : '원장 대기'}</b></div>
+                    <div style="font-size:11px; color:${stages.analyze?.status==='failed'?'#dc2626':'#64748b'}; margin-top:4px;">${stages.analyze?.detail || '원장 대기'}</div>
                   </div>
                   <div style="background:#ffffff; border:1px solid #e2e8f0; padding:12px; border-radius:4px;">
                     <div style="font-weight:700; margin-bottom:4px; color:${stages.quality?.status==='unknown'?'#d97706':'#059669'};">3. 품질 검증 (Quality)</div>
-                    <div class="mono" style="font-size:11px;">상태: <b>${stages.quality?.status || 'verified'}</b></div>
-                    <div class="mono" style="font-size:11px;">해시: <b>${stages.quality?.count || 'SHA-256 통과'}</b></div>
-                    <div style="font-size:11px; color:#64748b; margin-top:4px;">${stages.quality?.note || '데이터 무결성 검증'}</div>
+                    <div class="mono" style="font-size:11px;">상태: <b>${stages.quality?.status || '대기'}</b></div>
+                    <div class="mono" style="font-size:11px;">이슈: <b>${typeof stages.quality?.quality_issue_count === 'number' ? stages.quality.quality_issue_count : '원장 대기'}</b></div>
+                    <div style="font-size:11px; color:#64748b; margin-top:4px;">${stages.quality?.detail || '원장 대기'}</div>
                   </div>
                   <div style="background:#ffffff; border:1px solid #e2e8f0; padding:12px; border-radius:4px;">
                     <div style="font-weight:700; margin-bottom:4px; color:${stages.publish?.status==='blocked'?'#dc2626':'#059669'};">4. 게시 (Publish)</div>
-                    <div class="mono" style="font-size:11px;">상태: <b>${stages.publish?.status || 'success'}</b></div>
-                    <div class="mono" style="font-size:11px;">호스트: <b>${stages.publish?.count || 'Mac-mini / CDN'}</b></div>
-                    <div style="font-size:11px; color:#64748b; margin-top:4px;">${stages.publish?.note || '배포 완료 확인'}</div>
+                    <div class="mono" style="font-size:11px;">상태: <b>${stages.publish?.status || '대기'}</b></div>
+                    <div class="mono" style="font-size:11px;">근거: <b>${stages.publish?.artifact ? '산출물' : '원장 대기'}</b></div>
+                    <div style="font-size:11px; color:#64748b; margin-top:4px;">${stages.publish?.note || '원장 대기'}</div>
                   </div>
                 </div>
               </div>
@@ -2238,19 +2307,19 @@
                 <table style="width:100%; border-collapse:collapse; font-size:11.5px;" class="mono">
                   <tr style="border-bottom:1px solid #e2e8f0; padding:6px 0;">
                     <td style="padding:6px; font-weight:700; width:140px;">today.json</td>
-                    <td style="padding:6px; color:#2563eb;">${hashes.today || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}</td>
+                    <td style="padding:6px; color:#2563eb;">${hashes.today || '원장 대기'}</td>
                   </tr>
                   <tr style="border-bottom:1px solid #e2e8f0; padding:6px 0;">
                     <td style="padding:6px; font-weight:700;">global.json</td>
-                    <td style="padding:6px; color:#2563eb;">${hashes.global || '8f480329ac61abb35e1012fa6d80d8561de1849a29db88914ac0e141f2207777'}</td>
+                    <td style="padding:6px; color:#2563eb;">${hashes.global || '원장 대기'}</td>
                   </tr>
                   <tr style="border-bottom:1px solid #e2e8f0; padding:6px 0;">
                     <td style="padding:6px; font-weight:700;">status.json</td>
-                    <td style="padding:6px; color:#2563eb;">${hashes.status || 'a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0'}</td>
+                    <td style="padding:6px; color:#2563eb;">${hashes.status || '원장 대기'}</td>
                   </tr>
                   <tr>
                     <td style="padding:6px; font-weight:700;">quality.json</td>
-                    <td style="padding:6px; color:${hashes.quality==='unverified'?'#dc2626':'#059669'};">${hashes.quality || 'sha256_verified'}</td>
+                    <td style="padding:6px; color:${hashes.quality==='unverified'?'#dc2626':'#059669'};">${hashes.quality || '원장 대기'}</td>
                   </tr>
                 </table>
               </div>
@@ -2263,11 +2332,10 @@
               </div>
 
               <div class="cockpit-bottom">
-                <button class="btn-quiet" style="font-size:11.5px;" onclick="openServiceActions('${s.id}')">GitHub Actions 열기</button>
-                <button class="btn-quiet" style="font-size:11.5px;" onclick="showReadOnlyNotice('${s.id}')">실측 범위 안내</button>
-                <button class="btn-quiet" style="font-size:11.5px;" onclick="downloadServiceJson('${s.id}')">원시 원장(JSON) 다운로드</button>
-                <a href="https://github.com/pyw31337/${isNb?'news':'lets'}" target="_blank" class="btn-primary-subtle" style="font-size:11.5px; text-decoration:none;">GitHub 저장소 ↗</a>
-                <button class="btn-quiet" style="font-size:11.5px;" onclick="toggleServiceExpansion('${s.id}')">접기 ▴</button>
+                <button class="btn-quiet" style="font-size:11.5px;" onclick="openServiceActions('${s.id}')">Actions</button>
+                <button class="btn-quiet" style="font-size:11.5px;" onclick="downloadServiceJson('${s.id}')">원장</button>
+                <a href="https://github.com/pyw31337/${isNb?'news':'lets'}" target="_blank" class="btn-primary-subtle" style="font-size:11.5px; text-decoration:none;">저장소</a>
+                <button class="btn-quiet icon-button" aria-label="상세 닫기" title="상세 닫기" onclick="toggleServiceExpansion('${s.id}')">${chevronIcon('up')}</button>
               </div>
             </div>
           </td>
@@ -2359,7 +2427,7 @@
     }
 
     function showLocalInferenceInfo() {
-      showToast('⚡ Apple Silicon M3 Neural Engine (8-core): 100% 온디바이스 로컬 추론 가동 중 ($0.00)');
+      showToast('로컬 추론 원장이 연결되지 않았습니다.');
     }
 
     function setChartFilter(period, btn) {
@@ -2446,7 +2514,7 @@
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
-      showToast(`✓ [${serviceId}] 관측 원장(JSON) 파일이 다운로드되었습니다.`);
+      showToast(`[${serviceId}] 관측 원장을 다운로드했습니다.`);
     }
 
     function exportSnapshotData() {
@@ -2466,7 +2534,7 @@
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
-      showToast('✓ 스냅샷 백업 파일이 다운로드되었습니다.');
+      showToast('스냅샷을 다운로드했습니다.');
     }
 
     function triggerRestorePrompt() {
@@ -2485,9 +2553,9 @@
           applyObservabilityToNewsBoard();
           renderSidebar();
           renderMasterTable();
-          showToast('✓ 스냅샷 원장이 성공적으로 복원되었습니다.');
+          showToast('스냅샷을 복원했습니다.');
         } catch (err) {
-          showToast('⚠️ 스냅샷 파일 형식이 올바르지 않습니다: ' + err.message);
+          showToast('스냅샷 형식을 확인하세요: ' + err.message);
         }
       };
       reader.readAsText(file);
@@ -2510,12 +2578,12 @@
       try {
         await init();
         showToast(dataLoadErrors.length
-          ? `⚠️ ${dataLoadErrors.join(', ')}을 불러오지 못했습니다.`
-          : '✓ 실시간 관제 데이터가 최신 원장과 동기화되었습니다.');
+          ? `${dataLoadErrors.join(', ')}을 불러오지 못했습니다.`
+          : '최신 원장을 불러왔습니다.');
       } catch (err) {
-        showToast('⚠️ 동기화 중 오류 발생: ' + err.message);
+        showToast('동기화 오류: ' + err.message);
       } finally {
-        if (btn) btn.innerText = '실시간 동기화 ▾';
+        if (btn) btn.innerText = '실시간 동기화';
       }
     }
 

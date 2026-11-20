@@ -1,6 +1,21 @@
 {
-  "schema_version": "1.0.0",
-  "generated_at": "2026-11-18T00:00:00+09:00",
-  "runs": [],
-  "note": "실제 실행 이벤트 연결 전 초기 상태. master_ecosystem_pulse의 기존 시계열은 configured_snapshot으로 표시한다."
+  "schema_version": "1.1.0",
+  "generated_at": "2026-11-20T07:31:58.059578+00:00",
+  "runs": [
+    {
+      "source_run_id": "news-observability:observed-news-20261120-094927",
+      "service_id": "news",
+      "source": "newsboard_observability",
+      "workflow": "NewsBoard OpenAssembly Sync",
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-20T00:49:27Z",
+      "observed": {
+        "count": 1545374,
+        "unit": "vote_rows"
+      },
+      "note": "NewsBoard public observability ledger: persisted vote-row count."
+    }
+  ],
+  "note": "Workflow execution evidence. observed.count is populated only by collectors that report a real persisted-record count."
 }

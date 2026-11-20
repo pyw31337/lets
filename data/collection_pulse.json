@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-20T16:26:12.992399+09:00",
+  "generated_at": "2026-11-20T16:37:46.963437+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -8,11 +8,11 @@
     "rule": "Configured targets and workflow completion are never treated as observed record volume."
   },
   "overall": {
-    "volume_evidence": "not_connected",
-    "today_collected": null,
+    "volume_evidence": "observed",
+    "today_collected": 1545374,
     "yesterday_collected": null,
     "delta_pct": null,
-    "week_current": null,
+    "week_current": 1545374,
     "week_previous": null,
     "week_delta_pct": null,
     "collectors_healthy": 6,
@@ -87,11 +87,16 @@
     },
     {
       "date": "2026-11-20",
-      "collected": null,
-      "evidence": "not_connected"
+      "collected": 1545374,
+      "evidence": "observed"
     }
   ],
-  "service_volumes": {},
+  "service_volumes": {
+    "news": {
+      "today": 1545374,
+      "yesterday": null
+    }
+  },
   "quality": {
     "collect_success_pct": 100.0,
     "analyze_success_pct": 100.0,
