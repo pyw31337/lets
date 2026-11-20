@@ -1,278 +1,165 @@
 /**
- * Let's Design System (LDS v2.5.0)
- * 렛츠 패밀리 서비스 공통 디자인 시스템 CSS 라이브러리
- * - Taste Skill 기반: "Tactile Modernism & Digital Craft"
- * - 스퀘어클 벤토 그리드(Squircle Bento Architecture, 16~24px 곡률 + 1px 섬세한 헤어라인)
- * - 고정폭 타뷸러 숫자 (Tabular Figures: font-variant-numeric: tabular-nums)
- * - 스프링 피직스 트랜지션 (Spring Physics: cubic-bezier(0.16, 1, 0.3, 1))
- * - 세그먼트 컨트롤 vs 뱃지 분리 & 3열 풀위드 차트 탭
- * - 로컬 에지 AI & Ollama 인프라 관제 컴포넌트
- * - v2.5.0: 최상단 풀위드 스티키 콕핏 바, 보더리스 내비 탭, PC 4단 그리드, 정원(Circle) 차트 오버레이
- * - 320px 모바일 완벽 대응
+ * Let's Design System (LDS v3.0.0)
+ * 렛츠 생태계 공통 디자인 시스템 코어 사양서
+ * 
+ * [LDS v3.0 핵심 디자인 철학]
+ * 1. 단일 브랜드 컬러 (Unified Blue Brand Identity):
+ *    - 코어 브랜드: #2563eb (Primary Blue), #1d4ed8 (Deep Blue), #eff6ff (Soft Tint Blue)
+ *    - 상태 시맨틱 컬러 한정 사용: 정상(Emerald #059669), 주의(Amber #d97706), 경고(Red #dc2626)
+ * 2. 박스 구조 탈피 (Anti-Box Discipline):
+ *    - 박스 안에 박스 중첩 금지.
+ *    - 배경색, 테두리, 그림자 동시 사용 절대 금지. 배경색 사용 시 테두리 제외, 섀도우는 롤오버/플로팅에만 한정.
+ *    - 구분선은 직선 헤어라인(1px #f1f5f9), 곡선 보더 지양, 옅은 톤으로 시각적 피로 최소화.
+ * 3. UI 컴포넌트 형태 차별화:
+ *    - 버튼: 4px 미세 곡률 + 기능 텍스트 + 캐럿(›). 캡슐형 남발 금지.
+ *    - 탭: 보더리스 텍스트 + 활성 시 단정한 하단 인디케이터 라인.
+ *    - 뱃지/필드: 캡슐형 대신 고정폭 모노스페이스 플랫 라벨.
+ * 4. 간결성 & 미사여구 전면 배제:
+ *    - '통합 거버넌스 오버뷰' -> '오버뷰'로 단일 명사화.
+ *    - 장황한 설명글 제거, 필수 부가정보는 'ⓘ' 툴팁으로만 제공.
+ * 5. 시간 표준 및 차트 컨트롤:
+ *    - 타임스탬프: 축약형 '12분전' 기본 표기 + 롤오버 시 'YYYY.MM.DD (요일) HH:MM:SS' 정밀 툴팁.
+ *    - 차트 컨트롤: 일(Day), 월(Month), 년(Year) 필터 및 처리량 정렬 지원.
  */
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
 :root {
-  --lds-version: "2.6.0";
-  --lds-focus: #2563eb;
-  --lds-safe-top: env(safe-area-inset-top, 0px);
-  --lds-safe-right: env(safe-area-inset-right, 0px);
-  --lds-safe-bottom: env(safe-area-inset-bottom, 0px);
-  --lds-safe-left: env(safe-area-inset-left, 0px);
+  --lds-version: "3.0.0";
 
-  /* 8-Point Grid Spacing Tokens */
-  --space-2: 2px;
-  --space-4: 4px;
-  --space-6: 6px;
-  --space-8: 8px;
-  --space-12: 12px;
-  --space-16: 16px;
-  --space-20: 20px;
-  --space-24: 24px;
-  --space-32: 32px;
-  --space-40: 40px;
-  --space-48: 48px;
-  --space-64: 64px;
+  /* 1. Unified Blue Brand Palette */
+  --lds-brand-900: #1e3a8a;
+  --lds-brand-800: #1e40af;
+  --lds-brand-700: #1d4ed8;
+  --lds-brand-600: #2563eb;          /* Core Primary Brand Blue */
+  --lds-brand-500: #3b82f6;
+  --lds-brand-400: #60a5fa;
+  --lds-brand-200: #bfdbfe;
+  --lds-brand-100: #dbeafe;
+  --lds-brand-50:  #eff6ff;          /* Primary Surface Tint */
 
-  /* Typography Scale (Tabular Numerals Default for Metrics) */
-  --font-family-base: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  
-  --fs-xs: 12px;
-  --fs-sm: 13px;
-  --fs-md: 15px;
-  --fs-lg: 17px;
-  --fs-xl: 20px;
-  --fs-2xl: 24px;
-  --fs-3xl: 32px;
-  --fs-display: clamp(28px, 4vw, 40px);
+  /* 2. Functional Meaningful Status Colors ONLY */
+  --lds-status-normal:     #059669;  /* 정상 가동 (Emerald 600) */
+  --lds-status-normal-bg:  #ecfdf5;
+  --lds-status-warning:    #d97706;  /* 주의 / 지연 (Amber 600) */
+  --lds-status-warning-bg: #fffbeb;
+  --lds-status-danger:     #dc2626;  /* 경고 / 오류 (Red 600) */
+  --lds-status-danger-bg:  #fef2f2;
 
-  --fw-regular: 400;
-  --fw-medium: 500;
-  --fw-semibold: 600;
-  --fw-bold: 700;
-  --fw-extrabold: 800;
+  /* 3. Neutral Canvas & Straight Hairlines (No Curved Distracting Lines) */
+  --lds-canvas-bg:    #ffffff;
+  --lds-surface-subtle: #f8fafc;
+  --lds-divider-faint: #f1f5f9;      /* 옅은 직선 구분선 */
+  --lds-divider-line:  #e2e8f0;      /* 기준선 */
 
-  --lh-tight: 1.25;
-  --lh-snug: 1.45;
-  --lh-body: 1.6;
+  /* 4. Typography Scale & High-Contrast */
+  --lds-font-sans: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --lds-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Taste Palette: Apple Warm Neutral & Surfaces */
-  --bg-page: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-subtle: #f1f5f9;
-  --bg-hover: #f1f5f9;
+  --lds-text-strong: #0f172a;
+  --lds-text-body:   #334155;
+  --lds-text-muted:  #64748b;
+  --lds-text-faint:  #94a3b8;
 
-  /* 1px 미세 헤어라인 (스퀘어클 벤토 보더) */
-  --border-hairline: rgba(0, 0, 0, 0.08);
-  --divider: #f1f5f9;
-  --divider-dark: #e2e8f0;
+  /* 5. Elevation & Floating (Meaningful only) */
+  --lds-shadow-floating: 0 12px 32px -4px rgba(15, 23, 42, 0.12);
+  --lds-shadow-hover:    0 4px 12px rgba(15, 23, 42, 0.05);
 
-  /* Impeccable WCAG AA 4.5:1+ 고대비 타이포그래피 */
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #475569;
-  --text-subtle: #64748b;
-  --text-white: #ffffff;
-
-  /* 절제된 시맨틱 포인트 컬러 (WCAG AA 4.5:1+ 충족) */
-  --primary: #2563eb;          /* 수집 / 기본 포인트 */
-  --primary-light: #eff6ff;
-  --primary-hover: #1d4ed8;
-
-  --success: #047857;          /* 분석 / 로컬 AI 정상 (Emerald 700 - 4.8:1 대비 충족) */
-  --success-light: #ecfdf5;
-
-  --indigo: #4f46e5;           /* 품질 */
-  --indigo-light: #eef2ff;
-
-  --warning: #d97706;          /* 운영·관리 (Amber 600 - 4.5:1 대비 충족) */
-  --warning-light: #fffbeb;
-
-  --danger: #b91c1c;           /* 위험 (Red 700 - 5.5:1 대비 충족) */
-  --danger-light: #fef2f2;
-
-  --purple: #7c3aed;           /* 로컬 에지 AI / Ollama */
-  --purple-light: #f5f3ff;
-
-  /* 스퀘어클 비클리핑 섀도우 */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
-
-  /* 스퀘어클 곡률 토큰 */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 26px;
-  --radius-full: 9999px;
-
-  /* 스프링 피직스 트랜지션 (Spring Damper feel: stiffness 300, damping 28) */
-  --transition-spring: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-smooth: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  /* 6. Spacing */
+  --lds-space-1: 4px;
+  --lds-space-2: 8px;
+  --lds-space-3: 12px;
+  --lds-space-4: 16px;
+  --lds-space-6: 24px;
+  --lds-space-8: 32px;
+  --lds-space-12: 48px;
 }
 
-/* Baseline & Typography */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Base Reset & Anti-Box Global Rules */
+body {
+  font-family: var(--lds-font-sans);
+  background-color: var(--lds-canvas-bg);
+  color: var(--lds-text-strong);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-html {
-  -webkit-text-size-adjust: 100%;
-  font-family: var(--font-family-base);
-  background-color: var(--bg-page);
-  color: var(--text-primary);
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
+/* Straight Subtle Hairline Dividers */
+.lds-divider {
+  height: 1px;
+  background-color: var(--lds-divider-faint);
+  border: none;
+  margin: var(--lds-space-4) 0;
 }
 
-/* 숫자 표시 시 글자 폭이 흔들리지 않는 고정폭 타뷸러 넘버 */
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum";
+/* Tab Navigation - Borderless with Bottom Indicator */
+.lds-tab-nav {
+  display: flex;
+  gap: var(--lds-space-4);
+  border-bottom: 1px solid var(--lds-divider-line);
 }
-
-/* 스퀘어클 벤토 카드 (Taste Archetype) */
-.lds-bento-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-hairline);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-spring), box-shadow var(--transition-spring);
-  position: relative;
-  min-width: 0;
-}
-.lds-bento-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* 세그먼트 컨트롤 컴포넌트 */
-.lds-segmented-control {
-  display: inline-flex;
-  align-items: center;
-  background: var(--bg-subtle);
-  padding: 4px;
-  border-radius: var(--radius-md);
-  gap: 4px;
-  user-select: none;
-}
-.lds-segmented-btn {
+.lds-tab-btn {
+  padding: var(--lds-space-3) var(--lds-space-2);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--lds-text-muted);
   background: transparent;
   border: none;
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all var(--transition-spring);
-  white-space: nowrap;
-}
-.lds-segmented-btn.active {
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  font-weight: var(--fw-bold);
-}
-
-/* ==========================================================
-   LDS v2.5.0 Cockpit, Nav, Grid & Chart Extensions
-   ========================================================== */
-
-/* 1. 최상단 풀위드 스티키 콕핏 바 (Top 0px Sticky Full-Width) */
-.lds-cockpit-bar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-  border-radius: 0;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-}
-
-/* 2. 플랫 보더리스 내비게이션 탭 (의미 없는 외곽 박스 제거) */
-.lds-nav-tab {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
+}
+.lds-tab-btn:hover {
+  color: var(--lds-text-strong);
+}
+.lds-tab-btn.active {
+  color: var(--lds-brand-700);
+  font-weight: 700;
+  border-bottom-color: var(--lds-brand-600);
+}
+
+/* Segmented Control for Charts (Day / Month / Year) */
+.lds-segmented-filter {
+  display: inline-flex;
+  background: var(--lds-surface-subtle);
+  border-radius: 4px;
+  padding: 2px;
+}
+.lds-seg-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--lds-text-muted);
   background: transparent;
-  border: 1px solid transparent;
-  white-space: nowrap;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  user-select: none;
 }
-.lds-nav-tab:hover {
-  background: rgba(15, 23, 42, 0.04);
-  color: var(--text-primary);
-}
-.lds-nav-tab.active {
-  background: #0f172a;
-  color: #ffffff;
-  font-weight: var(--fw-bold);
-  border-color: #0f172a;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
-}
-.lds-nav-tab .lds-tab-badge {
-  font-size: var(--fs-xs);
-  font-family: var(--font-family-mono);
-  padding: 1px 6px;
-  border-radius: 6px;
-  background: rgba(15, 23, 42, 0.06);
-  color: var(--text-muted);
-  font-weight: var(--fw-semibold);
-}
-.lds-nav-tab.active .lds-tab-badge {
-  background: rgba(255, 255, 255, 0.22);
-  color: #ffffff;
+.lds-seg-btn.active {
+  background: #ffffff;
+  color: var(--lds-brand-700);
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-/* 3. PC 4단 반응형 그리드 시스템 */
-.lds-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-16);
-  width: 100%;
+/* Tooltip Affordance (i) */
+.lds-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--lds-text-faint);
+  background: var(--lds-surface-subtle);
+  cursor: help;
+  margin-left: 4px;
 }
-@media (max-width: 1400px) {
-  .lds-grid-4 { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 1024px) {
-  .lds-grid-4 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .lds-grid-4 { grid-template-columns: 1fr; }
-}
-
-/* 4. HTML 기반 정원 Circle 크로스헤어 닷 (종횡비 왜곡 완전 방지) */
-.lds-chart-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50% !important;
-  background: var(--lds-focus);
-  border: 2px solid #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.1s ease;
-  transform: translate(-50%, -50%);
-  z-index: 5;
+.lds-info-icon:hover {
+  color: var(--lds-brand-600);
+  background: var(--lds-brand-50);
 }

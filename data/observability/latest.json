@@ -1,0 +1,60 @@
+{
+  "run_id": "observed-news-20261120-094927",
+  "observed_at": "2026-11-20T00:49:27Z",
+  "observed_at_kst": "2026-11-20T09:49:27+09:00",
+  "source": "local_runner",
+  "workflow": "NewsBoard OpenAssembly Sync",
+  "commit": "dc82190492",
+  "host": "Mac-mini.local (M3 16GB)",
+  "stages": {
+    "collect": {
+      "status": "success",
+      "ok": 1545374,
+      "fail": 0,
+      "errors": 0,
+      "artifact": true,
+      "detail": "open.assembly.go.kr 10대 위원회 법안 및 투표 전수 수집 완료"
+    },
+    "analyze": {
+      "status": "observed",
+      "ok": 487,
+      "fail": 0,
+      "errors": 0,
+      "artifact": true,
+      "detail": "bge-m3 임베딩 및 정당별 표결 분류 (이벤트 분리 기록 대기)"
+    },
+    "quality": {
+      "status": "unknown",
+      "quality_issue_count": 0,
+      "event_quality_present": false,
+      "detail": "품질 검증 Gate 연결 대기 (산출물 SHA-256 검증 필요)"
+    },
+    "publish": {
+      "status": "success",
+      "note": "pushed 로그 확인 완료 (SQLite WAL 동기화)",
+      "artifact": true
+    }
+  },
+  "counts": {
+    "vote_rows": 1545374,
+    "members": 487,
+    "photos": 3262,
+    "photos_total": 3296,
+    "issues": 312,
+    "sources": 4,
+    "entities": 487,
+    "global_issues": 0,
+    "quality_issues": 0
+  },
+  "artifacts": {
+    "today": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "global": "8f480329ac61abb35e1012fa6d80d8561de1849a29db88914ac0e141f2207777",
+    "quality": "pending_gate_validation",
+    "status": "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+    "event_quality": null
+  },
+  "status_snapshot": {
+    "updated": "2026-11-20T09:49:27+09:00",
+    "error_count": 0
+  }
+}

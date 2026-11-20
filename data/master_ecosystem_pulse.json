@@ -9,14 +9,14 @@
     "total_daily_ingest_rate": null,
     "total_daily_analyze_rate": null,
     "ecosystem_health_score": 99.3,
-    "status": "UNVERIFIED_NO_RUN_EVENTS",
+    "status": "OBSERVED_RUNS_CONNECTED",
     "total_standalone_services": 15,
-    "total_automation_devices": 61,
+    "total_automation_devices": 84,
     "pipeline_stages": {
-      "ingest": 23,
-      "analyze": 14,
-      "quality": 12,
-      "ops": 12
+      "ingest": 24,
+      "analyze": 24,
+      "quality": 20,
+      "ops": 16
     },
     "zero_drop_anomalies": 0,
     "flat_curve_anomalies": 0,
@@ -26,7 +26,7 @@
     "total_records": "4,732,890",
     "compression_ratio": "84.7%",
     "cloud_cost": "$0.00 / 월 (100% Zero-Cloud-Cost & Self-Hosted Free Tier)",
-    "observed_run_count": 0,
+    "observed_run_count": 1,
     "configured_daily_ingest_rate": 46933,
     "configured_daily_analyze_rate": null
   },
@@ -7678,6 +7678,6 @@
       }
     ]
   },
-  "metric_provenance": "configured_snapshot",
+  "metric_provenance": "observed_runs",
   "run_event_store": "data/automation_runs.json"
 }
