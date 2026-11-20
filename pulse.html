@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수집 펄스 · 이상 징후</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --brand: #2563eb;
+    --brand-hover: #1d4ed8;
+    --text: #0f172a;
+    --text-secondary: #334155;
+    --muted: #64748b;
+    --faint: #94a3b8;
+    --line: #f1f5f9;
+    --line-strong: #e2e8f0;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+    --bg: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Pretendard Variable", -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 32px 40px 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+  h2 { font-size: 15px; font-weight: 700; color: var(--text); margin: 32px 0 12px; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .muted { color: var(--muted); }
+  .faint { color: var(--faint); }
+  .row { display: flex; gap: 32px; flex-wrap: wrap; }
+  .kpi { flex: 1; min-width: 160px; }
+  .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .kpi-value { font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+  .kpi-unit { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .kpi-delta { font-size: 12px; margin-top: 2px; }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+  .alert-strip { margin: 16px 0 24px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .alert-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .alert-item:last-child { border-bottom: none; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: var(--red); }
+  .dot-amber { background: var(--amber); }
+  .dot-green { background: var(--green); }
+  .sev-critical { color: var(--red); font-weight: 700; }
+  .sev-warning { color: var(--amber); font-weight: 700; }
+  a.action { color: var(--brand); text-decoration: none; font-size: 12px; font-weight: 600; }
+  a.action:hover { text-decoration: underline; }
+  .chart-bars { display: flex; align-items: flex-end; height: 100px; gap: 3px; margin-top: 8px; }
+  .bar { flex: 1; background: #bfdbfe; border-radius: 2px 2px 0 0; min-height: 4px; }
+  .bar.today { background: var(--brand); }
+  .bar-label { font-size: 9px; color: var(--faint); text-align: center; margin-top: 4px; }
+  .funnel-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .funnel-label { width: 52px; color: var(--muted); }
+  .funnel-track { flex: 1; height: 8px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .funnel-fill { height: 100%; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+  th { text-align: left; font-weight: 600; color: var(--faint); font-size: 11px; padding: 6px 8px; border-bottom: 1px solid var(--line-strong); }
+  td { padding: 8px; border-bottom: 1px solid var(--line); }
+  .status-healthy { color: var(--green); }
+  .status-stale { color: var(--amber); }
+  .status-failed { color: var(--red); }
+  .linkage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 12px; }
+  .linkage-card { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .linkage-title { font-weight: 600; color: var(--text); }
+  .linkage-num { font-size: 20px; font-weight: 800; color: var(--text); }
+</style>
+</head>
+<body>
+  <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+    <h1>수집 펄스</h1>
+    <span class="mono faint" id="updated">로딩 중</span>
+  </div>
+  <p class="muted" style="margin-bottom:24px;">오늘·전일·주간 수집량, 수집기 상태, 이상 징후, 누적 성장, 품질·연계 지표</p>
+
+  <div class="row" id="kpis"></div>
+  <div class="alert-strip" id="alerts"></div>
+
+  <div class="row">
+    <div style="flex:1.4;">
+      <h2>14일 수집량 · 누적 추이</h2>
+      <div id="chart"></div>
+    </div>
+    <div style="flex:1;">
+      <h2>품질 퍼널 (최근일)</h2>
+      <div id="funnel"></div>
+    </div>
+  </div>
+
+  <h2>서비스별 수집기 현황</h2>
+  <div id="matrix"></div>
+
+  <h2>서비스 간 연계</h2>
+  <div class="linkage-grid" id="linkage"></div>
+
+  <script>
+    async function load() {
+      try {
+        const resp = await fetch('data/collection_pulse.json');
+        if (!resp.ok) throw new Error('fetch failed');
+        const d = await resp.json();
+        render(d);
+      } catch (e) {
+        document.getElementById('updated').textContent = '데이터 로드 실패';
+        console.error(e);
+      }
+    }
+
+    function render(d) {
+      const o = d.overall || {};
+      document.getElementById('updated').textContent = new Date(d.generated_at).toLocaleString('ko-KR', {hour:'2-digit', minute:'2-digit'}) + ' 기준';
+
+      const deltaClass = (o.delta_pct || 0) >= 0 ? 'up' : 'down';
+      const deltaSign = (o.delta_pct || 0) >= 0 ? '▲' : '▼';
+      document.getElementById('kpis').innerHTML = `
+        <div class="kpi">
+          <div class="kpi-label">오늘 수집</div>
+          <div class="kpi-value">${(o.today_collected||0).toLocaleString()} <span class="kpi-unit">건</span></div>
+          <div class="kpi-delta ${deltaClass}">${deltaSign} ${Math.abs(o.delta_pct||0)}% <span class="faint">전일 ${(o.yesterday_collected||0).toLocaleString()}</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">주간 수집</div>
+          <div class="kpi-value">${((o.week_current||0)/1000).toFixed(1)}k</div>
+          <div class="kpi-delta up">▲ ${o.week_delta_pct||0}% <span class="faint">전주 대비</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">수집기 정상</div>
+          <div class="kpi-value">${o.collectors_healthy||0}<span class="kpi-unit"> / ${o.collectors_total||0}</span></div>
+          <div class="kpi-delta">${o.stale_or_failed||0}건 주의</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">누적 원장</div>
+          <div class="kpi-value">${((o.cumulative_records||0)/1e6).toFixed(2)}M</div>
+          <div class="kpi-delta">품질 ${o.quality_score||'—'} <span class="up">+${o.quality_delta||0}</span></div>
+        </div>
+      `;
+
+      const anomalies = d.anomalies || [];
+      const alertsEl = document.getElementById('alerts');
+      if (!anomalies.length) {
+        alertsEl.innerHTML = '<div class="muted">현재 이상 징후 없음</div>';
+      } else {
+        alertsEl.innerHTML = anomalies.map(a => {
+          const sevClass = a.severity === 'critical' ? 'sev-critical' : 'sev-warning';
+          const dotClass = a.severity === 'critical' ? 'dot-red' : 'dot-amber';
+          const link = a.action_url ? `<a class="action" href="${a.action_url}" target="_blank" rel="noopener">${a.action} ↗</a>` : `<span class="faint">${a.action}</span>`;
+          return `<div class="alert-item">
+            <span class="dot ${dotClass}"></span>
+            <span class="${sevClass}">${a.type}</span>
+            <span style="flex:1;">${a.message} <span class="faint">· ${a.detail}</span></span>
+            ${link}
+          </div>`;
+        }).join('');
+      }
+
+      const trend = d.daily_trend || [];
+      if (trend.length) {
+        const max = Math.max(...trend.map(t => t.collected || 0), 1);
+        const bars = trend.map((t, i) => {
+          const h = Math.round((t.collected / max) * 100);
+          const isToday = i === trend.length - 1;
+          return `<div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+            <div class="bar ${isToday ? 'today' : ''}" style="height:${h}%;" title="${t.date}: ${t.collected?.toLocaleString()}건 (누적 ${(t.cumulative||0).toLocaleString()})"></div>
+            <div class="bar-label">${(t.date||'').slice(8)}</div>
+          </div>`;
+        }).join('');
+        document.getElementById('chart').innerHTML = `<div class="chart-bars">${bars}</div>`;
+      }
+
+      const last = trend[trend.length - 1];
+      if (last) {
+        const c = last.collected || 1;
+        document.getElementById('funnel').innerHTML = `
+          <div class="funnel-row"><span class="funnel-label">수집</span><div class="funnel-track"><div class="funnel-fill" style="width:100%; background:#2563eb;"></div></div><span class="mono">${(last.collected||0).toLocaleString()}</span></div>
+          <div class="funnel-row"><span class="funnel-label">분석</span><div class="funnel-track"><div class="funnel-fill" style="width:${Math.round((last.analyzed||0)/c*100)}%; background:#3b82f6;"></div></div><span class="mono">${(last.analyzed||0).toLocaleString()}</span></div>
+          <div class="funnel-row"><span class="funnel-label">품질</span><div class="funnel-track"><div class="funnel-fill" style="width:${Math.round((last.quality_passed||0)/c*100)}%; background:#059669;"></div></div><span class="mono">${(last.quality_passed||0).toLocaleString()}</span></div>
+        `;
+      }
+
+      const services = d.services || [];
+      const rows = services.map(s => {
+        const statusClass = s.status === 'healthy' ? 'status-healthy' : s.status === 'failed' ? 'status-failed' : 'status-stale';
+        const statusText = s.status === 'healthy' ? '정상' : s.status === 'failed' ? '실패' : '지연';
+        const deltaColor = (s.delta_pct||0) > 0 ? 'var(--green)' : (s.delta_pct||0) < 0 ? 'var(--red)' : 'var(--muted)';
+        const sign = (s.delta_pct||0) > 0 ? '+' : '';
+        return `<tr>
+          <td style="font-weight:600;">${s.name}</td>
+          <td class="${statusClass}">${statusText}</td>
+          <td class="mono">${(s.today||0).toLocaleString()}</td>
+          <td class="mono" style="color:${deltaColor};">${sign}${s.delta_pct||0}%</td>
+          <td class="mono faint">${s.last_success || '—'}</td>
+        </tr>`;
+      }).join('');
+      document.getElementById('matrix').innerHTML = `
+        <table>
+          <thead><tr><th>서비스</th><th>상태</th><th>오늘</th><th>전일비</th><th>마지막 성공</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+
+      const link = d.linkage || {};
+      const cards = Object.entries(link).filter(([k]) => k !== 'note').map(([k, v]) => {
+        const title = k.replace(/_/g, ' → ').replace('newsboard', '뉴스보드').replace('people', '피플').replace('culture', '컬처').replace('calendar', '달력').replace('cctv', 'CCTV').replace('subway', '지하철');
+        const num = v.used_entities || v.shared_events || v.correlated_incidents || 0;
+        return `<div class="linkage-card">
+          <div class="linkage-title">${title}</div>
+          <div class="linkage-num">${num.toLocaleString()}</div>
+          <div class="faint">커버리지 ${v.coverage_pct || 0}%</div>
+        </div>`;
+      }).join('');
+      document.getElementById('linkage').innerHTML = cards + (link.note ? `<div class="muted" style="grid-column:1/-1; margin-top:8px;">${link.note}</div>` : '');
+    }
+
+    load();
+  </script>
+</body>
+</html>
