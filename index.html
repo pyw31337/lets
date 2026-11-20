@@ -1000,11 +1000,10 @@
         <div class="kpi-col" onclick="toggleSort('throughput')" title="클릭: 처리량순 정렬">
           <div class="kpi-label">일일 총 수집 & 연산</div>
           <div class="kpi-hero">
-            <span id="kpiDailyThroughput">48,250</span> <span class="kpi-unit">건/일</span>
+            <span id="kpiDailyThroughput">실측 대기</span> <span class="kpi-unit" id="kpiDailyThroughputUnit"></span>
           </div>
-          <div class="kpi-desc">
-            <span style="color:#059669; font-weight:700;">▲ +28.5%</span>
-            <span class="mono">[전일 37,550건]</span>
+          <div class="kpi-desc" id="kpiDailyThroughputDetail">
+            <span class="mono">수집량 원장 연결 대기</span>
           </div>
         </div>
 
@@ -1149,6 +1148,7 @@
        ========================================================== */
     let observabilityData = null;
     let liveOperationsData = null;
+    let collectionPulseData = null;
     let masterData = null;
     let dataLoadErrors = [];
     let expandedServices = new Set(['newsboard']); // Default expanded for NewsBoard
@@ -1765,9 +1765,10 @@
 
     async function init() {
       dataLoadErrors = [];
-      const [observabilityResult, liveResult] = await Promise.allSettled([
+      const [observabilityResult, liveResult, pulseResult] = await Promise.allSettled([
         fetchLedger('data/observability/latest.json'),
-        fetchLedger('data/live_operations.json')
+        fetchLedger('data/live_operations.json'),
+        fetchLedger('data/collection_pulse.json')
       ]);
       if (observabilityResult.status === 'fulfilled') {
         observabilityData = observabilityResult.value;
@@ -1781,6 +1782,13 @@
         renderLiveAttentionStrip();
       } else {
         dataLoadErrors.push('GitHub Actions 운영 원장');
+      }
+      if (pulseResult.status === 'fulfilled') {
+        collectionPulseData = pulseResult.value;
+        renderObservedThroughput();
+      } else {
+        dataLoadErrors.push('수집량 원장');
+        renderObservedThroughput();
       }
 
       updateMacroHeaderKPIs();
@@ -1828,6 +1836,49 @@
           <span>${escapeHtml(service.name || service.id)} <b style="color:${color}; font-weight:700;">${escapeHtml(service.label || '확인')}</b></span>
         </button>`;
       }).join('<span class="truth-sep">·</span>');
+    }
+
+    function renderObservedThroughput() {
+      const overall = collectionPulseData?.overall || {};
+      const value = document.getElementById('kpiDailyThroughput');
+      const unit = document.getElementById('kpiDailyThroughputUnit');
+      const detail = document.getElementById('kpiDailyThroughputDetail');
+      const line = document.getElementById('streamChartLine');
+      const area = document.getElementById('streamChartArea');
+      const dot = document.getElementById('streamChartDot');
+      const labels = document.getElementById('chartTimeLabels');
+      const trend = (collectionPulseData?.daily_trend || []).filter(day => typeof day.collected === 'number');
+      const observed = overall.volume_evidence === 'observed' && typeof overall.today_collected === 'number';
+
+      if (!observed) {
+        if (value) value.textContent = '실측 대기';
+        if (unit) unit.textContent = '';
+        if (detail) detail.innerHTML = '<span class="mono">수집기가 observed.count를 아직 보고하지 않았습니다.</span>';
+        if (line) line.style.opacity = '0';
+        if (area) area.style.opacity = '0';
+        if (dot) dot.style.opacity = '0';
+        if (labels) labels.innerHTML = '<span style="color:#d97706; font-weight:700;">실측 적재량 원장 미연결</span><span style="color:#94a3b8;">0건 또는 설정값으로 대체하지 않습니다</span>';
+        return;
+      }
+
+      if (value) value.textContent = Number(overall.today_collected).toLocaleString('ko-KR');
+      if (unit) unit.textContent = '건/일';
+      if (detail) detail.innerHTML = `<span style="color:${overall.delta_pct >= 0 ? '#059669' : '#dc2626'}; font-weight:700;">${overall.delta_pct >= 0 ? '▲' : '▼'} ${Math.abs(overall.delta_pct || 0)}%</span><span class="mono">[전일 ${Number(overall.yesterday_collected || 0).toLocaleString('ko-KR')}건]</span>`;
+      if (!trend.length) return;
+      const max = Math.max(...trend.map(day => day.collected), 1);
+      const points = trend.map((day, index) => {
+        const x = 10 + index * (520 / Math.max(trend.length - 1, 1));
+        const y = 70 - (day.collected / max) * 55;
+        return [x.toFixed(1), y.toFixed(1)];
+      });
+      const path = `M ${points.map(point => point.join(' ')).join(' L ')}`;
+      if (line) { line.setAttribute('d', path); line.style.opacity = '1'; }
+      if (area) { area.setAttribute('d', `${path} L 530 75 L 10 75 Z`); area.style.opacity = '0.08'; }
+      if (dot) { dot.setAttribute('cx', points.at(-1)[0]); dot.setAttribute('cy', points.at(-1)[1]); dot.style.opacity = '1'; }
+      if (labels) {
+        const marks = [trend[0], trend[Math.floor(trend.length / 2)], trend.at(-1)];
+        labels.innerHTML = marks.map(day => `<span style="color:#94a3b8;">${escapeHtml(day.date.slice(5))} (${Number(day.collected).toLocaleString('ko-KR')}건)</span>`).join('');
+      }
     }
 
     function applyObservabilityToNewsBoard() {
@@ -2293,6 +2344,15 @@
     }
 
     function setChartFilter(period, btn) {
+      const hasObservedVolume = collectionPulseData?.overall?.volume_evidence === 'observed';
+      if (!hasObservedVolume) {
+        showToast('실측 적재량 원장이 연결되면 기간별 차트를 사용할 수 있습니다.');
+        return;
+      }
+      if (period !== 'day') {
+        showToast('월·연 단위 실측 원장은 아직 연결되지 않았습니다.');
+        return;
+      }
       document.querySelectorAll('.filter-pills .pill-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       
