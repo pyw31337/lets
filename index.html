@@ -930,7 +930,7 @@
         <div class="side-logo">L</div>
         <div>
           <div class="side-title">Let's 허브</div>
-          <div class="mono" style="font-size:10px; color:#94a3b8;">15개 무인 장치 콘솔</div>
+          <div class="mono" style="font-size:10px; color:#94a3b8;">15개 서비스 관측</div>
         </div>
       </div>
 
@@ -1111,7 +1111,7 @@
 
       <!-- Master Operation Table -->
       <div class="table-header-row">
-        <div class="table-title">15대 서비스 무인 프로세스 운영 매트릭스</div>
+        <div class="table-title">15개 서비스 관측</div>
         <div style="font-size:12px; color:#64748b;">
           <select id="sortSelect" onchange="handleSortChange(this.value)" style="border:none; background:transparent; font-size:12px; color:#64748b; cursor:pointer;">
             <option value="default">기본</option>
@@ -1131,7 +1131,7 @@
               <span>일일 처리량</span> <span id="sortIcon-throughput" class="sort-icon"><svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
             </th>
             <th style="width:36%; cursor:pointer;" onclick="toggleSort('devices')" title="가동 노드수순 정렬">
-              <span>세부 현장 파이프라인 (수집·분석·품질·운영) & 장치 노드</span> <span id="sortIcon-devices" class="sort-icon"></span>
+              <span>등록 구성</span> <span id="sortIcon-devices" class="sort-icon"></span>
             </th>
             <th style="width:13%; cursor:pointer;" onclick="toggleSort('progress')" title="목표 달성 점유비순 정렬">
               <span>목표 달성 / 점유비</span> <span id="sortIcon-progress" class="sort-icon"></span>
@@ -2234,7 +2234,7 @@
                   </span>
                 </div>
                 <div class="mono" style="font-size:11px; color:#64748b;">
-                  도메인: <b style="color:#0f172a;">${s.category}</b> · 런타임: ${s.runtime} · 가동 노드: ${devList.length}대
+                  도메인: <b style="color:#0f172a;">${s.category}</b> · 런타임: ${s.runtime} · 등록 노드: ${devList.length}대
                 </div>
               </div>
 
@@ -2250,7 +2250,7 @@
               <div id="pane-${s.id}-runtime" class="cockpit-pane-content">
                 <div class="cockpit-columns">
                   <div class="cockpit-pane">
-                    <h4>가동 무인 노드 현황 (${devList.length}대)</h4>
+                    <h4>등록 노드 (${devList.length}대)</h4>
                     <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
                       ${devList.map(d => `
                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:3px 0; border-bottom:1px solid #f1f5f9;">
