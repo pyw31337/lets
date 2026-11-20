@@ -1,15 +1,15 @@
 {
   "version": "4.0.0",
-  "last_updated": "2026-11-20T11:29:17.115196+09:00",
+  "last_updated": "2026-11-20T17:04:23.712363+09:00",
   "dashboard_name": "Let's Master Control Hub",
   "theme": "LIGHT_TOSS_SUPABASE",
   "design_system": "LDS_v1.0.0",
   "summary": {
-    "total_indexed_records": 4845402,
+    "total_indexed_records": null,
     "total_daily_ingest_rate": null,
-    "total_daily_analyze_rate": null,
-    "ecosystem_health_score": 99.3,
-    "status": "OBSERVED_RUNS_CONNECTED",
+    "total_daily_analyze_rate": 0,
+    "ecosystem_health_score": null,
+    "status": "EVIDENCE_REQUIRED",
     "total_standalone_services": 15,
     "total_automation_devices": 84,
     "pipeline_stages": {
@@ -26,9 +26,11 @@
     "total_records": "4,732,890",
     "compression_ratio": "84.7%",
     "cloud_cost": "$0.00 / 월 (100% Zero-Cloud-Cost & Self-Hosted Free Tier)",
-    "observed_run_count": 1,
+    "observed_run_count": 11,
     "configured_daily_ingest_rate": 46933,
-    "configured_daily_analyze_rate": null
+    "configured_daily_analyze_rate": null,
+    "cumulative_evidence": "not_connected",
+    "quality_evidence": "not_connected"
   },
   "quality_lift_index": {
     "overall_score": 99.4,
@@ -65,7 +67,7 @@
       "badge_color": "#92400e",
       "title": "실행 이벤트가 없어 운영 상태를 검증할 수 없습니다",
       "desc": "서비스 원장과 설정값은 존재하지만 최근 SUCCESS/FAILED 실행 이벤트가 없습니다. 정상 가동이나 자동 치유로 표시하지 않습니다.",
-      "timestamp": "2026-11-20T11:29:17.115196+09:00"
+      "timestamp": "2026-11-20T17:04:23.712363+09:00"
     }
   ],
   "standalone_services": [
