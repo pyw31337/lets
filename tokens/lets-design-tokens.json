@@ -1,9 +1,80 @@
 {
-  "version": "1.1.0",
-  "font": {"family": "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif"},
-  "breakpoints": {"mobile": 320, "tablet": 640, "desktop": 1024, "wide": 1440},
-  "spacing": {"2": 2, "4": 4, "6": 6, "8": 8, "12": 12, "16": 16, "20": 20, "24": 24, "32": 32, "40": 40, "48": 48, "64": 64},
-  "colors": {"page": "#f8fafc", "surface": "#ffffff", "subtle": "#f1f5f9", "primary": "#0f172a", "secondary": "#334155", "muted": "#475569", "line": "#e2e8f0", "focus": "#1d4ed8"},
-  "interaction": {"minTouchTarget": 44, "focusRing": "0 0 0 3px color-mix(in srgb, var(--lds-focus) 28%, transparent)", "motionDuration": 250},
-  "services": {"calendar": "#6366f1", "news": "#1d4ed8", "people": "#e11d48", "law": "#2563eb", "insu": "#059669", "asset": "#4f46e5", "art": "#d97706"}
+  "version": "3.5.0",
+  "name": "Let's Design System Tokens (LDS v3.5)",
+  "brand": {
+    "primary": "#2563eb",
+    "hover": "#1d4ed8",
+    "deep": "#1e40af",
+    "surface": "#eff6ff",
+    "border": "#bfdbfe"
+  },
+  "semantic": {
+    "normal": "#059669",
+    "normalSurface": "#ecfdf5",
+    "warning": "#d97706",
+    "warningSurface": "#fffbeb",
+    "danger": "#dc2626",
+    "dangerSurface": "#fef2f2"
+  },
+  "neutral": {
+    "strong": "#0f172a",
+    "body": "#334155",
+    "muted": "#64748b",
+    "faint": "#94a3b8",
+    "line": "#e2e8f0",
+    "hairline": "#f1f5f9",
+    "canvas": "#ffffff",
+    "surfaceSubtle": "#fafbfc"
+  },
+  "font": {
+    "sans": "\"Pretendard Variable\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+    "mono": "ui-monospace, \"SF Mono\", Menlo, Monaco, Consolas, monospace"
+  },
+  "breakpoints": {
+    "mobileMin": 320,
+    "mobile": 375,
+    "tablet": 768,
+    "desktop": 1024,
+    "wide": 1440,
+    "max": 1920
+  },
+  "spacing": {
+    "hairline": 1,
+    "2": 2,
+    "4": 4,
+    "6": 6,
+    "8": 8,
+    "12": 12,
+    "16": 16,
+    "20": 20,
+    "24": 24,
+    "32": 32,
+    "40": 40,
+    "48": 48,
+    "64": 64
+  },
+  "interaction": {
+    "minTouchTarget": 44,
+    "focusRing": "0 0 0 2px #2563eb",
+    "motionDuration": 200
+  },
+  "rules": {
+    "antiBox": {
+      "nestedBoxesForbidden": true,
+      "simultaneousBgBorderShadowForbidden": true,
+      "thickLeftBorderForbidden": true,
+      "shadowUsage": "hover-and-floating-only"
+    },
+    "typography": {
+      "zeroFluff": true,
+      "mainTitle": "single-word-only",
+      "tabs": "single-word-only",
+      "explanatoryText": "tooltip-only"
+    },
+    "mobile": {
+      "strictZeroOverflowAt320": true,
+      "fixedHeaderLogoForbidden": true,
+      "tableToBlockStack": true
+    }
+  }
 }

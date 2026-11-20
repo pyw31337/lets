@@ -1,31 +1,19 @@
 /**
- * Let's Design System (LDS v3.0.0)
- * 렛츠 생태계 공통 디자인 시스템 코어 사양서
+ * Let's Design System (LDS v3.5.0)
+ * 렛츠 패밀리 통합 디자인 시스템 코어 사양서
  * 
- * [LDS v3.0 핵심 디자인 철학]
- * 1. 단일 브랜드 컬러 (Unified Blue Brand Identity):
- *    - 코어 브랜드: #2563eb (Primary Blue), #1d4ed8 (Deep Blue), #eff6ff (Soft Tint Blue)
- *    - 상태 시맨틱 컬러 한정 사용: 정상(Emerald #059669), 주의(Amber #d97706), 경고(Red #dc2626)
- * 2. 박스 구조 탈피 (Anti-Box Discipline):
- *    - 박스 안에 박스 중첩 금지.
- *    - 배경색, 테두리, 그림자 동시 사용 절대 금지. 배경색 사용 시 테두리 제외, 섀도우는 롤오버/플로팅에만 한정.
- *    - 구분선은 직선 헤어라인(1px #f1f5f9), 곡선 보더 지양, 옅은 톤으로 시각적 피로 최소화.
- * 3. UI 컴포넌트 형태 차별화:
- *    - 버튼: 4px 미세 곡률 + 기능 텍스트 + 캐럿(›). 캡슐형 남발 금지.
- *    - 탭: 보더리스 텍스트 + 활성 시 단정한 하단 인디케이터 라인.
- *    - 뱃지/필드: 캡슐형 대신 고정폭 모노스페이스 플랫 라벨.
- * 4. 간결성 & 미사여구 전면 배제:
- *    - '통합 거버넌스 오버뷰' -> '오버뷰'로 단일 명사화.
- *    - 장황한 설명글 제거, 필수 부가정보는 'ⓘ' 툴팁으로만 제공.
- * 5. 시간 표준 및 차트 컨트롤:
- *    - 타임스탬프: 축약형 '12분전' 기본 표기 + 롤오버 시 'YYYY.MM.DD (요일) HH:MM:SS' 정밀 툴팁.
- *    - 차트 컨트롤: 일(Day), 월(Month), 년(Year) 필터 및 처리량 정렬 지원.
+ * [핵심 디자인 규율]
+ * 1. 단일 브랜드 블루 (Unified Brand Blue #2563eb) & 제한적 시맨틱 컬러(정상 #059669, 주의 #d97706, 경고 #dc2626)
+ * 2. 안티 벤또 & 탈박스 (Anti-Box): 박스 안 박스 금지, 배경+테두리+그림자 동시 사용 금지, 좌측 굵은 테두리 금지, 넉넉한 여백과 1px 옅은 직선 구분선(#f1f5f9)
+ * 3. 극단적 단순화 & 미사여구 배제: 타이틀 '오버뷰', 탭 단일 단어('전체', '뉴스' 등), 설명글 배제(ⓘ 툴팁 활용), 탭 간격 32px 확보로 겹침 방지
+ * 4. 모바일 320px 무오버플로우 절대 규칙: scrollWidth === clientWidth === 320px (DIFF: 0), 다단 테이블의 스택 카드 전환
+ * 5. 유기적 심층 탐색 (Deep Drilldown): 인라인 콕핏, 4단계 파이프라인, SHA-256 해시 검증
  */
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
 :root {
-  --lds-version: "3.0.0";
+  --lds-version: "3.5.0";
 
   /* 1. Unified Blue Brand Palette */
   --lds-brand-900: #1e3a8a;
@@ -47,14 +35,14 @@
   --lds-status-danger-bg:  #fef2f2;
 
   /* 3. Neutral Canvas & Straight Hairlines (No Curved Distracting Lines) */
-  --lds-canvas-bg:    #ffffff;
-  --lds-surface-subtle: #f8fafc;
-  --lds-divider-faint: #f1f5f9;      /* 옅은 직선 구분선 */
-  --lds-divider-line:  #e2e8f0;      /* 기준선 */
+  --lds-canvas-bg:       #ffffff;
+  --lds-surface-subtle:  #fafbfc;
+  --lds-divider-faint:   #f1f5f9;    /* 옅은 직선 구분선 */
+  --lds-divider-line:    #e2e8f0;    /* 기준선 */
 
   /* 4. Typography Scale & High-Contrast */
-  --lds-font-sans: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --lds-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --lds-font-sans: "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --lds-font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 
   --lds-text-strong: #0f172a;
   --lds-text-body:   #334155;
@@ -65,41 +53,70 @@
   --lds-shadow-floating: 0 12px 32px -4px rgba(15, 23, 42, 0.12);
   --lds-shadow-hover:    0 4px 12px rgba(15, 23, 42, 0.05);
 
-  /* 6. Spacing */
+  /* 6. Spacing Scale */
   --lds-space-1: 4px;
   --lds-space-2: 8px;
   --lds-space-3: 12px;
   --lds-space-4: 16px;
   --lds-space-6: 24px;
   --lds-space-8: 32px;
+  --lds-space-10: 40px;
   --lds-space-12: 48px;
 }
 
-/* Base Reset & Anti-Box Global Rules */
-body {
-  font-family: var(--lds-font-sans);
+/* Base Reset & 320px Zero-Overflow Foundation */
+*, *::before, *::after {
+  box-sizing: border-box;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
   background-color: var(--lds-canvas-bg);
-  color: var(--lds-text-strong);
+  color: var(--lds-text-body);
+  font-family: var(--lds-font-sans);
+  font-size: 13px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Straight Subtle Hairline Dividers */
+h1, h2, h3, h4, p, span, div, td, th, button, pre, code {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.lds-mono {
+  font-family: var(--lds-font-mono);
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+/* Straight Hairline Dividers (Ultra-faint, no thick borders) */
 .lds-divider {
   height: 1px;
   background-color: var(--lds-divider-faint);
   border: none;
-  margin: var(--lds-space-4) 0;
+  margin: var(--lds-space-8) 0;
 }
 
-/* Tab Navigation - Borderless with Bottom Indicator */
+/* Tab Navigation - Generous Gap (32px), No Wrap Collisions */
 .lds-tab-nav {
   display: flex;
-  gap: var(--lds-space-4);
-  border-bottom: 1px solid var(--lds-divider-line);
+  align-items: center;
+  gap: var(--lds-space-8);
+  border-bottom: 1px solid var(--lds-divider-faint);
+  padding-bottom: 1px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
 }
+.lds-tab-nav::-webkit-scrollbar { display: none; }
+
 .lds-tab-btn {
-  padding: var(--lds-space-3) var(--lds-space-2);
+  padding: var(--lds-space-2) 0 var(--lds-space-3);
   font-size: 13px;
   font-weight: 500;
   color: var(--lds-text-muted);
@@ -110,15 +127,105 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .lds-tab-btn:hover {
   color: var(--lds-text-strong);
 }
 .lds-tab-btn.active {
-  color: var(--lds-brand-700);
+  color: var(--lds-text-strong);
   font-weight: 700;
-  border-bottom-color: var(--lds-brand-600);
+  border-bottom-color: var(--lds-text-strong);
 }
+.lds-tab-count {
+  font-size: 11px;
+  color: var(--lds-brand-600);
+  font-weight: 600;
+}
+
+/* Status Indicators (Disciplined, no colored pill wrapper abuse) */
+.lds-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.lds-dot-normal  { background-color: var(--lds-status-normal); }
+.lds-dot-warning { background-color: var(--lds-status-warning); }
+.lds-dot-danger  { background-color: var(--lds-status-danger); }
+.lds-dot-brand   { background-color: var(--lds-brand-600); }
+
+/* Monospace Flat Tags (No rounded capsule cliché) */
+.lds-tag-mono {
+  font-family: var(--lds-font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.lds-tag-mono.danger  { color: var(--lds-status-danger); }
+.lds-tag-mono.warning { color: var(--lds-status-warning); }
+.lds-tag-mono.normal  { color: var(--lds-status-normal); }
+
+/* Buttons (Disciplined 4px radius, clear actions) */
+.lds-btn-primary {
+  background: var(--lds-brand-600);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.lds-btn-primary:hover {
+  background: var(--lds-brand-700);
+}
+
+.lds-btn-subtle {
+  background: var(--lds-brand-50);
+  color: var(--lds-brand-700);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lds-btn-subtle:hover {
+  background: #dbeafe;
+}
+
+.lds-btn-quiet {
+  background: transparent;
+  color: var(--lds-text-muted);
+  border: 1px solid var(--lds-divider-line);
+  border-radius: 4px;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.lds-btn-quiet:hover {
+  color: var(--lds-text-strong);
+  border-color: var(--lds-text-faint);
+}
+
+/* Anti-Box Surface (Whitespace rhythm, never simultaneous bg+border+shadow) */
+.lds-surface {
+  background: var(--lds-canvas-bg);
+  padding: 0;
+  margin-bottom: var(--lds-space-10);
+  border-bottom: 1px solid var(--lds-divider-faint);
+}
+
+/* Equal Split Grid Utilities */
+.lds-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--lds-space-8); }
+.lds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--lds-space-8); }
+.lds-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--lds-space-8); }
 
 /* Segmented Control for Charts (Day / Month / Year) */
 .lds-segmented-filter {
@@ -144,7 +251,7 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
-/* Tooltip Affordance (i) */
+/* Discrete Tooltip Icon (ⓘ) */
 .lds-info-icon {
   display: inline-flex;
   align-items: center;
@@ -162,4 +269,57 @@ body {
 .lds-info-icon:hover {
   color: var(--lds-brand-600);
   background: var(--lds-brand-50);
+}
+
+/* Inline Cockpit Sheet (Deep Drilldown) */
+.lds-cockpit-sheet {
+  background: var(--lds-surface-subtle);
+  border-left: 2px solid var(--lds-brand-600);
+  padding: 20px 24px;
+  margin: 4px 0 16px;
+}
+
+/* ==========================================================
+   Mobile 320px Zero-Overflow Responsive Engine
+   ========================================================== */
+@media (max-width: 900px) {
+  .lds-tab-nav {
+    gap: var(--lds-space-4);
+  }
+  .lds-grid-2, .lds-grid-3, .lds-grid-4 {
+    grid-template-columns: 1fr;
+    gap: var(--lds-space-4);
+  }
+  
+  /* Convert Desktop Tables to Responsive Block Stack */
+  .lds-responsive-table,
+  .lds-responsive-table thead,
+  .lds-responsive-table tbody,
+  .lds-responsive-table tr,
+  .lds-responsive-table td {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+  .lds-responsive-table thead {
+    display: none !important;
+  }
+  .lds-responsive-table tr {
+    padding: var(--lds-space-4) 0;
+    border-bottom: 1px solid var(--lds-divider-faint);
+  }
+  .lds-responsive-table td {
+    padding: 2px 0;
+    border: none;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    font-size: 12.5px;
+  }
+  .lds-btn-primary, .lds-btn-subtle, .lds-btn-quiet {
+    padding: 6px 8px;
+    font-size: 11.5px;
+  }
 }
