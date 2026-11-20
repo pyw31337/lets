@@ -60,10 +60,13 @@ def main() -> int:
     ]
     dates = [(now.date() - timedelta(days=offset)).isoformat() for offset in range(13, -1, -1)]
     volume_by_day: dict[str, float] = defaultdict(float)
+    service_volume_by_day: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
     for event in ingests:
         day = event_day(event)
         if day in dates:
             volume_by_day[day] += float(event["observed"]["count"])
+            if event.get("service_id"):
+                service_volume_by_day[str(event["service_id"])][day] += float(event["observed"]["count"])
 
     history = [
         {"date": day, "collected": int(volume_by_day[day]) if day in volume_by_day else None,
@@ -116,6 +119,13 @@ def main() -> int:
             "collectors_total": len(services), "registered_nodes": len(inventory.get("automation_devices", [])),
         },
         "daily_trend": history,
+        "service_volumes": {
+            service_id: {
+                "today": int(days[today]) if today in days else None,
+                "yesterday": int(days[yesterday]) if yesterday in days else None,
+            }
+            for service_id, days in service_volume_by_day.items()
+        },
         "quality": {
             "collect_success_pct": success_rate(observability.get("stages", {}).get("collect", {})),
             "analyze_success_pct": success_rate(observability.get("stages", {}).get("analyze", {})),

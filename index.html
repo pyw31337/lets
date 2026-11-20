@@ -1785,6 +1785,7 @@
       }
       if (pulseResult.status === 'fulfilled') {
         collectionPulseData = pulseResult.value;
+        applyObservedServiceVolumes();
         renderObservedThroughput();
       } else {
         dataLoadErrors.push('수집량 원장');
@@ -1810,6 +1811,24 @@
         service.statusText = `실측: ${live.label || '확인 필요'} · ${live.detail || '상세 정보 없음'}`;
         service.observedDetail = `실측 실행 · ${live.updated_at || '시각 미확인'}`;
         service.liveActionsUrl = live.url;
+      });
+      applyObservedServiceVolumes();
+    }
+
+    function applyObservedServiceVolumes() {
+      const volumes = collectionPulseData?.service_volumes || {};
+      SERVICES_MASTER.forEach(service => {
+        const observed = volumes[LIVE_SERVICE_IDS[service.id]];
+        if (typeof observed?.today === 'number') {
+          service.dailyThroughput = `${observed.today.toLocaleString('ko-KR')}건/일`;
+          service.observedDetail = `실측 적재 · ${typeof observed.yesterday === 'number' ? `전일 ${observed.yesterday.toLocaleString('ko-KR')}건` : '전일 비교 대기'}`;
+        } else {
+          service.dailyThroughput = '실측 대기';
+          service.observedDetail = '수집량 원장 미연결';
+        }
+        service.progress = 0;
+        service.progressLabel = '실측 대기';
+        service.share = '설정값 미표시';
       });
     }
 
