@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-21T03:53:27.682270+00:00",
+  "generated_at": "2026-11-21T11:50:43.224756+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -598,6 +598,90 @@
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
       "completed_at": "2026-11-21T02:02:35Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/news/actions/runs/44900350471",
+      "service_id": "news",
+      "source": "github_actions",
+      "workflow": "collect-news",
+      "stage": "UNCLASSIFIED",
+      "status": "PENDING",
+      "completed_at": "2026-11-21T11:42:14Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/culture/actions/runs/44885364786",
+      "service_id": "culture",
+      "source": "github_actions",
+      "workflow": "Deploy to GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-21T08:36:46Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/meat/actions/runs/44894090772",
+      "service_id": "meat",
+      "source": "github_actions",
+      "workflow": "Deploy GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-21T10:23:34Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/camp/actions/runs/44891878704",
+      "service_id": "camp",
+      "source": "github_actions",
+      "workflow": "Site photos",
+      "stage": "UNCLASSIFIED",
+      "status": "PENDING",
+      "completed_at": "2026-11-21T09:55:48Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/cctv/actions/runs/44900945518",
+      "service_id": "cctv",
+      "source": "github_actions",
+      "workflow": "Check Key Area Playback",
+      "stage": "UNCLASSIFIED",
+      "status": "PENDING",
+      "completed_at": "2026-11-21T11:49:50Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/calendar/actions/runs/44891589472",
+      "service_id": "calendar",
+      "source": "github_actions",
+      "workflow": "Daily Photo Tag Maintenance",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-21T09:54:10Z",
       "observed": {
         "count": null,
         "unit": null
