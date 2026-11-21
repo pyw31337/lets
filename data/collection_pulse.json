@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-22T03:17:27.954647+09:00",
+  "generated_at": "2026-11-22T08:23:37.155755+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -110,8 +110,8 @@
       "status": "degraded",
       "label": "데이터 단계 주의",
       "detail": "실행 원장에 수집·분석·품질 단계 주의가 기록되어 있습니다",
-      "updated_at": "2026-11-21T18:12:14Z",
-      "age_hours": 0.08,
+      "updated_at": "2026-11-21T23:12:15Z",
+      "age_hours": 0.18,
       "url": "https://github.com/pyw31337/news/actions",
       "repo": "https://github.com/pyw31337/news",
       "next": "완료 결과 확인",
@@ -119,28 +119,28 @@
         "name": "collect-news",
         "conclusion": null,
         "status": "in_progress",
-        "url": "https://github.com/pyw31337/news/actions/runs/44934201606",
+        "url": "https://github.com/pyw31337/news/actions/runs/44960610904",
         "failed_steps": []
       },
       "open_issues": 3,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-21T17:53:58+00:00",
-        "age_hours": 0.38,
-        "run_id": "44931479289",
+        "observed_at": "2026-11-21T22:50:45+00:00",
+        "age_hours": 0.54,
+        "run_id": "44958099859",
         "stages": {
           "collect": {
             "status": "degraded",
-            "ok": 293,
-            "fail": 15,
-            "errors": 15,
+            "ok": 299,
+            "fail": 24,
+            "errors": 24,
             "artifact": true
           },
           "analyze": {
             "status": "degraded",
-            "ok": 474,
-            "fail": 21,
-            "errors": 21,
+            "ok": 485,
+            "fail": 25,
+            "errors": 25,
             "artifact": true
           },
           "quality": {
@@ -148,32 +148,32 @@
             "quality_issue_count": 10,
             "event_quality_present": true,
             "detail": {
-              "low_score": 8,
-              "low_photo": 7,
+              "low_score": 7,
+              "low_photo": 8,
               "low_source": 1,
-              "missing_event_stages": 10
+              "missing_event_stages": 8
             }
           },
           "publish": {
             "status": "success",
-            "published_at": "2026-11-21T17:56:40+00:00",
-            "data_commit": "578a25713d5fdcc3b4f7f603eb3ef980093a498d",
+            "published_at": "2026-11-21T22:54:08+00:00",
+            "data_commit": "5be9da754b420e14cf097553a4bb8579ef2db380",
             "note": "data 브랜치 커밋 이후 게시 확인"
           }
         },
         "counts": {
           "issues": 10,
-          "sources": 208,
+          "sources": 198,
           "entities": 36,
           "global_issues": 0,
           "quality_issues": 10
         },
         "artifacts": {
-          "today": "27029776f6b9fdfa84cc78695d88beb33e3621200830a6d4b9446c0f34a18325",
-          "global": "599e452fe9311729d3aff4957d1452bec5904c5a9a8bb640df69c2c0a017d30b",
-          "quality": "a2b708850208207efbeabcef2364304879b9ca44fd6dc146e9a7089a709bd8be",
-          "status": "011a85f77f36aa593b6ac893e0a56681aa848c616346f5a4fcef2a2271be8ef1",
-          "event_quality": "b7c79d5fc4a482153a650e0cf3f3a5eafd8fec9344842a343e30671460a6b59b"
+          "today": "5ddda708a0baebbefcfea6c63176806a629bc073f186ff94aa4a37bcbc2307c7",
+          "global": "744044bd524b42f4b2dca8eedddfe956cd82cd6b1a974313cb674bddd89018ae",
+          "quality": "8e4ef151b6c15c806eab8889c5d5fbb2115718c0491ee9b9f71e6a8384152ea1",
+          "status": "cfcfcee9ed63bf53510609ed9923d41b14a0637ad3497e226f514da853d4a2d0",
+          "event_quality": "956048822efc289b783f3c569dcf2d70e79406c3667148577a8585acf637f1f1"
         },
         "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
       }
@@ -184,16 +184,16 @@
       "status": "degraded",
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
-      "updated_at": "2026-11-21T16:42:25Z",
-      "age_hours": 1.58,
+      "updated_at": "2026-11-21T22:56:40Z",
+      "age_hours": 0.44,
       "url": "https://github.com/pyw31337/culture/actions",
       "repo": "https://github.com/pyw31337/culture",
       "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
-        "name": "Deploy to GitHub Pages",
+        "name": "Daily Data Update",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/culture/actions/runs/44925564780",
+        "url": "https://github.com/pyw31337/culture/actions/runs/44959211704",
         "failed_steps": []
       },
       "open_issues": 0
@@ -205,7 +205,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-16T08:39:20Z",
-      "age_hours": 129.63,
+      "age_hours": 134.73,
       "url": "https://github.com/pyw31337/pick/actions",
       "repo": "https://github.com/pyw31337/pick",
       "next": "수집기에서 observability/latest.json 발행",
@@ -225,7 +225,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-18T00:31:52Z",
-      "age_hours": 89.75,
+      "age_hours": 94.86,
       "url": "https://github.com/pyw31337/hair/actions",
       "repo": "https://github.com/pyw31337/hair",
       "next": "수집기에서 observability/latest.json 발행",
@@ -245,7 +245,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-21T17:52:24Z",
-      "age_hours": 0.41,
+      "age_hours": 5.51,
       "url": "https://github.com/pyw31337/meat/actions",
       "repo": "https://github.com/pyw31337/meat",
       "next": "수집기에서 observability/latest.json 발행",
@@ -265,7 +265,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-18T08:58:51Z",
-      "age_hours": 81.3,
+      "age_hours": 86.41,
       "url": "https://github.com/pyw31337/buy/actions",
       "repo": "https://github.com/pyw31337/buy",
       "next": "수집기에서 observability/latest.json 발행",
@@ -284,16 +284,16 @@
       "status": "degraded",
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
-      "updated_at": "2026-11-21T16:58:46Z",
-      "age_hours": 1.3,
+      "updated_at": "2026-11-21T23:15:31Z",
+      "age_hours": 0.13,
       "url": "https://github.com/pyw31337/camp/actions",
       "repo": "https://github.com/pyw31337/camp",
       "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
-        "name": "Deploy GitHub Pages",
-        "conclusion": "success",
-        "status": "completed",
-        "url": "https://github.com/pyw31337/camp/actions/runs/44927264774",
+        "name": "Data sync",
+        "conclusion": null,
+        "status": "pending",
+        "url": "https://github.com/pyw31337/camp/actions/runs/44960892970",
         "failed_steps": []
       },
       "open_issues": 3
@@ -304,16 +304,16 @@
       "status": "degraded",
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
-      "updated_at": "2026-11-21T15:40:39Z",
-      "age_hours": 2.61,
+      "updated_at": "2026-11-21T23:02:06Z",
+      "age_hours": 0.35,
       "url": "https://github.com/pyw31337/cctv/actions",
       "repo": "https://github.com/pyw31337/cctv",
       "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
-        "name": "Refresh quality_summary.json",
-        "conclusion": "success",
+        "name": "Actions Failure Auto-Remediation",
+        "conclusion": "skipped",
         "status": "completed",
-        "url": "https://github.com/pyw31337/cctv/actions/runs/44920410505",
+        "url": "https://github.com/pyw31337/cctv/actions/runs/44959737071",
         "failed_steps": []
       },
       "open_issues": 0
@@ -325,7 +325,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-20T08:04:11Z",
-      "age_hours": 34.21,
+      "age_hours": 39.32,
       "url": "https://github.com/pyw31337/metro/actions",
       "repo": "https://github.com/pyw31337/metro",
       "next": "수집기에서 observability/latest.json 발행",
@@ -344,16 +344,16 @@
       "status": "degraded",
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
-      "updated_at": "2026-11-21T09:54:10Z",
-      "age_hours": 8.38,
+      "updated_at": "2026-11-21T22:39:27Z",
+      "age_hours": 0.73,
       "url": "https://github.com/pyw31337/calendar/actions",
       "repo": "https://github.com/pyw31337/calendar",
       "next": "수집기에서 observability/latest.json 발행",
       "latest_run": {
-        "name": "Daily Photo Tag Maintenance",
+        "name": "Refresh Calendar OG Pages",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/calendar/actions/runs/44891589472",
+        "url": "https://github.com/pyw31337/calendar/actions/runs/44957844854",
         "failed_steps": []
       },
       "open_issues": 1
@@ -365,7 +365,7 @@
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
       "updated_at": "2026-11-21T00:28:57Z",
-      "age_hours": 17.8,
+      "age_hours": 22.9,
       "url": "https://github.com/pyw31337/law/actions",
       "repo": "https://github.com/pyw31337/law",
       "next": "예약 실행 유지",
@@ -413,8 +413,8 @@
       "status": "degraded",
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
-      "updated_at": "2026-11-20T23:36:30Z",
-      "age_hours": 18.68,
+      "updated_at": "2026-11-21T22:42:02Z",
+      "age_hours": 0.69,
       "url": "https://github.com/pyw31337/insu/actions",
       "repo": "https://github.com/pyw31337/insu",
       "next": "수집기에서 observability/latest.json 발행",
@@ -422,7 +422,7 @@
         "name": "24/7 Daily Policy Terms Ingestion",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/insu/actions/runs/44838018132",
+        "url": "https://github.com/pyw31337/insu/actions/runs/44958076873",
         "failed_steps": []
       },
       "open_issues": 0
@@ -434,7 +434,7 @@
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
       "updated_at": "2026-11-21T00:59:44Z",
-      "age_hours": 17.29,
+      "age_hours": 22.39,
       "url": "https://github.com/pyw31337/people/actions",
       "repo": "https://github.com/pyw31337/people",
       "next": "예약 실행 유지",
@@ -482,8 +482,8 @@
       "status": "healthy",
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
-      "updated_at": "2026-11-20T22:04:18Z",
-      "age_hours": 20.21,
+      "updated_at": "2026-11-21T20:43:02Z",
+      "age_hours": 2.67,
       "url": "https://github.com/pyw31337/asset/actions",
       "repo": "https://github.com/pyw31337/asset",
       "next": "예약 실행 유지",
@@ -491,14 +491,14 @@
         "name": "24/7 Daily Market Stream & Filing Ingestion",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/asset/actions/runs/44825775996",
+        "url": "https://github.com/pyw31337/asset/actions/runs/44947731918",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-20T22:04:14.301480+00:00",
-        "run_id": "asset-unimplemented-20261120T220414Z",
+        "observed_at": "2026-11-21T20:42:57.616251+00:00",
+        "run_id": "asset-unimplemented-20261121T204257Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -532,7 +532,7 @@
       "label": "정상",
       "detail": "최근 GitHub Actions 실행 정상",
       "updated_at": "2026-11-21T02:02:35Z",
-      "age_hours": 16.24,
+      "age_hours": 21.34,
       "url": "https://github.com/pyw31337/art/actions",
       "repo": "https://github.com/pyw31337/art",
       "next": "예약 실행 유지",
