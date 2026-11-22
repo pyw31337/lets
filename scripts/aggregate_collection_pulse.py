@@ -57,6 +57,7 @@ def main() -> int:
         if event.get("status") == "SUCCESS"
         and str(event.get("stage", "")).upper() == "INGEST"
         and isinstance(event.get("observed", {}).get("count"), (int, float))
+        and (event.get("service_id") == "news" or event.get("observed", {}).get("kind") == "increment")
     ]
     dates = [(now.date() - timedelta(days=offset)).isoformat() for offset in range(13, -1, -1)]
     volume_by_day: dict[str, float] = defaultdict(float)

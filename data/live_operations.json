@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-22T05:48:59.541543+00:00",
+  "generated_at": "2026-11-22T05:52:14.883621+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
-    "label": "운영 주의 11건",
-    "healthy": 4,
-    "degraded": 11,
+    "label": "운영 주의 9건",
+    "healthy": 6,
+    "degraded": 9,
     "blocked": 0,
     "note": "GitHub Actions·열린 이슈를 5분 주기로 집계합니다."
   },
@@ -33,7 +33,7 @@
       "observability": {
         "status": "observed",
         "observed_at": "2026-11-22T05:23:28+00:00",
-        "age_hours": 0.43,
+        "age_hours": 0.48,
         "run_id": "44988375189",
         "stages": {
           "collect": {
@@ -148,14 +148,14 @@
     {
       "id": "meat",
       "name": "렛츠미트",
-      "status": "degraded",
-      "label": "수집 미관측",
-      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "status": "healthy",
+      "label": "실측 수집",
+      "detail": "Persisted price history rows.",
       "updated_at": null,
       "age_hours": null,
       "url": "https://github.com/pyw31337/meat/actions",
       "repo": "https://github.com/pyw31337/meat",
-      "next": "수집기에서 observability/latest.json 발행",
+      "next": "예약 실행 유지",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -163,7 +163,36 @@
         "url": null,
         "failed_steps": []
       },
-      "open_issues": 0
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-22T05:50:53.427231+00:00",
+        "run_id": "meat-20261122T055053Z",
+        "stages": {
+          "collect": {
+            "status": "success",
+            "ok": 601,
+            "artifact": true
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "success",
+            "quality_issue_count": 0
+          },
+          "publish": {
+            "status": "success",
+            "artifact": true
+          }
+        },
+        "counts": {
+          "records": 601,
+          "unique_records": 601
+        },
+        "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json"
+      }
     },
     {
       "id": "buy",
@@ -208,14 +237,14 @@
     {
       "id": "cctv",
       "name": "렛츠CCTV",
-      "status": "degraded",
-      "label": "수집 미관측",
-      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "status": "healthy",
+      "label": "실측 수집",
+      "detail": "Persisted CCTV catalog snapshot.",
       "updated_at": null,
       "age_hours": null,
       "url": "https://github.com/pyw31337/cctv/actions",
       "repo": "https://github.com/pyw31337/cctv",
-      "next": "수집기에서 observability/latest.json 발행",
+      "next": "예약 실행 유지",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -223,7 +252,35 @@
         "url": null,
         "failed_steps": []
       },
-      "open_issues": 0
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-22T05:50:53.280760+00:00",
+        "run_id": "cctv-20261122T055053Z",
+        "stages": {
+          "collect": {
+            "status": "success",
+            "ok": 18274,
+            "artifact": true
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "success",
+            "quality_issue_count": 0
+          },
+          "publish": {
+            "status": "success",
+            "artifact": true
+          }
+        },
+        "counts": {
+          "records": 18274
+        },
+        "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json"
+      }
     },
     {
       "id": "metro",

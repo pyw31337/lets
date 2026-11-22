@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-22T05:49:00.389726+00:00",
+  "generated_at": "2026-11-22T05:52:15.785211+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -393,6 +393,34 @@
         "unit": null
       },
       "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "meat-observability:meat-20261122T055053Z",
+      "service_id": "meat",
+      "source": "persisted_price_history",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-22T05:50:53.427231+00:00",
+      "observed": {
+        "count": 601,
+        "unit": "records"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "cctv-observability:cctv-20261122T055053Z",
+      "service_id": "cctv",
+      "source": "persisted_cctv_catalog",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-22T05:50:53.280760+00:00",
+      "observed": {
+        "count": 18274,
+        "unit": "records"
+      },
+      "note": "Source-backed public observability ledger."
     }
   ],
   "note": "Workflow execution evidence. observed.count is populated only by collectors that report a real persisted-record count."

@@ -43,7 +43,9 @@ NEWS_OBSERVABILITY_URL = "https://raw.githubusercontent.com/pyw31337/news/data/o
 OBSERVABILITY_SOURCES = {
     "art": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
     "asset": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
+    "cctv": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
     "law": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
+    "meat": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
     "news": NEWS_OBSERVABILITY_URL,
     "people": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
 }
@@ -145,7 +147,7 @@ def record_observed_ingest(service_id: str, observability: dict | None) -> None:
     run_id = observability.get("run_id")
     observed_at = observability.get("observed_at") or observability.get("observed_at_kst")
     counts = observability.get("counts") or {}
-    count = counts.get("vote_rows") if service_id == "news" else counts.get("records")
+    count = counts.get("vote_rows") if service_id == "news" else counts.get("increment")
     collect = (observability.get("stages") or {}).get("collect") or {}
     if not run_id or not observed_at or not isinstance(count, (int, float)) or collect.get("status") != "success":
         return
@@ -165,7 +167,7 @@ def record_observed_ingest(service_id: str, observability: dict | None) -> None:
         "stage": "INGEST",
         "status": "SUCCESS",
         "completed_at": observed_at,
-        "observed": {"count": int(count), "unit": "vote_rows" if service_id == "news" else "records"},
+        "observed": {"count": int(count), "unit": "vote_rows" if service_id == "news" else "records", "kind": "increment"},
         "note": "Source-backed public observability ledger.",
     })
     ledger["schema_version"] = "1.1.0"
