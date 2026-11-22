@@ -133,8 +133,8 @@ def record_workflow_events(services: list[dict]) -> None:
     RUN_EVENTS.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def record_observed_news_ingest(observability: dict | None) -> None:
-    """Append a NewsBoard run only when its public observability ledger proves a count.
+def record_observed_ingest(service_id: str, observability: dict | None) -> None:
+    """Append a run only when a public observability ledger proves a count.
 
     The collector never derives a record count from an Actions result.  NewsBoard
     exposes both a stable run id and its persisted vote-row count, so it can be
@@ -144,7 +144,8 @@ def record_observed_news_ingest(observability: dict | None) -> None:
         return
     run_id = observability.get("run_id")
     observed_at = observability.get("observed_at") or observability.get("observed_at_kst")
-    count = (observability.get("counts") or {}).get("vote_rows")
+    counts = observability.get("counts") or {}
+    count = counts.get("vote_rows") if service_id == "news" else counts.get("records")
     collect = (observability.get("stages") or {}).get("collect") or {}
     if not run_id or not observed_at or not isinstance(count, (int, float)) or collect.get("status") != "success":
         return
@@ -153,25 +154,30 @@ def record_observed_news_ingest(observability: dict | None) -> None:
     except (FileNotFoundError, json.JSONDecodeError):
         ledger = {"schema_version": "1.1.0", "runs": []}
     runs = ledger.setdefault("runs", [])
-    source_run_id = f"news-observability:{run_id}"
+    source_run_id = f"{service_id}-observability:{run_id}"
     if any(run.get("source_run_id") == source_run_id for run in runs):
         return
     runs.append({
         "source_run_id": source_run_id,
-        "service_id": "news",
-        "source": "newsboard_observability",
+        "service_id": service_id,
+        "source": observability.get("source") or "service_observability",
         "workflow": observability.get("workflow"),
         "stage": "INGEST",
         "status": "SUCCESS",
         "completed_at": observed_at,
-        "observed": {"count": int(count), "unit": "vote_rows"},
-        "note": "NewsBoard public observability ledger: persisted vote-row count.",
+        "observed": {"count": int(count), "unit": "vote_rows" if service_id == "news" else "records"},
+        "note": "Source-backed public observability ledger.",
     })
     ledger["schema_version"] = "1.1.0"
     ledger["generated_at"] = datetime.now(timezone.utc).isoformat()
     ledger["runs"] = runs[-5000:]
     ledger["note"] = "Workflow execution evidence. observed.count is populated only by collectors that report a real persisted-record count."
     RUN_EVENTS.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def record_observed_news_ingest(observability: dict | None) -> None:
+    """Backward-compatible NewsBoard wrapper."""
+    record_observed_ingest("news", observability)
 
 
 def main() -> int:
@@ -339,7 +345,14 @@ def main() -> int:
             "counts": observability.get("counts") or {},
             "url": source_url,
         }
-        if collect_status not in {"success", "observed"}:
+        record_observed_ingest(service_id, observability)
+        quality_status = str((stages.get("quality") or {}).get("status") or "unknown")
+        if collect_status in {"success", "observed"} and quality_status == "success":
+            service["status"] = "healthy"
+            service["label"] = "실측 수집"
+            service["detail"] = str(observability.get("note") or "원천 수집과 품질 검증 원장이 확인되었습니다")
+            service["next"] = "예약 실행 유지"
+        else:
             service["status"] = "degraded"
             service["label"] = "수집 미구현" if collect_status == "not_implemented" else "수집 미관측"
             service["detail"] = str(observability.get("note") or "수집 원장에 성공 근거가 없습니다")
