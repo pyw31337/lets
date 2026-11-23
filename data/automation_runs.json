@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-23T08:21:19.912256+00:00",
+  "generated_at": "2026-11-23T08:22:59.109264+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -768,6 +768,20 @@
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
       "completed_at": "2026-11-23T01:29:08Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/buy/actions/runs/45137938281",
+      "service_id": "buy",
+      "source": "github_actions",
+      "workflow": "pages build and deployment",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T08:22:24Z",
       "observed": {
         "count": null,
         "unit": null
