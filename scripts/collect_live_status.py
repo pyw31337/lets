@@ -53,7 +53,7 @@ OBSERVABILITY_SOURCES = {
     "calendar": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
     "metro": "https://raw.githubusercontent.com/pyw31337/metro/main/public/data/observability/latest.json",
     "insu": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json",
-    "limery": "https://raw.githubusercontent.com/pyw31337/limery/main/data/observability/latest.json",
+    "limery": "https://pyw31337.github.io/lets/data/observability/limery_latest.json",
 }
 
 

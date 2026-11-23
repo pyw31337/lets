@@ -1,6 +1,6 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-23T07:50:43.568702+00:00",
+  "generated_at": "2026-11-23T07:56:15.411291+00:00",
   "services": [
     {
       "service_id": "news",
@@ -182,7 +182,7 @@
     },
     {
       "service_id": "limery",
-      "url": "https://raw.githubusercontent.com/pyw31337/limery/main/data/observability/latest.json",
+      "url": "https://pyw31337.github.io/lets/data/observability/limery_latest.json",
       "status": "unreachable",
       "observed_at": null,
       "run_id": null,

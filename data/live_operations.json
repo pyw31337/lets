@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-23T07:51:01.861848+00:00",
+  "generated_at": "2026-11-23T07:56:15.813473+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
@@ -33,7 +33,7 @@
       "observability": {
         "status": "observed",
         "observed_at": "2026-11-23T07:20:45+00:00",
-        "age_hours": 0.5,
+        "age_hours": 0.59,
         "run_id": "45129374870",
         "stages": {
           "collect": {
