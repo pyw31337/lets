@@ -362,7 +362,12 @@ def main() -> int:
             service["next"] = "예약 실행 유지"
         else:
             service["status"] = "degraded"
-            service["label"] = "수집 미구현" if collect_status == "not_implemented" else "수집 미관측"
+            if collect_status == "not_implemented":
+                service["label"] = "수집 미구현"
+            elif collect_status in {"success", "observed"} and quality_status not in {"success", "unknown"}:
+                service["label"] = "품질 단계 주의"
+            else:
+                service["label"] = "수집 미관측"
             service["detail"] = str(observability.get("note") or "수집 원장에 성공 근거가 없습니다")
             service["next"] = "원천 수집기와 검증 원장 연결"
 

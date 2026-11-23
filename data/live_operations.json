@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-23T07:43:20.333854+00:00",
+  "generated_at": "2026-11-23T07:51:01.861848+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
@@ -33,7 +33,7 @@
       "observability": {
         "status": "observed",
         "observed_at": "2026-11-23T07:20:45+00:00",
-        "age_hours": 0.38,
+        "age_hours": 0.5,
         "run_id": "45129374870",
         "stages": {
           "collect": {
@@ -89,7 +89,7 @@
       "id": "culture",
       "name": "컬처플로우",
       "status": "degraded",
-      "label": "수집 미관측",
+      "label": "품질 단계 주의",
       "detail": "Persisted CultureFlow calendar snapshot.",
       "updated_at": null,
       "age_hours": null,
@@ -248,13 +248,13 @@
       "id": "camp",
       "name": "렛츠캠핑",
       "status": "degraded",
-      "label": "수집 미관측",
-      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "label": "품질 단계 주의",
+      "detail": "Persisted campground catalog and quality snapshot; no daily increment inferred.",
       "updated_at": null,
       "age_hours": null,
       "url": "https://github.com/pyw31337/camp/actions",
       "repo": "https://github.com/pyw31337/camp",
-      "next": "수집기에서 observability/latest.json 발행",
+      "next": "원천 수집기와 검증 원장 연결",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -262,7 +262,37 @@
         "url": null,
         "failed_steps": []
       },
-      "open_issues": 0
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-22T05:52:57.031800+00:00",
+        "run_id": "camp-20261122T055257Z",
+        "stages": {
+          "collect": {
+            "status": "success",
+            "ok": 7740,
+            "artifact": true
+          },
+          "analyze": {
+            "status": "success",
+            "ok": 261553
+          },
+          "quality": {
+            "status": "degraded",
+            "quality_issue_count": 123
+          },
+          "publish": {
+            "status": "success",
+            "artifact": true
+          }
+        },
+        "counts": {
+          "records": 7740,
+          "facts": 261553,
+          "increment": null
+        },
+        "url": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json"
+      }
     },
     {
       "id": "cctv",

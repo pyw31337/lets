@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-23T07:43:21.406266+00:00",
+  "generated_at": "2026-11-23T07:51:03.173899+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",

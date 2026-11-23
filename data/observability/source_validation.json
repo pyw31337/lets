@@ -1,6 +1,6 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-23T07:43:04.955129+00:00",
+  "generated_at": "2026-11-23T07:50:43.568702+00:00",
   "services": [
     {
       "service_id": "news",
@@ -96,11 +96,16 @@
     {
       "service_id": "camp",
       "url": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json",
-      "status": "unreachable",
-      "observed_at": null,
-      "run_id": null,
-      "counts": {},
-      "error": "HTTP Error 404: Not Found"
+      "status": "observed",
+      "observed_at": "2026-11-22T05:52:57.031800+00:00",
+      "run_id": "camp-20261122T055257Z",
+      "counts": {
+        "records": 7740,
+        "facts": 261553,
+        "increment": null
+      },
+      "collect": "success",
+      "quality": "degraded"
     },
     {
       "service_id": "culture",
@@ -185,7 +190,7 @@
       "error": "HTTP Error 404: Not Found"
     }
   ],
-  "observed": 10,
+  "observed": 11,
   "not_configured": 3,
-  "degraded": 3
+  "degraded": 2
 }
