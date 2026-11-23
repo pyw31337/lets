@@ -9,12 +9,12 @@
     "cctv": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
     "meat": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
     "camp": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json",
-    "culture": null,
+    "culture": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json",
     "pick": null,
     "hair": null,
     "buy": null,
     "metro": null,
-    "calendar": null,
-    "insu": null
+    "calendar": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
+    "insu": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json"
   }
 }

@@ -1,6 +1,6 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-23T04:57:20.452145+00:00",
+  "generated_at": "2026-11-23T05:16:52.794378+00:00",
   "services": [
     {
       "service_id": "news",
@@ -104,11 +104,15 @@
     },
     {
       "service_id": "culture",
-      "url": null,
-      "status": "not_configured",
-      "observed_at": null,
-      "run_id": null,
-      "counts": {}
+      "url": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-23T05:14:39.430050+00:00",
+      "run_id": "culture-20261123T051439Z",
+      "counts": {
+        "records": 9486
+      },
+      "collect": "success",
+      "quality": "degraded"
     },
     {
       "service_id": "pick",
@@ -144,22 +148,30 @@
     },
     {
       "service_id": "calendar",
-      "url": null,
-      "status": "not_configured",
-      "observed_at": null,
-      "run_id": null,
-      "counts": {}
+      "url": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-23T05:14:12.576424+00:00",
+      "run_id": "calendar-20261123T051412Z",
+      "counts": {
+        "records": 7703
+      },
+      "collect": "success",
+      "quality": "success"
     },
     {
       "service_id": "insu",
-      "url": null,
-      "status": "not_configured",
-      "observed_at": null,
-      "run_id": null,
-      "counts": {}
+      "url": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-23T05:14:12.909609+00:00",
+      "run_id": "insu-20261123T051412Z",
+      "counts": {
+        "records": 7
+      },
+      "collect": "success",
+      "quality": "success"
     }
   ],
-  "observed": 6,
-  "not_configured": 7,
+  "observed": 9,
+  "not_configured": 4,
   "degraded": 2
 }
