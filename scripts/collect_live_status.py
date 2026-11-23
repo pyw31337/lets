@@ -44,6 +44,7 @@ OBSERVABILITY_SOURCES = {
     "art": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
     "asset": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
     "cctv": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
+    "camp": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json",
     "law": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
     "meat": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
     "news": NEWS_OBSERVABILITY_URL,

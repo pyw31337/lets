@@ -1,0 +1,20 @@
+{
+  "schema": "lets_observability_registry_v1",
+  "sources": {
+    "news": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
+    "art": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
+    "asset": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
+    "law": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
+    "people": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
+    "cctv": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
+    "meat": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
+    "camp": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json",
+    "culture": null,
+    "pick": null,
+    "hair": null,
+    "buy": null,
+    "metro": null,
+    "calendar": null,
+    "insu": null
+  }
+}

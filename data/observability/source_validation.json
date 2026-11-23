@@ -1,0 +1,165 @@
+{
+  "schema": "lets_observability_validation_v1",
+  "generated_at": "2026-11-23T04:57:20.452145+00:00",
+  "services": [
+    {
+      "service_id": "news",
+      "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
+      "status": "degraded",
+      "observed_at": "2026-11-23T04:53:10+00:00",
+      "run_id": "45113421258",
+      "counts": {
+        "issues": 10,
+        "sources": 212,
+        "entities": 36,
+        "global_issues": 12,
+        "quality_issues": 10
+      },
+      "collect": "degraded",
+      "quality": "success"
+    },
+    {
+      "service_id": "art",
+      "url": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-23T01:28:24.665551+00:00",
+      "run_id": "art-unimplemented-20261123T012824Z",
+      "counts": {
+        "records": 2650
+      },
+      "collect": "success",
+      "quality": "success"
+    },
+    {
+      "service_id": "asset",
+      "url": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-22T20:53:32.629012+00:00",
+      "run_id": "asset-unimplemented-20261122T205332Z",
+      "counts": {
+        "records": 66
+      },
+      "collect": "success",
+      "quality": "success"
+    },
+    {
+      "service_id": "law",
+      "url": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-22T23:56:17.815652+00:00",
+      "run_id": "law-unimplemented-20261122T235617Z",
+      "counts": {
+        "records": 20
+      },
+      "collect": "success",
+      "quality": "success"
+    },
+    {
+      "service_id": "people",
+      "url": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-23T00:32:32.860625+00:00",
+      "run_id": "people-unimplemented-20261123T003232Z",
+      "counts": {
+        "records": 50
+      },
+      "collect": "success",
+      "quality": "success"
+    },
+    {
+      "service_id": "cctv",
+      "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-22T19:49:07.324605+00:00",
+      "run_id": "cctv-20261122T194907Z",
+      "counts": {
+        "records": 18278
+      },
+      "collect": "success",
+      "quality": "success"
+    },
+    {
+      "service_id": "meat",
+      "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-23T02:25:38.037751+00:00",
+      "run_id": "meat-20261123T022538Z",
+      "counts": {
+        "records": 641,
+        "unique_records": 641,
+        "increment": 10,
+        "increment_date": "2026-11-23"
+      },
+      "collect": "success",
+      "quality": "success"
+    },
+    {
+      "service_id": "camp",
+      "url": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json",
+      "status": "unreachable",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {},
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "service_id": "culture",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    },
+    {
+      "service_id": "pick",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    },
+    {
+      "service_id": "hair",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    },
+    {
+      "service_id": "buy",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    },
+    {
+      "service_id": "metro",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    },
+    {
+      "service_id": "calendar",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    },
+    {
+      "service_id": "insu",
+      "url": null,
+      "status": "not_configured",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {}
+    }
+  ],
+  "observed": 6,
+  "not_configured": 7,
+  "degraded": 2
+}
