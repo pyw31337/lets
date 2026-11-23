@@ -48,6 +48,12 @@ master = load(ROOT / "data/master_ecosystem_pulse.json", {})
 if master.get("metric_provenance") != "observed_runs":
     issues.append({"severity": "medium", "kind": "showcase_uses_configured_snapshot", "detail": master.get("metric_provenance")})
 
+lifecycle = load(ROOT / "data/service_lifecycle.json", {"services": {}})
+active_ids = source_ids | live_ids
+for service_id, record in (lifecycle.get("services") or {}).items():
+    if record.get("status") == "retired" and service_id in active_ids:
+        issues.append({"severity": "high", "kind": "retired_service_active", "service_id": service_id, "successor": record.get("successor")})
+
 result = {
     "schema": "lets_truth_audit_v1",
     "generated_at": datetime.now(timezone.utc).isoformat(),

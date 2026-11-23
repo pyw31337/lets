@@ -1,0 +1,8 @@
+{
+  "schema": "lets_service_lifecycle_v1",
+  "services": {
+    "cart": {"status": "active", "canonical_name": "렛츠카트", "repository": "pyw31337/cart"},
+    "buy": {"status": "retired", "canonical_name": "렛츠바이", "successor": "cart", "retired_reason": "렛츠카트로 통폐합"}
+  },
+  "rule": "retired 서비스는 원장·대시보드·자동 진단의 활성 목록에 포함하지 않습니다."
+}
