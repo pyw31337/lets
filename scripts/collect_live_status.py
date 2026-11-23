@@ -21,14 +21,14 @@ REPOS = [
     ("buy", "렛츠바이"), ("camp", "렛츠캠핑"), ("cctv", "렛츠CCTV"),
     ("metro", "렛츠메트로"), ("calendar", "렛츠캘린더"), ("law", "렛츠로"),
     ("insu", "렛츠인슈"), ("people", "렛츠피플"), ("asset", "렛츠에셋"),
-    ("art", "렛츠아트"),
+    ("art", "렛츠아트"), ("limery", "라임리"),
 ]
 # A recent deployment is not enough to call a collector healthy. These
 # windows make stale schedules visible instead of silently reporting green.
 MAX_AGE_HOURS = {
     "news": 2, "culture": 36, "cctv": 12, "calendar": 36,
     "camp": 36, "meat": 36, "metro": 36, "pick": 36, "buy": 36,
-    "hair": 36, "law": 36, "insu": 36, "people": 36, "asset": 36, "art": 36,
+    "hair": 36, "law": 36, "insu": 36, "people": 36, "asset": 36, "art": 36, "limery": 36,
 }
 # Some repositories have deployment/recovery workflows that can run after a
 # collector. Prefer the primary data workflow so a recovery run cannot mask a
@@ -53,6 +53,7 @@ OBSERVABILITY_SOURCES = {
     "calendar": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
     "metro": "https://raw.githubusercontent.com/pyw31337/metro/main/public/data/observability/latest.json",
     "insu": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json",
+    "limery": "https://raw.githubusercontent.com/pyw31337/limery/main/data/observability/latest.json",
 }
 
 
@@ -369,6 +370,12 @@ def main() -> int:
     # a source was fetched, data was persisted, or quality passed.
     for service in services:
         if service.get("observability"):
+            continue
+        if service.get("id") == "limery":
+            service["status"] = "degraded"
+            service["label"] = "비공개 원장"
+            service["detail"] = "집계 원장은 비공개 저장소에 있어 LetsHub 공개 수집기가 읽을 수 없습니다"
+            service["next"] = "공개 집계 브리지 또는 승인된 읽기 토큰 연결"
             continue
         service["status"] = "degraded"
         service["label"] = "수집 미관측"

@@ -1,6 +1,6 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-23T07:38:25.974868+00:00",
+  "generated_at": "2026-11-23T07:43:04.955129+00:00",
   "services": [
     {
       "service_id": "news",
@@ -174,9 +174,18 @@
       },
       "collect": "success",
       "quality": "success"
+    },
+    {
+      "service_id": "limery",
+      "url": "https://raw.githubusercontent.com/pyw31337/limery/main/data/observability/latest.json",
+      "status": "unreachable",
+      "observed_at": null,
+      "run_id": null,
+      "counts": {},
+      "error": "HTTP Error 404: Not Found"
     }
   ],
   "observed": 10,
   "not_configured": 3,
-  "degraded": 2
+  "degraded": 3
 }

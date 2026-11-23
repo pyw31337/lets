@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-23T16:39:58.618571+09:00",
+  "generated_at": "2026-11-23T16:43:21.454030+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -16,7 +16,7 @@
     "week_previous": null,
     "week_delta_pct": null,
     "collectors_healthy": 9,
-    "collectors_total": 15,
+    "collectors_total": 16,
     "registered_nodes": 61
   },
   "daily_trend": [
@@ -130,7 +130,7 @@
       "observability": {
         "status": "observed",
         "observed_at": "2026-11-23T07:20:45+00:00",
-        "age_hours": 0.3,
+        "age_hours": 0.38,
         "run_id": "45129374870",
         "stages": {
           "collect": {
@@ -749,6 +749,26 @@
         },
         "url": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json"
       }
+    },
+    {
+      "id": "limery",
+      "name": "라임리",
+      "status": "degraded",
+      "label": "비공개 원장",
+      "detail": "집계 원장은 비공개 저장소에 있어 LetsHub 공개 수집기가 읽을 수 없습니다",
+      "updated_at": null,
+      "age_hours": null,
+      "url": "https://github.com/pyw31337/limery/actions",
+      "repo": "https://github.com/pyw31337/limery",
+      "next": "공개 집계 브리지 또는 승인된 읽기 토큰 연결",
+      "latest_run": {
+        "name": null,
+        "conclusion": null,
+        "status": null,
+        "url": null,
+        "failed_steps": []
+      },
+      "open_issues": 0
     }
   ],
   "anomalies": [
@@ -799,6 +819,14 @@
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "action": "수집기에서 observability/latest.json 발행",
       "href": "https://github.com/pyw31337/camp/actions"
+    },
+    {
+      "type": "NEEDS_REVIEW",
+      "service_id": "limery",
+      "service": "라임리",
+      "detail": "집계 원장은 비공개 저장소에 있어 LetsHub 공개 수집기가 읽을 수 없습니다",
+      "action": "공개 집계 브리지 또는 승인된 읽기 토큰 연결",
+      "href": "https://github.com/pyw31337/limery/actions"
     },
     {
       "type": "VOLUME_NOT_CONNECTED",
