@@ -1,13 +1,13 @@
 {
   "schema": "lets_truth_audit_v1",
-  "generated_at": "2026-11-23T08:22:59.184100+00:00",
+  "generated_at": "2026-11-23T08:53:58.027733+00:00",
   "status": "attention",
   "summary": {
     "sources": 16,
     "validated": 16,
     "live_services": 16,
-    "issues": 3,
-    "high": 3,
+    "issues": 2,
+    "high": 2,
     "medium": 0
   },
   "issues": [
@@ -21,12 +21,6 @@
       "severity": "high",
       "kind": "not_configured",
       "service_id": "hair",
-      "detail": null
-    },
-    {
-      "severity": "high",
-      "kind": "not_configured",
-      "service_id": "buy",
       "detail": null
     }
   ],

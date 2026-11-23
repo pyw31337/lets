@@ -1,6 +1,6 @@
 {
   "schema": "lets_ops_action_plan_v1",
-  "generated_at": "2026-11-23T08:22:59.219111+00:00",
+  "generated_at": "2026-11-23T08:53:58.070476+00:00",
   "status": "attention",
   "actions": [
     {
@@ -12,13 +12,6 @@
     },
     {
       "service_id": "hair",
-      "priority": "high",
-      "action": "connect_public_observability_source",
-      "reason": "수집기와 공개 observability/latest.json 연결이 없습니다.",
-      "safe_next_step": "실제 원장·품질 근거를 연결한 뒤 재검증"
-    },
-    {
-      "service_id": "buy",
       "priority": "high",
       "action": "connect_public_observability_source",
       "reason": "수집기와 공개 observability/latest.json 연결이 없습니다.",

@@ -1037,9 +1037,9 @@
             <span>렛츠미트 <b style="color:#d97706; font-weight:700;">+41h</b></span>
           </button>
           <span class="truth-sep">·</span>
-          <button class="truth-btn" onclick="openAttentionService('letsbuy')" title="렛츠바이 +39h 지연 분석 보기">
+          <button class="truth-btn" onclick="openAttentionService('letscart')" title="렛츠카트 상태 분석 보기">
             <span class="dot dot-amber"></span>
-            <span>렛츠바이 <b style="color:#d97706; font-weight:700;">+39h</b></span>
+            <span>렛츠카트 <b style="color:#d97706; font-weight:700;">확인 필요</b></span>
           </button>
         </div>
       </div>
@@ -1374,10 +1374,10 @@
         }
       },
       {
-        id: 'letsbuy',
-        name: '렛츠바이 (LetsBuy)',
+        id: 'letscart',
+        name: '렛츠카트 (LetsCart)',
         category: 'shopping',
-        subtitle: 'LetsBuy · 해외직구/관세',
+        subtitle: 'LetsCart · 구매이력·가격 비교',
         dailyThroughput: '320건/일',
         observedDetail: '지연 +39h 경과',
         pipeline: [
@@ -1787,7 +1787,7 @@
     const LIVE_SERVICE_IDS = {
       newsboard: 'news', cultureflow: 'culture', letscamp: 'camp', letscctv: 'cctv',
       letscalendar: 'calendar', letsmeat: 'meat', letssubway: 'metro', letspick: 'pick',
-      letsbuy: 'buy', letshair: 'hair', letslaw: 'law', letsinsu: 'insu',
+      letscart: 'cart', letshair: 'hair', letslaw: 'law', letsinsu: 'insu',
       letspeople: 'people', letsasset: 'asset', letsart: 'art', limery: 'limery'
     };
 
@@ -2434,7 +2434,7 @@
         currentCategoryFilter = 'attention';
         currentSortMode = 'status';
         sortAscending = false;
-        ['cultureflow', 'letspick', 'letshair', 'letsmeat', 'letsbuy'].forEach(id => expandedServices.add(id));
+        ['cultureflow', 'letspick', 'letshair', 'letsmeat', 'letscart'].forEach(id => expandedServices.add(id));
         if (window.location.hash !== '#attention') history.pushState(null, '', '#attention');
       } else if (type === 'observability') {
         currentCategoryFilter = 'all';

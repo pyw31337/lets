@@ -18,7 +18,7 @@ OWNER = "pyw31337"
 REPOS = [
     ("news", "뉴스보드"), ("culture", "컬처플로우"),
     ("pick", "렛츠픽"), ("hair", "렛츠헤어"), ("meat", "렛츠미트"),
-    ("buy", "렛츠바이"), ("camp", "렛츠캠핑"), ("cctv", "렛츠CCTV"),
+    ("cart", "렛츠카트"), ("camp", "렛츠캠핑"), ("cctv", "렛츠CCTV"),
     ("metro", "렛츠메트로"), ("calendar", "렛츠캘린더"), ("law", "렛츠로"),
     ("insu", "렛츠인슈"), ("people", "렛츠피플"), ("asset", "렛츠에셋"),
     ("art", "렛츠아트"), ("limery", "라임리"),
@@ -27,7 +27,7 @@ REPOS = [
 # windows make stale schedules visible instead of silently reporting green.
 MAX_AGE_HOURS = {
     "news": 2, "culture": 36, "cctv": 12, "calendar": 36,
-    "camp": 36, "meat": 36, "metro": 36, "pick": 36, "buy": 36,
+    "camp": 36, "meat": 36, "metro": 36, "pick": 36, "cart": 36,
     "hair": 36, "law": 36, "insu": 36, "people": 36, "asset": 36, "art": 36, "limery": 36,
 }
 # Some repositories have deployment/recovery workflows that can run after a
@@ -47,6 +47,7 @@ OBSERVABILITY_SOURCES = {
     "camp": "https://raw.githubusercontent.com/pyw31337/camp/main/data/observability/latest.json",
     "law": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
     "meat": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
+    "cart": "https://raw.githubusercontent.com/pyw31337/cart/main/data/observability/latest.json",
     "news": NEWS_OBSERVABILITY_URL,
     "people": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
     "culture": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json",
