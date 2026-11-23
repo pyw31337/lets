@@ -1,16 +1,34 @@
 {
   "schema": "lets_observability_v1",
-  "run_id": "limery-20261123T074228Z",
-  "observed_at": "2026-11-23T07:42:28.985078+00:00",
+  "run_id": "limery-20261123T075806Z",
+  "observed_at": "2026-11-23T07:58:06.952899+00:00",
   "service_id": "limery",
   "source": "private_limery_v3_index",
   "privacy": "aggregate_only",
   "stages": {
-    "collect": {"status": "success", "ok": 25, "artifact": true},
-    "analyze": {"status": "success", "ok": 25, "artifact": true},
-    "quality": {"status": "success", "quality_issue_count": 0},
-    "publish": {"status": "success", "artifact": true}
+    "collect": {
+      "status": "success",
+      "ok": 25,
+      "artifact": true
+    },
+    "analyze": {
+      "status": "success",
+      "ok": 25,
+      "artifact": true
+    },
+    "quality": {
+      "status": "success",
+      "quality_issue_count": 0
+    },
+    "publish": {
+      "status": "success",
+      "artifact": true
+    }
   },
-  "counts": {"bundles": 25, "files": 28, "bytes": 4857744},
+  "counts": {
+    "bundles": 25,
+    "files": 28,
+    "bytes": 4857744
+  },
   "note": "Privacy-safe aggregate only. Household records and monetary values remain private."
 }
