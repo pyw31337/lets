@@ -51,6 +51,7 @@ OBSERVABILITY_SOURCES = {
     "people": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
     "culture": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json",
     "calendar": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
+    "metro": "https://raw.githubusercontent.com/pyw31337/metro/main/public/data/observability/latest.json",
     "insu": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json",
 }
 

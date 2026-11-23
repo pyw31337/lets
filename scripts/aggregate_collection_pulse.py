@@ -60,14 +60,20 @@ def main() -> int:
         and (event.get("service_id") == "news" or event.get("observed", {}).get("kind") == "increment")
     ]
     dates = [(now.date() - timedelta(days=offset)).isoformat() for offset in range(13, -1, -1)]
+    # Observability endpoints are snapshots and may be published more than
+    # once per day.  Keep the largest proven increment per service/day rather
+    # than adding repeated snapshots and inflating the cockpit totals.
     volume_by_day: dict[str, float] = defaultdict(float)
-    service_volume_by_day: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
+    service_volume_by_day: dict[str, dict[str, float]] = defaultdict(dict)
     for event in ingests:
         day = event_day(event)
         if day in dates:
-            volume_by_day[day] += float(event["observed"]["count"])
-            if event.get("service_id"):
-                service_volume_by_day[str(event["service_id"])][day] += float(event["observed"]["count"])
+            service_id = str(event.get("service_id") or "unknown")
+            count = float(event["observed"]["count"])
+            service_volume_by_day[service_id][day] = max(service_volume_by_day[service_id].get(day, 0), count)
+    for service_days in service_volume_by_day.values():
+        for day, count in service_days.items():
+            volume_by_day[day] += count
 
     history = [
         {"date": day, "collected": int(volume_by_day[day]) if day in volume_by_day else None,

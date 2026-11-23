@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-23T14:16:53.829025+09:00",
+  "generated_at": "2026-11-23T16:39:58.618571+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -15,7 +15,7 @@
     "week_current": 1545384,
     "week_previous": null,
     "week_delta_pct": null,
-    "collectors_healthy": 8,
+    "collectors_healthy": 9,
     "collectors_total": 15,
     "registered_nodes": 61
   },
@@ -129,22 +129,22 @@
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-23T04:53:10+00:00",
-        "age_hours": 0.4,
-        "run_id": "45113421258",
+        "observed_at": "2026-11-23T07:20:45+00:00",
+        "age_hours": 0.3,
+        "run_id": "45129374870",
         "stages": {
           "collect": {
             "status": "degraded",
-            "ok": 292,
-            "fail": 23,
-            "errors": 23,
+            "ok": 298,
+            "fail": 15,
+            "errors": 15,
             "artifact": true
           },
           "analyze": {
             "status": "degraded",
-            "ok": 501,
-            "fail": 33,
-            "errors": 33,
+            "ok": 515,
+            "fail": 23,
+            "errors": 23,
             "artifact": true
           },
           "quality": {
@@ -152,32 +152,32 @@
             "quality_issue_count": 10,
             "event_quality_present": true,
             "detail": {
-              "low_score": 8,
-              "low_photo": 1,
-              "low_source": 1,
+              "low_score": 9,
+              "low_photo": 3,
+              "low_source": 0,
               "missing_event_stages": 9
             }
           },
           "publish": {
             "status": "success",
-            "published_at": "2026-11-23T04:53:27+00:00",
-            "data_commit": "3611d6f88d10daef7d15121b3653c566f4cba515",
+            "published_at": "2026-11-23T07:21:16+00:00",
+            "data_commit": "6f3d229486978f2e30fa40d46f7aec5b09705ae3",
             "note": "data 브랜치 커밋 이후 게시 확인"
           }
         },
         "counts": {
           "issues": 10,
-          "sources": 212,
+          "sources": 200,
           "entities": 36,
-          "global_issues": 12,
+          "global_issues": 0,
           "quality_issues": 10
         },
         "artifacts": {
-          "today": "93dc606af054495e816bd79138a3e187fdae53a582edf6da5a3afa0680a8db55",
-          "global": "3ff95dea599cc7a73b1f35d46ee845081bf329dd2ddf701fecc58ddfff5ad74d",
-          "quality": "15c38345fa42b61450ea58cd95b44969e5202793b57a89a1beef51b649664758",
-          "status": "a227fd2d12b2372c5f9b694b4af8523fe6a9f835c7305fc39bccf62277addf9e",
-          "event_quality": "0a3ce0fcad209945e80fdbdf35e779e5367126b33713bc7593fd32c7c617c5bd"
+          "today": "e11354b0dc92126df641c9cb1c88f4ba13c1cda1d9abaa30be45ecf042bc10d1",
+          "global": null,
+          "quality": "196a6adf4118d849b67f326100a7e841751aa4e32191adff4f1f3a873fc6f7d6",
+          "status": "5279b78c3b513c1830cbda243a0308a379157ddb62dc8e395ddb6422ff176fbd",
+          "event_quality": "6878eabc2abaa5db655bac3c50294fbe873ac1136456d096be36d6bc92d44a9a"
         },
         "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
       }
@@ -291,8 +291,8 @@
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-23T02:25:38.037751+00:00",
-        "run_id": "meat-20261123T022538Z",
+        "observed_at": "2026-11-23T07:09:39.226571+00:00",
+        "run_id": "meat-20261123T070939Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -412,14 +412,14 @@
     {
       "id": "metro",
       "name": "렛츠메트로",
-      "status": "degraded",
-      "label": "수집 미관측",
-      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
+      "status": "healthy",
+      "label": "실측 수집",
+      "detail": "Persisted metro public catalog snapshot; no daily increment inferred.",
       "updated_at": null,
       "age_hours": null,
       "url": "https://github.com/pyw31337/metro/actions",
       "repo": "https://github.com/pyw31337/metro",
-      "next": "수집기에서 observability/latest.json 발행",
+      "next": "예약 실행 유지",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -427,7 +427,36 @@
         "url": null,
         "failed_steps": []
       },
-      "open_issues": 0
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-23T07:35:44.292896+00:00",
+        "run_id": "metro-20261123T073544Z",
+        "stages": {
+          "collect": {
+            "status": "success",
+            "ok": 354369,
+            "artifact": true
+          },
+          "analyze": {
+            "status": "not_started",
+            "ok": null
+          },
+          "quality": {
+            "status": "success",
+            "quality_issue_count": 0
+          },
+          "publish": {
+            "status": "success",
+            "artifact": true
+          }
+        },
+        "counts": {
+          "records": 354369,
+          "files": 35
+        },
+        "url": "https://raw.githubusercontent.com/pyw31337/metro/main/public/data/observability/latest.json"
+      }
     },
     {
       "id": "calendar",
@@ -770,14 +799,6 @@
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "action": "수집기에서 observability/latest.json 발행",
       "href": "https://github.com/pyw31337/camp/actions"
-    },
-    {
-      "type": "NEEDS_REVIEW",
-      "service_id": "metro",
-      "service": "렛츠메트로",
-      "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
-      "action": "수집기에서 observability/latest.json 발행",
-      "href": "https://github.com/pyw31337/metro/actions"
     },
     {
       "type": "VOLUME_NOT_CONNECTED",
