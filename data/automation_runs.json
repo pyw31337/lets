@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-22T23:48:30.425624+00:00",
+  "generated_at": "2026-11-23T04:03:45.325713+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -726,6 +726,133 @@
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
       "completed_at": "2026-11-22T20:53:38Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "meat-observability:meat-20261123T022538Z",
+      "service_id": "meat",
+      "source": "persisted_price_history",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T02:25:38.037751+00:00",
+      "observed": {
+        "count": 10,
+        "unit": "records",
+        "kind": "increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/news/actions/runs/45107525233",
+      "service_id": "news",
+      "source": "github_actions",
+      "workflow": "collect-news",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T03:54:48Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/meat/actions/runs/45100146079",
+      "service_id": "meat",
+      "source": "github_actions",
+      "workflow": "Deploy GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T02:26:20Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/camp/actions/runs/45102904147",
+      "service_id": "camp",
+      "source": "github_actions",
+      "workflow": "Daily brief mail",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T02:56:02Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/cctv/actions/runs/45105858363",
+      "service_id": "cctv",
+      "source": "github_actions",
+      "workflow": "Refresh quality_summary.json",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T03:25:34Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/calendar/actions/runs/45086975072",
+      "service_id": "calendar",
+      "source": "github_actions",
+      "workflow": "Daily Ops Report",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T00:09:36Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/law/actions/runs/45085893778",
+      "service_id": "law",
+      "source": "github_actions",
+      "workflow": "24/7 Daily Legal Cases & Statutes Ingestion",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-22T23:56:23Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/people/actions/runs/45089361966",
+      "service_id": "people",
+      "source": "github_actions",
+      "workflow": "24/7 Daily Global People & Photo Ingestion",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T00:32:38Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/art/actions/runs/45094764627",
+      "service_id": "art",
+      "source": "github_actions",
+      "workflow": "pages build and deployment",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-23T01:29:08Z",
       "observed": {
         "count": null,
         "unit": null
