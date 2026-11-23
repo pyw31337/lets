@@ -1,16 +1,16 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-23T07:58:55.394103+00:00",
+  "generated_at": "2026-11-23T08:20:38.817801+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-23T07:20:45+00:00",
-      "run_id": "45129374870",
+      "observed_at": "2026-11-23T07:55:56+00:00",
+      "run_id": "45133017030",
       "counts": {
         "issues": 10,
-        "sources": 200,
+        "sources": 189,
         "entities": 36,
         "global_issues": 0,
         "quality_issues": 10
@@ -70,10 +70,10 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-22T19:49:07.324605+00:00",
-      "run_id": "cctv-20261122T194907Z",
+      "observed_at": "2026-11-23T08:11:34.906445+00:00",
+      "run_id": "cctv-20261123T081134Z",
       "counts": {
-        "records": 18278
+        "records": 18290
       },
       "collect": "success",
       "quality": "success"
