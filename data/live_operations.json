@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0.0",
-  "generated_at": "2026-11-23T07:56:15.813473+00:00",
+  "generated_at": "2026-11-23T07:58:55.455134+00:00",
   "source": "github-actions-live",
   "overall": {
     "status": "attention",
-    "label": "운영 주의 7건",
-    "healthy": 9,
-    "degraded": 7,
+    "label": "운영 주의 6건",
+    "healthy": 10,
+    "degraded": 6,
     "blocked": 0,
     "note": "GitHub Actions·열린 이슈를 5분 주기로 집계합니다."
   },
@@ -33,7 +33,7 @@
       "observability": {
         "status": "observed",
         "observed_at": "2026-11-23T07:20:45+00:00",
-        "age_hours": 0.59,
+        "age_hours": 0.64,
         "run_id": "45129374870",
         "stages": {
           "collect": {
@@ -686,14 +686,14 @@
     {
       "id": "limery",
       "name": "라임리",
-      "status": "degraded",
-      "label": "비공개 원장",
-      "detail": "집계 원장은 비공개 저장소에 있어 LetsHub 공개 수집기가 읽을 수 없습니다",
+      "status": "healthy",
+      "label": "실측 수집",
+      "detail": "Privacy-safe aggregate only. Household records and monetary values remain private.",
       "updated_at": null,
       "age_hours": null,
       "url": "https://github.com/pyw31337/limery/actions",
       "repo": "https://github.com/pyw31337/limery",
-      "next": "공개 집계 브리지 또는 승인된 읽기 토큰 연결",
+      "next": "예약 실행 유지",
       "latest_run": {
         "name": null,
         "conclusion": null,
@@ -701,7 +701,38 @@
         "url": null,
         "failed_steps": []
       },
-      "open_issues": 0
+      "open_issues": 0,
+      "observability": {
+        "status": "observed",
+        "observed_at": "2026-11-23T07:58:06.952899+00:00",
+        "run_id": "limery-20261123T075806Z",
+        "stages": {
+          "collect": {
+            "status": "success",
+            "ok": 25,
+            "artifact": true
+          },
+          "analyze": {
+            "status": "success",
+            "ok": 25,
+            "artifact": true
+          },
+          "quality": {
+            "status": "success",
+            "quality_issue_count": 0
+          },
+          "publish": {
+            "status": "success",
+            "artifact": true
+          }
+        },
+        "counts": {
+          "bundles": 25,
+          "files": 28,
+          "bytes": 4857744
+        },
+        "url": "https://pyw31337.github.io/lets/data/observability/limery_latest.json"
+      }
     }
   ],
   "incidents": [],
