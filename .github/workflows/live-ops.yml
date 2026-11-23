@@ -28,11 +28,36 @@ jobs:
           python scripts/aggregate_collection_pulse.py
       - name: Run truth contract self-audit
         run: python scripts/audit_truth_contract.py
+      - name: Decide safe remediation actions
+        run: python scripts/decide_ops_actions.py
+      - name: Track recurring truth gaps
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          actions=$(python -c "import json; print(len(json.load(open('data/observability/action_plan.json')).get('actions', [])))")
+          if [ "$actions" -eq 0 ]; then exit 0; fi
+          body=$(python - <<'PY'
+          import json
+          d=json.load(open('data/observability/action_plan.json'))
+          rows=['## 자동 원장 점검 결과','',f"생성 시각: `{d['generated_at']}`",'']
+          for a in d['actions']:
+              rows.append(f"- **{a['priority']} · {a['service_id']}**: `{a['action']}` — {a['reason']}")
+          rows += ['', '자동화는 원장 연결과 진단만 수행하며, 수집량을 임의로 만들지 않습니다.']
+          print('\\n'.join(rows))
+          PY
+          )
+          issue=$(gh issue list --state open --search 'Truth contract attention in:title' --json number --jq '.[0].number // empty')
+          if [ -n "$issue" ]; then
+            gh issue edit "$issue" --body "$body"
+          else
+            gh issue create --title "Truth contract attention" --body "$body" || true
+          fi
       - name: Publish changed snapshot
         run: |
           git config user.name "LetsHub Operations Bot"
           git config user.email "action@github.com"
-          git add data/live_operations.json data/collection_pulse.json data/automation_runs.json data/observability/source_validation.json data/observability/self_audit.json
+          git add data/live_operations.json data/collection_pulse.json data/automation_runs.json data/observability/source_validation.json data/observability/self_audit.json data/observability/action_plan.json
           if git diff --cached --quiet; then
             echo "No operational change"
           else
