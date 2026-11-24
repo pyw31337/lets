@@ -1978,6 +1978,12 @@
         subtitle: 'Limery · 가족 OS 집계 원장',
         dailyThroughput: '증분 원장 연결 대기',
         observedDetail: '비공개 원장 집계 브리지',
+        pipeline: [
+          { stage: 'ingest', text: '15대 서비스 비공개 원장 안전 집계' },
+          { stage: 'analyze', text: '가족 OS 데이터 익명화 및 번들화' },
+          { stage: 'quality', text: '라임리 원장 SHA-256 검증' },
+          { stage: 'publish', text: 'LetsHub 집계 브리지 자동 전달' }
+        ],
         devices: [],
         progress: 0,
         progressLabel: '집계 원장',
@@ -2410,7 +2416,7 @@
               <div class="mono" style="font-size:10.5px; color:${s.status==='failed'?'#dc2626':'#059669'};">${escapeHtml(s.observedDetail)}</div>
             </td>
             <td>
-              ${s.pipeline.map(p => `
+              ${(s.pipeline || []).map(p => `
                 <div style="display:inline-flex; align-items:center; margin:3px 7px 3px 0;">
                   <span class="stage-tag ${p.stage==='ingest'?'tag-ingest':(p.stage==='analyze'?'tag-analyze':(p.stage==='publish'?'tag-ops':'tag-quality'))}">${p.stage==='ingest'?'수집':(p.stage==='analyze'?'분석':(p.stage==='publish'?'게시':'검증'))}</span>
                   ${infoIcon(p.text)}
