@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-24T11:40:00.319275+00:00",
+  "generated_at": "2026-11-24T21:30:28.698541+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -1291,6 +1291,105 @@
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
       "completed_at": "2026-11-24T08:55:09Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "meat-observability:meat-20261124T205917Z",
+      "service_id": "meat",
+      "source": "persisted_price_history",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T20:59:17.062423+00:00",
+      "observed": {
+        "count": 10,
+        "unit": "records",
+        "kind": "increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/news/actions/runs/45485123052",
+      "service_id": "news",
+      "source": "github_actions",
+      "workflow": "collect-news",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T21:18:09Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/culture/actions/runs/45481213134",
+      "service_id": "culture",
+      "source": "github_actions",
+      "workflow": "Deploy to GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T20:34:05Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/meat/actions/runs/45486591299",
+      "service_id": "meat",
+      "source": "github_actions",
+      "workflow": "Meat Tracker Health Monitor",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T21:00:27Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/camp/actions/runs/45487634448",
+      "service_id": "camp",
+      "source": "github_actions",
+      "workflow": "Deploy GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T21:08:54Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/cctv/actions/runs/45472714248",
+      "service_id": "cctv",
+      "source": "github_actions",
+      "workflow": "Broadcast Rotation Audit",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T19:43:19Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/calendar/actions/runs/45394303331",
+      "service_id": "calendar",
+      "source": "github_actions",
+      "workflow": "Daily Photo Tag Maintenance",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T12:33:30Z",
       "observed": {
         "count": null,
         "unit": null

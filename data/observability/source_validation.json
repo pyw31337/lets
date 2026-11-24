@@ -1,18 +1,18 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-24T11:39:28.430751+00:00",
+  "generated_at": "2026-11-24T21:29:49.659854+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-24T11:28:50+00:00",
-      "run_id": "45381989393",
+      "observed_at": "2026-11-24T21:14:49+00:00",
+      "run_id": "45485123052",
       "counts": {
         "issues": 10,
-        "sources": 176,
+        "sources": 199,
         "entities": 36,
-        "global_issues": 12,
+        "global_issues": 0,
         "quality_issues": 10
       },
       "collect": "degraded",
@@ -82,13 +82,13 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T09:33:47.324500+00:00",
-      "run_id": "meat-20261124T093347Z",
+      "observed_at": "2026-11-24T20:59:17.062423+00:00",
+      "run_id": "meat-20261124T205917Z",
       "counts": {
-        "records": 651,
-        "unique_records": 651,
+        "records": 661,
+        "unique_records": 661,
         "increment": 10,
-        "increment_date": "2026-11-24"
+        "increment_date": "2026-11-25"
       },
       "collect": "success",
       "quality": "success"
