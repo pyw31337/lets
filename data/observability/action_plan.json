@@ -1,6 +1,6 @@
 {
   "schema": "lets_ops_action_plan_v1",
-  "generated_at": "2026-11-24T02:47:01.805174+00:00",
+  "generated_at": "2026-11-24T11:40:00.404099+00:00",
   "status": "clear",
   "actions": [],
   "policy": "자동 결정은 진단과 추적까지만 수행하며, 원천 서비스 데이터나 수집량을 임의로 변경하지 않습니다."
