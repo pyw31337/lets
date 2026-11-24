@@ -1,16 +1,16 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-23T14:23:02.303994+00:00",
+  "generated_at": "2026-11-24T00:29:36.046344+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-23T14:01:09+00:00",
-      "run_id": "45186535819",
+      "observed_at": "2026-11-24T00:26:37+00:00",
+      "run_id": "45295231621",
       "counts": {
         "issues": 10,
-        "sources": 210,
+        "sources": 183,
         "entities": 36,
         "global_issues": 12,
         "quality_issues": 10
@@ -70,8 +70,8 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-23T08:11:34.906445+00:00",
-      "run_id": "cctv-20261123T081134Z",
+      "observed_at": "2026-11-24T00:01:48.870553+00:00",
+      "run_id": "cctv-20261124T000148Z",
       "counts": {
         "records": 18290
       },
@@ -82,13 +82,13 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-23T11:26:15.399732+00:00",
-      "run_id": "meat-20261123T112615Z",
+      "observed_at": "2026-11-23T22:25:56.817182+00:00",
+      "run_id": "meat-20261123T222556Z",
       "counts": {
-        "records": 641,
-        "unique_records": 641,
+        "records": 651,
+        "unique_records": 651,
         "increment": 10,
-        "increment_date": "2026-11-23"
+        "increment_date": "2026-11-24"
       },
       "collect": "success",
       "quality": "success"
@@ -121,19 +121,31 @@
     },
     {
       "service_id": "pick",
-      "url": null,
-      "status": "not_configured",
-      "observed_at": null,
-      "run_id": null,
-      "counts": {}
+      "url": "https://raw.githubusercontent.com/pyw31337/pick/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-24T00:28:00.000000+00:00",
+      "run_id": "pick-20261124T002800Z",
+      "counts": {
+        "records": 10450,
+        "unique_deals": 10450,
+        "active_targets": 28
+      },
+      "collect": "success",
+      "quality": "success"
     },
     {
       "service_id": "hair",
-      "url": null,
-      "status": "not_configured",
-      "observed_at": null,
-      "run_id": null,
-      "counts": {}
+      "url": "https://raw.githubusercontent.com/pyw31337/hair/main/data/observability/latest.json",
+      "status": "observed",
+      "observed_at": "2026-11-24T00:28:00.000000+00:00",
+      "run_id": "hair-20261124T002800Z",
+      "counts": {
+        "records": 1420,
+        "unique_salons": 1420,
+        "active_regions": 25
+      },
+      "collect": "success",
+      "quality": "success"
     },
     {
       "service_id": "cart",
@@ -203,7 +215,7 @@
       "quality": "success"
     }
   ],
-  "observed": 13,
-  "not_configured": 2,
+  "observed": 15,
+  "not_configured": 0,
   "degraded": 1
 }

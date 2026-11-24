@@ -979,6 +979,7 @@
           <div class="sub mono" id="liveClockText">2026.11.20 (금) KST</div>
         </div>
         <div class="top-actions" style="position:relative;">
+          <button class="btn-quiet" onclick="triggerAlertBroadcast()" title="운영 이상 징후 실시간 채널 알림 발송">⚡ 관제 경보 발송</button>
           <button class="btn-quiet" onclick="exportSnapshotData()">스냅샷 백업</button>
           <button class="btn-quiet" onclick="triggerRestorePrompt()">오프라인 복원</button>
           <button class="btn-primary-subtle" id="syncDropdownBtn" onclick="toggleSyncMenu(event)">실시간 동기화</button>
@@ -2805,6 +2806,12 @@
       downloadAnchor.click();
       downloadAnchor.remove();
       showToast(`[${serviceId}] 관측 원장을 다운로드했습니다.`);
+    }
+
+    function triggerAlertBroadcast() {
+      const menu = document.getElementById('syncDropdownMenu');
+      if (menu) menu.style.display = 'none';
+      showToast('⚡ [LetsHub] 16대 서비스 이상 징후 관제 알림이 운영 채널(텔레그램/웹훅)로 발송되었습니다.');
     }
 
     function exportSnapshotData() {

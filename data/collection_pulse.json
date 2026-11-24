@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-23T23:23:39.929734+09:00",
+  "generated_at": "2026-11-24T09:30:09.364005+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -8,9 +8,9 @@
     "rule": "Configured targets and workflow completion are never treated as observed record volume."
   },
   "overall": {
-    "volume_evidence": "observed",
-    "today_collected": 49,
-    "yesterday_collected": null,
+    "volume_evidence": "not_connected",
+    "today_collected": null,
+    "yesterday_collected": 49,
     "delta_pct": null,
     "week_current": 1545423,
     "week_previous": null,
@@ -20,11 +20,6 @@
     "registered_nodes": 61
   },
   "daily_trend": [
-    {
-      "date": "2026-11-10",
-      "collected": null,
-      "evidence": "not_connected"
-    },
     {
       "date": "2026-11-11",
       "collected": null,
@@ -89,6 +84,11 @@
       "date": "2026-11-23",
       "collected": 49,
       "evidence": "observed"
+    },
+    {
+      "date": "2026-11-24",
+      "collected": null,
+      "evidence": "not_connected"
     }
   ],
   "service_volumes": {
@@ -97,12 +97,12 @@
       "yesterday": null
     },
     "meat": {
-      "today": 10,
-      "yesterday": null
+      "today": null,
+      "yesterday": 10
     },
     "cart": {
-      "today": 39,
-      "yesterday": null
+      "today": null,
+      "yesterday": 39
     }
   },
   "quality": {

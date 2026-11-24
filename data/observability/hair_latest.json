@@ -1,0 +1,36 @@
+{
+  "schema": "lets_observability_v1",
+  "run_id": "hair-20261124T002800Z",
+  "observed_at": "2026-11-24T00:28:00.000000+00:00",
+  "service_id": "hair",
+  "source": "client_hair_service_runtime",
+  "stages": {
+    "collect": {
+      "status": "success",
+      "ok": 1420,
+      "artifact": true
+    },
+    "analyze": {
+      "status": "success",
+      "ok": 1420,
+      "artifact": true
+    },
+    "quality": {
+      "status": "success",
+      "quality_issue_count": 0
+    },
+    "publish": {
+      "status": "success",
+      "artifact": true
+    }
+  },
+  "counts": {
+    "records": 1420,
+    "unique_salons": 1420,
+    "active_regions": 25
+  },
+  "artifacts": {
+    "salons": "a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3"
+  },
+  "note": "LetsHair salon price and menu intelligence bridge."
+}
