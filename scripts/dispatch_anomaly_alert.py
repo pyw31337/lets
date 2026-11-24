@@ -4,10 +4,12 @@ scripts/dispatch_anomaly_alert.py
 LetsHub 긴급 운영 이상 감지 및 텔레그램 / 웹훅 알림 브리지
 - self_audit.json, action_plan.json, live_operations.json의 장애/지연/이상 징후를 감지하여 즉각 전송
 - TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID 또는 DISCORD_WEBHOOK_URL / SLACK_WEBHOOK_URL 연동 지원
+- local.env / .env 자동 로드 지원
 - 미설정 시에도 로컬 디스패치 원장(data/observability/dispatch_history.jsonl)에 실측 증적 기록
 """
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import sys
@@ -19,6 +21,33 @@ ROOT = Path(__file__).resolve().parents[1]
 KST = timezone(timedelta(hours=9))
 
 
+def load_env_file(path: Path):
+    if not path.is_file():
+        return
+    try:
+        for line in path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            k = k.strip()
+            v = v.strip().strip("'\"")
+            if k and k not in os.environ:
+                os.environ[k] = v
+    except Exception:
+        pass
+
+
+def init_env():
+    # Try loading from local config locations
+    for env_path in [
+        ROOT / "local.env",
+        ROOT / ".env",
+        Path.home() / ".config/lets/alert.env",
+    ]:
+        load_env_file(env_path)
+
+
 def load_json(path: Path, default):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -26,7 +55,7 @@ def load_json(path: Path, default):
         return default
 
 
-def format_incident_report():
+def format_incident_report(is_test: bool = False):
     audit = load_json(ROOT / "data/observability/self_audit.json", {})
     action_plan = load_json(ROOT / "data/observability/action_plan.json", {})
     live_ops = load_json(ROOT / "data/live_operations.json", {})
@@ -47,8 +76,10 @@ def format_incident_report():
     audit_status = audit.get("status", "pass")
     issue_count = audit.get("summary", {}).get("issues", 0)
 
+    header_prefix = "🧪 [LetsHub 관제 테스트 경보]" if is_test else "🚨 [LetsHub 긴급 운영 관제 알림]"
+
     msg = [
-        "🚨 [LetsHub 긴급 운영 관제 알림]",
+        header_prefix,
         f"📅 관측 일시: {now_kst}",
         f"🛡️ 진단 상태: {audit_status.upper()} (감지된 이슈: {issue_count}건)",
         "",
@@ -69,56 +100,77 @@ def format_incident_report():
     return "\n".join(msg), len(incidents) + issue_count
 
 
-def dispatch():
-    message, count = format_incident_report()
+def dispatch(force: bool = False, test: bool = False):
+    init_env()
+    message, count = format_incident_report(is_test=test)
     now_iso = datetime.now(timezone.utc).isoformat()
+
+    # Don't send live alert if no incidents detected, unless forced or in test mode
+    should_send = (count > 0) or force or test
 
     dispatched_targets = []
 
-    # 1. Telegram Dispatch
     tg_token = os.environ.get("TELEGRAM_BOT_TOKEN")
     tg_chat_id = os.environ.get("TELEGRAM_CHAT_ID")
-    if tg_token and tg_chat_id:
-        try:
-            tg_url = f"https://api.telegram.org/bot{tg_token}/sendMessage"
-            payload = json.dumps({"chat_id": tg_chat_id, "text": message, "parse_mode": "HTML"}).encode("utf-8")
-            req = Request(tg_url, data=payload, headers={"Content-Type": "application/json"})
-            with urlopen(req, timeout=10) as resp:
-                if resp.status == 200:
-                    dispatched_targets.append("telegram")
-        except Exception as e:
-            print(f"Telegram dispatch failed: {e}", file=sys.stderr)
-
-    # 2. Discord / Slack Webhook Dispatch
     webhook_url = os.environ.get("DISCORD_WEBHOOK_URL") or os.environ.get("SLACK_WEBHOOK_URL")
-    if webhook_url:
-        try:
-            payload = json.dumps({"text": message, "content": message}).encode("utf-8")
-            req = Request(webhook_url, data=payload, headers={"Content-Type": "application/json"})
-            with urlopen(req, timeout=10) as resp:
-                if resp.status in {200, 204}:
-                    dispatched_targets.append("webhook")
-        except Exception as e:
-            print(f"Webhook dispatch failed: {e}", file=sys.stderr)
+
+    if should_send:
+        # 1. Telegram Dispatch
+        if tg_token and tg_chat_id:
+            try:
+                tg_url = f"https://api.telegram.org/bot{tg_token}/sendMessage"
+                payload = json.dumps({"chat_id": tg_chat_id, "text": message, "parse_mode": "HTML"}).encode("utf-8")
+                req = Request(tg_url, data=payload, headers={"Content-Type": "application/json"})
+                with urlopen(req, timeout=10) as resp:
+                    if resp.status == 200:
+                        dispatched_targets.append("telegram")
+            except Exception as e:
+                print(f"Telegram dispatch failed: {e}", file=sys.stderr)
+
+        # 2. Discord / Slack Webhook Dispatch
+        if webhook_url:
+            try:
+                payload = json.dumps({"text": message, "content": message}).encode("utf-8")
+                req = Request(webhook_url, data=payload, headers={"Content-Type": "application/json"})
+                with urlopen(req, timeout=10) as resp:
+                    if resp.status in {200, 204}:
+                        dispatched_targets.append("webhook")
+            except Exception as e:
+                print(f"Webhook dispatch failed: {e}", file=sys.stderr)
 
     # 3. Always log to dispatch history ledger
     history_file = ROOT / "data/observability/dispatch_history.jsonl"
+    history_file.parent.mkdir(parents=True, exist_ok=True)
     log_entry = {
         "timestamp": now_iso,
         "incident_count": count,
+        "mode": "test" if test else ("forced" if force else "auto"),
+        "sent": bool(dispatched_targets),
         "dispatched_targets": dispatched_targets if dispatched_targets else ["simulated_ledger"],
         "message_preview": message.splitlines()[0:3]
     }
     with history_file.open("a", encoding="utf-8") as f:
         f.write(json.dumps(log_entry, ensure_ascii=False) + "\n")
 
-    print(json.dumps({
+    result = {
         "status": "success",
         "timestamp": now_iso,
         "incident_count": count,
+        "sent": bool(dispatched_targets),
         "targets": dispatched_targets if dispatched_targets else ["simulated_ledger"]
-    }, ensure_ascii=False))
+    }
+    print(json.dumps(result, ensure_ascii=False))
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description="LetsHub Anomaly Alert Dispatcher")
+    parser.add_argument("--force", action="store_true", help="Force sending alerts regardless of incident count")
+    parser.add_argument("--test", action="store_true", help="Send a test alert message")
+    args = parser.parse_args()
+
+    dispatch(force=args.force, test=args.test)
 
 
 if __name__ == "__main__":
-    dispatch()
+    main()

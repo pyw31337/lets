@@ -30,6 +30,15 @@ jobs:
         run: python scripts/audit_truth_contract.py
       - name: Decide safe remediation actions
         run: python scripts/decide_ops_actions.py
+      - name: Dispatch anomaly alerts
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          python scripts/dispatch_anomaly_alert.py
       - name: Track recurring truth gaps
         if: always()
         env:

@@ -1,1 +1,2 @@
 {"timestamp": "2026-11-24T00:31:36.939416+00:00", "incident_count": 6, "dispatched_targets": ["simulated_ledger"], "message_preview": ["🚨 [LetsHub 긴급 운영 관제 알림]", "📅 관측 일시: 2026-11-24 09:31:36 KST", "🛡️ 진단 상태: PASS (감지된 이슈: 0건)"]}
+{"timestamp": "2026-11-24T02:45:11.780649+00:00", "incident_count": 6, "mode": "test", "sent": false, "dispatched_targets": ["simulated_ledger"], "message_preview": ["🧪 [LetsHub 관제 테스트 경보]", "📅 관측 일시: 2026-11-24 11:45:11 KST", "🛡️ 진단 상태: PASS (감지된 이슈: 0건)"]}

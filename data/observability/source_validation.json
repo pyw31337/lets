@@ -1,16 +1,16 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-24T01:44:52.080072+00:00",
+  "generated_at": "2026-11-24T02:31:30.188808+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-24T01:25:56+00:00",
-      "run_id": "45303226797",
+      "observed_at": "2026-11-24T02:22:19+00:00",
+      "run_id": "45310620315",
       "counts": {
         "issues": 10,
-        "sources": 175,
+        "sources": 196,
         "entities": 36,
         "global_issues": 12,
         "quality_issues": 10
@@ -34,8 +34,8 @@
       "service_id": "asset",
       "url": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-22T20:53:32.629012+00:00",
-      "run_id": "asset-unimplemented-20261122T205332Z",
+      "observed_at": "2026-11-24T01:57:58.493812+00:00",
+      "run_id": "asset-unimplemented-20261124T015758Z",
       "counts": {
         "records": 66
       },

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-24T01:45:30.270342+00:00",
+  "generated_at": "2026-11-24T02:46:46.326902+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -960,13 +960,13 @@
       "note": "Source-backed public observability ledger."
     },
     {
-      "source_run_id": "https://github.com/pyw31337/news/actions/runs/45306987155",
+      "source_run_id": "https://github.com/pyw31337/news/actions/runs/45314317131",
       "service_id": "news",
       "source": "github_actions",
       "workflow": "collect-news",
       "stage": "UNCLASSIFIED",
       "status": "PENDING",
-      "completed_at": "2026-11-24T01:42:15Z",
+      "completed_at": "2026-11-24T02:42:22Z",
       "observed": {
         "count": null,
         "unit": null
@@ -1030,13 +1030,13 @@
       "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
     },
     {
-      "source_run_id": "https://github.com/pyw31337/camp/actions/runs/45306407911",
+      "source_run_id": "https://github.com/pyw31337/camp/actions/runs/45307383378",
       "service_id": "camp",
       "source": "github_actions",
-      "workflow": "Pipeline quality",
+      "workflow": "Deploy GitHub Pages",
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
-      "completed_at": "2026-11-24T01:38:42Z",
+      "completed_at": "2026-11-24T01:47:58Z",
       "observed": {
         "count": null,
         "unit": null
@@ -1044,13 +1044,13 @@
       "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
     },
     {
-      "source_run_id": "https://github.com/pyw31337/cctv/actions/runs/45303925878",
+      "source_run_id": "https://github.com/pyw31337/cctv/actions/runs/45313639176",
       "service_id": "cctv",
       "source": "github_actions",
-      "workflow": "Actions Failure Auto-Remediation",
+      "workflow": "Check Key Area Playback",
       "stage": "UNCLASSIFIED",
-      "status": "PENDING",
-      "completed_at": "2026-11-24T01:17:26Z",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T02:44:18Z",
       "observed": {
         "count": null,
         "unit": null
@@ -1072,13 +1072,27 @@
       "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
     },
     {
-      "source_run_id": "https://github.com/pyw31337/art/actions/runs/45302495331",
-      "service_id": "art",
+      "source_run_id": "https://github.com/pyw31337/calendar/actions/runs/45314036710",
+      "service_id": "calendar",
       "source": "github_actions",
-      "workflow": "pages build and deployment",
+      "workflow": "Culture Performances Daily Sync",
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
-      "completed_at": "2026-11-24T01:07:20Z",
+      "completed_at": "2026-11-24T02:40:16Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/asset/actions/runs/45308856776",
+      "service_id": "asset",
+      "source": "github_actions",
+      "workflow": "24/7 Daily Market Stream & Filing Ingestion",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-24T01:58:04Z",
       "observed": {
         "count": null,
         "unit": null
