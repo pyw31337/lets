@@ -1,6 +1,6 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-25T14:47:20.366445+00:00",
+  "generated_at": "2026-11-25T23:22:32.871170+00:00",
   "services": [
     {
       "service_id": "news",
@@ -79,8 +79,8 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-25T08:49:10.993904+00:00",
-      "run_id": "cctv-20261125T084910Z",
+      "observed_at": "2026-11-25T22:18:20.223747+00:00",
+      "run_id": "cctv-20261125T221820Z",
       "counts": {
         "records": 18292
       },
@@ -91,13 +91,13 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-25T11:50:26.209389+00:00",
-      "run_id": "meat-20261125T115026Z",
+      "observed_at": "2026-11-25T20:21:49.195342+00:00",
+      "run_id": "meat-20261125T202149Z",
       "counts": {
-        "records": 661,
-        "unique_records": 661,
+        "records": 671,
+        "unique_records": 671,
         "increment": 10,
-        "increment_date": "2026-11-25"
+        "increment_date": "2026-11-26"
       },
       "collect": "success",
       "quality": "success"
@@ -213,12 +213,12 @@
       "service_id": "limery",
       "url": "https://pyw31337.github.io/lets/data/observability/limery_latest.json",
       "status": "observed",
-      "observed_at": "2026-11-23T07:58:06.952899+00:00",
-      "run_id": "limery-20261123T075806Z",
+      "observed_at": "2026-11-25T02:46:43.584660+00:00",
+      "run_id": "limery-20261125T024643Z",
       "counts": {
-        "bundles": 25,
-        "files": 28,
-        "bytes": 4857744
+        "bundles": 26,
+        "files": 31,
+        "bytes": 5672462
       },
       "collect": "success",
       "quality": "success"
