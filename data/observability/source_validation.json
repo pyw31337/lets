@@ -1,18 +1,18 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-24T21:29:49.659854+00:00",
+  "generated_at": "2026-11-25T04:29:07.608965+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-24T21:14:49+00:00",
-      "run_id": "45485123052",
+      "observed_at": "2026-11-25T04:20:40+00:00",
+      "run_id": "45544570327",
       "counts": {
         "issues": 10,
-        "sources": 199,
+        "sources": 181,
         "entities": 36,
-        "global_issues": 0,
+        "global_issues": 12,
         "quality_issues": 10
       },
       "collect": "degraded",
@@ -22,10 +22,11 @@
       "service_id": "art",
       "url": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T05:10:53.766168+00:00",
-      "run_id": "art-unimplemented-20261124T051053Z",
+      "observed_at": "2026-11-25T04:00:03.789492+00:00",
+      "run_id": "art-20261125T040003Z",
       "counts": {
-        "records": 2650
+        "records": 2650,
+        "increment": 0
       },
       "collect": "success",
       "quality": "success"
@@ -34,10 +35,11 @@
       "service_id": "asset",
       "url": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T01:57:58.493812+00:00",
-      "run_id": "asset-unimplemented-20261124T015758Z",
+      "observed_at": "2026-11-25T02:16:47.646365+00:00",
+      "run_id": "asset-20261125T021647Z",
       "counts": {
-        "records": 66
+        "records": 66,
+        "increment": 0
       },
       "collect": "success",
       "quality": "success"
@@ -46,10 +48,11 @@
       "service_id": "law",
       "url": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T04:08:25.717523+00:00",
-      "run_id": "law-unimplemented-20261124T040825Z",
+      "observed_at": "2026-11-25T02:51:22.547066+00:00",
+      "run_id": "law-20261125T025122Z",
       "counts": {
-        "records": 20
+        "records": 20,
+        "increment": 0
       },
       "collect": "success",
       "quality": "success"
@@ -58,10 +61,11 @@
       "service_id": "people",
       "url": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T04:31:11.740258+00:00",
-      "run_id": "people-unimplemented-20261124T043111Z",
+      "observed_at": "2026-11-25T03:15:58.644961+00:00",
+      "run_id": "people-20261125T031558Z",
       "counts": {
-        "records": 50
+        "records": 50,
+        "increment": 0
       },
       "collect": "success",
       "quality": "success"
@@ -70,10 +74,10 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T10:03:22.844128+00:00",
-      "run_id": "cctv-20261124T100322Z",
+      "observed_at": "2026-11-24T22:36:32.872455+00:00",
+      "run_id": "cctv-20261124T223632Z",
       "counts": {
-        "records": 18290
+        "records": 18292
       },
       "collect": "success",
       "quality": "success"
@@ -111,10 +115,10 @@
       "service_id": "culture",
       "url": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T03:59:21.437360+00:00",
-      "run_id": "culture-20261124T035921Z",
+      "observed_at": "2026-11-25T02:30:47.494303+00:00",
+      "run_id": "culture-20261125T023047Z",
       "counts": {
-        "records": 9131
+        "records": 9189
       },
       "collect": "success",
       "quality": "degraded"
@@ -151,13 +155,13 @@
       "service_id": "cart",
       "url": "https://raw.githubusercontent.com/pyw31337/cart/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T04:04:05.653227+00:00",
-      "run_id": "cart-20261124T040405Z",
+      "observed_at": "2026-11-25T02:45:03.050953+00:00",
+      "run_id": "cart-20261125T024503Z",
       "counts": {
         "records": 39,
         "catalog_products": 302,
         "increment": 0,
-        "increment_date": "2026-11-24",
+        "increment_date": "2026-11-25",
         "reviews": 997520
       },
       "collect": "success",
@@ -167,8 +171,8 @@
       "service_id": "metro",
       "url": "https://raw.githubusercontent.com/pyw31337/metro/main/public/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T03:59:58.338833+00:00",
-      "run_id": "metro-20261124T035958Z",
+      "observed_at": "2026-11-25T02:40:21.926212+00:00",
+      "run_id": "metro-20261125T024021Z",
       "counts": {
         "records": 354369,
         "files": 35
@@ -180,10 +184,10 @@
       "service_id": "calendar",
       "url": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T03:59:28.167409+00:00",
-      "run_id": "calendar-20261124T035928Z",
+      "observed_at": "2026-11-25T02:37:05.152330+00:00",
+      "run_id": "calendar-20261125T023705Z",
       "counts": {
-        "records": 7650
+        "records": 7550
       },
       "collect": "success",
       "quality": "success"
@@ -192,8 +196,8 @@
       "service_id": "insu",
       "url": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T03:44:29.271233+00:00",
-      "run_id": "insu-20261124T034429Z",
+      "observed_at": "2026-11-25T01:51:42.418654+00:00",
+      "run_id": "insu-20261125T015142Z",
       "counts": {
         "records": 7
       },
