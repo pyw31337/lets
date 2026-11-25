@@ -1,5 +1,15 @@
 # 회사 Mac mini (M2) → 집 iMac (M1) 이관 가이드 (2026년 12월 말)
 
+> **2026-11-26 보완** — 최신 실행 순서·전체 인벤토리는 [`IMAC_M1_HANDOFF.md`](IMAC_M1_HANDOFF.md)와
+> [`handoff.html`](../handoff.html)(인계 센터)를 먼저 보세요. 이 문서는 초기 판본이며,
+> 아래 항목이 빠져 있습니다.
+> - 뉴스보드 로컬 런타임 `~/Developer/newsboard-local` **55GB** + python venv + `local.env` + SSH 별칭 `github-newsboard`
+>   (launchd 13개 중 6개가 이 디렉터리에 의존합니다. 저장소는 비공개 `newsboard-local-handoff`에 있지만 런타임은 여기에만 있습니다.)
+> - Swift 바이너리(`vision-ocr`, `nbai`, calendar Vision 헬퍼)는 복사하지 말고 재컴파일
+> - `camp/local/macmini/install.sh`는 `~/.letscamp/env`를 비우고 다시 쓰므로 기존 env를 먼저 백업
+> - 아이맥은 16GB·512GB(라임리 문서 기준), Ollama 동시 모델 1개 제한 유지
+> - `news` 저장소의 `macmini-health`(매시 :25, 6h/36h)가 `reporters_local.json`·`overlay/latest.json`을 심박으로 봅니다
+
 회사 M2 Mac mini 사용 종료에 맞춰, 집 M1 iMac으로 LetsHub 및 16대 서비스 로컬 워크플로우를 무중단으로 이전하기 위한 체크리스트입니다.
 
 ---

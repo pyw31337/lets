@@ -4,6 +4,15 @@
 
 ## 🌐 주요 관제 기능
 
+### 기기 인계 센터
+
+회사 Mac mini에서 집 아이맥 M1으로 로컬 자동화를 옮기는 실행 화면입니다.
+
+- [아이맥 M1 인계 센터](https://pyw31337.github.io/lets/handoff.html)
+- 이전 대상 launchd 13개 · 로컬 런타임 61.4GB · 시크릿 이름 체크리스트 · 심박(macmini-health) 연동 확인
+- 마스터 스크립트 `scripts/migrate_to_imac_m1.sh` (export / import / verify / secrets / retire)
+- 실행 패키지 `packages/lets-imac-m1-handoff.tar.gz` · 런북 `docs/IMAC_M1_HANDOFF.md`
+
 ### 디자인 리뉴얼 시안
 
 실제 `master_ecosystem_pulse.json`을 읽는 비교용 쇼케이스를 먼저 제공합니다.

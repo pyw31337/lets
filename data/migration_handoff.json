@@ -1,0 +1,542 @@
+{
+  "schema": "lets.imac-m1-handoff.v1",
+  "generated_at": "2026-11-26T06:10:00+09:00",
+  "title": "맥미니 → 아이맥 M1 인계 센터",
+  "deadline": "2026-12-31",
+  "deadline_note": "회사 재직 마지막 달. 이후 회사 맥미니는 초기화·반납될 수 있으므로 인계물은 12월 안에 모두 집으로 옮겨야 합니다.",
+  "source": {
+    "machine": "회사 Mac mini (M2)",
+    "hostname": "bag-yeong-uui-Macmini.local",
+    "user": "pyw31337",
+    "home": "/Users/pyw31337",
+    "workspace_root": "/Users/pyw31337/Developer",
+    "chip": "Apple M2",
+    "ram_gb": 8,
+    "evidence": "bundle/manifest.json · exported_at 2026-11-25T01:48:40Z (맥미니에서 실제 실행한 번들 내보내기)"
+  },
+  "target": {
+    "machine": "집 아이맥 (M1)",
+    "chip": "Apple M1",
+    "ram_gb": 16,
+    "disk_gb": 512,
+    "note": "사양은 라임리 docs/MIGRATION_NEW_MACHINE.md 기재값입니다. 실제 기기에서 `sysctl -n hw.memsize`·`df -h /`로 확인하세요.",
+    "verified": false
+  },
+  "summary": {
+    "launchd_jobs": 13,
+    "crontab_entries": 0,
+    "local_runtimes": 7,
+    "local_runtime_gb": 61.4,
+    "repos": 17,
+    "ollama_models": 4,
+    "github_repos_with_workflows": 23,
+    "github_workflows": 158,
+    "github_cron_schedules": 100,
+    "heartbeat_artifacts": 2,
+    "secret_groups": 6
+  },
+  "jobs": [
+    {
+      "id": "newsboard-ai",
+      "label": "com.pyw31337.newsboard-ai",
+      "owner": "뉴스보드",
+      "name": "원본 수집·해외 번역·보강",
+      "what": "data 브랜치를 클론해 두고 수집·번역·enrich를 돌린 뒤, 로컬 커밋을 upload-queue에 쌓았다가 push합니다.",
+      "cmd": "$HOME/Developer/newsboard-local/news/local/run.sh",
+      "schedule": "30분마다",
+      "schedule_kind": "interval",
+      "interval_sec": 1800,
+      "run_at_load": false,
+      "depends": ["Developer/newsboard-local (55G)", "SSH 별칭 github-newsboard", "python venv", "local.env"],
+      "migrate": "manual",
+      "migrate_label": "수동(SSD 복사)",
+      "verify": "launchctl list | grep newsboard-ai  ·  ~/Developer/newsboard-local/logs/run-*.log 마지막 줄",
+      "risk": "가장 큰 덩어리(55G)이고 재설치 스크립트가 없습니다. 로컬 SSH 별칭과 local.env 값이 없으면 push가 조용히 실패합니다."
+    },
+    {
+      "id": "newsboard-analyze",
+      "label": "com.pyw31337.newsboard-analyze",
+      "owner": "뉴스보드",
+      "name": "로컬 분석 → overlay 산출",
+      "what": "매시 45분에 수집 결과를 분석해 data 브랜치의 overlay/latest.json을 갱신합니다. macmini-health가 이 파일의 신선도를 봅니다.",
+      "cmd": "$HOME/Developer/newsboard-local/analyze/analyze.py",
+      "schedule": "매시 45분",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/newsboard-local (55G)", "python venv"],
+      "migrate": "manual",
+      "migrate_label": "수동(SSD 복사)",
+      "verify": "gh api 'repos/pyw31337/news/commits?sha=data&path=overlay/latest.json&per_page=1'",
+      "risk": "이 작업이 멈추면 36시간 뒤 macmini-health 워크플로가 실패로 바뀝니다."
+    },
+    {
+      "id": "newsboard-dispatch",
+      "label": "com.pyw31337.newsboard-dispatch",
+      "owner": "뉴스보드",
+      "name": "발송·큐 처리",
+      "what": "매시 12분·42분에 대기 중인 발송 큐를 처리합니다.",
+      "cmd": "$HOME/Developer/newsboard-local/bin/dispatch.sh",
+      "schedule": "매시 12분·42분",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/newsboard-local (55G)"],
+      "migrate": "manual",
+      "migrate_label": "수동(SSD 복사)",
+      "verify": "ls -lt ~/Developer/newsboard-local/logs/dispatch.err | head -1",
+      "risk": "로그가 err 한 파일뿐입니다. 실패해도 조용하므로 이전 후 첫 24시간은 로그를 직접 보세요."
+    },
+    {
+      "id": "newsboard-gov",
+      "label": "com.pyw31337.newsboard-gov",
+      "owner": "뉴스보드",
+      "name": "정부·공공 자료 수집",
+      "what": "매시 20분 + 로그인 시 실행되어 공공 자료를 수집합니다.",
+      "cmd": "$HOME/Developer/newsboard-local/gov/run_gov.sh",
+      "schedule": "매시 20분 · 로그인 시",
+      "schedule_kind": "calendar",
+      "run_at_load": true,
+      "depends": ["Developer/newsboard-local (55G)", "local.env 공공 API 키"],
+      "migrate": "manual",
+      "migrate_label": "수동(SSD 복사)",
+      "verify": "ls -lt ~/Developer/newsboard-local/gov/logs/launchd.out.log | head -1",
+      "risk": "공공 API 키(DATA_GO_KR_KEY 등)가 비어 있으면 0건으로 조용히 끝납니다."
+    },
+    {
+      "id": "newsboard-journalists",
+      "label": "com.pyw31337.newsboard-journalists",
+      "owner": "뉴스보드",
+      "name": "기자·인물 아카이브",
+      "what": "매시 20분 + 로그인 시 실행되어 data 브랜치의 reporters_local.json을 갱신합니다. macmini-health가 이 파일도 봅니다.",
+      "cmd": "$HOME/Developer/newsboard-local/journalists/journalists.py",
+      "schedule": "매시 20분 · 로그인 시",
+      "schedule_kind": "calendar",
+      "run_at_load": true,
+      "depends": ["Developer/newsboard-local (55G)", "python venv", "local.env"],
+      "migrate": "manual",
+      "migrate_label": "수동(SSD 복사)",
+      "verify": "gh api 'repos/pyw31337/news/commits?sha=data&path=reporters_local.json&per_page=1'",
+      "risk": "심박 산출물 2개 중 하나를 만듭니다. 이전 누락 시 macmini-health가 곧바로 실패합니다."
+    },
+    {
+      "id": "newsboard-pol",
+      "label": "com.pyw31337.newsboard-pol",
+      "owner": "뉴스보드",
+      "name": "정치·공보 자료 수집",
+      "what": "매일 02:50에 국회·공보 자료를 수집합니다.",
+      "cmd": "$HOME/Developer/newsboard-local/pol/run_pol.sh",
+      "schedule": "매일 02:50",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/newsboard-local (55G)"],
+      "migrate": "manual",
+      "migrate_label": "수동(SSD 복사)",
+      "verify": "ls -lt ~/Developer/newsboard-local/pol/logs/launchd.out.log | head -1",
+      "risk": "02:50은 아이맥이 잠들기 쉬운 시간입니다. pmset 설정이 함께 넘어가야 합니다."
+    },
+    {
+      "id": "letscamp-nightshift",
+      "label": "com.letscamp.nightshift",
+      "owner": "렛츠캠핑",
+      "name": "야간·주말 사진/글 판독",
+      "what": "15분마다 깨어나 허용 시간대(평일 00~08·12~13·18~24, 주말·공휴일 종일)에만 사진 판독·후기 판정을 이어서 처리합니다.",
+      "cmd": "$HOME/.letscamp/camp/local/macmini/nightshift.mjs",
+      "schedule": "15분마다(실행 창은 스크립트가 판단)",
+      "schedule_kind": "interval",
+      "interval_sec": 900,
+      "run_at_load": false,
+      "depends": ["~/.letscamp (5.6G)", "Apple Vision 판독기(Swift 바이너리)", "Ollama qwen2.5vl:3b", "Node 22+"],
+      "migrate": "installer",
+      "migrate_label": "재설치 스크립트",
+      "verify": "node ~/.letscamp/camp/local/macmini/nightshift.mjs --dry-run",
+      "risk": "camp 저장소의 local/macmini/install.sh가 vision-ocr를 Swift로 다시 컴파일합니다. 이 스크립트는 ~/.letscamp/env를 비우고 다시 쓰므로 기존 env는 먼저 백업해야 합니다."
+    },
+    {
+      "id": "moyeora-media",
+      "label": "com.moyeora.media-analysis",
+      "owner": "모여라",
+      "name": "사진 분석·얼굴 인물 추천",
+      "what": "15분마다 새 사진이 있는지 확인하고, 있을 때만 장소·날짜·글자 분석과 얼굴 인식을 돌립니다.",
+      "cmd": "$HOME/Developer/calendar/tools/local-media-worker/run-media-worker.sh",
+      "schedule": "15분마다 · 로그인 시",
+      "schedule_kind": "interval",
+      "interval_sec": 900,
+      "run_at_load": true,
+      "depends": ["Developer/calendar", "Library/Application Support/Moyeora (86M)", "키체인 사진 분석 토큰"],
+      "migrate": "installer",
+      "migrate_label": "백업→복원(calendar)",
+      "verify": "zsh ~/Developer/calendar/tools/mac-automation/status.sh",
+      "risk": "얼굴 데이터는 재생성이 안 됩니다. calendar 도구의 backup.sh --with-secrets(키체인 포함·AES-256)로 넘겨야 합니다."
+    },
+    {
+      "id": "moyeora-culture",
+      "label": "com.moyeora.culture-intelligence",
+      "owner": "모여라",
+      "name": "공연 동기화·품질·로컬 AI 검토",
+      "what": "매일 02:20에 공연 목록을 정규화하고, 애매한 동명 그룹만 로컬 Ollama로 검토합니다.",
+      "cmd": "$HOME/Developer/calendar/tools/local-culture-worker/run-culture-intelligence.sh",
+      "schedule": "매일 02:20",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/calendar", "Ollama llama3.2:1b", "MOYEORA_CULTURE_PUSH"],
+      "migrate": "installer",
+      "migrate_label": "백업→복원(calendar)",
+      "verify": "ls -lt ~/Library/Logs/Moyeora/culture-intelligence.log | head -1",
+      "risk": "MOYEORA_CULTURE_PUSH=1이면 main에 커밋합니다. 새 기기에서 처음엔 0으로 두고 결과를 확인한 뒤 켜세요."
+    },
+    {
+      "id": "cultureflow-scheduler",
+      "label": "com.cultureflow.local-scheduler",
+      "owner": "컬처플로우",
+      "name": "문화 데이터 로컬 수집 스케줄러",
+      "what": "매일 01:17·05:17·21:47, 평일 18:37, 주말 09:13·13:07·17:19에 수집·검증을 돌립니다.",
+      "cmd": "$HOME/Developer/CultureFlow/scripts/local-scheduler.sh",
+      "schedule": "하루 3회 · 평일 18:37 · 주말 3회",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/CultureFlow (cultureflow-ai-test 사본)", "8종 공연·영화 API 키", "Node"],
+      "migrate": "installer",
+      "migrate_label": "백업→복원(calendar)",
+      "verify": "ls -lt ~/Developer/CultureFlow/logs/launchd-local-scheduler.out.log | head -1",
+      "risk": "CultureFlow 폴더는 cultureflow-ai-test(비공개 사본)에서 복원합니다. 저장소에는 .env가 없어 API 키 8종을 다시 넣어야 합니다(키 등록은 아직 사용자 몫)."
+    },
+    {
+      "id": "cultureflow-watch",
+      "label": "com.cultureflow.update-watch",
+      "owner": "컬처플로우",
+      "name": "로컬 데이터 갱신 감시",
+      "what": "매일 07:30에 로컬 수집이 실제로 갱신됐는지 확인합니다.",
+      "cmd": "$HOME/Developer/CultureFlow/scripts/check-local-data-update-status.sh",
+      "schedule": "매일 07:30",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/CultureFlow"],
+      "migrate": "installer",
+      "migrate_label": "백업→복원(calendar)",
+      "verify": "ls -lt ~/Developer/CultureFlow/logs/launchd-update-watch.out.log | head -1",
+      "risk": "감시만 하는 작업입니다. CultureFlow 폴더가 없으면 조용히 실패합니다."
+    },
+    {
+      "id": "cctv-playback",
+      "label": "com.pyw31337.letsview.playback-addresses",
+      "owner": "CCTV",
+      "name": "재생 주소 갱신",
+      "what": "30분마다 전용 클론(~/.cctv-ops)에서 제공자 주소 맵을 갱신합니다. 개발 체크아웃과 분리된 저부하 작업입니다.",
+      "cmd": "$HOME/.cctv-ops/repository/ops/refresh-playback-addresses.sh",
+      "schedule": "30분마다 · 로그인 시",
+      "schedule_kind": "interval",
+      "interval_sec": 1800,
+      "run_at_load": true,
+      "depends": ["~/.cctv-ops (418M)", "cctv 저장소"],
+      "migrate": "installer",
+      "migrate_label": "재설치 스크립트",
+      "verify": "launchctl print gui/$(id -u)/com.pyw31337.letsview.playback-addresses | head -20",
+      "risk": "cctv 저장소 ops/install-playback-address-refresh.sh로 다시 설치하면 됩니다. 옛 z3-cache 작업 2개는 이 스크립트가 자동으로 내립니다."
+    },
+    {
+      "id": "limery-daily-review",
+      "label": "com.limery.daily-family-review",
+      "owner": "라임리",
+      "name": "가족 관계 후보 매일 분석",
+      "what": "매일 09:35에 라임리 저장소를 ff-only로 갱신하고 가족 관계 후보·증거 판본을 계산해 비공개 폴더에 남깁니다.",
+      "cmd": "$HOME/Library/Application Support/Limery/daily-family-review/run.sh",
+      "schedule": "매일 09:35",
+      "schedule_kind": "calendar",
+      "run_at_load": false,
+      "depends": ["Developer/limery", "Library/Application Support/Limery (273M)", "렛츠캘린더(live-lets)"],
+      "migrate": "installer",
+      "migrate_label": "재설치 스크립트",
+      "verify": "tail -5 \"$HOME/Library/Application Support/Limery/daily-family-review/last-run.log\"",
+      "risk": "라임리 scripts/ops/install-daily-family-review.sh --with-lets-calendar로 다시 설치합니다. 기존 검토 기록을 남기려면 Application Support/Limery를 SSD로 함께 옮기세요."
+    }
+  ],
+  "runtimes": [
+    {
+      "path": "Developer/newsboard-local",
+      "size": "55G",
+      "size_gb": 55,
+      "required_by": ["뉴스보드 6개 작업"],
+      "transfer": "SSD (필수)",
+      "note": "코드 사본은 비공개 저장소 newsboard-local-handoff에 있지만, venv·local.env·upload-queue·data 체크아웃은 여기에만 있습니다. 55G 중 대부분은 news data 브랜치 체크아웃과 대기열입니다."
+    },
+    {
+      "path": ".letscamp",
+      "size": "5.6G",
+      "size_gb": 5.6,
+      "required_by": ["렛츠캠핑 nightshift"],
+      "transfer": "SSD 권장",
+      "note": "install.sh가 전용 클론을 다시 만들지만, 진행 이어하기 상태·avoid.txt·holidays.txt·env는 SSD로 넘기는 편이 안전합니다."
+    },
+    {
+      "path": "Library/Application Support/Moyeora",
+      "size": "86M",
+      "size_gb": 0.09,
+      "required_by": ["모여라 사진 분석·문화 AI"],
+      "transfer": "SSD (필수)",
+      "note": "얼굴 학습 데이터와 사진 분석 상태가 들어 있습니다. 재생성 불가."
+    },
+    {
+      "path": ".cctv-ops",
+      "size": "418M",
+      "size_gb": 0.42,
+      "required_by": ["CCTV 재생 주소 갱신"],
+      "transfer": "재생성 가능",
+      "note": "install-playback-address-refresh.sh가 전용 클론을 새로 만듭니다."
+    },
+    {
+      "path": "Library/Application Support/Limery",
+      "size": "273M",
+      "size_gb": 0.27,
+      "required_by": ["라임리 가족 관계 분석"],
+      "transfer": "SSD 권장",
+      "note": "source 클론은 다시 받을 수 있지만 reports(검토 기록)는 여기에만 쌓입니다."
+    },
+    {
+      "path": "Developer/news",
+      "size": "1.3M",
+      "size_gb": 0.0013,
+      "required_by": ["수동 작업"],
+      "transfer": "Git 클론",
+      "note": "저장소 코드만 있는 얕은 체크아웃. 다시 클론하면 됩니다."
+    },
+    {
+      "path": "Developer/family_os_web",
+      "size": "1.9M",
+      "size_gb": 0.0019,
+      "required_by": ["라임리(레거시 경로)"],
+      "transfer": "Git 클론",
+      "note": "라임리 프로젝트 경로가 ~/Developer/limery로 바뀌었습니다. 새 기기에서는 limery로 클론하세요."
+    }
+  ],
+  "repos": [
+    { "name": "CultureFlow", "url": "https://github.com/pyw31337/cultureflow-ai-test.git", "role": "문화 수집 로컬 작업트리(비공개 사본)" },
+    { "name": "art", "url": "https://github.com/pyw31337/art.git", "role": "렛츠아트(명화·문학)" },
+    { "name": "asset", "url": "https://github.com/pyw31337/asset.git", "role": "렛츠에셋(금융 시계열)" },
+    { "name": "buy", "url": "https://github.com/pyw31337/buy.git", "role": "렛츠바이(렛츠카트에 흡수)" },
+    { "name": "calendar", "url": "https://github.com/pyw31337/calendar.git", "role": "모여라 달력 + 맥 자동화 백업·복원 도구" },
+    { "name": "camp", "url": "https://github.com/pyw31337/camp.git", "role": "렛츠캠핑(맥미니 nightshift 원본 포함)" },
+    { "name": "cctv", "url": "https://github.com/pyw31337/cctv.git", "role": "CCTV 뷰어(주소 갱신 설치 스크립트 포함)" },
+    { "name": "cultureflow-ai-test", "url": "https://github.com/pyw31337/cultureflow-ai-test.git", "role": "컬처플로우 파이프라인 사본" },
+    { "name": "hair", "url": "https://github.com/pyw31337/hair.git", "role": "렛츠헤어" },
+    { "name": "insu", "url": "https://github.com/pyw31337/insu.git", "role": "렛츠인슈(약관)" },
+    { "name": "law", "url": "https://github.com/pyw31337/law.git", "role": "렛츠로(법률·판례)" },
+    { "name": "lets", "url": "https://github.com/pyw31337/lets.git", "role": "렛츠허브 관제(이 인계 센터)" },
+    { "name": "limery", "url": "https://github.com/pyw31337/limery.git", "role": "라임리 + 22개 launchd 템플릿·키 내보내기" },
+    { "name": "meat", "url": "https://github.com/pyw31337/meat.git", "role": "미트플레이스" },
+    { "name": "metro", "url": "https://github.com/pyw31337/metro.git", "role": "수도권 지하철" },
+    { "name": "people", "url": "https://github.com/pyw31337/people.git", "role": "렛츠피플(인물 아카이브)" },
+    { "name": "pick", "url": "https://github.com/pyw31337/pick.git", "role": "렛츠픽(추출 도구)" }
+  ],
+  "secrets": [
+    {
+      "id": "github",
+      "title": "GitHub 로그인·SSH",
+      "where": "macOS 키체인 · ~/.ssh",
+      "items": [
+        { "name": "gh CLI 인증", "detail": "키체인 항목 gh:github.com. 새 기기에서 `gh auth login`(repo·workflow)" },
+        { "name": "~/.ssh/config 의 Host github-newsboard", "detail": "뉴스보드가 git@github-newsboard:pyw31337/news.git 로 push합니다. IdentityFile 이름과 키 쌍을 함께 옮겨야 합니다." },
+        { "name": "~/.ssh/id_ed25519_limery 등 개인 키", "detail": "라임리 문서 기준. 키 파일은 SSD/AirDrop으로만 옮기고 Git에 넣지 않습니다." },
+        { "name": "git credential helper(osxkeychain)", "detail": "HTTPS push용 자격증명. `gh auth setup-git`로 새로 연결" }
+      ]
+    },
+    {
+      "id": "newsboard",
+      "title": "뉴스보드 로컬(local.env)",
+      "where": "~/Developer/newsboard-local/local.env",
+      "items": [
+        { "name": "NAVER_CLIENT_ID · NAVER_CLIENT_SECRET", "detail": "네이버 뉴스 수집" },
+        { "name": "DATA_GO_KR_KEY", "detail": "공공데이터포털" },
+        { "name": "KAKAO_REST_KEY", "detail": "지도·장소" },
+        { "name": "DART_API_KEY · ECOS_API_KEY · ASSEMBLY_KEY · LAW_OC", "detail": "공시·경제·국회·법령" },
+        { "name": "ARCHIVE_KEY", "detail": "아카이브 접근" },
+        { "name": "LLM_API_KEY · LLM_ENDPOINT · LLM_MODEL", "detail": "LLM 백엔드(없으면 Ollama/Apple 온디바이스로 대체)" },
+        { "name": "MEDIA_R2_SEC", "detail": "미디어 R2 업로드 자격증명" },
+        { "name": "NB_REMOTE", "detail": "git@github-newsboard:... 형태의 원격 주소(별칭 포함)" }
+      ]
+    },
+    {
+      "id": "camp",
+      "title": "렛츠캠핑(.letscamp/env)",
+      "where": "~/.letscamp/env",
+      "items": [
+        { "name": "LOCAL_VLM_MODEL", "detail": "qwen2.5vl:3b 등 판독 모델 이름(비밀값 아님)" },
+        { "name": "R2_ACCESS_KEY_ID · R2_SECRET_ACCESS_KEY · R2_ACCOUNT_ID", "detail": "썸네일·사진 업로드에 쓰는 경우" },
+        { "name": "SUPABASE_URL · SUPABASE_ANON_KEY", "detail": "캠핑장 DB 접근" }
+      ]
+    },
+    {
+      "id": "limery",
+      "title": "라임리(~/.limery/env · config.local.js)",
+      "where": "~/.limery/env · assets/config.local.js · ~/.wrangler/config/default.toml",
+      "items": [
+        { "name": "SUPABASE_SERVICE_ROLE_KEY · SUPABASE_ANON_KEY · FAMILY_ID", "detail": "가족 DB" },
+        { "name": "LIMERY_SYNC_STATUS_TOKEN", "detail": "수집 상태 읽기" },
+        { "name": "R2 계정 키 3종", "detail": "사진·원본 보관" },
+        { "name": "Cloudflare API 토큰", "detail": "wrangler 설정 파일 안" },
+        { "name": "GPG passphrase", "detail": "keys-import-from-github.sh 복원에 필요. 구글 Keep(2FA)에 보관 중인지 확인" }
+      ]
+    },
+    {
+      "id": "moyeora",
+      "title": "모여라·사진 분석",
+      "where": "키체인 · ~/Library/Application Support/Moyeora",
+      "items": [
+        { "name": "사진 분석 토큰", "detail": "키체인 항목. setup-media-analysis-worker.sh로 재발급 가능" },
+        { "name": "맥 백업 암호", "detail": "backup.sh --print-passphrase 로 확인해 따로 보관" },
+        { "name": "저장소별 .env", "detail": "backup.sh --with-secrets 가 AES-256으로 함께 담습니다" }
+      ]
+    },
+    {
+      "id": "lets",
+      "title": "렛츠허브 경보·Actions",
+      "where": "config/alert.env · GitHub Secrets",
+      "items": [
+        { "name": "TELEGRAM_BOT_TOKEN · TELEGRAM_CHAT_ID", "detail": "관제 경보" },
+        { "name": "DISCORD_WEBHOOK_URL · SLACK_WEBHOOK_URL", "detail": "웹훅(선택)" },
+        { "name": "LETS_STATUS_TOKEN", "detail": "다른 저장소 Actions 읽기용(클라우드에 있음, 이전 불필요)" },
+        { "name": "저장소별 Actions 시크릿", "detail": "camp 18 · news 13 · cctv 10 · calendar 1 · metro 6 · meat 1 · culture 8종 — GitHub에 그대로 있으므로 계정만 유지되면 재등록 불필요" }
+      ]
+    }
+  ],
+  "github_actions": {
+    "note": "GitHub Actions는 모두 GitHub 클라우드 러너에서 돌기 때문에 맥미니·아이맥과 무관하게 계속 실행됩니다. 인계 대상은 '로컬에서만 도는 13개'와 '로컬 산출물을 기다리는 심박 점검'뿐입니다.",
+    "repos": [
+      { "name": "camp", "workflows": 33, "cron": 24 },
+      { "name": "news", "workflows": 29, "cron": 27 },
+      { "name": "cctv", "workflows": 24, "cron": 17 },
+      { "name": "calendar", "workflows": 17, "cron": 7 },
+      { "name": "limery", "workflows": 16, "cron": 7 },
+      { "name": "lets", "workflows": 4, "cron": 2 },
+      { "name": "culture", "workflows": 4, "cron": 1 },
+      { "name": "metro", "workflows": 4, "cron": 1 },
+      { "name": "meat", "workflows": 4, "cron": 6 },
+      { "name": "cultureflow-ai-test", "workflows": 3, "cron": 1 },
+      { "name": "나머지 13개 저장소", "workflows": 20, "cron": 7 }
+    ],
+    "checked_at": "2026-11-26 KST",
+    "method": "gh api repos/pyw31337/{repo}/actions/workflows + 각 워크플로 파일의 cron 구문 집계"
+  },
+  "health": {
+    "workflow_name": "macmini-health",
+    "repo": "pyw31337/news",
+    "path": ".github/workflows/macmini-watch.yml",
+    "schedule": "매시 25분 (:25)",
+    "script": "scripts/macmini_health.py",
+    "thresholds": { "warn_hours": 6, "fail_hours": 36 },
+    "artifacts": [
+      { "kind": "journalists", "path": "reporters_local.json", "produced_by": "com.pyw31337.newsboard-journalists" },
+      { "kind": "overlay", "path": "overlay/latest.json", "produced_by": "com.pyw31337.newsboard-analyze" }
+    ],
+    "note": "이 워크플로는 맥미니에 직접 접속하지 못합니다. data 브랜치에 마지막으로 올라온 산출물 시각을 심박으로 봅니다. 호스트 이름이 바뀌어도 경로가 같으면 그대로 동작하므로, 아이맥에서 같은 두 작업이 돌면 됩니다.",
+    "live_check": "https://api.github.com/repos/pyw31337/news/commits?sha=data&path={path}&per_page=1"
+  },
+  "phases": [
+    {
+      "id": "d-15",
+      "when": "12월 중순까지 (회사)",
+      "title": "번들 새로 만들기",
+      "detail": "맥미니에서 migrate export를 실행해 launchd 전체 재스캔·시크릿 이름 목록·런타임 크기를 최신으로 갱신하고, calendar 백업(비밀값 포함)과 함께 외장 SSD에 담습니다.",
+      "cmds": [
+        "cd ~/Developer/lets && git pull",
+        "bash scripts/migrate_to_imac_m1.sh export --ssd /Volumes/IMAC_MIGRATION",
+        "zsh ~/Developer/calendar/tools/mac-automation/backup.sh --with-secrets"
+      ]
+    },
+    {
+      "id": "d-5",
+      "when": "퇴사 1주 전",
+      "title": "아이맥에서 가져오기",
+      "detail": "SSD를 집으로 가져가 import를 실행합니다. 저장소 클론·런타임 복사·launchd 경로 치환·등록까지 자동으로 하고, 실패한 작업만 따로 보고합니다.",
+      "cmds": [
+        "git clone https://github.com/pyw31337/lets.git ~/Developer/lets",
+        "bash ~/Developer/lets/scripts/migrate_to_imac_m1.sh import --ssd /Volumes/IMAC_MIGRATION",
+        "bash ~/Developer/lets/scripts/migrate_to_imac_m1.sh verify"
+      ]
+    },
+    {
+      "id": "d-4",
+      "when": "가져온 직후",
+      "title": "비밀값 채우기",
+      "detail": "이름만 넘어왔습니다. 값은 이 화면이 아니라 키체인·local.env·GitHub에 직접 넣습니다. 채운 뒤 verify를 다시 돌려 심박 산출물 두 개가 갱신되는지 봅니다.",
+      "cmds": [
+        "bash ~/Developer/lets/scripts/migrate_to_imac_m1.sh secrets",
+        "gh auth login && gh auth setup-git"
+      ]
+    },
+    {
+      "id": "d-1",
+      "when": "첫 성공 확인 후",
+      "title": "맥미니 작업 내리기",
+      "detail": "아이맥에서 두 심박 산출물이 한 번 이상 갱신된 것을 확인한 뒤, 같은 날 맥미니 launchd를 내립니다. 두 기기가 동시에 news data 브랜치에 push하면 충돌이 납니다.",
+      "cmds": [
+        "bash scripts/migrate_to_imac_m1.sh retire --yes   # 맥미니에서"
+      ]
+    },
+    {
+      "id": "d-0",
+      "when": "마지막 근무일",
+      "title": "반납 정리",
+      "detail": "gh 로그아웃, 키체인 항목 삭제, .env·SSH 키 삭제, SSD 사본 암호화 확인, 회사 계정 로그아웃. 맥미니에는 비밀값이 남지 않게 합니다.",
+      "cmds": [
+        "gh auth logout",
+        "bash scripts/migrate_to_imac_m1.sh retire --final"
+      ]
+    }
+  ],
+  "checklist": [
+    { "id": "c1", "group": "준비", "text": "아이맥 M1에서 macOS 버전·메모리·여유 공간 확인 (60GB 이상 필요)" },
+    { "id": "c2", "group": "준비", "text": "Xcode Command Line Tools 설치 (Vision·Swift 판독기 재컴파일)" },
+    { "id": "c3", "group": "준비", "text": "Homebrew·Node 22 이상·Python3·gh·Ollama 설치" },
+    { "id": "c4", "group": "준비", "text": "128GB 이상 외장 SSD 준비(APFS·암호화)" },
+    { "id": "c5", "group": "내보내기", "text": "맥미니에서 migrate export 실행 → launchd 전체 재스캔 결과 확인" },
+    { "id": "c6", "group": "내보내기", "text": "calendar backup.sh --with-secrets 실행 (모여라·컬처플로우·CCTV 설정)" },
+    { "id": "c7", "group": "내보내기", "text": "newsboard-local 55G + .letscamp + Application Support 2종 SSD 복사" },
+    { "id": "c8", "group": "내보내기", "text": "SSD의 secret-keys-only.txt 로 실제 시크릿 이름 확정(값은 파일에 없음)" },
+    { "id": "c9", "group": "가져오기", "text": "아이맥에서 migrate import 완료 · 실패 작업 0건 확인" },
+    { "id": "c10", "group": "가져오기", "text": "pmset 적용(sleep 0) 후 재부팅해도 launchd가 살아나는지 확인" },
+    { "id": "c11", "group": "가져오기", "text": "gh auth login · SSH 별칭 github-newsboard 키 등록" },
+    { "id": "c12", "group": "가져오기", "text": "local.env·.letscamp/env·~/.limery/env 값 채우기" },
+    { "id": "c13", "group": "검증", "text": "newsboard-journalists·analyze 1회 수동 실행 성공" },
+    { "id": "c14", "group": "검증", "text": "reporters_local.json·overlay/latest.json 심박 2개가 아이맥 실행 후 갱신됨" },
+    { "id": "c15", "group": "검증", "text": "camp nightshift --dry-run · CCTV 상태 · 라임리 09:35 로그 확인" },
+    { "id": "c16", "group": "정리", "text": "맥미니 launchd 전부 bootout (retire)" },
+    { "id": "c17", "group": "정리", "text": "맥미니 gh 로그아웃·키체인·.env·SSH 키 삭제" },
+    { "id": "c18", "group": "정리", "text": "SSD 사본 암호화 확인 후 보관, 아이맥 FileVault 켜기" }
+  ],
+  "risks": [
+    {
+      "title": "번들 스캔 범위",
+      "detail": "11-25 번들은 com.pyw31337·com.lets*·com.moyeora·com.cultureflow·com.limery 5개 접두사만 담았습니다. 다른 이름의 launchd 작업이 있으면 빠집니다. migrate export가 ~/Library/LaunchAgents 전체와 launchctl list를 다시 훑어 메웁니다."
+    },
+    {
+      "title": "Swift 바이너리 3종",
+      "detail": "~/.letscamp/bin/vision-ocr, newsboard-local/bin/nbai, calendar의 Vision 헬퍼는 인텔/ARM 바이너리를 그대로 복사하면 안 됩니다. 각 설치 스크립트로 다시 컴파일해야 합니다. nbai는 Apple Intelligence(FoundationModels)를 쓰므로 아이맥 macOS 버전이 낮으면 동작하지 않고, 그때는 LLM_BACKEND=ollama로 대체합니다."
+    },
+    {
+      "title": "Python 가상환경",
+      "detail": "newsboard-local/venv는 경로가 박혀 있어 복사만으로는 깨집니다. requirements로 새로 만드는 편이 빠릅니다."
+    },
+    {
+      "title": "중복 실행",
+      "detail": "이전 기간에 두 기기가 함께 돌면 news data 브랜치 push가 rebase 충돌하고 camp nightshift가 같은 파일을 커밋합니다. 아이맥 첫 성공 확인 당일 맥미니 작업을 내리세요."
+    },
+    {
+      "title": "8GB → 16GB라도 동시 실행 주의",
+      "detail": "Ollama 모델 4종을 동시에 올리면 스왑이 생깁니다. restore 스크립트가 OLLAMA_MAX_LOADED_MODELS=1을 걸지만, nightshift(15분)와 문화 AI(02:20)가 겹치는 새벽은 모델 하나만 유지되도록 확인하세요."
+    },
+    {
+      "title": "회사 기기 초기화",
+      "detail": "마지막 날 MDM이 기기를 지우면 그 뒤로는 아무것도 꺼낼 수 없습니다. export와 SSD 복사는 반드시 12월 중순까지 끝내야 합니다."
+    }
+  ],
+  "files": [
+    { "id": "migrate", "title": "migrate_to_imac_m1.sh", "path": "scripts/migrate_to_imac_m1.sh", "kind": "master", "desc": "export / import / verify / secrets / retire 한 파일. 맥미니와 아이맥 양쪽에서 씁니다." },
+    { "id": "restore", "title": "restore_on_new_pc.sh", "path": "bundle/restore_on_new_pc.sh", "kind": "existing", "desc": "런타임 설치·저장소 클론·plist 경로 치환·등록까지 하는 기존 복원 엔진(273줄)." },
+    { "id": "oneclick", "title": "one_click_restore.command", "path": "bundle/one_click_restore.command", "kind": "existing", "desc": "Finder에서 더블클릭하면 위 엔진을 실행합니다." },
+    { "id": "runtime", "title": "sync_local_runtimes.sh", "path": "scripts/sync_local_runtimes.sh", "kind": "existing", "desc": "비-Git 대용량 런타임을 SSD로 export/import(rsync)." },
+    { "id": "bundle", "title": "ecosystem_handoff_bundle.sh", "path": "scripts/ecosystem_handoff_bundle.sh", "kind": "existing", "desc": "맥미니에서 plist·crontab·Ollama·저장소·런타임 목록을 다시 뽑습니다." },
+    { "id": "package", "title": "lets-imac-m1-handoff 패키지", "path": "packages/lets-imac-m1-handoff.tar.gz", "kind": "archive", "desc": "plist 13개·스크립트·문서·매니페스트를 한 파일로 묶은 실행 패키지." },
+    { "id": "doc", "title": "인계 실행 문서", "path": "docs/IMAC_M1_HANDOFF.md", "kind": "doc", "desc": "이 화면과 같은 내용의 터미널용 런북(전체 목록·주의·검증)." },
+    { "id": "limery", "title": "라임리 마이그레이션 매뉴얼", "path": "https://github.com/pyw31337/limery/blob/main/docs/MIGRATION_NEW_MACHINE.md", "kind": "external", "desc": "라임리 22개 launchd·키 내보내기/가져오기(GPG) 절차." },
+    { "id": "macauto", "title": "캘린더 맥 자동화 백업·복원", "path": "https://github.com/pyw31337/calendar/blob/main/tools/mac-automation/README.md", "kind": "external", "desc": "모여라·컬처플로우·CCTV 설정을 비밀값까지 백업/복원." }
+  ]
+}
