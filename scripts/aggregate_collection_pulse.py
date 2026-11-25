@@ -109,6 +109,43 @@ def main() -> int:
         alerts.append({"type": "SHARP_DROP", "service_id": "all", "service": "수집량 원장",
                        "detail": f"전일 대비 {delta_pct}% 감소했습니다.", "action": "실행 로그와 API 제한을 확인하세요."})
 
+    service_volumes = {}
+    for service in services:
+        sid = str(service.get("id") or "")
+        if not sid:
+            continue
+        days = service_volume_by_day.get(sid, {})
+        obs = service.get("observability") or {}
+        counts = obs.get("counts") or {}
+        snapshot_val = (
+            counts.get("records") if isinstance(counts.get("records"), (int, float))
+            else counts.get("vote_rows") if isinstance(counts.get("vote_rows"), (int, float))
+            else counts.get("bundles") if isinstance(counts.get("bundles"), (int, float))
+            else None
+        )
+        snapshot_unit = "bundles" if isinstance(counts.get("bundles"), (int, float)) and not isinstance(counts.get("records"), (int, float)) else "records"
+        today_val = int(days[today]) if today in days else None
+        yesterday_val = int(days[yesterday]) if yesterday in days else None
+        volume_mode = "increment" if today_val is not None else ("snapshot_only" if snapshot_val is not None else "not_connected")
+        service_volumes[sid] = {
+            "today": today_val,
+            "yesterday": yesterday_val,
+            "snapshot": int(snapshot_val) if snapshot_val is not None else None,
+            "snapshot_unit": snapshot_unit,
+            "observed_at": obs.get("observed_at"),
+            "volume_mode": volume_mode,
+        }
+
+    news_live = next((s for s in services if s.get("id") == "news"), {})
+    news_obs = (news_live.get("observability") or {}) if news_live else {}
+    news_stages = news_obs.get("stages") or observability.get("stages", {})
+    news_counts = news_obs.get("counts") or observability.get("counts", {})
+    obs_services = [s for s in services if (s.get("observability") or {}).get("status") == "observed"]
+    quality_pass_services = [
+        s for s in obs_services
+        if ((s.get("observability") or {}).get("stages") or {}).get("quality", {}).get("status") == "success"
+    ]
+
     result = {
         "schema": "collection_pulse_v2", "generated_at": now.isoformat(),
         "provenance": {
@@ -126,18 +163,15 @@ def main() -> int:
             "collectors_total": len(services), "registered_nodes": len(inventory.get("automation_devices", [])),
         },
         "daily_trend": history,
-        "service_volumes": {
-            service_id: {
-                "today": int(days[today]) if today in days else None,
-                "yesterday": int(days[yesterday]) if yesterday in days else None,
-            }
-            for service_id, days in service_volume_by_day.items()
-        },
+        "service_volumes": service_volumes,
         "quality": {
-            "collect_success_pct": success_rate(observability.get("stages", {}).get("collect", {})),
-            "analyze_success_pct": success_rate(observability.get("stages", {}).get("analyze", {})),
-            "quality_issue_count": observability.get("counts", {}).get("quality_issues"),
-            "observed_at": observability.get("observed_at_kst") or observability.get("observed_at"),
+            "collect_success_pct": success_rate(news_stages.get("collect", {})),
+            "analyze_success_pct": success_rate(news_stages.get("analyze", {})),
+            "quality_issue_count": news_counts.get("quality_issues"),
+            "observed_at": news_obs.get("observed_at") or observability.get("observed_at_kst") or observability.get("observed_at"),
+            "services_observed": len(obs_services),
+            "services_quality_pass": len(quality_pass_services),
+            "services_total": len(services),
         },
         "services": services, "anomalies": alerts,
     }

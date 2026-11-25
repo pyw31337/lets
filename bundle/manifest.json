@@ -1,25 +1,20 @@
 {
-  "bundle_version": "1.0.0",
-  "exported_at": "2026-11-19T00:19:36Z",
+  "bundle_version": "2.1.0",
+  "exported_at": "2026-11-25T01:48:40Z",
   "source_machine": {
     "hostname": "bag-yeong-uui-Macmini.local",
+    "user": "pyw31337",
+    "home": "/Users/pyw31337",
+    "workspace_root": "/Users/pyw31337/Developer",
     "os": "Darwin",
-    "arch": "arm64"
+    "arch": "arm64",
+    "chip": "Apple M2",
+    "ram_gb": 8
   },
-  "ollama_models": [
-    {
-      "model": "qwen2.5vl:3b",
-      "size": "3.2GB",
-      "service": "렛츠캠프 야간 비전 OCR 판독"
-    },
-    {
-      "model": "llama3.2:1b",
-      "size": "1.3GB",
-      "service": "컬처플로우 심야 문화 인텔리전스"
-    }
-  ],
-  "launchagents_count": 9,
-  "ecosystem_services": 15,
-  "automation_devices": 61,
+  "ollama_models_file": "bundle/ollama_models.txt",
+  "repos_inventory": "bundle/repos.tsv",
+  "local_dirs_inventory": "bundle/local_dirs.tsv",
+  "launchagents_count": 13,
+  "env_files_count": 3,
   "zero_cloud_cost": true
 }

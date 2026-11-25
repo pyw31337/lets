@@ -66,7 +66,7 @@ jobs:
         run: |
           git config user.name "LetsHub Operations Bot"
           git config user.email "action@github.com"
-          git add data/live_operations.json data/collection_pulse.json data/automation_runs.json data/observability/source_validation.json data/observability/self_audit.json data/observability/action_plan.json
+          git add data/live_operations.json data/collection_pulse.json data/automation_runs.json data/observability/source_validation.json data/observability/self_audit.json data/observability/action_plan.json data/observability/snapshot_history.json
           if git diff --cached --quiet; then
             echo "No operational change"
           else

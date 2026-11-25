@@ -1,1 +1,3 @@
 __pycache__/
+bundle/env_backup/
+bundle/*.tar.gz

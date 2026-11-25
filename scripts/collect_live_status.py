@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import os
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -39,6 +39,8 @@ PRIMARY_WORKFLOWS = {
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data/live_operations.json"
 RUN_EVENTS = ROOT / "data/automation_runs.json"
+SNAPSHOT_HISTORY = ROOT / "data/observability/snapshot_history.json"
+KST = timezone(timedelta(hours=9))
 NEWS_OBSERVABILITY_URL = "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
 OBSERVABILITY_SOURCES = {
     "art": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
@@ -142,22 +144,74 @@ def record_workflow_events(services: list[dict]) -> None:
     RUN_EVENTS.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def _update_snapshot_history(service_id: str, observed_at: str, run_id: str, snapshot_count: int) -> tuple[int | None, str | None, int | None]:
+    """Record daily cumulative snapshot and return (delta, prev_date, prev_count) if computable."""
+    try:
+        day_kst = datetime.fromisoformat(observed_at.replace("Z", "+00:00")).astimezone(KST).date().isoformat()
+    except ValueError:
+        return None, None, None
+    try:
+        history = json.loads(SNAPSHOT_HISTORY.read_text(encoding="utf-8"))
+    except (FileNotFoundError, json.JSONDecodeError):
+        history = {"schema": "lets_snapshot_history_v1", "services": {}}
+    svc_hist = history.setdefault("services", {}).setdefault(service_id, {})
+    prev_dates = sorted(d for d in svc_hist.keys() if d < day_kst)
+    delta = None
+    prev_date = None
+    prev_count = None
+    if prev_dates:
+        prev_date = prev_dates[-1]
+        prev_val = svc_hist[prev_date].get("count")
+        if isinstance(prev_val, (int, float)) and snapshot_count >= prev_val:
+            prev_count = int(prev_val)
+            delta = int(snapshot_count - prev_count)
+    svc_hist[day_kst] = {
+        "count": int(snapshot_count),
+        "observed_at": observed_at,
+        "run_id": run_id,
+    }
+    for old_day in sorted(svc_hist.keys())[:-30]:
+        svc_hist.pop(old_day, None)
+    SNAPSHOT_HISTORY.parent.mkdir(parents=True, exist_ok=True)
+    SNAPSHOT_HISTORY.write_text(json.dumps(history, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return delta, prev_date, prev_count
+
+
 def record_observed_ingest(service_id: str, observability: dict | None) -> None:
     """Append a run only when a public observability ledger proves a count.
 
-    The collector never derives a record count from an Actions result.  NewsBoard
-    exposes both a stable run id and its persisted vote-row count, so it can be
-    represented as a genuine INGEST event in the shared ledger.
+    Prefers explicit ``counts.increment`` (or ``counts.vote_rows`` for news).
+    When a collector only reports a cumulative snapshot (``records`` or
+    ``bundles``), records daily snapshots and computes the genuine day-over-day
+    delta once a prior day's source-backed snapshot exists.
     """
     if not isinstance(observability, dict):
         return
     run_id = observability.get("run_id")
     observed_at = observability.get("observed_at") or observability.get("observed_at_kst")
     counts = observability.get("counts") or {}
-    count = counts.get("vote_rows") if service_id == "news" else counts.get("increment")
     collect = (observability.get("stages") or {}).get("collect") or {}
-    if not run_id or not observed_at or not isinstance(count, (int, float)) or collect.get("status") != "success":
+    if not run_id or not observed_at or collect.get("status") not in {"success", "observed"}:
         return
+
+    explicit_count = counts.get("vote_rows") if service_id == "news" else counts.get("increment")
+    unit = "vote_rows" if service_id == "news" else ("bundles" if isinstance(counts.get("bundles"), (int, float)) and not isinstance(counts.get("records"), (int, float)) else "records")
+    basis = "explicit_increment"
+    extra_observed = {}
+
+    if isinstance(explicit_count, (int, float)):
+        count = int(explicit_count)
+    else:
+        snapshot_val = counts.get("records") if isinstance(counts.get("records"), (int, float)) else counts.get("bundles")
+        if not isinstance(snapshot_val, (int, float)):
+            return
+        delta, prev_date, prev_count = _update_snapshot_history(service_id, observed_at, str(run_id), int(snapshot_val))
+        if delta is None:
+            return
+        count = delta
+        basis = "snapshot_delta"
+        extra_observed = {"prev_date": prev_date, "prev_count": prev_count, "current_count": int(snapshot_val)}
+
     try:
         ledger = json.loads(RUN_EVENTS.read_text(encoding="utf-8"))
     except (FileNotFoundError, json.JSONDecodeError):
@@ -174,7 +228,7 @@ def record_observed_ingest(service_id: str, observability: dict | None) -> None:
         "stage": "INGEST",
         "status": "SUCCESS",
         "completed_at": observed_at,
-        "observed": {"count": int(count), "unit": "vote_rows" if service_id == "news" else "records", "kind": "increment"},
+        "observed": {"count": count, "unit": unit, "kind": "increment", "basis": basis, **extra_observed},
         "note": "Source-backed public observability ledger.",
     })
     ledger["schema_version"] = "1.1.0"
