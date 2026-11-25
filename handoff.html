@@ -115,6 +115,7 @@
   .bars{display:grid;gap:0;margin-top:4px}
   .bar-row{display:grid;grid-template-columns:190px 1fr 76px 120px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
   .bar-row .p{font-family:var(--mono);font-size:11px;color:var(--text2);word-break:break-all}
+  .bar-row > *{min-width:0}
   .bartrack{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
   .barfill{height:100%;background:#bfdbfe;border-radius:3px}
   .barfill.hot{background:var(--brand)}
@@ -134,16 +135,17 @@
   summary .caret{width:0;height:0;border-left:4px solid var(--faint);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .15s;flex:none;margin-left:2px}
   details[open] summary .caret{transform:rotate(90deg)}
   summary .where{font-weight:400;font-size:10.5px;color:var(--faint);font-family:var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .si{padding:0 0 10px 18px}
-  .si .it{display:flex;gap:8px;padding:6px 0;border-top:1px dashed var(--line)}
+  .si{padding:0 0 10px 18px;min-width:0}
+  .si .it{display:flex;gap:8px;padding:6px 0;border-top:1px dashed var(--line);min-width:0}
   .si .it:first-child{border-top:0}
-  .si .nm{font-family:var(--mono);font-size:11px;color:var(--text2);flex:none;max-width:100%}
+  .si .nm{font-family:var(--mono);font-size:11px;color:var(--text2);flex:none;max-width:100%;overflow-wrap:anywhere}
   .si .dt{font-size:11px;color:var(--muted)}
   .badge-none{font-size:10px;color:var(--green);background:var(--green-bg);padding:2px 7px;border-radius:3px;white-space:nowrap}
   .warning{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;color:#b45309;background:var(--amber-bg);padding:9px 12px;border-radius:4px;margin:10px 0 6px}
 
   /* files */
-  .file{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .file{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line);min-width:0}
+  .file > div{min-width:0}
   .file .t{font-weight:600;color:var(--text);font-size:12.5px}
   .file .p{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:2px;word-break:break-all}
   .file .d{font-size:11px;color:var(--muted);margin-top:4px}
@@ -152,15 +154,16 @@
   .btn:hover{border-color:var(--brand);color:var(--brand)}
   .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
   .btn.primary:hover{background:var(--brand-hover)}
-  pre{background:#fafbfc;border-left:2px solid var(--line2);padding:10px 12px;overflow-x:auto;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--text2);border-radius:0 4px 4px 0}
+  pre{background:#fafbfc;border-left:2px solid var(--line2);padding:10px 12px;overflow-x:auto;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--text2);border-radius:0 4px 4px 0;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
   pre + pre{border-top:1px solid var(--line)}
-  .codeblock{margin:8px 0 2px;position:relative}
+  .codeblock{margin:8px 0 2px;position:relative;min-width:0;max-width:100%}
   .codeblock .copy{position:absolute;top:6px;right:6px;font-size:10px;padding:2px 7px;border:1px solid var(--line2);border-radius:3px;background:#fff;color:var(--muted);cursor:pointer}
   .codeblock .copy:hover{color:var(--brand);border-color:var(--brand)}
 
   /* health */
   .health{display:grid;gap:0}
-  .hrow{display:grid;grid-template-columns:1.2fr 1fr 110px 92px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+  .hrow{display:grid;grid-template-columns:1.2fr 1fr 110px 92px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);min-width:0}
+  .hrow > *{min-width:0;overflow-wrap:anywhere}
   .hrow .k{font-family:var(--mono);font-size:11.5px;color:var(--text)}
   .hrow .by{font-size:10.5px;color:var(--faint);font-family:var(--mono);word-break:break-all}
   .st{font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;justify-self:end}
@@ -168,7 +171,9 @@
   .hmeta{font-size:11px;color:var(--faint);margin-top:10px}
 
   /* phases */
-  .phase{display:grid;grid-template-columns:92px 1fr;gap:0 20px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase{display:grid;grid-template-columns:92px 1fr;gap:0 20px;padding:16px 0;border-bottom:1px solid var(--line);min-width:0}
+  .phase > div{min-width:0}
+  .phase pre{max-width:100%}
   .phase .w{font-size:11px;color:var(--faint);font-family:var(--mono);padding-top:2px}
   .phase h4{font-size:13px;color:var(--text);font-weight:700;margin-bottom:4px}
   .phase p{font-size:11.5px;color:var(--muted);max-width:760px}
@@ -223,7 +228,7 @@
     table.stack, table.stack tbody, table.stack tr, table.stack td{display:block;width:100%}
     table.stack tr{border-bottom:1px solid var(--line2);padding:12px 0}
     table.stack tr:last-child{border-bottom:0}
-    table.stack td{border:0;padding:2px 0}
+    table.stack td{border:0;padding:2px 0;overflow-wrap:anywhere}
     table.stack td::before{content:attr(data-label);display:inline-block;min-width:58px;font-size:10px;color:var(--faint);vertical-align:top}
     table.stack td[data-label=""]::before{display:none}
     .sched{white-space:normal}
