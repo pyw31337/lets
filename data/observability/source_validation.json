@@ -1,18 +1,18 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-25T04:29:07.608965+00:00",
+  "generated_at": "2026-11-25T14:47:20.366445+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-25T04:20:40+00:00",
-      "run_id": "45544570327",
+      "observed_at": "2026-11-20T03:22:45+00:00",
+      "run_id": "44666085152",
       "counts": {
         "issues": 10,
-        "sources": 181,
+        "sources": 187,
         "entities": 36,
-        "global_issues": 12,
+        "global_issues": 0,
         "quality_issues": 10
       },
       "collect": "degraded",
@@ -61,11 +61,16 @@
       "service_id": "people",
       "url": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-25T03:15:58.644961+00:00",
-      "run_id": "people-20261125T031558Z",
+      "observed_at": "2026-11-25T05:07:40.294155+00:00",
+      "run_id": "people-20261125T050740Z",
       "counts": {
-        "records": 50,
-        "increment": 0
+        "records": 21710,
+        "politicians": 50,
+        "medical_professionals": 156,
+        "with_photo": 2051,
+        "alumni_clusters": 1864,
+        "regional_clusters": 1212,
+        "increment": 21504
       },
       "collect": "success",
       "quality": "success"
@@ -74,8 +79,8 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T22:36:32.872455+00:00",
-      "run_id": "cctv-20261124T223632Z",
+      "observed_at": "2026-11-25T08:49:10.993904+00:00",
+      "run_id": "cctv-20261125T084910Z",
       "counts": {
         "records": 18292
       },
@@ -86,8 +91,8 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-24T20:59:17.062423+00:00",
-      "run_id": "meat-20261124T205917Z",
+      "observed_at": "2026-11-25T11:50:26.209389+00:00",
+      "run_id": "meat-20261125T115026Z",
       "counts": {
         "records": 661,
         "unique_records": 661,
