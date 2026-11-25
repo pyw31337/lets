@@ -160,7 +160,7 @@ PY
   done
   echo "  사용자 LaunchAgent 후보 ${count}개 → $all_tsv"
   if have launchctl; then
-    launchctl list 2>/dev/null | grep -v '^\s*-\s*0\s*com.apple' | awk 'NF>=3' > "$LIVE_DIR/launchctl-list.txt" 2>/dev/null || true
+    launchctl list 2>/dev/null | grep -v '^[[:space:]]*-[[:space:]]*0[[:space:]]*com\.apple' > "$LIVE_DIR/launchctl-list.txt" 2>/dev/null || true
     note "launchctl list 스냅샷: $LIVE_DIR/launchctl-list.txt"
   fi
 
