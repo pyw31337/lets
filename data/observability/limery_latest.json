@@ -1,7 +1,7 @@
 {
   "schema": "lets_observability_v1",
-  "run_id": "limery-20261124T040536Z",
-  "observed_at": "2026-11-24T04:05:36.290777+00:00",
+  "run_id": "limery-20261125T024643Z",
+  "observed_at": "2026-11-25T02:46:43.584660+00:00",
   "service_id": "limery",
   "source": "private_limery_v3_index",
   "privacy": "aggregate_only",
@@ -27,8 +27,8 @@
   },
   "counts": {
     "bundles": 26,
-    "files": 29,
-    "bytes": 5641268
+    "files": 31,
+    "bytes": 5672462
   },
   "note": "Privacy-safe aggregate only. Household records and monetary values remain private."
 }
