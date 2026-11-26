@@ -1,12 +1,12 @@
 {
   "schema_version": "3.0.0",
-  "last_updated": "2026-11-26T18:05:16.579502+09:00",
+  "last_updated": "2026-11-27T08:30:39.205919+09:00",
   "is_genuine_observability": true,
   "total_services_monitored": 6,
   "summary": {
-    "total_verified_records": 110946,
-    "total_storage_mb": 9720.26,
-    "today_ingested_count": 154,
+    "total_verified_records": 111123,
+    "total_storage_mb": 7843.99,
+    "today_ingested_count": 164,
     "ecosystem_health_score": 100.0,
     "overall_status": "OPTIMAL_GENUINE",
     "rule_74_media_compliant": true
@@ -17,34 +17,34 @@
       "name": "렛츠피플",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 102928,
-      "daily_added": 154,
-      "storage_mb": 51.73
+      "indexed_records": 103092,
+      "daily_added": 164,
+      "storage_mb": 112.64
     },
     {
       "service_id": "insu",
       "name": "렛츠인슈",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 12,
+      "indexed_records": 16,
       "daily_added": 0,
-      "storage_mb": 0.1
+      "storage_mb": 0.11
     },
     {
       "service_id": "law",
       "name": "렛츠로",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 12,
+      "indexed_records": 16,
       "daily_added": 0,
-      "storage_mb": 0.16
+      "storage_mb": 0.17
     },
     {
       "service_id": "asset",
       "name": "렛츠에셋",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 16,
+      "indexed_records": 21,
       "daily_added": 0,
       "storage_mb": 0.15
     },
@@ -55,7 +55,7 @@
       "is_genuine_data": true,
       "indexed_records": 7978,
       "daily_added": 0,
-      "storage_mb": 89.39
+      "storage_mb": 89.57
     },
     {
       "service_id": "news",
@@ -64,7 +64,7 @@
       "is_genuine_data": false,
       "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 9517.55
+      "storage_mb": 7641.35
     }
   ]
 }

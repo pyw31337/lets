@@ -66,7 +66,12 @@ def run_aggregation():
                         or p.get("total_artworks_indexed")
                         or 0
                     )
-                    s_daily = p.get("daily_added_count") or p.get("daily_increment_count") or 0
+                    s_daily = (
+                        p.get("daily_added_count")
+                        or p.get("daily_increment_count")
+                        or p.get("recently_added_count")
+                        or 0
+                    )
                     s_mb = p.get("database_storage_mb") or 0.0
             except Exception:
                 pass
