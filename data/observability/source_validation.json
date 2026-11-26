@@ -1,16 +1,16 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-26T05:12:36.826279+00:00",
+  "generated_at": "2026-11-26T15:09:54.158208+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-20T03:22:45+00:00",
-      "run_id": "44666085152",
+      "observed_at": "2026-11-26T14:54:24+00:00",
+      "run_id": "45841650108",
       "counts": {
         "issues": 10,
-        "sources": 187,
+        "sources": 191,
         "entities": 36,
         "global_issues": 0,
         "quality_issues": 10
@@ -79,8 +79,8 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-25T22:18:20.223747+00:00",
-      "run_id": "cctv-20261125T221820Z",
+      "observed_at": "2026-11-26T08:48:14.134736+00:00",
+      "run_id": "cctv-20261126T084814Z",
       "counts": {
         "records": 18292
       },
@@ -91,8 +91,8 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T04:02:36.265705+00:00",
-      "run_id": "meat-20261126T040236Z",
+      "observed_at": "2026-11-26T11:38:24.011350+00:00",
+      "run_id": "meat-20261126T113824Z",
       "counts": {
         "records": 671,
         "unique_records": 671,
@@ -213,12 +213,12 @@
       "service_id": "limery",
       "url": "https://pyw31337.github.io/lets/data/observability/limery_latest.json",
       "status": "observed",
-      "observed_at": "2026-11-25T02:46:43.584660+00:00",
-      "run_id": "limery-20261125T024643Z",
+      "observed_at": "2026-11-26T01:57:06.501620+00:00",
+      "run_id": "limery-20261126T015706Z",
       "counts": {
-        "bundles": 26,
-        "files": 31,
-        "bytes": 5672462
+        "bundles": 27,
+        "files": 36,
+        "bytes": 5749767
       },
       "collect": "success",
       "quality": "success"

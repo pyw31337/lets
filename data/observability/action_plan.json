@@ -1,7 +1,22 @@
 {
   "schema": "lets_ops_action_plan_v1",
-  "generated_at": "2026-11-26T05:13:17.218350+00:00",
-  "status": "clear",
-  "actions": [],
+  "generated_at": "2026-11-26T15:10:20.911021+00:00",
+  "status": "attention",
+  "actions": [
+    {
+      "service_id": "all",
+      "priority": "high",
+      "action": "connect_increment_event_contract",
+      "reason": "일일 적재량을 계산할 수 있는 증분 이벤트가 없습니다.",
+      "safe_next_step": "실제 원장·품질 근거를 연결한 뒤 재검증"
+    },
+    {
+      "service_id": "all",
+      "priority": "medium",
+      "action": "inspect_truth_contract",
+      "reason": "원장 계약을 점검해야 합니다.",
+      "safe_next_step": "실제 원장·품질 근거를 연결한 뒤 재검증"
+    }
+  ],
   "policy": "자동 결정은 진단과 추적까지만 수행하며, 원천 서비스 데이터나 수집량을 임의로 변경하지 않습니다."
 }
