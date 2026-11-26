@@ -1,19 +1,19 @@
 {
   "schema": "lets_observability_v1",
-  "run_id": "limery-20261125T024643Z",
-  "observed_at": "2026-11-25T02:46:43.584660+00:00",
+  "run_id": "limery-20261126T015706Z",
+  "observed_at": "2026-11-26T01:57:06.501620+00:00",
   "service_id": "limery",
   "source": "private_limery_v3_index",
   "privacy": "aggregate_only",
   "stages": {
     "collect": {
       "status": "success",
-      "ok": 26,
+      "ok": 27,
       "artifact": true
     },
     "analyze": {
       "status": "success",
-      "ok": 26,
+      "ok": 27,
       "artifact": true
     },
     "quality": {
@@ -26,9 +26,9 @@
     }
   },
   "counts": {
-    "bundles": 26,
-    "files": 31,
-    "bytes": 5672462
+    "bundles": 27,
+    "files": 36,
+    "bytes": 5749767
   },
   "note": "Privacy-safe aggregate only. Household records and monetary values remain private."
 }
