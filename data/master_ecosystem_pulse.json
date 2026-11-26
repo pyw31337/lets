@@ -1,12 +1,12 @@
 {
   "schema_version": "3.0.0",
-  "last_updated": "2026-11-26T16:49:42.917771+09:00",
+  "last_updated": "2026-11-26T18:05:16.579502+09:00",
   "is_genuine_observability": true,
   "total_services_monitored": 6,
   "summary": {
-    "total_verified_records": 110752,
-    "total_storage_mb": 9493.44,
-    "today_ingested_count": 0,
+    "total_verified_records": 110946,
+    "total_storage_mb": 9720.26,
+    "today_ingested_count": 154,
     "ecosystem_health_score": 100.0,
     "overall_status": "OPTIMAL_GENUINE",
     "rule_74_media_compliant": true
@@ -17,36 +17,36 @@
       "name": "렛츠피플",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 102774,
-      "daily_added": 0,
-      "storage_mb": 51.65
+      "indexed_records": 102928,
+      "daily_added": 154,
+      "storage_mb": 51.73
     },
     {
       "service_id": "insu",
       "name": "렛츠인슈",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 0,
+      "indexed_records": 12,
       "daily_added": 0,
-      "storage_mb": 0.07
+      "storage_mb": 0.1
     },
     {
       "service_id": "law",
       "name": "렛츠로",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 0,
+      "indexed_records": 12,
       "daily_added": 0,
-      "storage_mb": 0.09
+      "storage_mb": 0.16
     },
     {
       "service_id": "asset",
       "name": "렛츠에셋",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 0,
+      "indexed_records": 16,
       "daily_added": 0,
-      "storage_mb": 0.12
+      "storage_mb": 0.15
     },
     {
       "service_id": "art",
@@ -55,7 +55,7 @@
       "is_genuine_data": true,
       "indexed_records": 7978,
       "daily_added": 0,
-      "storage_mb": 89.0
+      "storage_mb": 89.39
     },
     {
       "service_id": "news",
@@ -64,7 +64,7 @@
       "is_genuine_data": false,
       "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 9291.29
+      "storage_mb": 9517.55
     }
   ]
 }

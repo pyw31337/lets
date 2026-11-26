@@ -57,7 +57,11 @@ def run_aggregation():
                     s_records = (
                         p.get("total_people_indexed")
                         or p.get("total_policies_indexed")
+                        or p.get("total_claim_scenarios")
+                        or p.get("total_statutes_indexed")
+                        or p.get("total_articles_indexed")
                         or p.get("total_cases_indexed")
+                        or p.get("total_corps_tracked")
                         or p.get("monitored_billionaires")
                         or p.get("total_artworks_indexed")
                         or 0
