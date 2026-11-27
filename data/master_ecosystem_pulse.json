@@ -1,34 +1,40 @@
 {
   "schema_version": "3.5.0",
-  "last_updated": "2026-11-27T09:17:20.499835+09:00",
+  "last_updated": "2026-11-27T12:42:32.444508+09:00",
   "is_genuine_observability": true,
   "total_services_monitored": 6,
   "summary": {
-    "total_verified_records": 111594,
-    "total_storage_mb": 7960.17,
+    "total_verified_records": 0,
+    "total_storage_mb": 0.0,
     "today_ingested_count": 0,
-    "ecosystem_health_score": 100.0,
+    "ecosystem_health_score": null,
     "overall_status": "OPTIMAL_GENUINE",
     "rule_74_media_compliant": true,
-    "external_vault_online": true,
-    "external_vault_free_gb": 3917.9,
-    "total_active_devices": 19
+    "external_vault_online": false,
+    "external_vault_free_gb": 0.0,
+    "total_active_devices": 19,
+    "total_indexed_records": null,
+    "total_daily_ingest_rate": null,
+    "zero_drop_anomalies": 0,
+    "flat_curve_anomalies": 0,
+    "total_standalone_services": 0,
+    "status": "EVIDENCE_REQUIRED"
   },
   "services": [
     {
       "service_id": "people",
       "name": "렛츠피플",
-      "status": "HEALTHY_GENUINE",
-      "is_genuine_data": true,
-      "indexed_records": 103563,
+      "status": "UNKNOWN",
+      "is_genuine_data": false,
+      "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 51.62,
+      "storage_mb": 0.0,
       "devices": [
         {
           "id": "ppl-wikidata",
           "name": "글로벌 위키데이터 인물 수집기",
           "stage": "수집",
-          "volume": 103563,
+          "volume": 0,
           "unit": "인물",
           "status": "ACTIVE_RUNNING",
           "desc": "10만+ 글로벌 정·재계 인물 실시간 색인"
@@ -55,21 +61,21 @@
           "id": "ppl-ontology",
           "name": "가계도·학력 심층 온톨로지 엔진",
           "stage": "분석",
-          "volume": 206798,
+          "volume": 0,
           "unit": "관계망",
           "status": "ACTIVE_RUNNING",
-          "desc": "가계도 103,399명 / 학력 103,399명 심층 연결"
+          "desc": "가계도 0명 / 학력 0명 심층 연결"
         }
       ]
     },
     {
       "service_id": "insu",
       "name": "렛츠인슈",
-      "status": "HEALTHY_GENUINE",
-      "is_genuine_data": true,
-      "indexed_records": 16,
+      "status": "UNKNOWN",
+      "is_genuine_data": false,
+      "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 0.11,
+      "storage_mb": 0.0,
       "devices": [
         {
           "id": "insu-clauses",
@@ -103,11 +109,11 @@
     {
       "service_id": "law",
       "name": "렛츠로",
-      "status": "HEALTHY_GENUINE",
-      "is_genuine_data": true,
-      "indexed_records": 16,
+      "status": "UNKNOWN",
+      "is_genuine_data": false,
+      "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 0.17,
+      "storage_mb": 0.0,
       "devices": [
         {
           "id": "law-statutes",
@@ -141,11 +147,11 @@
     {
       "service_id": "asset",
       "name": "렛츠에셋",
-      "status": "HEALTHY_GENUINE",
-      "is_genuine_data": true,
-      "indexed_records": 21,
+      "status": "UNKNOWN",
+      "is_genuine_data": false,
+      "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 0.15,
+      "storage_mb": 0.0,
       "devices": [
         {
           "id": "asset-krx",
@@ -179,11 +185,11 @@
     {
       "service_id": "art",
       "name": "렛츠아트",
-      "status": "MULTI_MUSEUM_GENUINE",
-      "is_genuine_data": true,
-      "indexed_records": 7978,
+      "status": "UNKNOWN",
+      "is_genuine_data": false,
+      "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 91.36,
+      "storage_mb": 0.0,
       "devices": [
         {
           "id": "art-met",
@@ -216,7 +222,7 @@
           "id": "art-vault",
           "name": "외장하드 2400px WebP 적재 엔진",
           "stage": "저장",
-          "volume": 2671,
+          "volume": 281,
           "unit": "WebP 블롭",
           "status": "ACTIVE_RUNNING",
           "desc": "외장하드 직통 적재 및 SHA-256 중복 방지"
@@ -230,7 +236,7 @@
       "is_genuine_data": false,
       "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 7755.57,
+      "storage_mb": 0.0,
       "devices": [
         {
           "id": "nb-assembly",
@@ -258,7 +264,7 @@
       "id": "ppl-wikidata",
       "name": "글로벌 위키데이터 인물 수집기",
       "stage": "수집",
-      "volume": 103563,
+      "volume": 0,
       "unit": "인물",
       "status": "ACTIVE_RUNNING",
       "desc": "10만+ 글로벌 정·재계 인물 실시간 색인"
@@ -285,10 +291,10 @@
       "id": "ppl-ontology",
       "name": "가계도·학력 심층 온톨로지 엔진",
       "stage": "분석",
-      "volume": 206798,
+      "volume": 0,
       "unit": "관계망",
       "status": "ACTIVE_RUNNING",
-      "desc": "가계도 103,399명 / 학력 103,399명 심층 연결"
+      "desc": "가계도 0명 / 학력 0명 심층 연결"
     },
     {
       "id": "insu-clauses",
@@ -402,7 +408,7 @@
       "id": "art-vault",
       "name": "외장하드 2400px WebP 적재 엔진",
       "stage": "저장",
-      "volume": 2671,
+      "volume": 281,
       "unit": "WebP 블롭",
       "status": "ACTIVE_RUNNING",
       "desc": "외장하드 직통 적재 및 SHA-256 중복 방지"
@@ -424,6 +430,22 @@
       "unit": "의원",
       "status": "ACTIVE_RUNNING",
       "desc": "1024차원 임베딩 정당 이탈률 분석"
+    }
+  ],
+  "metric_provenance": "observed_runs",
+  "run_event_store": "data/automation_runs.json",
+  "caution_alerts": [
+    {
+      "id": "alert_sentinel_unverified_11/27",
+      "level": "WARNING",
+      "service_id": "all",
+      "service_name": "센티널 통합 감시",
+      "badge_text": "실측 대기",
+      "badge_bg": "#fef3c7",
+      "badge_color": "#92400e",
+      "title": "실행 이벤트가 없어 운영 상태를 검증할 수 없습니다",
+      "desc": "서비스 원장과 설정값은 존재하지만 최근 SUCCESS/FAILED 실행 이벤트가 없습니다. 정상 가동이나 자동 치유로 표시하지 않습니다.",
+      "timestamp": "2026-11-27T12:42:32.444508+09:00"
     }
   ]
 }
