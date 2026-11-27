@@ -1132,7 +1132,7 @@
             <span id="vaultStatusBadge" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; padding:4px 10px; border-radius:6px; font-weight:700;">
               💾 외장하드 볼트: 온라인 (3,918.1 GB 여유)
             </span>
-            <span id="liveTelemetryClock" style="color:#64748b;">5초 주기 실시간 연동</span>
+            <span id="liveTelemetryClock" style="color:#64748b;">30초 주기 실시간 연동</span>
           </div>
         </div>
         <div id="liveDeviceCardsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">
@@ -2098,8 +2098,8 @@
       renderMasterTable();
       handleHashRoute();
 
-      // 실시간 수집 텔레메트리 5초 주기 라이브 폴링
-      setInterval(pollLiveTelemetry, 5000);
+      // 실시간 수집 텔레메트리 30초 주기 라이브 폴링 (무료티어 요청량 및 브라우저/서버 부하 보호)
+      setInterval(pollLiveTelemetry, 30000);
     }
 
     async function pollLiveTelemetry() {
