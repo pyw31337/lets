@@ -1,15 +1,8 @@
 {
   "schema": "lets_ops_action_plan_v1",
-  "generated_at": "2026-11-27T15:23:38.984491+00:00",
+  "generated_at": "2026-11-27T23:35:56.568396+00:00",
   "status": "attention",
   "actions": [
-    {
-      "service_id": "all",
-      "priority": "high",
-      "action": "connect_increment_event_contract",
-      "reason": "일일 적재량을 계산할 수 있는 증분 이벤트가 없습니다.",
-      "safe_next_step": "실제 원장·품질 근거를 연결한 뒤 재검증"
-    },
     {
       "service_id": "all",
       "priority": "medium",

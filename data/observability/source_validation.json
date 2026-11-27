@@ -1,18 +1,18 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-27T15:23:01.496015+00:00",
+  "generated_at": "2026-11-27T23:35:17.912131+00:00",
   "services": [
     {
       "service_id": "news",
       "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json",
       "status": "degraded",
-      "observed_at": "2026-11-20T03:22:45+00:00",
-      "run_id": "44666085152",
+      "observed_at": "2026-11-27T23:29:41+00:00",
+      "run_id": "46081135333",
       "counts": {
         "issues": 10,
-        "sources": 187,
+        "sources": 184,
         "entities": 36,
-        "global_issues": 0,
+        "global_issues": 12,
         "quality_issues": 10
       },
       "collect": "degraded",
@@ -35,8 +35,8 @@
       "service_id": "asset",
       "url": "https://raw.githubusercontent.com/pyw31337/asset/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T23:25:10.609940+00:00",
-      "run_id": "asset-20261126T232510Z",
+      "observed_at": "2026-11-27T23:06:12.508612+00:00",
+      "run_id": "asset-20261127T230612Z",
       "counts": {
         "records": 66,
         "increment": 0
@@ -79,8 +79,8 @@
       "service_id": "cctv",
       "url": "https://raw.githubusercontent.com/pyw31337/cctv/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-27T09:06:15.442844+00:00",
-      "run_id": "cctv-20261127T090615Z",
+      "observed_at": "2026-11-27T21:43:49.399568+00:00",
+      "run_id": "cctv-20261127T214349Z",
       "counts": {
         "records": 18293
       },
@@ -91,13 +91,13 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-27T11:31:48.735113+00:00",
-      "run_id": "meat-20261127T113148Z",
+      "observed_at": "2026-11-27T19:47:10.730132+00:00",
+      "run_id": "meat-20261127T194710Z",
       "counts": {
-        "records": 681,
-        "unique_records": 681,
+        "records": 691,
+        "unique_records": 691,
         "increment": 10,
-        "increment_date": "2026-11-27"
+        "increment_date": "2026-11-28"
       },
       "collect": "success",
       "quality": "success"
