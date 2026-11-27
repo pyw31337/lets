@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-27T12:42:32.473564+09:00",
+  "generated_at": "2026-11-27T13:34:40.022939+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -93,12 +93,14 @@
   ],
   "service_volumes": {
     "news": {
-      "today": null,
-      "yesterday": null,
-      "snapshot": null,
+      "today": 0,
+      "yesterday": 0,
+      "snapshot": 0,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-20T03:22:45+00:00",
-      "volume_mode": "not_connected"
+      "observed_at": "2026-11-27T13:34:40.022939+09:00",
+      "volume_mode": "snapshot_only",
+      "devices_count": 2,
+      "storage_mb": 8634.41
     },
     "culture": {
       "today": null,
@@ -173,44 +175,54 @@
       "volume_mode": "snapshot_only"
     },
     "law": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
-      "snapshot": 20,
+      "snapshot": 16,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-26T01:59:31.385176+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-27T13:34:40.022939+09:00",
+      "volume_mode": "snapshot_only",
+      "devices_count": 3,
+      "storage_mb": 0.17
     },
     "insu": {
-      "today": null,
-      "yesterday": 4,
-      "snapshot": 11,
+      "today": 0,
+      "yesterday": 0,
+      "snapshot": 16,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-26T01:27:52.351730+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-27T13:34:40.022939+09:00",
+      "volume_mode": "snapshot_only",
+      "devices_count": 3,
+      "storage_mb": 0.11
     },
     "people": {
-      "today": null,
-      "yesterday": 81064,
-      "snapshot": 102774,
+      "today": 0,
+      "yesterday": 0,
+      "snapshot": 103687,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-26T02:34:50.659495+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-27T13:34:40.022939+09:00",
+      "volume_mode": "snapshot_only",
+      "devices_count": 4,
+      "storage_mb": 51.66
     },
     "asset": {
       "today": 0,
       "yesterday": 0,
-      "snapshot": 66,
+      "snapshot": 21,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-26T23:25:10.609940+00:00",
-      "volume_mode": "increment"
+      "observed_at": "2026-11-27T13:34:40.022939+09:00",
+      "volume_mode": "snapshot_only",
+      "devices_count": 3,
+      "storage_mb": 0.15
     },
     "art": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
-      "snapshot": 2650,
+      "snapshot": 7978,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-26T03:25:36.290226+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-27T13:34:40.022939+09:00",
+      "volume_mode": "snapshot_only",
+      "devices_count": 4,
+      "storage_mb": 92.67
     },
     "limery": {
       "today": null,
