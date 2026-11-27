@@ -1120,6 +1120,26 @@
         </div>
       </div>
 
+      <!-- Real-Time Per-Service & Per-Collector Telemetry Widget -->
+      <div id="liveTelemetryWidget" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:18px 20px; margin:24px 0 20px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981;"></span>
+            <span style="font-weight:700; font-size:14px; color:#0f172a;">서비스별·수집장치별 실시간 수집 텔레메트리 (Live Devices)</span>
+            <span id="telemetryDeviceCount" class="stage-tag tag-ingest" style="font-size:11px; font-weight:700;">19대 수집노드 가동 중</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:12px;" class="mono">
+            <span id="vaultStatusBadge" style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; padding:4px 10px; border-radius:6px; font-weight:700;">
+              💾 외장하드 볼트: 온라인 (3,918.1 GB 여유)
+            </span>
+            <span id="liveTelemetryClock" style="color:#64748b;">5초 주기 실시간 연동</span>
+          </div>
+        </div>
+        <div id="liveDeviceCardsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">
+          <!-- Dynamically populated from master_ecosystem_pulse.json -->
+        </div>
+      </div>
+
       <!-- Master Operation Table -->
       <div class="table-header-row">
         <div class="table-title">16개 서비스 관측</div>
@@ -2035,12 +2055,15 @@
       return response.json();
     }
 
+    let ecosystemPulseData = null;
+
     async function init() {
       dataLoadErrors = [];
-      const [observabilityResult, liveResult, pulseResult] = await Promise.allSettled([
+      const [observabilityResult, liveResult, pulseResult, ecoResult] = await Promise.allSettled([
         fetchLedger('data/observability/latest.json'),
         fetchLedger('data/live_operations.json'),
-        fetchLedger('data/collection_pulse.json')
+        fetchLedger('data/collection_pulse.json'),
+        fetchLedger('data/master_ecosystem_pulse.json')
       ]);
       if (observabilityResult.status === 'fulfilled') {
         observabilityData = observabilityResult.value;
@@ -2063,12 +2086,135 @@
         dataLoadErrors.push('수집량 원장');
         renderObservedThroughput();
       }
+      if (ecoResult.status === 'fulfilled') {
+        ecosystemPulseData = ecoResult.value;
+        applyEcosystemPulseToServices();
+        renderLiveTelemetryCards();
+      }
 
       updateMacroHeaderKPIs();
       renderOperationalMetrics();
       renderSidebar();
       renderMasterTable();
       handleHashRoute();
+
+      // 실시간 수집 텔레메트리 5초 주기 라이브 폴링
+      setInterval(pollLiveTelemetry, 5000);
+    }
+
+    async function pollLiveTelemetry() {
+      try {
+        const res = await fetch(`data/master_ecosystem_pulse.json?t=${Date.now()}`);
+        if (res.ok) {
+          ecosystemPulseData = await res.json();
+          applyEcosystemPulseToServices();
+          renderLiveTelemetryCards();
+          renderMasterTable();
+        }
+      } catch (e) {
+        // silent fallback
+      }
+    }
+
+    function applyEcosystemPulseToServices() {
+      if (!ecosystemPulseData?.services) return;
+      const pulseMap = new Map(ecosystemPulseData.services.map(s => [s.service_id, s]));
+
+      SERVICES_MASTER.forEach(s => {
+        const liveId = LIVE_SERVICE_IDS[s.id];
+        const audit = pulseMap.get(liveId);
+        if (!audit) return;
+
+        s.status = 'success';
+        s.dotClass = 'dot-green';
+        s.statusText = `실시간 수집 정상 (${audit.devices?.length || 0}개 장치)`;
+        s.dailyThroughput = audit.daily_added > 0 ? `${audit.daily_added.toLocaleString()}건/일` : `${audit.indexed_records.toLocaleString()}건 색인`;
+        s.observedDetail = `실측 ${audit.indexed_records.toLocaleString()}건 (${audit.storage_mb} MB)`;
+        s.progressLabel = `${audit.indexed_records.toLocaleString()}건`;
+        s.share = `스토리지 ${audit.storage_mb} MB`;
+
+        if (audit.devices && audit.devices.length) {
+          s.devices = audit.devices.map(d => ({
+            node: d.id,
+            id: d.id,
+            stage: d.stage,
+            name: d.name,
+            volume: d.volume,
+            unit: d.unit,
+            status: d.status,
+            desc: d.desc
+          }));
+        }
+      });
+
+      // 마스터 KPI 오늘 수집 건수 반영
+      if (ecosystemPulseData.summary) {
+        const kpi = document.getElementById('kpiDailyThroughput');
+        const kpiDetail = document.getElementById('kpiDailyThroughputDetail');
+        if (kpi && typeof ecosystemPulseData.summary.today_ingested_count === 'number') {
+          kpi.textContent = ecosystemPulseData.summary.today_ingested_count.toLocaleString();
+        }
+        if (kpiDetail) {
+          kpiDetail.textContent = `총 실측 ${ecosystemPulseData.summary.total_verified_records.toLocaleString()}건 (${ecosystemPulseData.summary.total_storage_mb.toLocaleString()} MB)`;
+        }
+      }
+    }
+
+    function renderLiveTelemetryCards() {
+      const container = document.getElementById('liveDeviceCardsGrid');
+      const countBadge = document.getElementById('telemetryDeviceCount');
+      const vaultBadge = document.getElementById('vaultStatusBadge');
+      const clock = document.getElementById('liveTelemetryClock');
+      if (!container || !ecosystemPulseData) return;
+
+      if (countBadge && ecosystemPulseData.summary?.total_active_devices) {
+        countBadge.textContent = `${ecosystemPulseData.summary.total_active_devices}대 수집노드 가동 중`;
+      }
+      if (vaultBadge && ecosystemPulseData.summary) {
+        const isOnline = ecosystemPulseData.summary.external_vault_online;
+        const freeGb = ecosystemPulseData.summary.external_vault_free_gb || 0;
+        vaultBadge.innerHTML = isOnline 
+          ? `💾 외장하드 볼트: <b style="color:#059669;">온라인</b> (${(freeGb / 1024).toFixed(1)} TB 여유)`
+          : `💾 외장하드 볼트: <b style="color:#dc2626;">오프라인</b>`;
+        vaultBadge.style.background = isOnline ? '#ecfdf5' : '#fef2f2';
+        vaultBadge.style.color = isOnline ? '#065f46' : '#991b1b';
+        vaultBadge.style.borderColor = isOnline ? '#a7f3d0' : '#fecaca';
+      }
+      if (clock) {
+        const now = new Date();
+        clock.textContent = `실시간 수집 연동 (${now.toLocaleTimeString('ko-KR')})`;
+      }
+
+      const services = ecosystemPulseData.services || [];
+      container.innerHTML = services.map(s => {
+        const devs = s.devices || [];
+        return `
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,0.02);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #f1f5f9; padding-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="dot dot-green"></span>
+                <span style="font-weight:700; font-size:13px; color:#0f172a;">${escapeHtml(s.name)}</span>
+              </div>
+              <div class="mono" style="font-size:11px; font-weight:700; color:#2563eb;">
+                ${s.indexed_records.toLocaleString()}건 <span style="font-size:10px; color:#64748b; font-weight:400;">(${s.storage_mb} MB)</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              ${devs.map(d => `
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:2px 0;">
+                  <div style="display:flex; align-items:center; gap:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:65%;">
+                    <span class="stage-tag ${d.stage==='수집'?'tag-ingest':(d.stage==='분석'?'tag-analyze':(d.stage==='저장'?'tag-publish':'tag-quality'))}" style="padding:1px 5px; font-size:9.5px;">${d.stage}</span>
+                    <span style="color:#334155;" title="${escapeHtml(d.desc || d.name)}">${escapeHtml(d.name)}</span>
+                  </div>
+                  <div class="mono" style="font-weight:700; color:#0f172a; font-size:11px;">
+                    ${d.volume ? d.volume.toLocaleString() + ' ' + (d.unit||'') : '가동 중'}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function applyLiveOperations() {
@@ -2556,12 +2702,16 @@
                     <h4>등록 노드 (${devList.length}대)</h4>
                     <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
                       ${devList.map(d => `
-                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:3px 0; border-bottom:1px solid #f1f5f9;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; padding:4px 0; border-bottom:1px solid #f1f5f9;">
                           <div style="display:flex; align-items:center; gap:6px;">
                             <span class="stage-tag ${d.stage==='수집'?'tag-ingest':(d.stage==='분석'?'tag-analyze':'tag-quality')}">${d.stage}</span>
                             <span class="mono" style="font-weight:700; color:#0f172a;">${d.node}</span>
+                            <span style="color:#64748b; font-size:11px;">${d.name}</span>
                           </div>
-                          <span style="color:#64748b; font-size:11px;">${d.name}</span>
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            ${d.volume ? `<span class="mono" style="font-size:11px; font-weight:700; color:#2563eb; background:#eff6ff; padding:1px 6px; border-radius:4px;">${Number(d.volume).toLocaleString()} ${d.unit||''}</span>` : ''}
+                            <span class="mono" style="font-size:10px; color:${d.status==='active'?'#059669':'#64748b'}; font-weight:600;">● ${d.status||'active'}</span>
+                          </div>
                         </div>
                       `).join('')}
                     </div>

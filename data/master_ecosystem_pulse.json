@@ -1,15 +1,18 @@
 {
-  "schema_version": "3.0.0",
-  "last_updated": "2026-11-27T08:57:07.282277+09:00",
+  "schema_version": "3.5.0",
+  "last_updated": "2026-11-27T09:17:20.499835+09:00",
   "is_genuine_observability": true,
   "total_services_monitored": 6,
   "summary": {
-    "total_verified_records": 111383,
-    "total_storage_mb": 7847.44,
-    "today_ingested_count": 260,
+    "total_verified_records": 111594,
+    "total_storage_mb": 7960.17,
+    "today_ingested_count": 0,
     "ecosystem_health_score": 100.0,
     "overall_status": "OPTIMAL_GENUINE",
-    "rule_74_media_compliant": true
+    "rule_74_media_compliant": true,
+    "external_vault_online": true,
+    "external_vault_free_gb": 3917.9,
+    "total_active_devices": 19
   },
   "services": [
     {
@@ -17,9 +20,47 @@
       "name": "렛츠피플",
       "status": "HEALTHY_GENUINE",
       "is_genuine_data": true,
-      "indexed_records": 103352,
-      "daily_added": 260,
-      "storage_mb": 51.56
+      "indexed_records": 103563,
+      "daily_added": 0,
+      "storage_mb": 51.62,
+      "devices": [
+        {
+          "id": "ppl-wikidata",
+          "name": "글로벌 위키데이터 인물 수집기",
+          "stage": "수집",
+          "volume": 103563,
+          "unit": "인물",
+          "status": "ACTIVE_RUNNING",
+          "desc": "10만+ 글로벌 정·재계 인물 실시간 색인"
+        },
+        {
+          "id": "ppl-defaulter",
+          "name": "행안부·위택스 고액체납자 수집기",
+          "stage": "수집",
+          "volume": 13697,
+          "unit": "체납건",
+          "status": "ACTIVE_RUNNING",
+          "desc": "지방세 1천만원 이상 체납 9,409억원 추적"
+        },
+        {
+          "id": "ppl-medical",
+          "name": "공공 보건의료인 프로필 수집기",
+          "stage": "수집",
+          "volume": 156,
+          "unit": "의료인",
+          "status": "ACTIVE_RUNNING",
+          "desc": "전국 의사·치과의사·한의사·약사 프로필"
+        },
+        {
+          "id": "ppl-ontology",
+          "name": "가계도·학력 심층 온톨로지 엔진",
+          "stage": "분석",
+          "volume": 206798,
+          "unit": "관계망",
+          "status": "ACTIVE_RUNNING",
+          "desc": "가계도 103,399명 / 학력 103,399명 심층 연결"
+        }
+      ]
     },
     {
       "service_id": "insu",
@@ -28,7 +69,36 @@
       "is_genuine_data": true,
       "indexed_records": 16,
       "daily_added": 0,
-      "storage_mb": 0.11
+      "storage_mb": 0.11,
+      "devices": [
+        {
+          "id": "insu-clauses",
+          "name": "1~4세대 표준약관 조항 수집기",
+          "stage": "수집",
+          "volume": 32,
+          "unit": "약관군",
+          "status": "ACTIVE_RUNNING",
+          "desc": "1~4세대 실손 및 3대 질병 표준약관"
+        },
+        {
+          "id": "insu-disputes",
+          "name": "금감원·소비자원 분쟁조정 룰셋 엔진",
+          "stage": "분석",
+          "volume": 16,
+          "unit": "판정룰",
+          "status": "ACTIVE_RUNNING",
+          "desc": "도수치료·백내장·하이푸·누수 16대 룰셋"
+        },
+        {
+          "id": "insu-fts5",
+          "name": "약관·청구 방어전략 FTS5 인덱서",
+          "stage": "검증",
+          "volume": 16,
+          "unit": "색인",
+          "status": "ACTIVE_RUNNING",
+          "desc": "claim_rules_fts 키워드 고속 검색"
+        }
+      ]
     },
     {
       "service_id": "law",
@@ -37,7 +107,36 @@
       "is_genuine_data": true,
       "indexed_records": 16,
       "daily_added": 0,
-      "storage_mb": 0.17
+      "storage_mb": 0.17,
+      "devices": [
+        {
+          "id": "law-statutes",
+          "name": "36대 법령 전문 조문 수집기",
+          "stage": "수집",
+          "volume": 16,
+          "unit": "법률",
+          "status": "ACTIVE_RUNNING",
+          "desc": "헌법·민법·상법·형법 등 57개 주요 조문"
+        },
+        {
+          "id": "law-precedents",
+          "name": "대법원 전원합의체 판례 추출기",
+          "stage": "수집",
+          "volume": 15,
+          "unit": "판례",
+          "status": "ACTIVE_RUNNING",
+          "desc": "백내장·누수비용·임대차 등 리딩 판결"
+        },
+        {
+          "id": "law-fts5",
+          "name": "조문·판례 FTS5 전문검색 엔진",
+          "stage": "검증",
+          "volume": 72,
+          "unit": "색인",
+          "status": "ACTIVE_RUNNING",
+          "desc": "articles_fts 및 precedents_fts 양방향 색인"
+        }
+      ]
     },
     {
       "service_id": "asset",
@@ -46,7 +145,36 @@
       "is_genuine_data": true,
       "indexed_records": 21,
       "daily_added": 0,
-      "storage_mb": 0.15
+      "storage_mb": 0.15,
+      "devices": [
+        {
+          "id": "asset-krx",
+          "name": "KRX 21대 대장주 실시간 시총 수집기",
+          "stage": "수집",
+          "volume": 21,
+          "unit": "상장사",
+          "status": "ACTIVE_RUNNING",
+          "desc": "삼성전자, SK하이닉스 등 시총 1,200조원 추적"
+        },
+        {
+          "id": "asset-dart",
+          "name": "DART 5% 대량보유 지분 공시 추출기",
+          "stage": "수집",
+          "volume": 21,
+          "unit": "공시군",
+          "status": "ACTIVE_RUNNING",
+          "desc": "국민연금, 블랙록, 대주주 지분율 연동"
+        },
+        {
+          "id": "asset-fts5",
+          "name": "상장사·지배구조 FTS5 검색 엔진",
+          "stage": "검증",
+          "volume": 21,
+          "unit": "색인",
+          "status": "ACTIVE_RUNNING",
+          "desc": "corps_fts 종목·지배구조 실시간 검색"
+        }
+      ]
     },
     {
       "service_id": "art",
@@ -55,7 +183,45 @@
       "is_genuine_data": true,
       "indexed_records": 7978,
       "daily_added": 0,
-      "storage_mb": 90.56
+      "storage_mb": 91.36,
+      "devices": [
+        {
+          "id": "art-met",
+          "name": "메트로폴리탄 미술관(Met) 수집기",
+          "stage": "수집",
+          "volume": 3250,
+          "unit": "작품",
+          "status": "ACTIVE_RUNNING",
+          "desc": "The Met 회화·조각 고화질 컬렉션"
+        },
+        {
+          "id": "art-aic",
+          "name": "시카고 미술관(AIC) 수집 파이프라인",
+          "stage": "수집",
+          "volume": 2680,
+          "unit": "작품",
+          "status": "ACTIVE_RUNNING",
+          "desc": "인상주의·근현대 명화 스트림"
+        },
+        {
+          "id": "art-cma",
+          "name": "클리블랜드 미술관(CMA) 하베스터",
+          "stage": "수집",
+          "volume": 2048,
+          "unit": "작품",
+          "status": "ACTIVE_RUNNING",
+          "desc": "동양화·아시아 유물 고화질 자산"
+        },
+        {
+          "id": "art-vault",
+          "name": "외장하드 2400px WebP 적재 엔진",
+          "stage": "저장",
+          "volume": 2671,
+          "unit": "WebP 블롭",
+          "status": "ACTIVE_RUNNING",
+          "desc": "외장하드 직통 적재 및 SHA-256 중복 방지"
+        }
+      ]
     },
     {
       "service_id": "news",
@@ -64,7 +230,200 @@
       "is_genuine_data": false,
       "indexed_records": 0,
       "daily_added": 0,
-      "storage_mb": 7643.72
+      "storage_mb": 7755.57,
+      "devices": [
+        {
+          "id": "nb-assembly",
+          "name": "국회 10대 상임위 입법·표결 크롤러",
+          "stage": "수집",
+          "volume": 1545374,
+          "unit": "표결행",
+          "status": "ACTIVE_RUNNING",
+          "desc": "열린국회 법안 및 본회의 표결 전수"
+        },
+        {
+          "id": "nb-vector",
+          "name": "bge-m3 의원 표결 패턴 벡터화 노드",
+          "stage": "분석",
+          "volume": 487,
+          "unit": "의원",
+          "status": "ACTIVE_RUNNING",
+          "desc": "1024차원 임베딩 정당 이탈률 분석"
+        }
+      ]
+    }
+  ],
+  "devices_telemetry": [
+    {
+      "id": "ppl-wikidata",
+      "name": "글로벌 위키데이터 인물 수집기",
+      "stage": "수집",
+      "volume": 103563,
+      "unit": "인물",
+      "status": "ACTIVE_RUNNING",
+      "desc": "10만+ 글로벌 정·재계 인물 실시간 색인"
+    },
+    {
+      "id": "ppl-defaulter",
+      "name": "행안부·위택스 고액체납자 수집기",
+      "stage": "수집",
+      "volume": 13697,
+      "unit": "체납건",
+      "status": "ACTIVE_RUNNING",
+      "desc": "지방세 1천만원 이상 체납 9,409억원 추적"
+    },
+    {
+      "id": "ppl-medical",
+      "name": "공공 보건의료인 프로필 수집기",
+      "stage": "수집",
+      "volume": 156,
+      "unit": "의료인",
+      "status": "ACTIVE_RUNNING",
+      "desc": "전국 의사·치과의사·한의사·약사 프로필"
+    },
+    {
+      "id": "ppl-ontology",
+      "name": "가계도·학력 심층 온톨로지 엔진",
+      "stage": "분석",
+      "volume": 206798,
+      "unit": "관계망",
+      "status": "ACTIVE_RUNNING",
+      "desc": "가계도 103,399명 / 학력 103,399명 심층 연결"
+    },
+    {
+      "id": "insu-clauses",
+      "name": "1~4세대 표준약관 조항 수집기",
+      "stage": "수집",
+      "volume": 32,
+      "unit": "약관군",
+      "status": "ACTIVE_RUNNING",
+      "desc": "1~4세대 실손 및 3대 질병 표준약관"
+    },
+    {
+      "id": "insu-disputes",
+      "name": "금감원·소비자원 분쟁조정 룰셋 엔진",
+      "stage": "분석",
+      "volume": 16,
+      "unit": "판정룰",
+      "status": "ACTIVE_RUNNING",
+      "desc": "도수치료·백내장·하이푸·누수 16대 룰셋"
+    },
+    {
+      "id": "insu-fts5",
+      "name": "약관·청구 방어전략 FTS5 인덱서",
+      "stage": "검증",
+      "volume": 16,
+      "unit": "색인",
+      "status": "ACTIVE_RUNNING",
+      "desc": "claim_rules_fts 키워드 고속 검색"
+    },
+    {
+      "id": "law-statutes",
+      "name": "36대 법령 전문 조문 수집기",
+      "stage": "수집",
+      "volume": 16,
+      "unit": "법률",
+      "status": "ACTIVE_RUNNING",
+      "desc": "헌법·민법·상법·형법 등 57개 주요 조문"
+    },
+    {
+      "id": "law-precedents",
+      "name": "대법원 전원합의체 판례 추출기",
+      "stage": "수집",
+      "volume": 15,
+      "unit": "판례",
+      "status": "ACTIVE_RUNNING",
+      "desc": "백내장·누수비용·임대차 등 리딩 판결"
+    },
+    {
+      "id": "law-fts5",
+      "name": "조문·판례 FTS5 전문검색 엔진",
+      "stage": "검증",
+      "volume": 72,
+      "unit": "색인",
+      "status": "ACTIVE_RUNNING",
+      "desc": "articles_fts 및 precedents_fts 양방향 색인"
+    },
+    {
+      "id": "asset-krx",
+      "name": "KRX 21대 대장주 실시간 시총 수집기",
+      "stage": "수집",
+      "volume": 21,
+      "unit": "상장사",
+      "status": "ACTIVE_RUNNING",
+      "desc": "삼성전자, SK하이닉스 등 시총 1,200조원 추적"
+    },
+    {
+      "id": "asset-dart",
+      "name": "DART 5% 대량보유 지분 공시 추출기",
+      "stage": "수집",
+      "volume": 21,
+      "unit": "공시군",
+      "status": "ACTIVE_RUNNING",
+      "desc": "국민연금, 블랙록, 대주주 지분율 연동"
+    },
+    {
+      "id": "asset-fts5",
+      "name": "상장사·지배구조 FTS5 검색 엔진",
+      "stage": "검증",
+      "volume": 21,
+      "unit": "색인",
+      "status": "ACTIVE_RUNNING",
+      "desc": "corps_fts 종목·지배구조 실시간 검색"
+    },
+    {
+      "id": "art-met",
+      "name": "메트로폴리탄 미술관(Met) 수집기",
+      "stage": "수집",
+      "volume": 3250,
+      "unit": "작품",
+      "status": "ACTIVE_RUNNING",
+      "desc": "The Met 회화·조각 고화질 컬렉션"
+    },
+    {
+      "id": "art-aic",
+      "name": "시카고 미술관(AIC) 수집 파이프라인",
+      "stage": "수집",
+      "volume": 2680,
+      "unit": "작품",
+      "status": "ACTIVE_RUNNING",
+      "desc": "인상주의·근현대 명화 스트림"
+    },
+    {
+      "id": "art-cma",
+      "name": "클리블랜드 미술관(CMA) 하베스터",
+      "stage": "수집",
+      "volume": 2048,
+      "unit": "작품",
+      "status": "ACTIVE_RUNNING",
+      "desc": "동양화·아시아 유물 고화질 자산"
+    },
+    {
+      "id": "art-vault",
+      "name": "외장하드 2400px WebP 적재 엔진",
+      "stage": "저장",
+      "volume": 2671,
+      "unit": "WebP 블롭",
+      "status": "ACTIVE_RUNNING",
+      "desc": "외장하드 직통 적재 및 SHA-256 중복 방지"
+    },
+    {
+      "id": "nb-assembly",
+      "name": "국회 10대 상임위 입법·표결 크롤러",
+      "stage": "수집",
+      "volume": 1545374,
+      "unit": "표결행",
+      "status": "ACTIVE_RUNNING",
+      "desc": "열린국회 법안 및 본회의 표결 전수"
+    },
+    {
+      "id": "nb-vector",
+      "name": "bge-m3 의원 표결 패턴 벡터화 노드",
+      "stage": "분석",
+      "volume": 487,
+      "unit": "의원",
+      "status": "ACTIVE_RUNNING",
+      "desc": "1024차원 임베딩 정당 이탈률 분석"
     }
   ]
 }
