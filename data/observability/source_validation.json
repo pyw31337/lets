@@ -1,6 +1,6 @@
 {
   "schema": "lets_observability_validation_v1",
-  "generated_at": "2026-11-26T23:47:41.199027+00:00",
+  "generated_at": "2026-11-27T05:24:37.188773+00:00",
   "services": [
     {
       "service_id": "news",
@@ -22,8 +22,8 @@
       "service_id": "art",
       "url": "https://raw.githubusercontent.com/pyw31337/art/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T03:25:36.290226+00:00",
-      "run_id": "art-20261126T032536Z",
+      "observed_at": "2026-11-27T03:33:01.827320+00:00",
+      "run_id": "art-20261127T033301Z",
       "counts": {
         "records": 2650,
         "increment": 0
@@ -48,8 +48,8 @@
       "service_id": "law",
       "url": "https://raw.githubusercontent.com/pyw31337/law/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:59:31.385176+00:00",
-      "run_id": "law-20261126T015931Z",
+      "observed_at": "2026-11-27T01:59:30.784446+00:00",
+      "run_id": "law-20261127T015930Z",
       "counts": {
         "records": 20,
         "increment": 0
@@ -61,8 +61,8 @@
       "service_id": "people",
       "url": "https://raw.githubusercontent.com/pyw31337/people/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T02:34:50.659495+00:00",
-      "run_id": "people-20261126T023450Z",
+      "observed_at": "2026-11-27T02:34:07.222753+00:00",
+      "run_id": "people-20261127T023407Z",
       "counts": {
         "records": 102774,
         "politicians": 50,
@@ -70,7 +70,7 @@
         "with_photo": 3498,
         "alumni_clusters": 1637,
         "regional_clusters": 9236,
-        "increment": 81064
+        "increment": 0
       },
       "collect": "success",
       "quality": "success"
@@ -91,8 +91,8 @@
       "service_id": "meat",
       "url": "https://raw.githubusercontent.com/pyw31337/meat/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T19:58:31.805677+00:00",
-      "run_id": "meat-20261126T195831Z",
+      "observed_at": "2026-11-27T04:00:21.499940+00:00",
+      "run_id": "meat-20261127T040021Z",
       "counts": {
         "records": 681,
         "unique_records": 681,
@@ -120,10 +120,10 @@
       "service_id": "culture",
       "url": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:48:08.705255+00:00",
-      "run_id": "culture-20261126T014808Z",
+      "observed_at": "2026-11-27T01:46:15.851261+00:00",
+      "run_id": "culture-20261127T014615Z",
       "counts": {
-        "records": 9224
+        "records": 9321
       },
       "collect": "success",
       "quality": "degraded"
@@ -160,13 +160,13 @@
       "service_id": "cart",
       "url": "https://raw.githubusercontent.com/pyw31337/cart/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:56:02.536298+00:00",
-      "run_id": "cart-20261126T015602Z",
+      "observed_at": "2026-11-27T01:54:05.169409+00:00",
+      "run_id": "cart-20261127T015405Z",
       "counts": {
         "records": 39,
         "catalog_products": 302,
         "increment": 0,
-        "increment_date": "2026-11-26",
+        "increment_date": "2026-11-27",
         "reviews": 997520
       },
       "collect": "success",
@@ -176,8 +176,8 @@
       "service_id": "metro",
       "url": "https://raw.githubusercontent.com/pyw31337/metro/main/public/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:52:39.394252+00:00",
-      "run_id": "metro-20261126T015239Z",
+      "observed_at": "2026-11-27T01:50:05.285183+00:00",
+      "run_id": "metro-20261127T015005Z",
       "counts": {
         "records": 354369,
         "files": 35
@@ -189,10 +189,10 @@
       "service_id": "calendar",
       "url": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:51:42.340625+00:00",
-      "run_id": "calendar-20261126T015142Z",
+      "observed_at": "2026-11-27T01:49:11.736706+00:00",
+      "run_id": "calendar-20261127T014911Z",
       "counts": {
-        "records": 7650
+        "records": 7726
       },
       "collect": "success",
       "quality": "success"
@@ -201,8 +201,8 @@
       "service_id": "insu",
       "url": "https://raw.githubusercontent.com/pyw31337/insu/main/data/observability/latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:27:52.351730+00:00",
-      "run_id": "insu-20261126T012752Z",
+      "observed_at": "2026-11-27T01:25:27.295210+00:00",
+      "run_id": "insu-20261127T012527Z",
       "counts": {
         "records": 11
       },
@@ -213,12 +213,12 @@
       "service_id": "limery",
       "url": "https://pyw31337.github.io/lets/data/observability/limery_latest.json",
       "status": "observed",
-      "observed_at": "2026-11-26T01:57:06.501620+00:00",
-      "run_id": "limery-20261126T015706Z",
+      "observed_at": "2026-11-27T01:56:15.650365+00:00",
+      "run_id": "limery-20261127T015615Z",
       "counts": {
-        "bundles": 27,
-        "files": 36,
-        "bytes": 5749767
+        "bundles": 29,
+        "files": 42,
+        "bytes": 5900665
       },
       "collect": "success",
       "quality": "success"

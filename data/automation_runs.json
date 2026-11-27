@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1.0",
-  "generated_at": "2026-11-26T23:48:05.121435+00:00",
+  "generated_at": "2026-11-27T05:25:02.758558+00:00",
   "runs": [
     {
       "source_run_id": "news-observability:observed-news-20261120-094927",
@@ -2749,6 +2749,363 @@
       "stage": "UNCLASSIFIED",
       "status": "SUCCESS",
       "completed_at": "2026-11-26T23:29:17Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "culture-observability:culture-20261127T014615Z",
+      "service_id": "culture",
+      "source": "persisted_culture_calendar",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:46:15.851261+00:00",
+      "observed": {
+        "count": 97,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "snapshot_delta",
+        "prev_date": "2026-11-26",
+        "prev_count": 9224,
+        "current_count": 9321
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "meat-observability:meat-20261127T040021Z",
+      "service_id": "meat",
+      "source": "persisted_price_history",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T04:00:21.499940+00:00",
+      "observed": {
+        "count": 10,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "explicit_increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "cart-observability:cart-20261127T015405Z",
+      "service_id": "cart",
+      "source": "persisted_letscart_catalog",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:54:05.169409+00:00",
+      "observed": {
+        "count": 0,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "explicit_increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "metro-observability:metro-20261127T015005Z",
+      "service_id": "metro",
+      "source": "persisted_metro_catalog",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:50:05.285183+00:00",
+      "observed": {
+        "count": 0,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "snapshot_delta",
+        "prev_date": "2026-11-26",
+        "prev_count": 354369,
+        "current_count": 354369
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "calendar-observability:calendar-20261127T014911Z",
+      "service_id": "calendar",
+      "source": "persisted_calendar_data",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:49:11.736706+00:00",
+      "observed": {
+        "count": 76,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "snapshot_delta",
+        "prev_date": "2026-11-26",
+        "prev_count": 7650,
+        "current_count": 7726
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "law-observability:law-20261127T015930Z",
+      "service_id": "law",
+      "source": "uk_legislation_feed",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:59:30.784446+00:00",
+      "observed": {
+        "count": 0,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "explicit_increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "insu-observability:insu-20261127T012527Z",
+      "service_id": "insu",
+      "source": "persisted_policy_ledger",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:25:27.295210+00:00",
+      "observed": {
+        "count": 0,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "snapshot_delta",
+        "prev_date": "2026-11-26",
+        "prev_count": 11,
+        "current_count": 11
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "people-observability:people-20261127T023407Z",
+      "service_id": "people",
+      "source": "wikidata_wikipedia_elite_pipeline",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T02:34:07.222753+00:00",
+      "observed": {
+        "count": 0,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "explicit_increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "art-observability:art-20261127T033301Z",
+      "service_id": "art",
+      "source": "met_open_access",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T03:33:01.827320+00:00",
+      "observed": {
+        "count": 0,
+        "unit": "records",
+        "kind": "increment",
+        "basis": "explicit_increment"
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "limery-observability:limery-20261127T015615Z",
+      "service_id": "limery",
+      "source": "private_limery_v3_index",
+      "workflow": null,
+      "stage": "INGEST",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:56:15.650365+00:00",
+      "observed": {
+        "count": 2,
+        "unit": "bundles",
+        "kind": "increment",
+        "basis": "snapshot_delta",
+        "prev_date": "2026-11-26",
+        "prev_count": 27,
+        "current_count": 29
+      },
+      "note": "Source-backed public observability ledger."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/news/actions/runs/45944433640",
+      "service_id": "news",
+      "source": "github_actions",
+      "workflow": "collect-news",
+      "stage": "UNCLASSIFIED",
+      "status": "PENDING",
+      "completed_at": "2026-11-27T05:12:52Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/culture/actions/runs/45924346147",
+      "service_id": "culture",
+      "source": "github_actions",
+      "workflow": "Publish LetsHub observability",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:46:21Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/meat/actions/runs/45937475304",
+      "service_id": "meat",
+      "source": "github_actions",
+      "workflow": "Meat Tracker Health Monitor",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T04:01:25Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/cart/actions/runs/45925195191",
+      "service_id": "cart",
+      "source": "github_actions",
+      "workflow": "pages build and deployment",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:54:30Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/camp/actions/runs/45945110504",
+      "service_id": "camp",
+      "source": "github_actions",
+      "workflow": "Shorts sync",
+      "stage": "UNCLASSIFIED",
+      "status": "PENDING",
+      "completed_at": "2026-11-27T05:19:27Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/cctv/actions/runs/45942787046",
+      "service_id": "cctv",
+      "source": "github_actions",
+      "workflow": "Refresh KMA precipitation grid",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T04:56:27Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/metro/actions/runs/45924805528",
+      "service_id": "metro",
+      "source": "github_actions",
+      "workflow": "Publish LetsHub observability",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:50:13Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/calendar/actions/runs/45926334445",
+      "service_id": "calendar",
+      "source": "github_actions",
+      "workflow": "Daily Ops Report",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T02:07:21Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/law/actions/runs/45925671069",
+      "service_id": "law",
+      "source": "github_actions",
+      "workflow": "24/7 Daily Legal Cases & Statutes Ingestion",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:59:36Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/insu/actions/runs/45922483126",
+      "service_id": "insu",
+      "source": "github_actions",
+      "workflow": "24/7 Daily Policy Terms Ingestion",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T01:25:31Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/people/actions/runs/45941775208",
+      "service_id": "people",
+      "source": "github_actions",
+      "workflow": "Deploy Let's People to GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T04:45:42Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/asset/actions/runs/45913937908",
+      "service_id": "asset",
+      "source": "github_actions",
+      "workflow": "Deploy Let's Asset to GitHub Pages",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-26T23:58:01Z",
+      "observed": {
+        "count": null,
+        "unit": null
+      },
+      "note": "Workflow execution evidence only; collection volume was not reported by the workflow."
+    },
+    {
+      "source_run_id": "https://github.com/pyw31337/art/actions/runs/45945257614",
+      "service_id": "art",
+      "source": "github_actions",
+      "workflow": "pages build and deployment",
+      "stage": "UNCLASSIFIED",
+      "status": "SUCCESS",
+      "completed_at": "2026-11-27T05:21:39Z",
       "observed": {
         "count": null,
         "unit": null
