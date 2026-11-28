@@ -1,6 +1,6 @@
 {
   "schema": "collection_pulse_v2",
-  "generated_at": "2026-11-28T12:25:04.548253+09:00",
+  "generated_at": "2026-11-28T13:56:03.031434+09:00",
   "provenance": {
     "workflow_state": "data/live_operations.json",
     "run_events": "data/automation_runs.json",
@@ -9,10 +9,10 @@
   },
   "overall": {
     "volume_evidence": "observed",
-    "today_collected": 10,
+    "today_collected": 174,
     "yesterday_collected": 186,
-    "delta_pct": -94.6,
-    "week_current": 102986,
+    "delta_pct": -6.5,
+    "week_current": 103150,
     "week_previous": 1545374,
     "week_delta_pct": -93.3,
     "collectors_healthy": 11,
@@ -87,7 +87,7 @@
     },
     {
       "date": "2026-11-28",
-      "collected": 10,
+      "collected": 174,
       "evidence": "observed"
     }
   ],
@@ -97,16 +97,16 @@
       "yesterday": null,
       "snapshot": null,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T23:29:41+00:00",
+      "observed_at": "2026-11-28T03:58:02+00:00",
       "volume_mode": "not_connected"
     },
     "culture": {
-      "today": null,
+      "today": 11,
       "yesterday": 97,
-      "snapshot": 9321,
+      "snapshot": 9332,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T01:46:15.851261+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T01:28:24.079115+00:00",
+      "volume_mode": "increment"
     },
     "pick": {
       "today": null,
@@ -129,16 +129,16 @@
       "yesterday": 10,
       "snapshot": 691,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T19:47:10.730132+00:00",
+      "observed_at": "2026-11-28T03:48:29.517803+00:00",
       "volume_mode": "increment"
     },
     "cart": {
-      "today": null,
+      "today": 39,
       "yesterday": 0,
       "snapshot": 39,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T01:54:05.169409+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T01:38:16.210035+00:00",
+      "volume_mode": "increment"
     },
     "camp": {
       "today": null,
@@ -157,44 +157,44 @@
       "volume_mode": "increment"
     },
     "metro": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
       "snapshot": 354369,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T01:50:05.285183+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T01:32:33.975036+00:00",
+      "volume_mode": "increment"
     },
     "calendar": {
-      "today": null,
+      "today": 114,
       "yesterday": 76,
-      "snapshot": 7726,
+      "snapshot": 7840,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T01:49:11.736706+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T01:30:28.421112+00:00",
+      "volume_mode": "increment"
     },
     "law": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
       "snapshot": 20,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T01:59:30.784446+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T01:44:02.224195+00:00",
+      "volume_mode": "increment"
     },
     "insu": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
       "snapshot": 11,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T01:25:27.295210+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T00:58:25.253291+00:00",
+      "volume_mode": "increment"
     },
     "people": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
       "snapshot": 102774,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T02:34:07.222753+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T02:24:42.212937+00:00",
+      "volume_mode": "increment"
     },
     "asset": {
       "today": 0,
@@ -205,12 +205,12 @@
       "volume_mode": "increment"
     },
     "art": {
-      "today": null,
+      "today": 0,
       "yesterday": 0,
       "snapshot": 2650,
       "snapshot_unit": "records",
-      "observed_at": "2026-11-27T03:33:01.827320+00:00",
-      "volume_mode": "snapshot_only"
+      "observed_at": "2026-11-28T03:09:58.148970+00:00",
+      "volume_mode": "increment"
     },
     "limery": {
       "today": null,
@@ -222,10 +222,10 @@
     }
   },
   "quality": {
-    "collect_success_pct": 96.1,
-    "analyze_success_pct": 94.4,
+    "collect_success_pct": 93.2,
+    "analyze_success_pct": 95.5,
     "quality_issue_count": 10,
-    "observed_at": "2026-11-27T23:29:41+00:00",
+    "observed_at": "2026-11-28T03:58:02+00:00",
     "services_observed": 14,
     "services_quality_pass": 12,
     "services_total": 16
@@ -237,37 +237,39 @@
       "status": "degraded",
       "label": "데이터 단계 주의",
       "detail": "실행 원장에 수집·분석·품질 단계 주의가 기록되어 있습니다",
-      "updated_at": "2026-11-27T23:12:16Z",
-      "age_hours": 0.38,
+      "updated_at": "2026-11-28T03:47:28Z",
+      "age_hours": 1.14,
       "url": "https://github.com/pyw31337/news/actions",
       "repo": "https://github.com/pyw31337/news",
-      "next": "완료 결과 확인",
+      "next": "실패 로그 확인 후 재실행",
       "latest_run": {
         "name": "collect-news",
-        "conclusion": null,
-        "status": "in_progress",
-        "url": "https://github.com/pyw31337/news/actions/runs/46081135333",
-        "failed_steps": []
+        "conclusion": "failure",
+        "status": "completed",
+        "url": "https://github.com/pyw31337/news/actions/runs/46103254867",
+        "failed_steps": [
+          "collect: 사이트 묶기"
+        ]
       },
       "open_issues": 4,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T23:29:41+00:00",
-        "age_hours": 0.09,
-        "run_id": "46081135333",
+        "observed_at": "2026-11-28T03:58:02+00:00",
+        "age_hours": 0.96,
+        "run_id": "46095523181",
         "stages": {
           "collect": {
             "status": "degraded",
-            "ok": 292,
-            "fail": 12,
-            "errors": 12,
+            "ok": 290,
+            "fail": 21,
+            "errors": 21,
             "artifact": true
           },
           "analyze": {
             "status": "degraded",
-            "ok": 425,
-            "fail": 25,
-            "errors": 25,
+            "ok": 493,
+            "fail": 23,
+            "errors": 23,
             "artifact": true
           },
           "quality": {
@@ -275,32 +277,32 @@
             "quality_issue_count": 10,
             "event_quality_present": true,
             "detail": {
-              "low_score": 8,
-              "low_photo": 7,
+              "low_score": 7,
+              "low_photo": 3,
               "low_source": 5,
-              "missing_event_stages": 9
+              "missing_event_stages": 8
             }
           },
           "publish": {
             "status": "success",
-            "published_at": "2026-11-27T23:30:01+00:00",
-            "data_commit": "b2cec650023224ecc80dde3259ba749824388b5e",
+            "published_at": "2026-11-28T03:58:24+00:00",
+            "data_commit": "71cbf74981611bb11a09ece73a6d453db602d93f",
             "note": "data 브랜치 커밋 이후 게시 확인"
           }
         },
         "counts": {
           "issues": 10,
-          "sources": 184,
+          "sources": 200,
           "entities": 36,
           "global_issues": 12,
           "quality_issues": 10
         },
         "artifacts": {
-          "today": "2a4d7a84d879720a0e4d119c74f4156db4509678c03adc929b2caef9c355b3fc",
-          "global": "6e85ea354bd924f82f44a6ce0dd051d2b9d8569a0f97d72899495ef945b6c17a",
-          "quality": "adb91b3108358f394cf01a16189cea87b754a707e4bde597375fb5c31d0ec923",
-          "status": "cccc3b9d8a2fdaf8f42cf6395c17cc0f60803ffb3757d501a977e17952fc97ee",
-          "event_quality": "04babab66a2f508d0a95c7aa8ffeb85f4facea0d80277b9d0210c154453905d4"
+          "today": "1367395d2c6da7af44a3eb735ded2401942a3f062d51ebb7b8755fee70f2ad12",
+          "global": "2248f5ac59a328c761a423d2dfb37a44cc9ba098d8a67189520c67da1a0c1ae0",
+          "quality": "d98f12bb7e7eafec4e5d37687c735364dda2c5fdb0bef6ff1d905030545c1bb6",
+          "status": "b15c946548fe5ec01e999a100361358dbad7b4e1f38e6bb8e33ab74a4133c12f",
+          "event_quality": "31c91ae9bbaadcf9ea28ca7ffbe528588e8abb76ff88ea18cb3892d3774e06d8"
         },
         "url": "https://raw.githubusercontent.com/pyw31337/news/data/observability/latest.json"
       }
@@ -311,27 +313,27 @@
       "status": "degraded",
       "label": "품질 단계 주의",
       "detail": "Persisted CultureFlow calendar snapshot.",
-      "updated_at": "2026-11-27T16:33:39Z",
-      "age_hours": 7.03,
+      "updated_at": "2026-11-28T01:28:29Z",
+      "age_hours": 3.45,
       "url": "https://github.com/pyw31337/culture/actions",
       "repo": "https://github.com/pyw31337/culture",
       "next": "원천 수집기와 검증 원장 연결",
       "latest_run": {
-        "name": "Deploy to GitHub Pages",
+        "name": "Publish LetsHub observability",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/culture/actions/runs/46033967451",
+        "url": "https://github.com/pyw31337/culture/actions/runs/46093181062",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T01:46:15.851261+00:00",
-        "run_id": "culture-20261127T014615Z",
+        "observed_at": "2026-11-28T01:28:24.079115+00:00",
+        "run_id": "culture-20261128T012824Z",
         "stages": {
           "collect": {
             "status": "success",
-            "ok": 9321,
+            "ok": 9332,
             "artifact": true
           },
           "analyze": {
@@ -348,7 +350,7 @@
           }
         },
         "counts": {
-          "records": 9321
+          "records": 9332
         },
         "url": "https://raw.githubusercontent.com/pyw31337/culture/main/public/data/observability/latest.json"
       }
@@ -360,7 +362,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-24T00:29:25Z",
-      "age_hours": 95.1,
+      "age_hours": 100.44,
       "url": "https://github.com/pyw31337/pick/actions",
       "repo": "https://github.com/pyw31337/pick",
       "next": "수집기에서 observability/latest.json 발행",
@@ -380,7 +382,7 @@
       "label": "수집 미관측",
       "detail": "GitHub Actions 실행 기록만 있고 실제 수집·저장 원장이 없습니다",
       "updated_at": "2026-11-24T00:29:37Z",
-      "age_hours": 95.09,
+      "age_hours": 100.43,
       "url": "https://github.com/pyw31337/hair/actions",
       "repo": "https://github.com/pyw31337/hair",
       "next": "수집기에서 observability/latest.json 발행",
@@ -399,8 +401,8 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Persisted price history rows; increment is the latest persisted date.",
-      "updated_at": "2026-11-27T19:48:05Z",
-      "age_hours": 3.79,
+      "updated_at": "2026-11-28T03:49:30Z",
+      "age_hours": 1.1,
       "url": "https://github.com/pyw31337/meat/actions",
       "repo": "https://github.com/pyw31337/meat",
       "next": "예약 실행 유지",
@@ -408,14 +410,14 @@
         "name": "Meat Tracker Health Monitor",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/meat/actions/runs/46059197203",
+        "url": "https://github.com/pyw31337/meat/actions/runs/46104657493",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T19:47:10.730132+00:00",
-        "run_id": "meat-20261127T194710Z",
+        "observed_at": "2026-11-28T03:48:29.517803+00:00",
+        "run_id": "meat-20261128T034829Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -450,8 +452,8 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Persisted LetsCart catalog and price snapshot; source service is LetsCart, not deprecated LetsBuy.",
-      "updated_at": "2026-11-27T05:33:00Z",
-      "age_hours": 18.04,
+      "updated_at": "2026-11-28T01:38:44Z",
+      "age_hours": 3.28,
       "url": "https://github.com/pyw31337/cart/actions",
       "repo": "https://github.com/pyw31337/cart",
       "next": "예약 실행 유지",
@@ -459,14 +461,14 @@
         "name": "pages build and deployment",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/cart/actions/runs/45946420609",
+        "url": "https://github.com/pyw31337/cart/actions/runs/46094104943",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T01:54:05.169409+00:00",
-        "run_id": "cart-20261127T015405Z",
+        "observed_at": "2026-11-28T01:38:16.210035+00:00",
+        "run_id": "cart-20261128T013816Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -490,8 +492,8 @@
         "counts": {
           "records": 39,
           "catalog_products": 302,
-          "increment": 0,
-          "increment_date": "2026-11-27",
+          "increment": 39,
+          "increment_date": "2026-11-28",
           "reviews": 997520
         },
         "url": "https://raw.githubusercontent.com/pyw31337/cart/main/data/observability/latest.json"
@@ -503,16 +505,16 @@
       "status": "degraded",
       "label": "품질 단계 주의",
       "detail": "Persisted campground catalog and quality snapshot; no daily increment inferred.",
-      "updated_at": "2026-11-27T22:48:15Z",
-      "age_hours": 0.78,
+      "updated_at": "2026-11-28T04:52:34Z",
+      "age_hours": 0.05,
       "url": "https://github.com/pyw31337/camp/actions",
       "repo": "https://github.com/pyw31337/camp",
       "next": "원천 수집기와 검증 원장 연결",
       "latest_run": {
-        "name": "Deploy GitHub Pages",
+        "name": "Web quality",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/camp/actions/runs/46078573874",
+        "url": "https://github.com/pyw31337/camp/actions/runs/46108632474",
         "failed_steps": []
       },
       "open_issues": 4,
@@ -553,16 +555,16 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Persisted CCTV catalog snapshot.",
-      "updated_at": "2026-11-27T23:34:03Z",
-      "age_hours": 0.02,
+      "updated_at": "2026-11-28T04:55:43Z",
+      "age_hours": -0.0,
       "url": "https://github.com/pyw31337/cctv/actions",
       "repo": "https://github.com/pyw31337/cctv",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Actions Failure Auto-Remediation",
-        "conclusion": "skipped",
+        "name": "Refresh KMA precipitation grid",
+        "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/cctv/actions/runs/46083193104",
+        "url": "https://github.com/pyw31337/cctv/actions/runs/46109741857",
         "failed_steps": []
       },
       "open_issues": 0,
@@ -601,8 +603,8 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Persisted metro public catalog snapshot; no daily increment inferred.",
-      "updated_at": "2026-11-27T01:50:13Z",
-      "age_hours": 21.75,
+      "updated_at": "2026-11-28T01:32:44Z",
+      "age_hours": 3.38,
       "url": "https://github.com/pyw31337/metro/actions",
       "repo": "https://github.com/pyw31337/metro",
       "next": "예약 실행 유지",
@@ -610,14 +612,14 @@
         "name": "Publish LetsHub observability",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/metro/actions/runs/45924805528",
+        "url": "https://github.com/pyw31337/metro/actions/runs/46093610087",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T01:50:05.285183+00:00",
-        "run_id": "metro-20261127T015005Z",
+        "observed_at": "2026-11-28T01:32:33.975036+00:00",
+        "run_id": "metro-20261128T013233Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -650,27 +652,27 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Persisted calendar public data snapshot.",
-      "updated_at": "2026-11-27T10:56:12Z",
-      "age_hours": 12.65,
+      "updated_at": "2026-11-28T01:52:54Z",
+      "age_hours": 3.05,
       "url": "https://github.com/pyw31337/calendar/actions",
       "repo": "https://github.com/pyw31337/calendar",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Daily Photo Tag Maintenance",
+        "name": "Daily Ops Report",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/calendar/actions/runs/45985970425",
+        "url": "https://github.com/pyw31337/calendar/actions/runs/46095165096",
         "failed_steps": []
       },
       "open_issues": 1,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T01:49:11.736706+00:00",
-        "run_id": "calendar-20261127T014911Z",
+        "observed_at": "2026-11-28T01:30:28.421112+00:00",
+        "run_id": "calendar-20261128T013028Z",
         "stages": {
           "collect": {
             "status": "success",
-            "ok": 7726,
+            "ok": 7840,
             "artifact": true
           },
           "analyze": {
@@ -687,7 +689,7 @@
           }
         },
         "counts": {
-          "records": 7726
+          "records": 7840
         },
         "url": "https://raw.githubusercontent.com/pyw31337/calendar/main/public-vite/data/observability/latest.json"
       }
@@ -698,8 +700,8 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "UK legislation public Atom feed snapshot.",
-      "updated_at": "2026-11-27T01:59:36Z",
-      "age_hours": 21.59,
+      "updated_at": "2026-11-28T01:44:10Z",
+      "age_hours": 3.19,
       "url": "https://github.com/pyw31337/law/actions",
       "repo": "https://github.com/pyw31337/law",
       "next": "예약 실행 유지",
@@ -707,14 +709,14 @@
         "name": "24/7 Daily Legal Cases & Statutes Ingestion",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/law/actions/runs/45925671069",
+        "url": "https://github.com/pyw31337/law/actions/runs/46094583396",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T01:59:30.784446+00:00",
-        "run_id": "law-20261127T015930Z",
+        "observed_at": "2026-11-28T01:44:02.224195+00:00",
+        "run_id": "law-20261128T014402Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -748,8 +750,8 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Persisted insurance policy ledger snapshot; no daily increment inferred.",
-      "updated_at": "2026-11-27T01:25:31Z",
-      "age_hours": 22.16,
+      "updated_at": "2026-11-28T00:58:30Z",
+      "age_hours": 3.95,
       "url": "https://github.com/pyw31337/insu/actions",
       "repo": "https://github.com/pyw31337/insu",
       "next": "예약 실행 유지",
@@ -757,14 +759,14 @@
         "name": "24/7 Daily Policy Terms Ingestion",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/insu/actions/runs/45922483126",
+        "url": "https://github.com/pyw31337/insu/actions/runs/46090701813",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T01:25:27.295210+00:00",
-        "run_id": "insu-20261127T012527Z",
+        "observed_at": "2026-11-28T00:58:25.253291+00:00",
+        "run_id": "insu-20261128T005825Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -796,23 +798,23 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Wikidata global notables, Wikipedia Korean medical/political figures, and elite network clusters.",
-      "updated_at": "2026-11-27T04:45:42Z",
-      "age_hours": 18.83,
+      "updated_at": "2026-11-28T02:24:50Z",
+      "age_hours": 2.51,
       "url": "https://github.com/pyw31337/people/actions",
       "repo": "https://github.com/pyw31337/people",
       "next": "예약 실행 유지",
       "latest_run": {
-        "name": "Deploy Let's People to GitHub Pages",
+        "name": "24/7 Daily Global People & Photo Ingestion",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/people/actions/runs/45941775208",
+        "url": "https://github.com/pyw31337/people/actions/runs/46097881463",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T02:34:07.222753+00:00",
-        "run_id": "people-20261127T023407Z",
+        "observed_at": "2026-11-28T02:24:42.212937+00:00",
+        "run_id": "people-20261128T022442Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -852,7 +854,7 @@
       "label": "실측 수집",
       "detail": "World Bank Korea GDP series snapshot.",
       "updated_at": "2026-11-27T23:06:17Z",
-      "age_hours": 0.48,
+      "age_hours": 5.82,
       "url": "https://github.com/pyw31337/asset/actions",
       "repo": "https://github.com/pyw31337/asset",
       "next": "예약 실행 유지",
@@ -901,8 +903,8 @@
       "status": "healthy",
       "label": "실측 수집",
       "detail": "Met Open Access department 11 identifier snapshot.",
-      "updated_at": "2026-11-27T05:21:39Z",
-      "age_hours": 18.23,
+      "updated_at": "2026-11-28T03:10:53Z",
+      "age_hours": 1.75,
       "url": "https://github.com/pyw31337/art/actions",
       "repo": "https://github.com/pyw31337/art",
       "next": "예약 실행 유지",
@@ -910,14 +912,14 @@
         "name": "pages build and deployment",
         "conclusion": "success",
         "status": "completed",
-        "url": "https://github.com/pyw31337/art/actions/runs/45945257614",
+        "url": "https://github.com/pyw31337/art/actions/runs/46101528581",
         "failed_steps": []
       },
       "open_issues": 0,
       "observability": {
         "status": "observed",
-        "observed_at": "2026-11-27T03:33:01.827320+00:00",
-        "run_id": "art-20261127T033301Z",
+        "observed_at": "2026-11-28T03:09:58.148970+00:00",
+        "run_id": "art-20261128T030958Z",
         "stages": {
           "collect": {
             "status": "success",
@@ -1003,7 +1005,7 @@
       "service_id": "news",
       "service": "뉴스보드",
       "detail": "실행 원장에 수집·분석·품질 단계 주의가 기록되어 있습니다",
-      "action": "완료 결과 확인",
+      "action": "실패 로그 확인 후 재실행",
       "href": "https://github.com/pyw31337/news/actions"
     },
     {
@@ -1037,13 +1039,6 @@
       "detail": "Persisted campground catalog and quality snapshot; no daily increment inferred.",
       "action": "원천 수집기와 검증 원장 연결",
       "href": "https://github.com/pyw31337/camp/actions"
-    },
-    {
-      "type": "SHARP_DROP",
-      "service_id": "all",
-      "service": "수집량 원장",
-      "detail": "전일 대비 -94.6% 감소했습니다.",
-      "action": "실행 로그와 API 제한을 확인하세요."
     }
   ]
 }

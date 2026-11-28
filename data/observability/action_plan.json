@@ -1,15 +1,7 @@
 {
   "schema": "lets_ops_action_plan_v1",
-  "generated_at": "2026-11-27T23:35:56.568396+00:00",
-  "status": "attention",
-  "actions": [
-    {
-      "service_id": "all",
-      "priority": "medium",
-      "action": "inspect_truth_contract",
-      "reason": "원장 계약을 점검해야 합니다.",
-      "safe_next_step": "실제 원장·품질 근거를 연결한 뒤 재검증"
-    }
-  ],
+  "generated_at": "2026-11-28T04:56:03.098407+00:00",
+  "status": "clear",
+  "actions": [],
   "policy": "자동 결정은 진단과 추적까지만 수행하며, 원천 서비스 데이터나 수집량을 임의로 변경하지 않습니다."
 }
